@@ -1,4 +1,4 @@
-const CACHE_NAME = 'my-voca-shell-v2';
+const CACHE_NAME='my-voca-v10-6-favorite-control';
 const APP_SHELL = ['./', './index.html', './manifest.webmanifest'];
 
 self.addEventListener('install', event => {
