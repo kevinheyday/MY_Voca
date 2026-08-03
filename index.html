@@ -2275,20 +2275,66 @@ function sentenceMaskedHtml(q){
   const word=recallText(q?.word||'').trim();
   const patternRanges=pattern?collectHighlightRanges(text,pattern):[];
   const wordRanges=word?collectHighlightRanges(text,word):[];
-  const points=new Set([0,text.length]);
-  [...patternRanges,...wordRanges].forEach(([a,b])=>{points.add(a);points.add(b)});
-  const cuts=[...points].sort((a,b)=>a-b);
-  let html='';
-  for(let n=0;n<cuts.length-1;n++){
-    const a=cuts[n],b=cuts[n+1];
-    if(b<=a)continue;
-    const part=recallEscape(text.slice(a,b));
-    const inPattern=patternRanges.some(([x,y])=>a>=x&&b<=y);
-    const inWord=wordRanges.some(([x,y])=>a>=x&&b<=y);
-    if(inPattern)html+=blankWordsHtml(text.slice(a,b),'');
-    else if(inWord)html+=blankWordsHtml(text.slice(a,b),'wordBlank');
-    else html+=part;
+
+  // 문장 내 영어 단어를 모두 토큰화한다. 2단계에서는 최소 50%를 가린다.
+  const tokenRe=/[A-Za-z0-9]+(?:['’\-][A-Za-z0-9]+)*/g;
+  const tokens=[];
+  let m;
+  while((m=tokenRe.exec(text))!==null){
+    tokens.push({start:m.index,end:m.index+m[0].length,text:m[0],index:tokens.length});
   }
+  if(!tokens.length)return recallEscape(text);
+
+  const overlaps=(token,ranges)=>ranges.some(([a,b])=>token.start<b&&token.end>a);
+  const selected=new Set();
+  tokens.forEach((t,idx)=>{
+    if(overlaps(t,patternRanges)||overlaps(t,wordRanges))selected.add(idx);
+  });
+
+  const target=Math.ceil(tokens.length*0.5);
+  const stopWords=new Set([
+    'a','an','the','and','or','but','so','if','then','than','as','at','by','for','from','in','into','of','on','to','up','with',
+    'i','you','he','she','it','we','they','me','him','her','us','them','my','your','his','our','their','this','that','these','those',
+    'am','is','are','was','were','be','been','being','do','does','did','have','has','had','will','would','can','could','may','might','must','shall','should',
+    'not','no','yes','there','here','what','which','who','whom','whose','when','where','why','how','just','very','too'
+  ]);
+
+  // 핵심어를 우선하되 문장 앞·중간·뒤에 균형 있게 분산한다.
+  const candidates=tokens.filter((t,idx)=>!selected.has(idx)).map((t,idx)=>{
+    const lower=t.text.toLowerCase();
+    const contentScore=stopWords.has(lower)?0:2;
+    const lengthScore=Math.min(1.5,t.text.length/8);
+    return {...t,contentScore,lengthScore};
+  });
+  const desired=[];
+  const remaining=Math.max(0,target-selected.size);
+  for(let k=0;k<remaining;k++){
+    const ideal=(k+0.5)/Math.max(1,remaining);
+    let best=null,bestScore=-Infinity;
+    for(const c of candidates){
+      if(desired.some(d=>d.index===c.index))continue;
+      const pos=(c.index+0.5)/tokens.length;
+      const distancePenalty=Math.abs(pos-ideal)*3;
+      const adjacencyPenalty=[...selected,...desired.map(d=>d.index)].some(i=>Math.abs(i-c.index)===1)?0.35:0;
+      const score=c.contentScore+c.lengthScore-distancePenalty-adjacencyPenalty;
+      if(score>bestScore){bestScore=score;best=c;}
+    }
+    if(best){desired.push(best);selected.add(best.index);}
+  }
+
+  let html='';
+  let cursor=0;
+  tokens.forEach((t,idx)=>{
+    if(t.start>cursor)html+=recallEscape(text.slice(cursor,t.start));
+    if(selected.has(idx)){
+      const isWord=overlaps(t,wordRanges);
+      html+=blankWordsHtml(text.slice(t.start,t.end),isWord?'wordBlank':'');
+    }else{
+      html+=recallEscape(text.slice(t.start,t.end));
+    }
+    cursor=t.end;
+  });
+  if(cursor<text.length)html+=recallEscape(text.slice(cursor));
   return html||recallEscape(text);
 }
 
