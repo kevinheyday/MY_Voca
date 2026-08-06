@@ -1,0 +1,12 @@
+{
+  "name": "MY VOCA · OPIC AL + TOEFL",
+  "short_name": "MY VOCA",
+  "id": "./",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#eef2f7",
+  "theme_color": "#2563eb",
+  "lang": "ko-KR",
+  "description": "영어 단어, 회화 패턴, 퀴즈와 반복 학습을 위한 MY VOCA 앱"
+}
