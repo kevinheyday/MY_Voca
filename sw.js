@@ -1,4 +1,4 @@
-const CACHE_NAME='my-voca-v10-6-favorite-control';
+const CACHE_NAME = 'my-voca-auto-next-toggle-v2';
 const APP_SHELL = ['./', './index.html', './manifest.webmanifest'];
 
 self.addEventListener('install', event => {
