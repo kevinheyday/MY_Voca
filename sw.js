@@ -1,28 +1,36 @@
-const CACHE_NAME='my-voca-v5-3-10-quiz-manual-speech';
-const APP_SHELL = ['./', './index.html', './css/app.css', './js/app.js', './manifest.webmanifest'];
+const CACHE_NAME='my-voca-v5.3.17-pages-fixed-release';
+const APP_SHELL=[
+  './',
+  './index.html',
+  './manifest.webmanifest'
+];
 
-self.addEventListener('install', event => {
+self.addEventListener('install',event=>{
   self.skipWaiting();
-  event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(APP_SHELL)).catch(() => undefined));
-});
-
-self.addEventListener('activate', event => {
   event.waitUntil(
-    caches.keys()
-      .then(keys => Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))))
-      .then(() => self.clients.claim())
+    caches.open(CACHE_NAME).then(cache=>cache.addAll(APP_SHELL))
   );
 });
 
-self.addEventListener('fetch', event => {
-  if(event.request.method !== 'GET') return;
+self.addEventListener('activate',event=>{
+  event.waitUntil(
+    caches.keys()
+      .then(keys=>Promise.all(keys.filter(key=>key!==CACHE_NAME).map(key=>caches.delete(key))))
+      .then(()=>self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch',event=>{
+  if(event.request.method!=='GET')return;
   event.respondWith(
     fetch(event.request)
-      .then(response => {
-        const copy = response.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(event.request, copy)).catch(() => undefined);
+      .then(response=>{
+        if(response&&response.status===200){
+          const copy=response.clone();
+          caches.open(CACHE_NAME).then(cache=>cache.put(event.request,copy)).catch(()=>{});
+        }
         return response;
       })
-      .catch(() => caches.match(event.request).then(cached => cached || caches.match('./index.html')))
+      .catch(()=>caches.match(event.request).then(cached=>cached||caches.match('./index.html')))
   );
 });
