@@ -1,5 +1,5 @@
-const CACHE_NAME = 'my-voca-auto-next-toggle-v2';
-const APP_SHELL = ['./', './index.html', './manifest.webmanifest'];
+const CACHE_NAME='my-voca-v5-3-10-quiz-manual-speech';
+const APP_SHELL = ['./', './index.html', './css/app.css', './js/app.js', './manifest.webmanifest'];
 
 self.addEventListener('install', event => {
   self.skipWaiting();
