@@ -1,17 +1,10 @@
-const CACHE_NAME='my-voca-v5.3.17-pages-fixed-release';
-const APP_SHELL=[
-  './',
-  './index.html',
-  './manifest.webmanifest'
-];
+const CACHE_NAME='my-voca-v5.3.18-unknown-word-onboarding-release';
+const APP_SHELL=['./','./index.html','./manifest.webmanifest'];
 
 self.addEventListener('install',event=>{
   self.skipWaiting();
-  event.waitUntil(
-    caches.open(CACHE_NAME).then(cache=>cache.addAll(APP_SHELL))
-  );
+  event.waitUntil(caches.open(CACHE_NAME).then(cache=>cache.addAll(APP_SHELL)));
 });
-
 self.addEventListener('activate',event=>{
   event.waitUntil(
     caches.keys()
@@ -19,18 +12,15 @@ self.addEventListener('activate',event=>{
       .then(()=>self.clients.claim())
   );
 });
-
 self.addEventListener('fetch',event=>{
   if(event.request.method!=='GET')return;
   event.respondWith(
-    fetch(event.request)
-      .then(response=>{
-        if(response&&response.status===200){
-          const copy=response.clone();
-          caches.open(CACHE_NAME).then(cache=>cache.put(event.request,copy)).catch(()=>{});
-        }
-        return response;
-      })
-      .catch(()=>caches.match(event.request).then(cached=>cached||caches.match('./index.html')))
+    fetch(event.request).then(response=>{
+      if(response&&response.status===200){
+        const copy=response.clone();
+        caches.open(CACHE_NAME).then(cache=>cache.put(event.request,copy)).catch(()=>{});
+      }
+      return response;
+    }).catch(()=>caches.match(event.request).then(cached=>cached||caches.match('./index.html')))
   );
 });

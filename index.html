@@ -1,4 +1,4 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.17 · Wake Lock Fix</title>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.18 · Wake Lock Fix</title>
 <style>
 
 *{box-sizing:border-box}body{margin:0;background:#eef2f7;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans KR",sans-serif;color:#111827}.app{max-width:720px;margin:auto;padding:14px 14px 100px}header{display:flex;justify-content:space-between;align-items:center}h1{font-size:20px;margin:0}.sub{font-size:12px;color:#667085}.count{background:#fff;padding:8px 12px;border-radius:999px;font-weight:900}.progress{height:8px;background:#d8dee7;border-radius:99px;overflow:hidden;margin:12px 0}.bar{height:100%;background:#22c55e}.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}.tab{border:1px solid #e5e7eb;background:#fff;border-radius:14px;padding:11px;font-weight:900}.active{background:#111827;color:#fff}.card{background:#fff;border-radius:28px;overflow:hidden;box-shadow:0 18px 45px #0f172a1f}.hero{height:245px;position:relative;overflow:hidden;padding:18px;color:#fff;background:linear-gradient(135deg,#0f766e,#2563eb);display:flex;flex-direction:column;justify-content:space-between;isolation:isolate}.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 75% 20%,rgba(255,255,255,.28),transparent 28%),linear-gradient(180deg,transparent 50%,rgba(15,23,42,.34));z-index:-1}.heroTop{display:flex;justify-content:space-between;align-items:flex-start}.visualScene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:92px;filter:drop-shadow(0 16px 16px rgba(15,23,42,.24));transform:translateY(7px)}.heroCopy{position:relative;z-index:2;padding-right:64px}.memoryPhrase{font-size:22px;font-weight:950;line-height:1.2;text-shadow:0 2px 10px rgba(0,0,0,.25)}.memoryKo{font-size:13px;font-weight:750;margin-top:6px;opacity:.9}.flipHint{position:absolute;right:18px;bottom:17px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);padding:7px 10px;border-radius:999px;font-size:12px;font-weight:850}.hero.flipped .visualScene{opacity:.14}.hero.flipped .memoryPhrase{font-size:34px}.hero.flipped .memoryKo{font-size:17px}.hero.flipped:after{content:"암기 카드";position:absolute;left:18px;top:58px;font-size:12px;font-weight:900;letter-spacing:.08em;opacity:.78}.tag{font-size:12px;font-weight:900;background:#ffffff2a;padding:7px 10px;border-radius:99px;height:max-content}.fav,.speak{border:0;background:#fff;border-radius:50%;width:46px;height:46px;font-size:21px}.fav{position:relative;z-index:20;pointer-events:auto;cursor:pointer;color:#cbd5e1;border:2px solid #cbd5e1;background:#fff;box-shadow:0 4px 14px rgba(15,23,42,.12);font-weight:900}.fav.is-favorite{color:#ef4444;border-color:#ef4444;background:#fff1f2;transform:scale(1.06)}.body{padding:23px}.row{display:flex;justify-content:space-between;gap:12px}.word{font-size:39px;font-weight:950;line-height:1.05}.meaning{font-size:22px;font-weight:900;margin-top:13px}.section{border-top:1px solid #e5e7eb;margin-top:19px;padding-top:17px}.label{font-size:12px;color:#667085;font-weight:900;margin-bottom:8px}.chip{display:inline-block;background:#f2f4f7;border-radius:99px;padding:8px 10px;font-weight:800}.toolbar{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}.select,.toggle{width:100%;border:1px solid #d0d5dd;background:#fff;border-radius:14px;padding:11px 12px;font-weight:800;color:#344054}.metaLine{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}.missBadge{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:6px 9px;font-size:13px;font-weight:900;background:#f2f4f7;color:#475467}.missBadge.warm{background:#fef3c7;color:#92400e}.missBadge.hot{background:#ffedd5;color:#9a3412}.missBadge.fire{background:#fee2e2;color:#b91c1c}.autoStatus{font-size:12px;color:#667085;margin-top:6px}.reviewHead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}.reviewCount{font-size:13px;font-weight:900;border-radius:999px;padding:6px 9px;background:#f2f4f7}.modeNote{font-size:12px;color:#667085;margin:-6px 2px 12px}.startOverlay{position:fixed;inset:0;background:rgba(15,23,42,.58);display:flex;align-items:center;justify-content:center;padding:24px;z-index:99}.startBox{max-width:420px;background:#fff;border-radius:24px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.25);text-align:center}.startBox h2{margin:0 0 8px}.startBox p{color:#667085;line-height:1.6}.startBox button{width:100%;border:0;border-radius:16px;padding:15px;background:#111827;color:#fff;font-size:17px;font-weight:900}.streak{font-size:13px;color:#667085;font-weight:800}.example{font-size:20px;font-weight:800;line-height:1.5}.trans{margin-top:8px;color:#475467;line-height:1.55}.question{font-size:18px;font-weight:850}.small{display:flex;gap:8px;margin-top:14px}.small button{flex:1;border:1px solid #e5e7eb;background:#fff;border-radius:13px;padding:11px;font-weight:800}.bottom{position:fixed;left:0;right:0;bottom:0;background:#f8fafcf0;padding:10px 14px}.inner{max-width:720px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{border:0;border-radius:18px;padding:17px;font-size:18px;font-weight:900}.know{background:#fff}.learn{background:#111827;color:#fff}.hidden{display:none}.quiz,.review{background:#fff;border-radius:24px;padding:22px}.option{display:block;width:100%;text-align:left;margin:10px 0;padding:14px;border:1px solid #e5e7eb;background:#fff;border-radius:14px;font-weight:700}.correct{background:#dcfce7!important;border-color:#22c55e!important}.wrong{background:#fee2e2!important;border-color:#ef4444!important}.quizControls{display:flex;gap:8px;align-items:center;margin-bottom:14px}.quizFeedback{margin:14px 0 6px;padding:13px 14px;border-radius:14px;font-weight:900;line-height:1.45}.quizFeedback.ok{background:#dcfce7;color:#166534}.quizFeedback.no{background:#fee2e2;color:#991b1b}.quizMeta{font-size:13px;color:#667085;font-weight:800;margin-top:7px}.item{border:1px solid #e5e7eb;border-radius:14px;padding:13px;margin-bottom:9px}@media(max-width:480px){.hero{height:225px}.visualScene{font-size:82px}.memoryPhrase{font-size:20px}.word{font-size:37px}}
@@ -689,9 +689,25 @@ body.compare-sheet-open{overflow:hidden}
 .quizWordInlineActions .speak,.quizWordInlineActions .compareQuickBtn{margin:0}
 @media(max-width:480px){.quizWordActionRow{gap:9px;margin:14px 0 7px}.quizWordInlineActions{gap:6px}.quizWordInlineActions .speak,.quizWordInlineActions .compareQuickBtn{width:40px;height:40px;font-size:18px}}
 
-/* v5.3.17: Drawer button only on Home */
+/* v5.3.18: Drawer button only on Home */
 .drawerMenuButton.page-hidden{display:none!important;pointer-events:none!important}
 #quiz{touch-action:pan-y}
+
+.unknownWordGuideOverlay{position:fixed;inset:0;z-index:12000;background:rgba(15,23,42,.52);display:flex;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(3px)}
+.unknownWordGuideOverlay.hidden{display:none}
+.unknownWordGuideCard{width:min(520px,100%);background:#fff;border-radius:26px;padding:24px;box-shadow:0 28px 70px rgba(15,23,42,.28);text-align:center}
+.unknownWordGuideIcon{width:58px;height:58px;margin:0 auto 10px;border-radius:18px;background:#fff7d6;display:flex;align-items:center;justify-content:center;font-size:31px}
+.unknownWordGuideCard h2{margin:0;color:#111827;font-size:23px;font-weight:950;line-height:1.25}
+.unknownWordGuideDay{margin:7px 0 14px;color:#2563eb;font-size:14px;font-weight:950}
+.unknownWordGuideMessage{text-align:left;background:#f8fafc;border:1px solid #e2e8f0;border-radius:18px;padding:15px 16px;color:#344054;font-size:14px;line-height:1.58}
+.unknownWordGuideMessage>b{display:block;color:#111827;font-size:15px;margin-bottom:7px}
+.unknownWordGuideMessage p{margin:7px 0 0}
+.unknownWordGuideRule{background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:10px 11px;color:#9a3412;font-weight:850}
+.unknownWordGuidePrimary,.unknownWordGuideSecondary{width:100%;border-radius:15px;padding:14px 12px;font-size:16px;font-weight:950;margin-top:11px}
+.unknownWordGuidePrimary{border:0;background:#111827;color:#fff}
+.unknownWordGuideSecondary{border:1px solid #d0d5dd;background:#fff;color:#475467;margin-top:8px}
+@media(max-width:480px){.unknownWordGuideOverlay{padding:14px}.unknownWordGuideCard{border-radius:22px;padding:20px 16px}.unknownWordGuideCard h2{font-size:21px}.unknownWordGuideMessage{font-size:13px}}
+
 </style>
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
@@ -710,7 +726,7 @@ body.compare-sheet-open{overflow:hidden}
     <div class="drawerSummary">
       <div><b id="drawerLearned">0</b><span>학습</span></div>
       <div><b id="drawerWrong">0</b><span>오답</span></div>
-      <div><b id="drawerFavorite">0</b><span>즐겨찾기</span></div>
+      <div><b id="drawerFavorite">0</b><span>모르는 단어</span></div>
     </div>
     <div class="drawerProgressCard" aria-label="전체 진행률">
       <div class="drawerProgressHead"><span>전체 진행률</span><b id="drawerOverallPercent">0%</b></div>
@@ -726,9 +742,9 @@ body.compare-sheet-open{overflow:hidden}
     <button class="drawerItem" data-drawer-action="quiz"><span class="drawerIcon">📝</span><span class="drawerItemText">퀴즈<small>현재 DAY의 퀴즈 화면으로 이동</small></span></button>
     <div class="drawerDivider"></div>
     <div class="drawerSectionTitle">집중 학습</div>
-    <button class="drawerItem" data-drawer-action="favorite"><span class="drawerIcon">⭐</span><span class="drawerItemText">즐겨찾기<small>즐겨찾기 단어만 학습</small></span></button>
+    <button class="drawerItem" data-drawer-action="favorite"><span class="drawerIcon">⭐</span><span class="drawerItemText">모르는 단어<small>모르는 단어만 학습</small></span></button>
     <button class="drawerItem" data-drawer-action="wrong"><span class="drawerIcon">❌</span><span class="drawerItemText">틀린 단어<small>퀴즈 오답 단어만 학습</small></span></button>
-    <button class="drawerItem" data-drawer-action="wrongFav"><span class="drawerIcon">🎯</span><span class="drawerItemText">틀린 단어 + 즐겨찾기<small>두 목록을 합쳐 집중 학습</small></span></button>
+    <button class="drawerItem" data-drawer-action="wrongFav"><span class="drawerIcon">🎯</span><span class="drawerItemText">틀린 단어 + 모르는 단어<small>두 목록을 합쳐 집중 학습</small></span></button>
     <button class="drawerItem" data-drawer-action="compare"><span class="drawerIcon">🔎</span><span class="drawerItemText">단어 비교<small>비슷한 단어와 뜻·예문 비교</small></span></button>
     <div class="drawerDivider"></div>
     <div class="drawerSectionTitle">기록과 설정</div>
@@ -768,7 +784,7 @@ body.compare-sheet-open{overflow:hidden}
 <section class="homePlaybackCard">
       <div class="homePlaybackTitle">🎧 학습 재생 설정</div>
       <div class="homePlaybackGrid">
-        <div class="homePlaybackField"><label for="homeOrderMode">학습 순서</label><select id="homeOrderMode"><option value="book">📘 기본 순서</option><option value="quizWrongDesc">❌ 퀴즈 오답 많은 순</option><option value="quizWeak">🎯 틀린 단어만</option><option value="favorite">⭐ 즐겨찾기</option><option value="wrongFav">🎯⭐ 틀린 단어 + 즐겨찾기</option><option value="quizRateAsc">📉 퀴즈 정답률 낮은 순</option><option value="quizRateDesc">📈 퀴즈 정답률 높은 순</option><option value="random">🔀 랜덤</option></select></div>
+        <div class="homePlaybackField"><label for="homeOrderMode">학습 순서</label><select id="homeOrderMode"><option value="book">📘 기본 순서</option><option value="quizWrongDesc">❌ 퀴즈 오답 많은 순</option><option value="quizWeak">🎯 틀린 단어만</option><option value="favorite">⭐ 모르는 단어</option><option value="wrongFav">🎯⭐ 틀린 단어 + 모르는 단어</option><option value="quizRateAsc">📉 퀴즈 정답률 낮은 순</option><option value="quizRateDesc">📈 퀴즈 정답률 높은 순</option><option value="random">🔀 랜덤</option></select></div>
         <div class="homePlaybackField"><label for="homeSpeechMode">자동 읽기 범위</label><select id="homeSpeechMode"><option value="off">🔇 자동 읽기 끄기</option><option value="word">🔤 단어 읽기 · 단어+뜻</option><option value="all">🎙 단어 + 예문 + 패러프레이즈</option><option value="full">🔊 전체 읽기</option></select></div>
       </div>
       <div class="homePlaybackHint">여기서 고른 값이 모든 Day 학습에 적용됩니다. 학습 중에는 화면 아래 고정 버튼으로 재생을 즉시 멈추거나 현재 카드부터 다시 시작할 수 있습니다.</div>
@@ -781,8 +797,8 @@ body.compare-sheet-open{overflow:hidden}
           <select id="selectedStudyMode" class="repeatSelect" aria-label="DAY별 단어 학습 범위">
             <option value="all" selected>전체 반복</option>
             <option value="wrong">틀린 단어만</option>
-            <option value="favorite">즐겨찾기</option>
-            <option value="wrongFav">틀린 단어 + 즐겨찾기</option>
+            <option value="favorite">모르는 단어</option>
+            <option value="wrongFav">틀린 단어 + 모르는 단어</option>
           </select>
           <select id="autoRepeat" class="repeatSelect" aria-label="연속 재생 학습 횟수"><option value="1" selected>1회</option><option value="2">2회</option><option value="3">3회</option><option value="5">5회</option><option value="10">10회</option></select>
           <button id="selectedStartBtn" class="selectedStartBtn" type="button">▶ DAY별 단어 학습</button>
@@ -791,6 +807,22 @@ body.compare-sheet-open{overflow:hidden}
 
       <div class="dayGrid" id="dayGrid"></div>
     </section>
+  </div>
+</div>
+
+
+<div id="unknownWordGuideOverlay" class="unknownWordGuideOverlay hidden" role="dialog" aria-modal="true" aria-labelledby="unknownWordGuideTitle">
+  <div class="unknownWordGuideCard">
+    <div class="unknownWordGuideIcon">⭐</div>
+    <h2 id="unknownWordGuideTitle">모르는 단어를 먼저 골라보세요</h2>
+    <p id="unknownWordGuideDay" class="unknownWordGuideDay">DAY</p>
+    <div class="unknownWordGuideMessage">
+      <b>이 DAY에는 아직 모르는 단어가 선택되어 있지 않습니다.</b>
+      <p>학습 전에 헷갈리거나 아직 완전히 익숙하지 않은 단어를 골라두면 <b>모르는 단어만</b>, <b>틀린 단어만</b>, <b>틀린 단어 + 모르는 단어</b>로 집중 학습할 수 있습니다.</p>
+      <p class="unknownWordGuideRule">이 화면은 해당 DAY에서 모르는 단어가 0개일 때만 팝업됩니다. 모르는 단어가 없더라도 복습할 단어를 최소 1개 선택해 보세요.</p>
+    </div>
+    <button id="unknownWordGuideSelect" class="unknownWordGuidePrimary" type="button">⭐ 모르는 단어 선택</button>
+    <button id="unknownWordGuideSkip" class="unknownWordGuideSecondary" type="button">바로 학습하기</button>
   </div>
 </div>
 
@@ -805,17 +837,18 @@ body.compare-sheet-open{overflow:hidden}
 
     <section class="configSection">
       <div class="configSectionTitle">📘 MY VOCA 사용방법</div><p><b>이번 업데이트:</b> 홈 상단의 MY VOCA, 오늘의 학습, 학습 재생 설정 영역을 모바일 화면에 맞게 압축했습니다. 기능은 그대로 유지되며 첫 화면에서 DAY별 학습 영역을 더 빠르게 확인할 수 있습니다.</p>
+      <details class="usageDetail"><summary>⭐ DAY 시작 전 모르는 단어 선택</summary><div class="usageBody">홈에서 DAY 카드를 눌렀을 때 해당 DAY의 <b>모르는 단어가 0개</b>이면 안내 팝업이 표시됩니다. <b>모르는 단어 선택</b>에서 헷갈리거나 다시 볼 단어를 최소 1개 표시하면 이후 <b>모르는 단어만</b>, <b>틀린 단어만</b>, <b>틀린 단어 + 모르는 단어</b> 집중 학습을 바로 사용할 수 있습니다. 이미 모르는 단어가 1개 이상 저장된 DAY에서는 이 팝업이 다시 뜨지 않습니다.</div></details>
       <details class="usageSection" open>
         <summary>1. 처음 시작할 때</summary>
         <div class="usageBody">
-          <ol class="usageSteps"><li>홈에서 공부할 <b>DAY</b>를 선택합니다.</li><li>퀴즈의 <b>단어 선택</b>에서 전체 단어와 뜻을 먼저 훑어봅니다.</li><li>모르는 단어를 체크하면 학습 화면의 <b>즐겨찾기</b>와 자동으로 연동됩니다.</li><li>홈에서 <b>전체 반복</b> 또는 <b>틀린 단어 + 즐겨찾기</b>를 선택해 학습을 시작합니다.</li></ol>
-          <div class="usageFlow"><span class="usageChip">DAY 선택</span><span class="usageArrow">→</span><span class="usageChip">단어 선택</span><span class="usageArrow">→</span><span class="usageChip">즐겨찾기</span><span class="usageArrow">→</span><span class="usageChip">반복 학습</span></div>
+          <ol class="usageSteps"><li>홈에서 공부할 <b>DAY</b>를 선택합니다.</li><li>퀴즈의 <b>모르는 단어 선택</b>에서 전체 단어와 뜻을 먼저 훑어봅니다.</li><li>모르는 단어를 체크하면 학습 화면의 <b>모르는 단어</b>와 자동으로 연동됩니다.</li><li>홈에서 <b>전체 반복</b> 또는 <b>틀린 단어 + 모르는 단어</b>를 선택해 학습을 시작합니다.</li></ol>
+          <div class="usageFlow"><span class="usageChip">DAY 선택</span><span class="usageArrow">→</span><span class="usageChip">모르는 단어 선택</span><span class="usageArrow">→</span><span class="usageChip">모르는 단어</span><span class="usageArrow">→</span><span class="usageChip">반복 학습</span></div>
         </div>
       </details>
       <details class="usageSection">
         <summary>2. 홈 화면과 반복 학습</summary>
         <div class="usageBody">
-          <div class="usageMiniGrid"><div class="usageMini"><b>전체 반복</b>선택한 DAY의 모든 단어를 연속 학습합니다.</div><div class="usageMini"><b>틀린 단어만</b>퀴즈에서 한 번 이상 틀린 단어만 재생합니다.</div><div class="usageMini"><b>즐겨찾기</b>직접 표시한 즐겨찾기 단어만 재생합니다.</div><div class="usageMini"><b>틀린 단어 + 즐겨찾기</b>두 목록을 합쳐 중복 없이 재생합니다.</div><div class="usageMini"><b>기본 순서</b>DAY와 단어 번호 순서대로 학습합니다.</div><div class="usageMini"><b>랜덤</b>저장된 랜덤 순서를 유지해 중단 지점부터 이어서 학습합니다.</div></div>
+          <div class="usageMiniGrid"><div class="usageMini"><b>전체 반복</b>선택한 DAY의 모든 단어를 연속 학습합니다.</div><div class="usageMini"><b>틀린 단어만</b>퀴즈에서 한 번 이상 틀린 단어만 재생합니다.</div><div class="usageMini"><b>모르는 단어</b>직접 표시한 모르는 단어만 재생합니다.</div><div class="usageMini"><b>틀린 단어 + 모르는 단어</b>두 목록을 합쳐 중복 없이 재생합니다.</div><div class="usageMini"><b>기본 순서</b>DAY와 단어 번호 순서대로 학습합니다.</div><div class="usageMini"><b>랜덤</b>저장된 랜덤 순서를 유지해 중단 지점부터 이어서 학습합니다.</div></div>
           <div class="usageTip">여러 DAY를 공부하다 앱을 닫아도 마지막 학습 DAY가 새 선택 범위에 포함되면 저장 위치부터 이어집니다.</div>
         </div>
       </details>
@@ -823,13 +856,13 @@ body.compare-sheet-open{overflow:hidden}
         <summary>3. 학습 화면 사용법</summary>
         <div class="usageBody">
           <p><b>읽기 순서:</b> 단어 → 뜻 → 첫 예문 → 패러프레이징 → 회화 패턴 → Collocation → 유의어·반의어</p><p><b>패러프레이징의 사용된 유의어:</b> 패러프레이징 문장에 실제로 들어간 표현만 파란색으로 강조하고 <b>영어 표현 - 한국어 뜻</b>으로 표시합니다. 원문 단어가 그대로 유지되거나 등록된 유의어가 문장에 없으면 배지를 표시하지 않습니다.</p><p><b>유의어·반의어 목록:</b> 각 표현은 <b>영어 단어 - 한국어 뜻</b> 형식으로 표시됩니다. 🔊 버튼을 누르면 영어 표현을 들을 수 있습니다.</p>
-          <ul class="usageSteps"><li><b>🏠 홈:</b> 음성·자동 스크롤·반복을 즉시 중지하고 홈으로 이동합니다.</li><li><b>☆ 즐겨찾기:</b> 현재 단어를 바로 등록하거나 해제합니다.</li><li><b>⏸ 재생 정지 / ▶ 재생 시작:</b> 현재 카드 위치를 유지한 채 음성을 멈추거나 다시 시작합니다.</li><li><b>좌우 스와이프:</b> 이전·다음 단어로 이동합니다.</li></ul>
+          <ul class="usageSteps"><li><b>🏠 홈:</b> 음성·자동 스크롤·반복을 즉시 중지하고 홈으로 이동합니다.</li><li><b>☆ 모르는 단어:</b> 현재 단어를 바로 등록하거나 해제합니다.</li><li><b>⏸ 재생 정지 / ▶ 재생 시작:</b> 현재 카드 위치를 유지한 채 음성을 멈추거나 다시 시작합니다.</li><li><b>좌우 스와이프:</b> 이전·다음 단어로 이동합니다.</li></ul>
         </div>
       </details>
       <details class="usageSection">
         <summary>4. 퀴즈 4가지</summary>
         <div class="usageBody">
-          <ul class="usageSteps"><li><b>학습 조건 동기화:</b> Drawer의 즐겨찾기·틀린 단어·틀린 단어 + 즐겨찾기를 선택하면 DAY 위 학습 범위와 퀴즈 대상 콤보박스에도 즉시 반영됩니다. 어느 콤보박스에서 변경해도 다른 화면에 같은 조건이 저장됩니다.</li><li><b>퀴즈 대상 조건:</b> 전체 단어·틀린 단어만·즐겨찾기·틀린 단어 + 즐겨찾기 중 하나를 선택하면 모든 퀴즈 방식에 같은 조건이 적용됩니다.</li><li><b>퀴즈 하단 버튼:</b> 왼쪽부터 다음·이전·자동 넘기기 순서입니다. 자동 넘기기 ON이면 정답·오답 후 단어와 예문을 끝까지 읽고 다음 문제로 이동합니다. OFF이면 자동 음성과 자동 이동이 멈추며 다음 버튼으로 직접 진행합니다.</li><li><b>기존 객관식:</b> 자동 재생이 켜져 있으면 정답 선택 후 정답 단어와 예문을 끝까지 들은 뒤 다음 문제로 이동합니다.</li><li><b>단어 말하기:</b> 영어 또는 뜻을 보고 답을 소리 내어 말한 뒤 맞았어요·오답을 선택합니다. 정답을 열면 영어 예문 아래에 한글 해석도 함께 표시됩니다. 자동 재생이 켜져 있으면 정답 단어와 영어 예문을 읽고 이동합니다.</li><li><b>문장 말하기:</b> 한글 뜻 → 전체 문장 → 핵심 빈칸 → 전체 문장 말하기 순서로 기본·패러프레이징 문장을 연습합니다. 최종 채점 후 자동 재생을 시작하거나 정지할 수 있습니다.</li><li><b>단어 선택:</b> 선택한 조건에 해당하는 단어 목록에서 즐겨찾기를 한꺼번에 관리합니다. 전체 DAY를 확인하려면 퀴즈 대상을 ‘전체 단어’로 선택하세요.</li><li><b>유의어·반의어:</b> 같은 뜻 찾기, 유의어 뜻 맞추기, 패러프레이징 문장에 사용된 유의어 찾기, 반의어 찾기를 섞어서 출제합니다. 뜻이 확인된 유의어만 문제로 사용하므로 ‘등록된 뜻이 없습니다.’ 선택지는 표시되지 않습니다. 등록된 데이터가 있는 단어만 문제로 나오며 결과는 해당 학습 단어의 퀴즈 통계와 망각곡선에 반영됩니다.</li></ul>
+          <ul class="usageSteps"><li><b>학습 조건 동기화:</b> Drawer의 모르는 단어·틀린 단어·틀린 단어 + 모르는 단어를 선택하면 DAY 위 학습 범위와 퀴즈 대상 콤보박스에도 즉시 반영됩니다. 어느 콤보박스에서 변경해도 다른 화면에 같은 조건이 저장됩니다.</li><li><b>퀴즈 대상 조건:</b> 전체 단어·틀린 단어만·모르는 단어·틀린 단어 + 모르는 단어 중 하나를 선택하면 모든 퀴즈 방식에 같은 조건이 적용됩니다.</li><li><b>퀴즈 하단 버튼:</b> 왼쪽부터 다음·이전·자동 넘기기 순서입니다. 자동 넘기기 ON이면 정답·오답 후 단어와 예문을 끝까지 읽고 다음 문제로 이동합니다. OFF이면 자동 음성과 자동 이동이 멈추며 다음 버튼으로 직접 진행합니다.</li><li><b>기존 객관식:</b> 자동 재생이 켜져 있으면 정답 선택 후 정답 단어와 예문을 끝까지 들은 뒤 다음 문제로 이동합니다.</li><li><b>단어 말하기:</b> 영어 또는 뜻을 보고 답을 소리 내어 말한 뒤 맞았어요·오답을 선택합니다. 정답을 열면 영어 예문 아래에 한글 해석도 함께 표시됩니다. 자동 재생이 켜져 있으면 정답 단어와 영어 예문을 읽고 이동합니다.</li><li><b>문장 말하기:</b> 한글 뜻 → 전체 문장 → 핵심 빈칸 → 전체 문장 말하기 순서로 기본·패러프레이징 문장을 연습합니다. 최종 채점 후 자동 재생을 시작하거나 정지할 수 있습니다.</li><li><b>모르는 단어 선택:</b> 선택한 조건에 해당하는 단어 목록에서 모르는 단어를 한꺼번에 관리합니다. 전체 DAY를 확인하려면 퀴즈 대상을 ‘전체 단어’로 선택하세요.</li><li><b>유의어·반의어:</b> 같은 뜻 찾기, 유의어 뜻 맞추기, 패러프레이징 문장에 사용된 유의어 찾기, 반의어 찾기를 섞어서 출제합니다. 뜻이 확인된 유의어만 문제로 사용하므로 ‘등록된 뜻이 없습니다.’ 선택지는 표시되지 않습니다. 등록된 데이터가 있는 단어만 문제로 나오며 결과는 해당 학습 단어의 퀴즈 통계와 망각곡선에 반영됩니다.</li></ul>
           <div class="usageTip">문제를 풀지 않아도 다음 문제로 건너뛸 수 있으며, 건너뛴 문제는 정답·오답 통계에 포함되지 않습니다.</div>
         </div>
       </details>
@@ -840,8 +873,8 @@ body.compare-sheet-open{overflow:hidden}
       <details class="usageSection">
         <summary>6. 추천 학습 순서</summary>
         <div class="usageBody">
-          <p><b>처음 학습:</b></p><div class="usageFlow"><span class="usageChip">단어 선택</span><span class="usageArrow">→</span><span class="usageChip">전체 반복</span><span class="usageArrow">→</span><span class="usageChip">객관식</span><span class="usageArrow">→</span><span class="usageChip">단어 말하기</span><span class="usageArrow">→</span><span class="usageChip">문장 말하기</span></div>
-          <p style="margin-top:12px"><b>복습:</b></p><div class="usageFlow"><span class="usageChip">틀린 단어 + 즐겨찾기</span><span class="usageArrow">→</span><span class="usageChip">망각곡선</span><span class="usageArrow">→</span><span class="usageChip">문장 말하기</span></div>
+          <p><b>처음 학습:</b></p><div class="usageFlow"><span class="usageChip">모르는 단어 선택</span><span class="usageArrow">→</span><span class="usageChip">전체 반복</span><span class="usageArrow">→</span><span class="usageChip">객관식</span><span class="usageArrow">→</span><span class="usageChip">단어 말하기</span><span class="usageArrow">→</span><span class="usageChip">문장 말하기</span></div>
+          <p style="margin-top:12px"><b>복습:</b></p><div class="usageFlow"><span class="usageChip">틀린 단어 + 모르는 단어</span><span class="usageArrow">→</span><span class="usageChip">망각곡선</span><span class="usageArrow">→</span><span class="usageChip">문장 말하기</span></div>
         </div>
       </details>
     </section>
@@ -900,7 +933,7 @@ body.compare-sheet-open{overflow:hidden}
 </div>
 
 <div id="dayAppPage" class="hidden">
-<div class="app"><header class="dayHeader"><button id="homeBtn" class="homeBtn" aria-label="홈으로">⌂</button><div class="dayHeaderTitle"><h1>Speaking Priority VOCA · Day 1</h1><div class="sub">회화 활용도 중심 30일 코스</div></div><div class="count"><span id="idx">1</span>/<span id="total">57</span></div></header><div class="progress"><div id="bar" class="bar"></div></div><div class="tabs fourTabs"><button class="tab active" data-v="learn">학습</button><button class="tab" data-v="quiz">퀴즈</button><button class="tab" data-v="forget">망각곡선</button><button class="tab" data-v="score">스코어</button></div><div class="toolbar" id="toolbar"><select id="orderMode" class="select" aria-label="학습 순서"><option value="book">📘 기본 순서</option><option value="quizWrongDesc" selected>❌ 퀴즈 오답 많은 순</option><option value="quizWeak">🎯 틀린 단어만</option><option value="favorite">⭐ 즐겨찾기</option><option value="wrongFav">🎯⭐ 틀린 단어 + 즐겨찾기</option><option value="quizRateAsc">📉 퀴즈 정답률 낮은 순</option><option value="quizRateDesc">📈 퀴즈 정답률 높은 순</option><option value="random">🔀 랜덤</option></select><select id="speechMode" class="select" aria-label="자동 읽기"><option value="off">🔇 자동 읽기 끄기</option><option value="word">🔤 단어 읽기 · 단어+뜻</option><option value="all">🎙 단어 + 예문 + 패러프레이즈</option><option value="full" selected>🔊 전체 읽기</option></select></div><div class="modeNote" id="modeNote"></div>
+<div class="app"><header class="dayHeader"><button id="homeBtn" class="homeBtn" aria-label="홈으로">⌂</button><div class="dayHeaderTitle"><h1>Speaking Priority VOCA · Day 1</h1><div class="sub">회화 활용도 중심 30일 코스</div></div><div class="count"><span id="idx">1</span>/<span id="total">57</span></div></header><div class="progress"><div id="bar" class="bar"></div></div><div class="tabs fourTabs"><button class="tab active" data-v="learn">학습</button><button class="tab" data-v="quiz">퀴즈</button><button class="tab" data-v="forget">망각곡선</button><button class="tab" data-v="score">스코어</button></div><div class="toolbar" id="toolbar"><select id="orderMode" class="select" aria-label="학습 순서"><option value="book">📘 기본 순서</option><option value="quizWrongDesc" selected>❌ 퀴즈 오답 많은 순</option><option value="quizWeak">🎯 틀린 단어만</option><option value="favorite">⭐ 모르는 단어</option><option value="wrongFav">🎯⭐ 틀린 단어 + 모르는 단어</option><option value="quizRateAsc">📉 퀴즈 정답률 낮은 순</option><option value="quizRateDesc">📈 퀴즈 정답률 높은 순</option><option value="random">🔀 랜덤</option></select><select id="speechMode" class="select" aria-label="자동 읽기"><option value="off">🔇 자동 읽기 끄기</option><option value="word">🔤 단어 읽기 · 단어+뜻</option><option value="all">🎙 단어 + 예문 + 패러프레이즈</option><option value="full" selected>🔊 전체 읽기</option></select></div><div class="modeNote" id="modeNote"></div>
 <section id="learn"><div id="autoPlayBadge" class="autoPlayBadge"></div><div class="card" id="card"><div class="hero" id="hero"><div class="heroTop"><span class="tag">DAY 1 · SPEAKING PRIORITY</span><button class="fav" id="fav">☆</button></div><div class="visualScene" id="visualScene">🎯</div><div class="heroCopy"><div class="memoryPhrase" id="memoryPhrase"></div><div class="memoryKo" id="memoryKo"></div></div><div class="flipHint">탭해서 카드 뒤집기</div></div><div class="body"><div class="row"><div><div class="word" id="word"></div><div class="pronunciation" id="pronunciation"></div></div><button class="speak" id="speakW">🔊</button></div><div class="meaning" id="meaning"></div><div class="metaLine"><div id="stars"></div><span class="streak" id="studyCountBadge">학습 0회</span><span class="streak" id="learnQuizCountBadge">퀴즈 오답 0회 / 시도 0회</span></div><div class="autoStatus" id="autoStatus">새 카드가 나오면 자동으로 읽어 줍니다.</div><div class="section"><div class="label">첫 번째 예문</div><div class="row"><div><div class="example" id="ex"></div><div class="trans" id="tr"></div></div><button class="speak" id="speakE">🔊</button></div></div><div class="section">
   <div class="label">🔄 패러프레이징 예문</div>
   <div id="synonymBadge" class="synonymBadge"></div>
@@ -956,7 +989,7 @@ body.compare-sheet-open{overflow:hidden}
   <button id="quizModeChoice" class="quizModeBtn active" type="button" role="tab" aria-selected="true">기존 객관식</button>
   <button id="quizModeRecall" class="quizModeBtn" type="button" role="tab" aria-selected="false">단어 말하기</button>
   <button id="quizModeSentence" class="quizModeBtn" type="button" role="tab" aria-selected="false">문장 말하기</button>
-  <button id="quizModeFavorite" class="quizModeBtn" type="button" role="tab" aria-selected="false">단어 선택</button>
+  <button id="quizModeFavorite" class="quizModeBtn" type="button" role="tab" aria-selected="false">모르는 단어 선택</button>
   <button id="quizModeLexical" class="quizModeBtn" type="button" role="tab" aria-selected="false">유의어·반의어</button>
 </div>
 <div class="quizFilterBar">
@@ -964,8 +997,8 @@ body.compare-sheet-open{overflow:hidden}
   <select id="quizFilterMode" class="quizFilterSelect" aria-label="퀴즈 대상 조건">
     <option value="all">전체 단어</option>
     <option value="wrong">틀린 단어만</option>
-    <option value="favorite">즐겨찾기</option>
-    <option value="wrongFav">틀린 단어 + 즐겨찾기</option>
+    <option value="favorite">모르는 단어</option>
+    <option value="wrongFav">틀린 단어 + 모르는 단어</option>
   </select>
   <span id="quizFilterCount" class="quizFilterCount">0개</span>
 </div>
@@ -1611,7 +1644,7 @@ function updateLearningFavoriteButton(){
   const b=document.getElementById('learnFavoriteControl');if(!b)return;
   const w=(deck&&deck.length&&typeof cur==='function')?cur():null;
   const on=!!(w&&favs.includes(w.word));
-  b.innerHTML=on?'★<br>즐겨찾기':'☆<br>즐겨찾기';
+  b.innerHTML=on?'★<br>모르는 단어':'☆<br>모르는 단어';
   b.classList.toggle('favoriteOn',on);
   b.setAttribute('aria-pressed',on?'true':'false');
 }
@@ -2174,8 +2207,8 @@ function applyQuizReviewResult(st,isCorrect){
 function quizRateFor(w){let st=stats[w.word]||{};let total=(st.quizCorrect||0)+(st.quizWrong||0);return total?(st.quizCorrect||0)/total:0}
 function shuffleDeck(items){const a=[...items];for(let n=a.length-1;n>0;n--){const j=Math.floor(Math.random()*(n+1));[a[n],a[j]]=[a[j],a[n]]}return a}
 function applyStudyOrder(items,mode){let d=[...items];if(mode==='miss')mode='quizWrongDesc';if(mode==='weak')mode='quizWeak';if(mode==='studyAsc')mode='quizRateAsc';if(mode==='studyDesc')mode='quizRateDesc';if(mode==='quizWrongDesc')d.sort((a,b)=>(stats[b.word].quizWrong||0)-(stats[a.word].quizWrong||0)||(stats[b.word].lastQuizWrong||0)-(stats[a.word].lastQuizWrong||0));if(mode==='quizWeak')d=d.filter(w=>(stats[w.word].quizWrong||0)>0).sort((a,b)=>(stats[b.word].quizWrong||0)-(stats[a.word].quizWrong||0));if(mode==='quizRateAsc')d.sort((a,b)=>quizRateFor(a)-quizRateFor(b)||(stats[b.word].quizWrong||0)-(stats[a.word].quizWrong||0));if(mode==='quizRateDesc')d.sort((a,b)=>quizRateFor(b)-quizRateFor(a)||(stats[b.word].quizCorrect||0)-(stats[a.word].quizCorrect||0));if(mode==='random')d=shuffleDeck(d);if(mode==='favorite')d=d.filter(w=>favs.includes(w.word));if(mode==='wrongFav')d=d.filter(w=>(stats[w.word]?.quizWrong||0)>0||favs.includes(w.word)).sort((a,b)=>(stats[b.word]?.quizWrong||0)-(stats[a.word]?.quizWrong||0)||(favs.includes(b.word)?1:0)-(favs.includes(a.word)?1:0));return d}
-function buildDeck(mode){__lastStudyCountedKey='';let d=applyStudyOrder(W,mode);if(mode==='quizWeak'&&!d.length){alert('현재 학습 범위에 퀴즈에서 틀린 단어가 없습니다.');return false;}if(mode==='favorite'&&!d.length){alert('현재 학습 범위에 즐겨찾기 단어가 없습니다.');return false;}if(mode==='wrongFav'&&!d.length){alert('현재 학습 범위에 틀린 단어 또는 즐겨찾기 단어가 없습니다.');return false;}deck=d;i=0;let names={book:'기본 순서',quizWrongDesc:'퀴즈 오답 많은 순',quizWeak:'틀린 단어만',favorite:'즐겨찾기',wrongFav:'틀린 단어 + 즐겨찾기',quizRateAsc:'퀴즈 정답률 낮은 순',quizRateDesc:'퀴즈 정답률 높은 순',random:'무작위 순서'};$('modeNote').textContent='현재 학습 모드: '+(names[mode]||names.book);render()}
-function finishLearning(){stopSpeech();$('bottom').classList.add('hidden');$('bar').style.width='100%';let total=deck.length,wrong=deck.filter(w=>(stats[w.word].quizWrong||0)>0).length;let names={book:'기본 순서',quizWrongDesc:'퀴즈 오답 많은 순',quizWeak:'틀린 단어만',favorite:'즐겨찾기',wrongFav:'틀린 단어 + 즐겨찾기',quizRateAsc:'퀴즈 정답률 낮은 순',quizRateDesc:'퀴즈 정답률 높은 순',random:'랜덤'};$('finishSummary').innerHTML=`${names[$('orderMode').value]||'현재'} 학습 ${total}개를 모두 끝냈습니다.<br>퀴즈 오답 기록이 있는 단어는 ${wrong}개입니다.`;$('finishOverlay').classList.remove('hidden')}$('prev').onclick=()=>{stopSpeech();AUTO.token++;if(i){i--;render()}};$('next').onclick=()=>{stopSpeech();AUTO.token++;if(i<deck.length-1){i++;render()}else{finishLearning()}};$('reset').onclick=()=>{if(confirm('학습·퀴즈·복습 기록을 모두 초기화할까요?')){known=[];favs=[];stats={};W.forEach(w=>stats[w.word]={miss:0,streak:0,lastMiss:0,lastSeen:0,quizWrong:0,quizCorrect:0,quizStreak:0,lastQuizWrong:0,studyCount:0,reviewStep:0,dueAt:0});save();buildDeck('book')}};$('speakW').onclick=()=>{stopSpeech();speakOne(cur().word)};$('speakE').onclick=()=>{stopSpeech();speakTwice(cur().example,.84)};
+function buildDeck(mode){__lastStudyCountedKey='';let d=applyStudyOrder(W,mode);if(mode==='quizWeak'&&!d.length){alert('현재 학습 범위에 퀴즈에서 틀린 단어가 없습니다.');return false;}if(mode==='favorite'&&!d.length){alert('현재 학습 범위에 모르는 단어 단어가 없습니다.');return false;}if(mode==='wrongFav'&&!d.length){alert('현재 학습 범위에 틀린 단어 또는 모르는 단어 단어가 없습니다.');return false;}deck=d;i=0;let names={book:'기본 순서',quizWrongDesc:'퀴즈 오답 많은 순',quizWeak:'틀린 단어만',favorite:'모르는 단어',wrongFav:'틀린 단어 + 모르는 단어',quizRateAsc:'퀴즈 정답률 낮은 순',quizRateDesc:'퀴즈 정답률 높은 순',random:'무작위 순서'};$('modeNote').textContent='현재 학습 모드: '+(names[mode]||names.book);render()}
+function finishLearning(){stopSpeech();$('bottom').classList.add('hidden');$('bar').style.width='100%';let total=deck.length,wrong=deck.filter(w=>(stats[w.word].quizWrong||0)>0).length;let names={book:'기본 순서',quizWrongDesc:'퀴즈 오답 많은 순',quizWeak:'틀린 단어만',favorite:'모르는 단어',wrongFav:'틀린 단어 + 모르는 단어',quizRateAsc:'퀴즈 정답률 낮은 순',quizRateDesc:'퀴즈 정답률 높은 순',random:'랜덤'};$('finishSummary').innerHTML=`${names[$('orderMode').value]||'현재'} 학습 ${total}개를 모두 끝냈습니다.<br>퀴즈 오답 기록이 있는 단어는 ${wrong}개입니다.`;$('finishOverlay').classList.remove('hidden')}$('prev').onclick=()=>{stopSpeech();AUTO.token++;if(i){i--;render()}};$('next').onclick=()=>{stopSpeech();AUTO.token++;if(i<deck.length-1){i++;render()}else{finishLearning()}};$('reset').onclick=()=>{if(confirm('학습·퀴즈·복습 기록을 모두 초기화할까요?')){known=[];favs=[];stats={};W.forEach(w=>stats[w.word]={miss:0,streak:0,lastMiss:0,lastSeen:0,quizWrong:0,quizCorrect:0,quizStreak:0,lastQuizWrong:0,studyCount:0,reviewStep:0,dueAt:0});save();buildDeck('book')}};$('speakW').onclick=()=>{stopSpeech();speakOne(cur().word)};$('speakE').onclick=()=>{stopSpeech();speakTwice(cur().example,.84)};
 $('speakQ').onclick=()=>{stopSpeech();speakTwice(cur().paraphrase||cur().example,.84)};$('speakPattern').onclick=()=>{stopSpeech();const w=cur();speakOne(w.pattern||w.used_pattern||w.collocation||w.phrase||'',.82)};$('speakPatternExamples').onclick=async()=>{stopSpeech();for(const x of patternExamplesOf(cur()))for(let n=0;n<settingInt('patternRepeat',1,1,3);n++)await speakComplete(x,getSpeechRate(),'en-US')};$('speakAllCollocations').onclick=async()=>{stopSpeech();const w=cur();const list=(w.collocations2&&w.collocations2.length?w.collocations2:(w.collocation?[w.collocation]:[])).map(x=>decodeHtmlEntities(String(x||''))).filter(Boolean);for(const x of list){for(let n=0;n<settingInt('collocationRepeat',1,1,3);n++)await speakComplete(x,getSpeechRate(),'en-US');await new Promise(r=>setTimeout(r,100));}};$('speakAllSynonyms').onclick=async()=>{stopSpeech();const w=cur();const list=[...fallbackSynonymsOf(w),...antonymsOf(w)].map(x=>x.en).filter(Boolean);for(const x of list){for(let n=0;n<settingInt('synonymRepeat',1,1,3);n++)await speakComplete(x,getSpeechRate(),'en-US');await new Promise(r=>setTimeout(r,100));}};document.addEventListener('click',e=>{const b=e.target.closest('.detailSpeakBtn');if(!b)return;e.preventDefault();e.stopPropagation();const text=decodeURIComponent(b.dataset.speak||'');if(!text)return;stopSpeech();speakComplete(text,.84,'en-US')});$('fav').onclick=(e)=>{e.preventDefault();e.stopPropagation();toggleCurrentFavorite()};$('fav').addEventListener('touchend',(e)=>{e.stopPropagation()});$('hero').onclick=e=>{if(e.target.closest('#fav'))return;$('hero').classList.toggle('flipped')};
 
 
@@ -2488,7 +2521,7 @@ $('startLearning').onclick=()=>{
   AUTO.active=false;
   AUTO.token++;
   forceReleaseWakeLock();forceReleaseWakeLock();initTTS();unlockTTSFromGesture();hasStarted=true;$('startOverlay').classList.add('hidden');$('bottom').classList.remove('hidden');buildDeck($('orderMode').value)};$('restartLearning').onclick=()=>{stopSpeech();$('finishOverlay').classList.add('hidden');if(AUTO.selectedDays&&AUTO.selectedDays.length){document.querySelectorAll('.daySelectCheck').forEach(x=>x.checked=AUTO.selectedDays.includes(Number(x.dataset.checkDay)));startSelectedAutoLearning()}else{$('bottom').classList.remove('hidden');buildDeck($('orderMode').value)}};
-let quizMode='choice'; // choice: 객관식, recall: 단어 말하기, sentence: 문장 말하기, favorite: DAY 단어 선택, lexical: 유의어·반의어
+let quizMode='choice'; // choice: 객관식, recall: 단어 말하기, sentence: 문장 말하기, favorite: DAY 모르는 단어 선택, lexical: 유의어·반의어
 let quizFilterMode=localStorage.getItem(packKey('quizFilterMode'))||'all'; // all | wrong | favorite | wrongFav
 let sentenceRecallTimer=null;
 let sentenceRecallStage=0;
@@ -2562,7 +2595,7 @@ let quizSelectedDay=1;
 let quizAllWrongMode=false;
 
 function quizFilterLabel(){
-  return ({all:'전체 단어',wrong:'틀린 단어만',favorite:'즐겨찾기',wrongFav:'틀린 단어 + 즐겨찾기'})[quizFilterMode]||'전체 단어';
+  return ({all:'전체 단어',wrong:'틀린 단어만',favorite:'모르는 단어',wrongFav:'틀린 단어 + 모르는 단어'})[quizFilterMode]||'전체 단어';
 }
 function applyQuizFilter(items){
   const source=[...items];
@@ -2590,7 +2623,7 @@ function updateQuizDayNav(){
   if(!btn||!label)return;
   btn.classList.toggle('active',quizAllWrongMode);
   btn.disabled=quizMode==='favorite';
-  btn.textContent=quizMode==='favorite'?'⭐ DAY 단어 선택':(quizAllWrongMode?'↩ 현재 Day로 돌아가기':'🔥 전체 Day 오답');
+  btn.textContent=quizMode==='favorite'?'⭐ DAY 모르는 단어 선택':(quizAllWrongMode?'↩ 현재 Day로 돌아가기':'🔥 전체 Day 오답');
 
   if(quizAllWrongMode){
     const wrongCount=ALL_WORDS.filter(w=>(stats[w.word]?.quizWrong||0)>0).length;
@@ -2757,7 +2790,7 @@ function setQuizMode(mode){
   $('recallGuide').classList.toggle('hidden',quizMode==='choice');
   if(quizMode==='recall')$('recallGuide').textContent='문제를 보고 답을 소리 내어 말한 뒤 정답을 확인하세요. 맞았어요/오답 기록은 기존 객관식 카운터와 공유됩니다.';
   if(quizMode==='sentence')$('recallGuide').textContent='문장 말하기는 현재 Day의 등록 순서대로 진행됩니다. 한글 뜻을 보고 3초 동안 떠올린 뒤, 전체 문장 반복 듣기 → 패턴·단어 빈칸 말하기 → 문장 전체 말하기 순서로 연습합니다.';
-  if(quizMode==='favorite')$('recallGuide').textContent='DAY 전체 단어를 먼저 훑어보고 모르는 단어를 체크하세요. 체크한 단어는 학습 화면의 즐겨찾기와 즉시 연동됩니다.';
+  if(quizMode==='favorite')$('recallGuide').textContent='DAY 전체 단어를 먼저 훑어보고 모르는 단어를 체크하세요. 체크한 단어는 학습 화면의 모르는 단어와 즉시 연동됩니다.';
   if(quizMode==='lexical')$('recallGuide').textContent='유의어 뜻 맞추기·같은 뜻 찾기·패러프레이징에 사용된 유의어 찾기·반의어 찾기를 섞어서 연습합니다. 등록된 데이터가 있는 문제만 출제됩니다.';
   $('quizDirection').disabled=quizMode==='sentence'||quizMode==='favorite'||quizMode==='lexical';
   updateQuizPlaybackButton();
@@ -3191,7 +3224,7 @@ function renderFavoriteSelector(){
     const on=favs.includes(w.word);
     return `<label class="favoriteWordRow ${on?'selected':''}" data-fav-index="${idx}"><input class="favoriteWordCheck" type="checkbox" ${on?'checked':''}><span class="favoriteWordMain"><b>${escHtml(w.word)}</b><span>${escHtml(w.meaning||'')}</span></span><span class="favoriteWordStar">${on?'★':'☆'}</span></label>`;
   }).join('');
-  $('opts').innerHTML=`<div class="favoritePickerSummary"><span>즐겨찾기 선택</span><span id="favoritePickerCount">${selected}/${favoriteSelectorWords.length}</span></div><div class="favoritePickerToolbar"><button id="favoriteSelectAll" type="button">전체 선택</button><button id="favoriteClearAll" type="button">전체 해제</button><button id="favoriteSelectUnlearned" type="button">미학습만 선택</button></div><div class="favoriteWordList">${rows}</div><button id="favoritePickerDone" class="favoritePickerDone" type="button">선택 완료 · 홈으로</button>`;
+  $('opts').innerHTML=`<div class="favoritePickerSummary"><span>모르는 모르는 단어 선택</span><span id="favoritePickerCount">${selected}/${favoriteSelectorWords.length}</span></div><div class="favoritePickerToolbar"><button id="favoriteSelectAll" type="button">전체 선택</button><button id="favoriteClearAll" type="button">전체 해제</button><button id="favoriteSelectUnlearned" type="button">미학습만 선택</button></div><div class="favoriteWordList">${rows}</div><button id="favoritePickerDone" class="favoritePickerDone" type="button">${unknownSelectorReturnDay?'선택 완료 · 학습 시작':'선택 완료 · 홈으로'}</button>`;
   const refresh=()=>{
     const count=favoriteSelectorWords.filter(w=>favs.includes(w.word)).length;
     const c=$('favoritePickerCount');if(c)c.textContent=`${count}/${favoriteSelectorWords.length}`;
@@ -3204,7 +3237,21 @@ function renderFavoriteSelector(){
   $('favoriteSelectAll').onclick=()=>{favoriteSelectorWords.forEach(w=>setFavoriteWord(w.word,true));renderFavoriteSelector();};
   $('favoriteClearAll').onclick=()=>{favoriteSelectorWords.forEach(w=>setFavoriteWord(w.word,false));renderFavoriteSelector();};
   $('favoriteSelectUnlearned').onclick=()=>{favoriteSelectorWords.forEach(w=>setFavoriteWord(w.word,(stats[w.word]?.studyCount||0)===0));renderFavoriteSelector();};
-  $('favoritePickerDone').onclick=()=>{save();syncFavoriteSelectorHome();goHome();};
+  $('favoritePickerDone').onclick=()=>{
+    save();syncFavoriteSelectorHome();
+    if(unknownSelectorReturnDay){
+      const targetDay=Number(unknownSelectorReturnDay);
+      const selectedCount=unknownWordCountForDay(targetDay);
+      if(selectedCount<1){
+        alert('모르는 단어 또는 복습할 단어를 최소 1개 선택해 주세요.');
+        return;
+      }
+      unknownSelectorReturnDay=null;
+      openDay(targetDay,'learn');
+      return;
+    }
+    goHome();
+  };
 }
 
 function lexicalAllItems(kind='synonym'){
@@ -3665,6 +3712,49 @@ function currentLearningDayForHome(){
   if(!$('dayAppPage')?.classList.contains('hidden')&&cur())return Number(cur().newDay||currentDay||0);
   return 0;
 }
+
+let pendingUnknownWordDay=null;
+let unknownSelectorReturnDay=null;
+
+function unknownWordCountForDay(day){
+  const dayWords=ALL_WORDS.filter(w=>Number(w.newDay)===Number(day));
+  return dayWords.filter(w=>favs.includes(w.word)).length;
+}
+function closeUnknownWordGuide(){
+  const overlay=document.getElementById('unknownWordGuideOverlay');
+  if(overlay)overlay.classList.add('hidden');
+}
+function showUnknownWordGuide(day){
+  pendingUnknownWordDay=Number(day);
+  const label=document.getElementById('unknownWordGuideDay');
+  if(label)label.textContent=`${dayDisplayLabel(pendingUnknownWordDay)} · 모르는 단어 0개`;
+  const overlay=document.getElementById('unknownWordGuideOverlay');
+  if(overlay)overlay.classList.remove('hidden');
+}
+function requestDayLearning(day){
+  day=Number(day);
+  if(unknownWordCountForDay(day)===0){
+    showUnknownWordGuide(day);
+    return;
+  }
+  openDay(day,'learn');
+}
+function openUnknownWordSelectorFromGuide(){
+  const day=Number(pendingUnknownWordDay||1);
+  pendingUnknownWordDay=null;
+  closeUnknownWordGuide();
+  unknownSelectorReturnDay=day;
+  openDay(day,'quiz');
+  if(typeof setQuizMode==='function')setQuizMode('favorite');
+  if(typeof renderFavoriteSelector==='function')renderFavoriteSelector();
+}
+function skipUnknownWordGuideAndLearn(){
+  const day=Number(pendingUnknownWordDay||1);
+  pendingUnknownWordDay=null;
+  closeUnknownWordGuide();
+  openDay(day,'learn');
+}
+
 function renderDayGrid(){
   const saved=JSON.parse(localStorage.getItem(selectedDaysKey())||'[]');
   const activeLearningDay=currentLearningDayForHome();
@@ -3674,11 +3764,11 @@ function renderDayGrid(){
       <div class="dayCardTop"><span>${dayDisplayLabel(d,true)}</span>${isCurrent?'<span class="dayCurrentDot" title="현재 학습 중"></span>':''}<span class="dayStatus">${p.learned===0?'미학습':p.learned===p.total?'완료':'학습 중'}</span><span class="dayCardCheckWrap"><input class="daySelectCheck" type="checkbox" data-check-day="${d}" ${checked?'checked':''} aria-label="${dayDisplayLabel(d)} 선택"></span></div>
       <div style="font-size:14px;font-weight:950;margin-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${m.theme}</div>
       <div class="dayProgress"><div style="width:${p.pct}%"></div></div>
-      <div class="dayCompactMeta"><span>📖 ${p.learned}/${p.total}</span><span>❌ ${p.wrongWords}</span><span>★ ${p.favoriteCount}</span></div>
+      <div class="dayCompactMeta"><span>📖 ${p.learned}/${p.total}</span><span>❌ ${p.wrongWords}</span><span>⭐ ${p.favoriteCount} 모름</span></div>
       <div class="dayCardBottom"><span>${p.pct}%</span><span>학습 ${p.studyTotal}회</span><span>복습 ${p.due}</span></div>
     </div>`;
   }).join('');
-  document.querySelectorAll('#dayGrid [data-day]').forEach(card=>card.onclick=e=>{if(e.target.closest('.daySelectCheck'))return;openDay(Number(card.dataset.day),'learn')});
+  document.querySelectorAll('#dayGrid [data-day]').forEach(card=>card.onclick=e=>{if(e.target.closest('.daySelectCheck'))return;requestDayLearning(Number(card.dataset.day))});
   document.querySelectorAll('.daySelectCheck').forEach(ch=>ch.onchange=()=>{
     const days=[...document.querySelectorAll('.daySelectCheck:checked')].map(x=>Number(x.dataset.checkDay)).sort((a,b)=>a-b);
     localStorage.setItem(selectedDaysKey(),JSON.stringify(days));
@@ -3728,10 +3818,10 @@ function startSelectedAutoLearning(){
     alert('선택한 Day에 틀린 단어가 없습니다.');stopRepeatWakeSession();return;
   }
   if(!allEligible.length&&studyMode==='favorite'){
-    alert('선택한 Day에 즐겨찾기 단어가 없습니다.');stopRepeatWakeSession();return;
+    alert('선택한 Day에 모르는 단어 단어가 없습니다.');stopRepeatWakeSession();return;
   }
   if(!allEligible.length&&studyMode==='wrongFav'){
-    alert('선택한 Day에 틀린 단어 또는 즐겨찾기 단어가 없습니다.');stopRepeatWakeSession();return;
+    alert('선택한 Day에 틀린 단어 또는 모르는 단어 단어가 없습니다.');stopRepeatWakeSession();return;
   }
 
   const previous=readSelectedProgress();
@@ -3744,7 +3834,7 @@ function startSelectedAutoLearning(){
   AUTO.selectedDays=days;AUTO.repeats=repeats;AUTO.pass=resumed?Math.min(repeats,resumed.pass):1;AUTO.token++;
   currentDay=resumed?Number(selectedWords[resumed.index]?.newDay||days[0]):days[0];W=selectedWords;deck=[...W];i=resumed?resumed.index:0;
   const dayLabel=days.length<=6?days.map(d=>dayDisplayLabel(d,true)).join(', '):`${days.length}개 Day`;
-  const modeLabel=studyMode==='wrong'?'틀린 단어만':studyMode==='favorite'?'즐겨찾기':studyMode==='wrongFav'?'틀린 단어 + 즐겨찾기':'전체 반복';
+  const modeLabel=studyMode==='wrong'?'틀린 단어만':studyMode==='favorite'?'모르는 단어':studyMode==='wrongFav'?'틀린 단어 + 모르는 단어':'전체 반복';
   document.querySelector('.dayHeaderTitle h1').textContent=`${currentCfg().short} · ${modeLabel}`;
   document.querySelector('.dayHeaderTitle .sub').textContent=`${dayLabel} · ${W.length} Cards · ${repeats}회 반복`;
   learningPlaybackPaused=false;updateLearningPlaybackButton();hasStarted=true;save();initTTS();unlockTTSFromGesture();
@@ -3752,7 +3842,7 @@ function startSelectedAutoLearning(){
   document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.v==='learn'));
   ['learn','quiz','score','forget'].forEach(v=>$(v).classList.toggle('hidden',v!=='learn'));
   $('toolbar').classList.add('hidden');$('modeNote').classList.remove('hidden');$('bottom').classList.remove('hidden');updateLearningPlaybackButton();
-  const orderNames={book:'기본 순서',quizWrongDesc:'오답 많은 순',quizWeak:'틀린 단어만',favorite:'즐겨찾기',wrongFav:'틀린 단어 + 즐겨찾기',quizRateAsc:'정답률 낮은 순',quizRateDesc:'정답률 높은 순',random:'랜덤'};
+  const orderNames={book:'기본 순서',quizWrongDesc:'오답 많은 순',quizWeak:'틀린 단어만',favorite:'모르는 단어',wrongFav:'틀린 단어 + 모르는 단어',quizRateAsc:'정답률 낮은 순',quizRateDesc:'정답률 높은 순',random:'랜덤'};
   $('modeNote').textContent=`자동 학습 중: ${dayLabel} · ${modeLabel} · ${orderNames[selectedOrder]||'기본 순서'} · ${repeats}회${resumed?' · 저장 위치에서 이어하기':''}`;saveSelectedProgress();
   render(true);
   // 화면 전환과 첫 렌더가 끝난 뒤 잠금을 다시 확인한다.
@@ -3832,6 +3922,12 @@ function goHome(){if(currentCardRepeatActive)stopCurrentCardRepeatImmediately();
   window.scrollTo({top:0,behavior:'auto'});
 }
 $('homeBtn').onclick=goHome;
+
+const unknownWordGuideSelect=document.getElementById('unknownWordGuideSelect');
+if(unknownWordGuideSelect)unknownWordGuideSelect.onclick=openUnknownWordSelectorFromGuide;
+const unknownWordGuideSkip=document.getElementById('unknownWordGuideSkip');
+if(unknownWordGuideSkip)unknownWordGuideSkip.onclick=skipUnknownWordGuideAndLearn;
+
 appSettings=loadAppSettings();syncContinuousStudyRepeatControl();
 const autoRepeatSelect=document.getElementById('autoRepeat');
 if(autoRepeatSelect)autoRepeatSelect.onchange=()=>{
@@ -3914,8 +4010,8 @@ function refreshUsageRecommendation(){
   for(let d=1;d<=currentCfg().days;d++){const p=dayProgress(d);if(p.learned<p.total){nextDay=d;break}}
   const items=[];
   if(due>0)items.push(`망각곡선에서 오늘 복습할 단어 ${due}개를 먼저 확인하세요.`);
-  if(weak>0||favoriteCount>0)items.push(`홈에서 ‘틀린 단어 + 즐겨찾기’를 선택해 오답 ${weak}개와 즐겨찾기 ${favoriteCount}개를 집중 반복하세요.`);
-  items.push(`DAY ${nextDay}의 ‘단어 선택’에서 전체 목록을 보고 모르는 단어를 먼저 체크하세요.`);
+  if(weak>0||favoriteCount>0)items.push(`홈에서 ‘틀린 단어 + 모르는 단어’를 선택해 오답 ${weak}개와 모르는 단어 ${favoriteCount}개를 집중 반복하세요.`);
+  items.push(`DAY ${nextDay}의 ‘모르는 단어 선택’에서 전체 목록을 보고 모르는 단어를 먼저 체크하세요.`);
   items.push('마지막으로 단어 말하기 또는 문장 말하기를 10분 정도 진행하세요.');
   title.textContent=due>0?'오늘은 복습부터 시작하세요':(weak>0||favoriteCount>0?'취약 단어를 집중 학습하세요':`DAY ${nextDay} 새 학습을 시작하세요`);
   list.innerHTML=items.map(x=>`<li>${x}</li>`).join('');
@@ -4090,7 +4186,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
     if(action==='forget'){openDay(currentDay||1,'forget');return}
     if(action==='config'){openConfiguration();return}
     if(action==='whatsnew'){openConfiguration();setTimeout(()=>document.querySelector('.configSection')?.scrollIntoView({behavior:'smooth',block:'start'}),120);return}
-    if(action==='info'){alert('MY VOCA v5.3.17\nDrawer 집중 학습과 DAY·퀴즈 콤보박스의 학습 조건을 동기화했습니다.');return}
+    if(action==='info'){alert('MY VOCA v5.3.18\nDrawer 집중 학습과 DAY·퀴즈 콤보박스의 학습 조건을 동기화했습니다.');return}
     if(action==='continue'){
       const p=readSelectedProgress();
       if(p&&Array.isArray(p.days)&&p.days.length){
@@ -4106,7 +4202,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
 
 
 
-// MY VOCA v5.3.17 Drawer Quiz Menu
+// MY VOCA v5.3.18 Drawer Quiz Menu
 (function initCompareCenter(){
   const page=document.getElementById('comparePage');
   const input=document.getElementById('compareSearchInput');
