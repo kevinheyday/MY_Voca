@@ -1,4 +1,4 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><!-- MY VOCA V5.3.59 SINGLE FILE: responsive quiz navigation -->
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><!-- MY VOCA V5.3.61 SINGLE FILE: responsive quiz navigation -->
 <title>MY VOCA v5.3.18 · Wake Lock Fix</title>
 <style>
 
@@ -729,7 +729,7 @@ body.compare-sheet-open{overflow:hidden}
 .unknownWordGuideSecondary{border:1px solid #d0d5dd;background:#fff;color:#475467;margin-top:8px}
 @media(max-width:480px){.unknownWordGuideOverlay{padding:14px}.unknownWordGuideCard{border-radius:22px;padding:20px 16px}.unknownWordGuideCard h2{font-size:21px}.unknownWordGuideMessage{font-size:13px}}
 
-/* v5.3.59 ACTUAL INLINE practical-reading UI */
+/* v5.3.61 ACTUAL INLINE practical-reading UI */
 .practiceStoryList{display:flex !important;flex-direction:column !important;gap:7px !important}
 .practiceStoryItem{
   position:relative !important;display:grid !important;grid-template-columns:minmax(0,1fr) 46px !important;
@@ -795,7 +795,7 @@ body.compare-sheet-open{overflow:hidden}
   .readingCompactPattern{grid-template-columns:minmax(108px,1.06fr) minmax(94px,.94fr) !important;font-size:8.9px !important}
 }
 
-/* v5.3.59 remove ONLY outer legacy speakers; keep card speaker */
+/* v5.3.61 remove ONLY outer legacy speakers; keep card speaker */
 body.practiceReadingMode #speakW,
 body.practiceReadingMode #speakE,
 body.practiceReadingMode #speakQ,
@@ -830,7 +830,7 @@ body.practiceReadingMode .practiceCardCopy{
   width:100% !important;
 }
 
-/* v5.3.59 vertical reading summary + hide legacy details */
+/* v5.3.61 vertical reading summary + hide legacy details */
 body.practiceReadingMode .readingReferenceColumns{
   display:flex !important;
   flex-direction:column !important;
@@ -870,18 +870,29 @@ body.practiceReadingMode #morePanel{
   display:none !important;
 }
 
-/* v5.3.59 Study Time Dashboard */
+/* v5.3.61 Study Time Dashboard */
 .studyTimeDashboard{margin-bottom:18px}.studyTimeHead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;background:linear-gradient(135deg,#f7f5ff,#eef2ff);border:1px solid #ddd6fe;border-radius:22px 22px 0 0;padding:18px 18px 8px}.studyTimeTitle{font-size:21px;font-weight:950;color:#4f46e5}.studyTimeSub{font-size:12px;color:#667085;font-weight:750;margin-top:4px}.studyTimeGuideBtn{border:1px solid #d0d5dd;background:#fff;border-radius:10px;padding:8px 10px;font-weight:850;color:#475467;white-space:nowrap}.studyTimeSummary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;background:linear-gradient(135deg,#f7f5ff,#eef2ff);border:1px solid #ddd6fe;border-top:0;border-radius:0 0 22px 22px;padding:10px 16px 18px}.studySummaryCard{background:rgba(255,255,255,.68);border:1px solid rgba(221,214,254,.8);border-radius:16px;padding:14px 8px;text-align:center}.studySummaryCard span{display:block;font-size:12px;color:#475467;font-weight:850}.studySummaryCard b{display:block;font-size:25px;color:#101828;margin:7px 0 5px}.studySummaryCard small{font-size:11px;color:#667085;font-weight:750}.studyChartCard,.studyCategoryCard{margin-top:14px;background:#fff;border:1px solid #e5e7eb;border-radius:22px;padding:17px;box-shadow:0 6px 18px rgba(15,23,42,.035)}.studyChartTop{display:flex;justify-content:space-between;gap:12px;align-items:center}.studyChartTop>div:first-child{display:flex;flex-direction:column;gap:3px}.studyChartTop b{font-size:17px}.studyChartTop span{font-size:12px;color:#667085;font-weight:800}.studyRangeSwitch{display:flex;border:1px solid #d0d5dd;border-radius:11px;overflow:hidden}.studyRangeSwitch button{border:0;background:#fff;padding:9px 13px;font-weight:900;color:#475467}.studyRangeSwitch button.active{background:#5b43df;color:#fff}.studyBarChart{height:210px;display:flex;align-items:flex-end;gap:7px;padding:22px 2px 4px;border-bottom:1px solid #e5e7eb;margin-top:8px;overflow-x:auto}.studyBarCol{height:100%;min-width:34px;flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}.studyBarValue{font-size:10px;font-weight:900;color:#344054;margin-bottom:4px}.studyBar{width:min(28px,72%);min-height:2px;border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,#7c5ce6,#5141d8)}.studyBarCol.today .studyBar{background:linear-gradient(180deg,#a99cf3,#7667e8)}.studyBarLabel{font-size:10px;color:#667085;font-weight:800;margin-top:6px;white-space:nowrap}.studyBarCol.today .studyBarLabel{color:#4f46e5}.studyCategoryTitle{display:flex;justify-content:space-between;gap:10px;align-items:center}.studyCategoryTitle b{font-size:17px}.studyCategoryTitle span{font-size:12px;color:#667085;font-weight:800}.studyCategoryBody{display:grid;grid-template-columns:130px 1fr;gap:18px;align-items:center;margin-top:15px}.studyDonut{width:120px;height:120px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#e5e7eb 0 100%);position:relative}.studyDonut:after{content:'';position:absolute;width:72px;height:72px;border-radius:50%;background:#fff}.studyDonut>div{z-index:1;text-align:center;display:flex;flex-direction:column}.studyDonut span{font-size:10px;color:#667085;font-weight:800}.studyDonut b{font-size:15px;color:#101828}.studyCategoryLegend{display:flex;flex-direction:column}.studyCategoryLegend>div{display:grid;grid-template-columns:12px 1fr auto;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid #eef2f7}.studyCategoryLegend>div:last-child{border-bottom:0}.studyCategoryLegend span{font-size:12px;font-weight:800;color:#475467}.studyCategoryLegend b{font-size:12px;color:#101828}.catDot{width:10px;height:10px;border-radius:50%}.catDot.word{background:#6d4ce8}.catDot.reading{background:#4b88e8}.catDot.quiz{background:#61c781}.studyTimeNotice{margin-top:12px;font-size:11px;line-height:1.55;color:#667085;padding:0 6px}@media(max-width:520px){.studyTimeHead{padding:15px 13px 6px}.studyTimeSummary{padding:9px 11px 14px;gap:6px}.studySummaryCard{padding:12px 4px}.studySummaryCard b{font-size:20px}.studySummaryCard small{font-size:9px}.studyChartCard,.studyCategoryCard{padding:14px}.studyBarChart{height:185px;gap:4px}.studyBarCol{min-width:29px}.studyCategoryBody{grid-template-columns:100px 1fr;gap:10px}.studyDonut{width:96px;height:96px}.studyDonut:after{width:58px;height:58px}.studyCategoryLegend span,.studyCategoryLegend b{font-size:10px}}
 
-/* v5.3.59 Day Loop Training */
+/* v5.3.61 Day Loop Training */
 .dayLoopWrap{margin-top:16px;text-align:left}.dayLoopHero{padding:16px;border:1px solid #d8d3ff;border-radius:18px;background:linear-gradient(135deg,#f7f5ff,#eef2ff)}
 .dayLoopHeroTop{display:flex;justify-content:space-between;align-items:center;gap:10px}.dayLoopTitle{font-size:20px;font-weight:950;color:#4338ca}.dayLoopSub{margin-top:5px;font-size:12px;line-height:1.5;color:#667085;font-weight:750}
 .dayLoopToggle{border:0;border-radius:12px;padding:11px 13px;font-weight:950;background:#e5e7eb;color:#344054;white-space:nowrap}.dayLoopToggle.active{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff}
 .dayLoopStatus{margin-top:10px;font-size:12px;font-weight:850;color:#5b4bd8}.dayLoopList{display:flex;flex-direction:column;gap:10px;margin-top:12px}
 .dayLoopCard{border:1px solid #e5e7eb;border-radius:16px;background:#fff;padding:14px;transition:.18s ease}.dayLoopCard.active{border:2px solid #7667e8;background:#faf9ff;box-shadow:0 6px 18px rgba(79,70,229,.12)}
-.dayLoopNo{font-size:11px;font-weight:900;color:#98a2b3;margin-bottom:7px}.dayLoopSentence{font-size:17px;line-height:1.65;font-weight:800;color:#1f2937}.dayLoopKo{font-size:12px;line-height:1.5;color:#667085;margin-top:8px}
+.dayLoopNo{margin-bottom:8px}
+.dayLoopSentenceBtn{display:inline-flex;align-items:center;gap:7px;border:1px solid #d0d5dd;background:#f8fafc;color:#475467;border-radius:999px;padding:7px 11px;font-size:11px;font-weight:950;cursor:pointer;transition:.16s ease}
+.dayLoopSentenceBtn .infinityIcon{font-size:16px;line-height:1;color:#6366f1}
+.dayLoopSentenceBtn.focused{border-color:#6366f1;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;box-shadow:0 5px 14px rgba(79,70,229,.18)}
+.dayLoopSentenceBtn.focused .infinityIcon{color:#fff}
+.dayLoopCard.focused{border:2px solid #7c3aed;background:#f7f5ff;box-shadow:0 8px 22px rgba(124,58,237,.13)}
+.dayLoopFocusHint{font-size:10px;font-weight:850;color:#7c3aed;margin-left:7px}.dayLoopSentence{font-size:17px;line-height:1.65;font-weight:800;color:#1f2937}.dayLoopKo{font-size:12px;line-height:1.5;color:#667085;margin-top:8px}
 .dayLoopFooter{display:flex;gap:8px;margin-top:12px}.dayLoopFooter button{flex:1;border:1px solid #d0d5dd;background:#fff;border-radius:12px;padding:11px 8px;font-weight:900;color:#475467}
 @media(max-width:520px){.dayLoopHeroTop{align-items:flex-start}.dayLoopTitle{font-size:18px}.dayLoopSentence{font-size:15px}.dayLoopToggle{font-size:12px;padding:10px}}
+
+.dayLoopCardTop{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:8px}
+.dayLoopViewBtn{border:1px solid #d0d5dd;background:#fff;color:#475467;border-radius:999px;padding:7px 10px;font-size:11px;font-weight:900;white-space:nowrap}
+.dayLoopViewBtn.active{border-color:#94a3b8;background:#f8fafc;color:#334155}
+@media(max-width:520px){.dayLoopCardTop{gap:6px}.dayLoopViewBtn{font-size:10px;padding:7px 9px}}
 </style>
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
@@ -929,7 +940,7 @@ body.practiceReadingMode #morePanel{
     <button class="drawerItem" data-drawer-action="config"><span class="drawerIcon">⚙️</span><span class="drawerItemText">Config<small>음성·반복·퀴즈 설정</small></span></button>
     <button class="drawerItem" data-drawer-action="usage"><span class="drawerIcon">📘</span><span class="drawerItemText">사용 방법<small>MY VOCA 학습 방법과 기능 안내</small></span></button>
     <button class="drawerItem" data-drawer-action="whatsnew"><span class="drawerIcon">🆕</span><span class="drawerItemText">업데이트 내역<small>이번 버전 변경 사항</small></span></button>
-    <button class="drawerItem" data-drawer-action="info"><span class="drawerIcon">ℹ️</span><span class="drawerItemText">앱 정보<small>MY VOCA v5.3.59</small></span></button>
+    <button class="drawerItem" data-drawer-action="info"><span class="drawerIcon">ℹ️</span><span class="drawerItemText">앱 정보<small>MY VOCA v5.3.61</small></span></button>
   </nav>
 </aside>
 
@@ -939,7 +950,7 @@ body.practiceReadingMode #morePanel{
       <div>
         <div class="homeEyebrow" id="homeCourseEyebrow">MY VOCA UNIFIED COURSE · 69 DAYS</div>
         <h1 id="homeCourseTitle">MY VOCA</h1>
-        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.59 · MINIMAL PRACTICE</div>
+        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.61 · MINIMAL PRACTICE</div>
       </div>
       <div class="homeDayBadge"><b id="homeRegisteredDays">30</b><span>등록 Day</span></div>
     </section>
@@ -1072,7 +1083,7 @@ body.practiceReadingMode #morePanel{
     <section class="configSection">
       <div class="configSectionTitle">🎤 문장 말하기 설정</div>
       <div class="configRow"><div class="configCopy"><b>영어 문장 공개 전 대기</b><span>한글 뜻을 보고 문장을 떠올리는 시간</span></div><select id="cfgRecallDelay" class="configSelect"><option value="1">1초</option><option value="2">2초</option><option value="3">3초</option><option value="4">4초</option><option value="5">5초</option><option value="7">7초</option><option value="10">10초</option></select></div>
-      <div class="configRow"><div class="configCopy"><b>한 주기 문장 반복 횟수</b><span>1단계에서 쉬기 전 연속으로 읽는 횟수</span></div><select id="cfgSentenceRepeat" class="configSelect"><option value="1">1회</option><option value="2">2회</option><option value="3">3회</option><option value="4">4회</option><option value="5">5회</option></select></div>
+      <div class="configRow"><div class="configCopy"><b>한 주기 문장 반복 횟수</b><span>1단계에서 쉬기 전 연속으로 읽는 횟수</span></div><select id="cfgSentenceRepeat" class="configSelect"><option value="1">1회</option><option value="2">2회</option><option value="3">3회</option><option value="4">4회</option><option value="5">5회</option></select></div><div class="configRow"><div class="configCopy"><b>Day Loop 문장당 반복 횟수</b><span>전체 Loop에서 한 문장을 연속으로 읽고 다음 문장으로 넘어가는 횟수</span></div><select id="cfgDayLoopSentenceRepeat" class="configSelect"><option value="1">1회</option><option value="2">2회</option><option value="3">3회</option><option value="5">5회</option></select></div>
       <div class="configRow"><div class="configCopy"><b>2단계 전까지 계속 반복</b><span>끄면 설정한 횟수만 읽고 멈춥니다.</span></div><input id="cfgSentenceContinuous" class="configCheck" type="checkbox"></div>
       <div class="configRow"><div class="configCopy"><b>반복 주기 사이 쉼</b><span>한 주기 종료 후 다시 읽기 전 대기시간</span></div><select id="cfgSentencePause" class="configSelect"><option value="300">0.3초</option><option value="500">0.5초</option><option value="700">0.7초</option><option value="1000">1.0초</option><option value="1500">1.5초</option><option value="2000">2.0초</option></select></div>
     </section>
@@ -2024,7 +2035,7 @@ const usedPattern=String(w.pattern||w.used_pattern||w.collocation||w.phrase||'')
 $('fav').textContent=favs.includes(w.word)?'★':'☆';$('fav').classList.toggle('is-favorite',favs.includes(w.word));updateLearningFavoriteButton();recordStudyView(w);if(AUTO.active)saveSelectedProgress();let st=stats[w.word];$('studyCountBadge').textContent='학습 '+(st.studyCount||0)+'회';let quizAttempts=(st.quizCorrect||0)+(st.quizWrong||0);$('learnQuizCountBadge').textContent='퀴즈 오답 '+(st.quizWrong||0)+'회 / 시도 '+quizAttempts+'회';let v=V[w.word]||{icon:'💬',phrase:w.collocation,ko:w.meaning,bg:'linear-gradient(135deg,#0891b2,#1d4ed8)'};$('visualScene').textContent=v.icon;$('memoryPhrase').textContent=v.phrase;$('memoryKo').textContent=v.ko;$('hero').style.background=v.bg;$('hero').classList.remove('flipped');st.lastSeen=Date.now();save();if(autoSpeak&&hasStarted&&!learningPlaybackPaused){updateAutoBadge();const scheduledKey=cardKey(w);requestAnimationFrame(()=>requestAnimationFrame(()=>{if(thisRender!==__renderVersion||cardKey(cur())!==scheduledKey)return;if(AUTO.active)autoReadAndAdvance(cur(),thisRender);else autoRead(cur(),thisRender)}))}}
 // Robust Web Speech API wrapper (Android Chrome / WebView friendly)
 const APP_SETTINGS_KEY='myVocaConfigurationV1';
-const APP_SETTINGS_DEFAULTS={speechRate:1.1,exampleRepeat:2,patternRepeat:1,collocationRepeat:1,synonymRepeat:1,recallDelay:3,sentenceRepeat:2,sentenceContinuous:true,sentencePause:700,wordReadRepeat:3,continuousStudyRepeat:1,quizWordRepeat:1,quizAutoNext:true};
+const APP_SETTINGS_DEFAULTS={speechRate:1.1,exampleRepeat:2,patternRepeat:1,collocationRepeat:1,synonymRepeat:1,recallDelay:3,sentenceRepeat:2,dayLoopSentenceRepeat:2,sentenceContinuous:true,sentencePause:700,wordReadRepeat:3,continuousStudyRepeat:1,quizWordRepeat:1,quizAutoNext:true};
 function loadAppSettings(){
   try{return {...APP_SETTINGS_DEFAULTS,...JSON.parse(localStorage.getItem(APP_SETTINGS_KEY)||'{}')}}catch(e){return {...APP_SETTINGS_DEFAULTS}}
 }
@@ -3288,62 +3299,164 @@ function restoreLearnProgress(){
 }
 
 
-let dayLoopActive=false,dayLoopToken=0,dayLoopRound=0,dayLoopIndex=-1;
-function stopDayLoop(cancelVoice=true){
-  dayLoopActive=false;dayLoopToken++;dayLoopIndex=-1;
-  if(cancelVoice){stopSpeech();if('speechSynthesis' in window)window.speechSynthesis.cancel();}
-  const b=$('dayLoopToggle');if(b){b.classList.remove('active');b.textContent='🔁 반복 듣기 OFF';}
-  const s=$('dayLoopStatus');if(s)s.textContent=dayLoopRound?`${dayLoopRound}회 반복 · 일시정지`:'반복 듣기 일시정지';
-}
+let dayLoopActive=false,dayLoopToken=0,dayLoopRound=0,dayLoopIndex=-1,dayLoopFocusIndex=-1;let dayLoopVisibleCards=new Set();
+
 function dayLoopCards(){
   return quizDeck.filter(q=>q&&q.isPracticeSentence&&sentenceText(q));
+}
+
+function updateDayLoopFocusUI(){
+  document.querySelectorAll('.dayLoopSentenceBtn').forEach((btn,i)=>{
+    const focused=i===dayLoopFocusIndex;
+    btn.classList.toggle('focused',focused);
+    btn.setAttribute('aria-pressed',String(focused));
+    btn.innerHTML=`<span>Sentence ${i+1}</span><span class="infinityIcon">∞</span>${focused?'<span>집중</span>':''}`;
+  });
+  document.querySelectorAll('.dayLoopCard').forEach((card,i)=>card.classList.toggle('focused',i===dayLoopFocusIndex));
+}
+
+function stopDayLoop(cancelVoice=true,clearFocus=true){
+  dayLoopActive=false;dayLoopToken++;dayLoopIndex=-1;
+  if(clearFocus)dayLoopFocusIndex=-1;
+  if(cancelVoice){stopSpeech();if('speechSynthesis' in window)window.speechSynthesis.cancel();}
+  const b=$('dayLoopToggle');if(b){b.classList.remove('active');b.textContent='🔁 반복 듣기 OFF';}
+  updateDayLoopFocusUI();
+  const s=$('dayLoopStatus');if(s)s.textContent=dayLoopRound?`${dayLoopRound}회 반복 · 일시정지`:'반복 듣기 일시정지';
+}
+
+
+function setDayLoopCardVisible(index,visible){
+  const cards=dayLoopCards();
+  const q=cards[index];if(!q)return;
+  if(visible)dayLoopVisibleCards.add(index);else dayLoopVisibleCards.delete(index);
+  const sentenceEl=$('dayLoopSentence'+index);
+  if(sentenceEl)sentenceEl.innerHTML=visible?sentenceHighlightedHtml(q):sentenceMaskedHtml(q);
+  const btn=$('dayLoopViewBtn'+index);
+  if(btn){
+    btn.classList.toggle('active',visible);
+    btn.textContent=visible?'🙈 문장 숨기기':'👁 문장 보기';
+    btn.setAttribute('aria-pressed',String(visible));
+  }
 }
 function renderDayLoopTraining(autoStart=true){
   const cards=dayLoopCards();
   if(!cards.length)return false;
+  dayLoopFocusIndex=-1;dayLoopVisibleCards=new Set();
   $('qw').textContent=`DAY ${quizSelectedDay} Loop Training`;
   $('quizMeta').textContent='50% 이상 가린 실전 문장을 먼저 떠올린 뒤 완전한 문장을 들어보세요.';
+  const perSentence=settingInt('dayLoopSentenceRepeat',2,1,5);
   $('opts').innerHTML=`<div class="dayLoopWrap">
     <div class="dayLoopHero">
-      <div class="dayLoopHeroTop"><div><div class="dayLoopTitle">🎧 Day Loop Training</div><div class="dayLoopSub">50% 가리기 · DAY 전체 문장 무한 반복</div></div><button id="dayLoopToggle" class="dayLoopToggle ${autoStart?'active':''}" type="button">🔁 반복 듣기 ${autoStart?'ON':'OFF'}</button></div>
-      <div id="dayLoopStatus" class="dayLoopStatus">전체 ${cards.length}문장 · Recall → 듣기</div>
+      <div class="dayLoopHeroTop"><div><div class="dayLoopTitle">🎧 Day Loop Training</div><div class="dayLoopSub">50% 가리기 · 문장당 ${perSentence}회 · DAY 전체 무한 반복</div></div><button id="dayLoopToggle" class="dayLoopToggle ${autoStart?'active':''}" type="button">🔁 반복 듣기 ${autoStart?'ON':'OFF'}</button></div>
+      <div id="dayLoopStatus" class="dayLoopStatus">전체 ${cards.length}문장 · Sentence 버튼의 ∞를 누르면 해당 문장만 무한 반복</div>
     </div>
-    <div id="dayLoopList" class="dayLoopList">${cards.map((q,i)=>`<div class="dayLoopCard" id="dayLoopCard${i}"><div class="dayLoopNo">Sentence ${i+1}</div><div class="dayLoopSentence">${sentenceMaskedHtml(q)}</div><div class="dayLoopKo">${recallEscape(sentenceKo(q))}</div></div>`).join('')}</div>
+    <div id="dayLoopList" class="dayLoopList">${cards.map((q,i)=>`<div class="dayLoopCard" id="dayLoopCard${i}">
+      <div class="dayLoopCardTop">
+        <div class="dayLoopNo"><button class="dayLoopSentenceBtn" data-day-loop-focus="${i}" type="button" aria-pressed="false"><span>Sentence ${i+1}</span><span class="infinityIcon">∞</span></button></div>
+        <button id="dayLoopViewBtn${i}" class="dayLoopViewBtn" data-day-loop-view="${i}" type="button" aria-pressed="false">👁 문장 보기</button>
+      </div>
+      <div class="dayLoopSentence" id="dayLoopSentence${i}">${sentenceMaskedHtml(q)}</div><div class="dayLoopKo">${recallEscape(sentenceKo(q))}</div></div>`).join('')}</div>
     <div class="dayLoopFooter"><button id="dayLoopTop" type="button">↑ 맨 위로</button><button id="dayLoopRestart" type="button">↻ 처음부터</button></div>
   </div>`;
   $('quizFeedback').className='quizFeedback hidden';
   $('nextq').classList.add('hidden');$('prevq').classList.add('hidden');
-  const toggle=$('dayLoopToggle');
-  toggle.onclick=()=>{if(dayLoopActive)stopDayLoop(true);else startDayLoopTraining(0,true)};
+
+  $('dayLoopToggle').onclick=()=>{
+    if(dayLoopActive)stopDayLoop(true,true);
+    else startDayLoopTraining(Math.max(0,dayLoopIndex),true);
+  };
   $('dayLoopTop').onclick=()=>document.getElementById('dayLoopCard0')?.scrollIntoView({behavior:'smooth',block:'center'});
-  $('dayLoopRestart').onclick=()=>{stopDayLoop(true);startDayLoopTraining(0,true)};
+  $('dayLoopRestart').onclick=()=>{stopDayLoop(true,true);startDayLoopTraining(0,true)};
+
+  document.querySelectorAll('[data-day-loop-focus]').forEach(btn=>{
+    btn.onclick=()=>{
+      const target=Number(btn.dataset.dayLoopFocus);
+      if(dayLoopFocusIndex===target){
+        // Same button again: release infinite repeat and resume normal loop from NEXT sentence.
+        const next=(target+1)%cards.length;
+        dayLoopFocusIndex=-1;
+        dayLoopToken++;
+        stopSpeech();if('speechSynthesis' in window)window.speechSynthesis.cancel();
+        updateDayLoopFocusUI();
+        startDayLoopTraining(next,false);
+      }else{
+        // Another sentence: current focus is automatically released and new sentence becomes infinite focus.
+        startDayLoopFocused(target);
+      }
+    };
+  });
+
+  // Per-card show/hide only changes the text rendering. It never interrupts TTS.
+  document.querySelectorAll('[data-day-loop-view]').forEach(btn=>{
+    btn.onclick=()=>{
+      const target=Number(btn.dataset.dayLoopView);
+      setDayLoopCardVisible(target,!dayLoopVisibleCards.has(target));
+    };
+  });
+
   if(autoStart)setTimeout(()=>startDayLoopTraining(0,true),180);
   return true;
 }
+
+async function playDayLoopSentence(q,idx,token,repeatNo,totalRepeats,focused=false){
+  if(!dayLoopActive||token!==dayLoopToken)return false;
+  dayLoopIndex=idx;
+  document.querySelectorAll('.dayLoopCard.active').forEach(el=>el.classList.remove('active'));
+  const card=$('dayLoopCard'+idx);
+  if(card){card.classList.add('active');card.scrollIntoView({behavior:'smooth',block:'center'});}
+  const status=$('dayLoopStatus');
+  if(status)status.textContent=focused
+    ?`Sentence ${idx+1} ∞ 집중 반복 · 해제하려면 같은 Sentence 버튼을 다시 누르세요`
+    :`${dayLoopRound}회째 · ${idx+1}/${dayLoopCards().length} · ${repeatNo}/${totalRepeats} · 먼저 말해보세요`;
+
+  const recallWait=Math.max(900,Math.min(3000,Number(appSettings.sentencePause)||1500));
+  await new Promise(r=>setTimeout(r,recallWait));
+  if(!dayLoopActive||token!==dayLoopToken)return false;
+  if(status&&!focused)status.textContent=`${dayLoopRound}회째 · ${idx+1}/${dayLoopCards().length} · ${repeatNo}/${totalRepeats} · 정답 듣기`;
+  const text=sentenceText(q);
+  if(text)await speakComplete(text,getSpeechRate(),'en-US');
+  if(!dayLoopActive||token!==dayLoopToken)return false;
+  await new Promise(r=>setTimeout(r,Math.max(250,Math.min(1800,Number(appSettings.sentencePause)||700))));
+  return dayLoopActive&&token===dayLoopToken;
+}
+
 async function startDayLoopTraining(startIndex=0,newRound=false){
   const cards=dayLoopCards();if(!cards.length)return;
-  stopDayLoop(true);dayLoopActive=true;if(newRound)dayLoopRound=0;
+  // Invalidate previous loop but preserve the new normal-loop state.
+  dayLoopToken++;
+  stopSpeech();if('speechSynthesis' in window)window.speechSynthesis.cancel();
+  dayLoopActive=true;dayLoopFocusIndex=-1;if(newRound)dayLoopRound=0;
+  updateDayLoopFocusUI();
   const token=++dayLoopToken;
   const btn=$('dayLoopToggle');if(btn){btn.classList.add('active');btn.textContent='🔁 반복 듣기 ON';}
-  const recallWait=Math.max(900,Math.min(3000,Number(appSettings.sentencePause)||1500));
   let idx=Math.max(0,Math.min(startIndex,cards.length-1));
-  while(dayLoopActive&&token===dayLoopToken){
+  while(dayLoopActive&&token===dayLoopToken&&dayLoopFocusIndex<0){
     dayLoopRound++;
     for(;idx<cards.length;idx++){
-      if(!dayLoopActive||token!==dayLoopToken)return;
-      dayLoopIndex=idx;
-      document.querySelectorAll('.dayLoopCard.active').forEach(el=>el.classList.remove('active'));
-      const card=$('dayLoopCard'+idx);if(card){card.classList.add('active');card.scrollIntoView({behavior:'smooth',block:'center'});}
-      const status=$('dayLoopStatus');if(status)status.textContent=`${dayLoopRound}회째 · ${idx+1}/${cards.length} · 먼저 말해보세요`;
-      await new Promise(r=>setTimeout(r,recallWait));
-      if(!dayLoopActive||token!==dayLoopToken)return;
-      if(status)status.textContent=`${dayLoopRound}회째 · ${idx+1}/${cards.length} · 정답 듣기`;
-      const text=sentenceText(cards[idx]);
-      if(text)await speakComplete(text,getSpeechRate(),'en-US');
-      if(!dayLoopActive||token!==dayLoopToken)return;
-      await new Promise(r=>setTimeout(r,Math.max(250,Math.min(1800,Number(appSettings.sentencePause)||700))));
+      if(!dayLoopActive||token!==dayLoopToken||dayLoopFocusIndex>=0)return;
+      const repeats=settingInt('dayLoopSentenceRepeat',2,1,5);
+      for(let r=1;r<=repeats;r++){
+        if(!await playDayLoopSentence(cards[idx],idx,token,r,repeats,false))return;
+      }
     }
     idx=0;
+  }
+}
+
+async function startDayLoopFocused(targetIndex){
+  const cards=dayLoopCards();if(!cards.length||!cards[targetIndex])return;
+  dayLoopToken++;
+  stopSpeech();if('speechSynthesis' in window)window.speechSynthesis.cancel();
+  dayLoopActive=true;dayLoopFocusIndex=targetIndex;dayLoopIndex=targetIndex;
+  updateDayLoopFocusUI();
+  const token=++dayLoopToken;
+  const btn=$('dayLoopToggle');if(btn){btn.classList.add('active');btn.textContent='🔁 반복 듣기 ON';}
+  let focusRepeat=0;
+  while(dayLoopActive&&token===dayLoopToken&&dayLoopFocusIndex===targetIndex){
+    focusRepeat++;
+    const status=$('dayLoopStatus');
+    if(status)status.textContent=`Sentence ${targetIndex+1} ∞ 집중 반복 · ${focusRepeat}회째 · 같은 버튼을 누르면 해제`;
+    if(!await playDayLoopSentence(cards[targetIndex],targetIndex,token,focusRepeat,focusRepeat,true))return;
   }
 }
 
@@ -4300,7 +4413,7 @@ $('quizAllWrongBtn').onclick=function(e){
 };
 
 
-// v5.3.59 Daily study time tracking
+// v5.3.61 Daily study time tracking
 const STUDY_TIME_KEY='myVocaStudyTimeV1';let studyRangeDays=7;let studyLastActivity=Date.now();
 function studyDateKey(d=new Date()){const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');return `${y}-${m}-${day}`}
 function loadStudyTime(){try{return JSON.parse(localStorage.getItem(STUDY_TIME_KEY)||'{}')||{}}catch(e){return {}}}
@@ -4733,7 +4846,7 @@ $('card').addEventListener('touchend',e=>{
 
 
 
-window.APP_VERSION='V5.3.59-single-file';
+window.APP_VERSION='V5.3.61-single-file';
 window.addEventListener('pagehide',()=>{__repeatWakeSession=false;forceReleaseWakeLock();});
 
 
@@ -4779,7 +4892,7 @@ function refreshHomeConfigSummary(){
 function fillConfigurationForm(){
   appSettings=loadAppSettings();
   const set=(id,v)=>{const el=$(id);if(el)el.value=String(v)};
-  set('cfgSpeechRate',appSettings.speechRate);set('cfgExampleRepeat',appSettings.exampleRepeat);set('cfgPatternRepeat',appSettings.patternRepeat);set('cfgCollocationRepeat',appSettings.collocationRepeat);set('cfgSynonymRepeat',appSettings.synonymRepeat);set('cfgRecallDelay',appSettings.recallDelay);set('cfgSentenceRepeat',appSettings.sentenceRepeat);set('cfgSentencePause',appSettings.sentencePause);set('cfgWordReadRepeat',appSettings.wordReadRepeat);set('cfgContinuousStudyRepeat',appSettings.continuousStudyRepeat);set('cfgQuizWordRepeat',appSettings.quizWordRepeat);
+  set('cfgSpeechRate',appSettings.speechRate);set('cfgExampleRepeat',appSettings.exampleRepeat);set('cfgPatternRepeat',appSettings.patternRepeat);set('cfgCollocationRepeat',appSettings.collocationRepeat);set('cfgSynonymRepeat',appSettings.synonymRepeat);set('cfgRecallDelay',appSettings.recallDelay);set('cfgSentenceRepeat',appSettings.sentenceRepeat);set('cfgDayLoopSentenceRepeat',appSettings.dayLoopSentenceRepeat||2);set('cfgSentencePause',appSettings.sentencePause);set('cfgWordReadRepeat',appSettings.wordReadRepeat);set('cfgContinuousStudyRepeat',appSettings.continuousStudyRepeat);set('cfgQuizWordRepeat',appSettings.quizWordRepeat);
   if($('cfgSentenceContinuous'))$('cfgSentenceContinuous').checked=appSettings.sentenceContinuous!==false;
   if($('cfgQuizAutoNext'))$('cfgQuizAutoNext').checked=appSettings.quizAutoNext!==false;
 }
@@ -4831,7 +4944,7 @@ prepareSeparatedUsagePage();
 if($('openConfigBtn'))$('openConfigBtn').onclick=openConfiguration;
 if($('configBackBtn'))$('configBackBtn').onclick=closeConfiguration;
 if($('usageBackBtn'))$('usageBackBtn').onclick=closeUsagePage;
-if($('configSaveBtn'))$('configSaveBtn').onclick=()=>{saveAppSettings({speechRate:parseFloat($('cfgSpeechRate').value),exampleRepeat:parseInt($('cfgExampleRepeat').value),patternRepeat:parseInt($('cfgPatternRepeat').value),collocationRepeat:parseInt($('cfgCollocationRepeat').value),synonymRepeat:parseInt($('cfgSynonymRepeat').value),recallDelay:parseInt($('cfgRecallDelay').value),sentenceRepeat:parseInt($('cfgSentenceRepeat').value),sentenceContinuous:$('cfgSentenceContinuous').checked,sentencePause:parseInt($('cfgSentencePause').value),wordReadRepeat:parseInt($('cfgWordReadRepeat').value),continuousStudyRepeat:parseInt($('cfgContinuousStudyRepeat').value),quizWordRepeat:parseInt($('cfgQuizWordRepeat').value),quizAutoNext:$('cfgQuizAutoNext').checked});restoreConfigReturnState();showConfigSavedToast()};
+if($('configSaveBtn'))$('configSaveBtn').onclick=()=>{saveAppSettings({speechRate:parseFloat($('cfgSpeechRate').value),exampleRepeat:parseInt($('cfgExampleRepeat').value),patternRepeat:parseInt($('cfgPatternRepeat').value),collocationRepeat:parseInt($('cfgCollocationRepeat').value),synonymRepeat:parseInt($('cfgSynonymRepeat').value),recallDelay:parseInt($('cfgRecallDelay').value),sentenceRepeat:parseInt($('cfgSentenceRepeat').value),dayLoopSentenceRepeat:parseInt($('cfgDayLoopSentenceRepeat').value),sentenceContinuous:$('cfgSentenceContinuous').checked,sentencePause:parseInt($('cfgSentencePause').value),wordReadRepeat:parseInt($('cfgWordReadRepeat').value),continuousStudyRepeat:parseInt($('cfgContinuousStudyRepeat').value),quizWordRepeat:parseInt($('cfgQuizWordRepeat').value),quizAutoNext:$('cfgQuizAutoNext').checked});restoreConfigReturnState();showConfigSavedToast()};
 if($('configResetBtn'))$('configResetBtn').onclick=()=>{appSettings={...APP_SETTINGS_DEFAULTS};localStorage.setItem(APP_SETTINGS_KEY,JSON.stringify(appSettings));setSpeechRate(appSettings.speechRate);fillConfigurationForm();syncContinuousStudyRepeatControl();refreshHomeConfigSummary()};
 
 refreshHomeConfigSummary();
@@ -4995,7 +5108,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
     if(action==='config'){openConfiguration();return}
     if(action==='usage'){openUsagePage();return}
     if(action==='whatsnew'){openUsagePage();setTimeout(()=>document.querySelector('#usagePage .configSection')?.scrollIntoView({behavior:'smooth',block:'start'}),120);return}
-    if(action==='info'){alert('MY VOCA v5.3.59\n기존 UI를 유지하면서 실전 문장 학습과 학습 기록 내보내기를 추가했습니다.');return}
+    if(action==='info'){alert('MY VOCA v5.3.61\n기존 UI를 유지하면서 실전 문장 학습과 학습 기록 내보내기를 추가했습니다.');return}
     if(action==='continue'){
       const p=readSelectedProgress();
       if(p&&Array.isArray(p.days)&&p.days.length){
