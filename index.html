@@ -1,4 +1,4 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><!-- MY VOCA V5.3.48 SINGLE FILE: upload this index.html only -->
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><!-- MY VOCA V5.3.51 SINGLE FILE: responsive quiz navigation -->
 <title>MY VOCA v5.3.18 · Wake Lock Fix</title>
 <style>
 
@@ -505,6 +505,17 @@
 .sentenceStageNavBtn{border:1px solid #d0d5dd;background:#fff;color:#667085;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:900;cursor:pointer}
 .sentenceStageNavBtn.active{background:#4f46e5;border-color:#4f46e5;color:#fff}
 .sentenceStageNavArrow{color:#98a2b3;font-weight:900;font-size:12px}
+
+.sentenceStage2Actions{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.sentenceStage2Actions .sentenceStageBtn{min-width:0;white-space:normal;line-height:1.25}
+.sentenceStage2Aux{display:flex;justify-content:center;margin-top:10px}
+.sentenceStage2Aux .sentenceStageBtn{width:min(56%,260px)}
+.sentenceRepeatBtn.active{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;border-color:transparent}
+@media(max-width:520px){
+  .sentenceStage2Actions{gap:8px}
+  .sentenceStage2Actions .sentenceStageBtn{font-size:14px;padding:13px 8px}
+  .sentenceStage2Aux .sentenceStageBtn{width:min(70%,240px);font-size:14px}
+}
 .sentenceStageBadge{display:inline-flex;align-items:center;border-radius:999px;padding:6px 10px;background:#e0e7ff;color:#3730a3;font-size:12px;font-weight:950;margin-bottom:10px}
 .sentencePromptKo{font-size:19px;font-weight:900;line-height:1.55;color:#1f2937}
 .sentenceKoSupport{margin-top:12px;padding-top:11px;border-top:1px solid #e5e7eb;font-size:15px;font-weight:800;line-height:1.6;color:#667085}
@@ -529,14 +540,14 @@
 
 .quizPlaybackHint{display:block;margin-top:12px;padding:10px 12px;border-radius:12px;background:#f8fafc;color:#667085;font-size:13px;font-weight:800;line-height:1.45;text-align:center}
 .quizQuestionNav{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
-.quizQuestionNav.quizQuestionNavThree{grid-template-columns:minmax(0,.78fr) minmax(0,.78fr) minmax(0,1.44fr)}
-.quizQuestionNav .option{margin:0;min-width:0;padding:12px 7px;font-size:14px;font-weight:950;white-space:nowrap;display:flex;align-items:center;justify-content:center;text-align:center;gap:5px;line-height:1.15}
+.quizQuestionNav.quizQuestionNavThree{grid-template-columns:minmax(0,30fr) minmax(0,25fr) minmax(0,45fr)}
+.quizQuestionNav .option{margin:0;min-width:0;max-width:100%;padding:12px 8px;font-size:clamp(13px,3.2vw,16px);font-weight:950;white-space:nowrap;overflow:hidden;text-overflow:clip;display:flex;align-items:center;justify-content:center;text-align:center;gap:4px;line-height:1.15}
 .quizQuestionNav .option:disabled{opacity:.38;cursor:not-allowed}
 .quizQuestionNav .quizNavNext{background:#111827;color:#fff;border-color:#111827}
 .quizQuestionNav .quizNavPrev{background:#fff;color:#111827}
 .quizQuestionNav .quizPlaybackToggle{background:#eef2ff;color:#3730a3;border-color:#c7d2fe}
 .quizQuestionNav .quizPlaybackToggle.paused{background:#ecfdf3;color:#067647;border-color:#abefc6}
-@media(max-width:480px){.quizQuestionNav{gap:6px}.quizQuestionNav .option{padding:11px 3px;font-size:11px}.quizQuestionNav .quizPlaybackToggle{font-size:11px}.quizPlaybackHint{display:none}}
+@media(max-width:480px){.quizQuestionNav{gap:6px}.quizQuestionNav.quizQuestionNavThree{grid-template-columns:minmax(0,30fr) minmax(0,25fr) minmax(0,45fr)}.quizQuestionNav .option{padding:11px 4px;font-size:clamp(12px,3.3vw,14px);letter-spacing:-.02em}.quizQuestionNav .quizPlaybackToggle{font-size:clamp(12px,3.3vw,14px)}.quizPlaybackHint{display:none}}
 
 
 /* Configuration screen */
@@ -1163,7 +1174,7 @@ body.practiceReadingMode #morePanel{
   </div>
 </div>
 <div id="recallGuide" class="recallGuide hidden">문제를 보고 답을 소리 내어 말하세요. 말하지 못하면 바로 ‘오답’으로 기록하세요.</div>
-<div class="quizControls" style="flex-wrap:wrap"><select id="quizDirection" class="select" style="flex:1;min-width:160px"><option value="enKo">영어 → 한글</option><option value="koEn">한글 → 영어</option></select><button id="speakQuiz" class="speak" aria-label="퀴즈 단어 듣기">🔊</button></div><div class="metaLine" id="quizStatLine"><span class="missBadge" id="quizCorrectBadge">정답 0회</span><span class="missBadge" id="quizWrongBadge">오답 0회</span><span class="missBadge" id="quizStreakBadge">연속 정답 0회</span><span class="missBadge" id="quizAccuracyBadge">정답률 0%</span></div><div class="word" id="qw"></div><div class="quizMeta" id="quizMeta"></div><div id="opts"></div><div id="quizFeedback" class="quizFeedback hidden"></div><div class="quizQuestionNav quizQuestionNavThree"><button class="option quizNavNext" id="nextq" type="button">다음 →</button><button class="option quizNavPrev" id="prevq" type="button">← 이전</button><button id="quizPlayPause" class="option quizPlaybackToggle" type="button">🔁 자동 넘기기 ON</button></div></section><section id="score" class="hidden score">
+<div class="quizControls" style="flex-wrap:wrap"><select id="quizDirection" class="select" style="flex:1;min-width:160px"><option value="enKo">영어 → 한글</option><option value="koEn">한글 → 영어</option></select><button id="speakQuiz" class="speak" aria-label="퀴즈 단어 듣기">🔊</button></div><div class="metaLine" id="quizStatLine"><span class="missBadge" id="quizCorrectBadge">정답 0회</span><span class="missBadge" id="quizWrongBadge">오답 0회</span><span class="missBadge" id="quizStreakBadge">연속 정답 0회</span><span class="missBadge" id="quizAccuracyBadge">정답률 0%</span></div><div class="word" id="qw"></div><div class="quizMeta" id="quizMeta"></div><div id="opts"></div><div id="quizFeedback" class="quizFeedback hidden"></div><div class="quizQuestionNav quizQuestionNavThree"><button class="option quizNavNext" id="nextq" type="button">다음 →</button><button class="option quizNavPrev" id="prevq" type="button">← 이전</button><button id="quizPlayPause" class="option quizPlaybackToggle" type="button">자동 ON</button></div></section><section id="score" class="hidden score">
   <div class="scoreHero">
     <div>
       <div class="scoreEyebrow">DAY MASTERY SCORE</div>
@@ -2974,6 +2985,7 @@ let sentenceRecallTimer=null;
 let sentenceRecallStage=0;
 let sentenceRecallVisible=false;
 let sentenceRecallVariant='original'; // original | paraphrase
+let sentenceStage2Repeat=false;
 let sentenceRepeatToken=0;
 let quizCurrent=null,quizAnswered=false;
 let quizAutoNextTimer=null;
@@ -2985,7 +2997,7 @@ function clearQuizAutoNext(){
 function updateQuizPlaybackButton(){
   const btn=$('quizPlayPause'),hint=$('quizPlaybackHint');
   if(!btn)return;
-  btn.textContent=quizPlaybackEnabled?'🔁 자동 넘기기 ON':'⏸ 자동 넘기기 OFF';
+  btn.textContent=quizPlaybackEnabled?'자동 ON':'자동 OFF';
   btn.classList.toggle('paused',!quizPlaybackEnabled);
   if(hint)hint.textContent='';
 }
@@ -3271,20 +3283,21 @@ function stopSentenceRepeat(cancelVoice=true){
   }
 }
 
-async function startSentenceContinuousRepeat(q){
+async function startSentenceContinuousRepeat(q,stage=1){
   const myToken=++sentenceRepeatToken;
   const reads=settingInt('sentenceRepeat',2,1,5);
   const continuous=appSettings.sentenceContinuous!==false;
   const pause=Math.max(100,Math.min(5000,Number(appSettings.sentencePause)||700));
   do{
     for(let n=0;n<reads;n++){
-      if(myToken!==sentenceRepeatToken||quizMode!=='sentence'||quizCurrent!==q||sentenceRecallStage!==1||quizSessionDone)return;
+      if(myToken!==sentenceRepeatToken||quizMode!=='sentence'||quizCurrent!==q||sentenceRecallStage!==stage||quizSessionDone)return;
+      if(stage===2&&!sentenceStage2Repeat)return;
       await speakSentenceOnce(q);
       if(n<reads-1)await new Promise(r=>setTimeout(r,420));
     }
     if(!continuous)return;
     await new Promise(r=>setTimeout(r,pause));
-  }while(myToken===sentenceRepeatToken&&quizMode==='sentence'&&quizCurrent===q&&sentenceRecallStage===1&&!quizSessionDone);
+  }while(myToken===sentenceRepeatToken&&quizMode==='sentence'&&quizCurrent===q&&sentenceRecallStage===stage&&!quizSessionDone&&(stage!==2||sentenceStage2Repeat));
 }
 
 function setQuizMode(mode){
@@ -3451,7 +3464,7 @@ function newRecallQuestion(){
   $('quiz').classList.toggle('ko-en-mode',direction==='koEn');
   $('quizFeedback').className='quizFeedback hidden';
   $('quizFeedback').textContent='';
-  $('nextq').textContent='다음 문제 →';
+  $('nextq').textContent='다음 →';
   $('nextq').classList.remove('hidden');
   quizAnswered=false;
   quizPendingPlaybackFactory=null;
@@ -3660,7 +3673,7 @@ function renderSentenceStage(q,stage,visible=false){
     actions=`<div class="sentenceStageActions one"><button id="sentenceToStage2" class="sentenceStageBtn sentencePrimary" type="button">2단계 · 빈칸 문장 말하기</button></div>`;
   }else if(stage===2){
     content=`<div id="sentencePracticeText" class="sentenceEnglish">${visible?full:sentenceMaskedHtml(q)}</div>${patternInfo}`;
-    actions=`<div class="sentenceStageActions"><button id="sentenceToggle" class="sentenceStageBtn sentenceSecondary" type="button">${visible?'문장 숨기기':'문장 보기 · 듣기'}</button><button id="sentenceToStage3" class="sentenceStageBtn sentencePrimary" type="button">3단계 · 전체 문장 말하기</button></div>`;
+    actions=`<div class="sentenceStage2Actions"><button id="sentenceStage2Repeat" class="sentenceStageBtn sentenceRepeatBtn ${sentenceStage2Repeat?'active':''}" type="button">🔁 반복 듣기 ${sentenceStage2Repeat?'ON':'OFF'}</button><button id="sentenceToStage3" class="sentenceStageBtn sentencePrimary" type="button">③ 전체 문장 말하기</button></div><div class="sentenceStage2Aux"><button id="sentenceToggle" class="sentenceStageBtn sentenceSecondary" type="button">${visible?'문장 숨기기':'👁 문장 보기'}</button></div>`;
   }else{
     content=visible?`<div id="sentencePracticeText" class="sentenceEnglish">${full}</div>`:`<div id="sentencePracticeText" class="sentenceHiddenBox">영어 문장을 보지 않고 전체 문장을 말해 보세요.</div>`;
     if(!isPara && hasParaphraseSentence(q)){
@@ -3681,7 +3694,9 @@ function renderSentenceStage(q,stage,visible=false){
   document.querySelectorAll('[data-sentence-stage]').forEach(btn=>{
     btn.onclick=()=>{
       const target=Number(btn.dataset.sentenceStage||stage);
-      if(target!==1)stopSentenceRepeat(true);
+      stopSentenceRepeat(true);
+      if(target!==2)sentenceStage2Repeat=false;
+      if(target===2&&stage!==2)sentenceStage2Repeat=false;
       renderSentenceStage(q,target,false);
     };
   });
@@ -3689,16 +3704,30 @@ function renderSentenceStage(q,stage,visible=false){
   if(stage===1){
     $('sentenceToStage2').onclick=()=>{
       stopSentenceRepeat(true);
+      sentenceStage2Repeat=false;
       renderSentenceStage(q,2,false);
     };
-    startSentenceContinuousRepeat(q);
+    startSentenceContinuousRepeat(q,1);
   }else if(stage===2){
     $('sentenceToggle').onclick=()=>{
       const next=!sentenceRecallVisible;
-      renderSentenceStage(q,2,next);
-      if(next)speakSentenceOnce(q);
+      sentenceRecallVisible=next;
+      const textEl=$('sentencePracticeText');
+      if(textEl)textEl.innerHTML=next?full:sentenceMaskedHtml(q);
+      const toggleBtn=$('sentenceToggle');
+      if(toggleBtn)toggleBtn.textContent=next?'문장 숨기기':'👁 문장 보기';
     };
-    $('sentenceToStage3').onclick=()=>renderSentenceStage(q,3,false);
+    $('sentenceStage2Repeat').onclick=()=>{
+      sentenceStage2Repeat=!sentenceStage2Repeat;
+      stopSentenceRepeat(true);
+      renderSentenceStage(q,2,sentenceRecallVisible);
+      if(sentenceStage2Repeat)startSentenceContinuousRepeat(q,2);
+    };
+    $('sentenceToStage3').onclick=()=>{
+      sentenceStage2Repeat=false;
+      stopSentenceRepeat(true);
+      renderSentenceStage(q,3,false);
+    };
   }else{
     $('sentenceToggle').onclick=()=>{
       const next=!sentenceRecallVisible;
@@ -3749,7 +3778,7 @@ function updateQuestionNavButtons(){
   const prev=$('prevq'),next=$('nextq');
   if(prev)prev.disabled=quizSessionDone ? quizDeck.length===0 : quizIndex<=0;
   if(next && !quizSessionDone){
-    next.textContent='다음 문제 →';
+    next.textContent='다음 →';
   }
 }
 
@@ -4556,7 +4585,7 @@ $('card').addEventListener('touchend',e=>{
 
 
 
-window.APP_VERSION='V5.3.48-single-file';
+window.APP_VERSION='V5.3.51-single-file';
 window.addEventListener('pagehide',()=>{__repeatWakeSession=false;forceReleaseWakeLock();});
 
 
