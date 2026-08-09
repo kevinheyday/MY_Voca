@@ -1,4 +1,4 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><!-- MY VOCA V5.3.58 SINGLE FILE: responsive quiz navigation -->
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><!-- MY VOCA V5.3.59 SINGLE FILE: responsive quiz navigation -->
 <title>MY VOCA v5.3.18 · Wake Lock Fix</title>
 <style>
 
@@ -729,7 +729,7 @@ body.compare-sheet-open{overflow:hidden}
 .unknownWordGuideSecondary{border:1px solid #d0d5dd;background:#fff;color:#475467;margin-top:8px}
 @media(max-width:480px){.unknownWordGuideOverlay{padding:14px}.unknownWordGuideCard{border-radius:22px;padding:20px 16px}.unknownWordGuideCard h2{font-size:21px}.unknownWordGuideMessage{font-size:13px}}
 
-/* v5.3.58 ACTUAL INLINE practical-reading UI */
+/* v5.3.59 ACTUAL INLINE practical-reading UI */
 .practiceStoryList{display:flex !important;flex-direction:column !important;gap:7px !important}
 .practiceStoryItem{
   position:relative !important;display:grid !important;grid-template-columns:minmax(0,1fr) 46px !important;
@@ -795,7 +795,7 @@ body.compare-sheet-open{overflow:hidden}
   .readingCompactPattern{grid-template-columns:minmax(108px,1.06fr) minmax(94px,.94fr) !important;font-size:8.9px !important}
 }
 
-/* v5.3.58 remove ONLY outer legacy speakers; keep card speaker */
+/* v5.3.59 remove ONLY outer legacy speakers; keep card speaker */
 body.practiceReadingMode #speakW,
 body.practiceReadingMode #speakE,
 body.practiceReadingMode #speakQ,
@@ -830,7 +830,7 @@ body.practiceReadingMode .practiceCardCopy{
   width:100% !important;
 }
 
-/* v5.3.58 vertical reading summary + hide legacy details */
+/* v5.3.59 vertical reading summary + hide legacy details */
 body.practiceReadingMode .readingReferenceColumns{
   display:flex !important;
   flex-direction:column !important;
@@ -870,8 +870,18 @@ body.practiceReadingMode #morePanel{
   display:none !important;
 }
 
-/* v5.3.58 Study Time Dashboard */
+/* v5.3.59 Study Time Dashboard */
 .studyTimeDashboard{margin-bottom:18px}.studyTimeHead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;background:linear-gradient(135deg,#f7f5ff,#eef2ff);border:1px solid #ddd6fe;border-radius:22px 22px 0 0;padding:18px 18px 8px}.studyTimeTitle{font-size:21px;font-weight:950;color:#4f46e5}.studyTimeSub{font-size:12px;color:#667085;font-weight:750;margin-top:4px}.studyTimeGuideBtn{border:1px solid #d0d5dd;background:#fff;border-radius:10px;padding:8px 10px;font-weight:850;color:#475467;white-space:nowrap}.studyTimeSummary{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;background:linear-gradient(135deg,#f7f5ff,#eef2ff);border:1px solid #ddd6fe;border-top:0;border-radius:0 0 22px 22px;padding:10px 16px 18px}.studySummaryCard{background:rgba(255,255,255,.68);border:1px solid rgba(221,214,254,.8);border-radius:16px;padding:14px 8px;text-align:center}.studySummaryCard span{display:block;font-size:12px;color:#475467;font-weight:850}.studySummaryCard b{display:block;font-size:25px;color:#101828;margin:7px 0 5px}.studySummaryCard small{font-size:11px;color:#667085;font-weight:750}.studyChartCard,.studyCategoryCard{margin-top:14px;background:#fff;border:1px solid #e5e7eb;border-radius:22px;padding:17px;box-shadow:0 6px 18px rgba(15,23,42,.035)}.studyChartTop{display:flex;justify-content:space-between;gap:12px;align-items:center}.studyChartTop>div:first-child{display:flex;flex-direction:column;gap:3px}.studyChartTop b{font-size:17px}.studyChartTop span{font-size:12px;color:#667085;font-weight:800}.studyRangeSwitch{display:flex;border:1px solid #d0d5dd;border-radius:11px;overflow:hidden}.studyRangeSwitch button{border:0;background:#fff;padding:9px 13px;font-weight:900;color:#475467}.studyRangeSwitch button.active{background:#5b43df;color:#fff}.studyBarChart{height:210px;display:flex;align-items:flex-end;gap:7px;padding:22px 2px 4px;border-bottom:1px solid #e5e7eb;margin-top:8px;overflow-x:auto}.studyBarCol{height:100%;min-width:34px;flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center}.studyBarValue{font-size:10px;font-weight:900;color:#344054;margin-bottom:4px}.studyBar{width:min(28px,72%);min-height:2px;border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,#7c5ce6,#5141d8)}.studyBarCol.today .studyBar{background:linear-gradient(180deg,#a99cf3,#7667e8)}.studyBarLabel{font-size:10px;color:#667085;font-weight:800;margin-top:6px;white-space:nowrap}.studyBarCol.today .studyBarLabel{color:#4f46e5}.studyCategoryTitle{display:flex;justify-content:space-between;gap:10px;align-items:center}.studyCategoryTitle b{font-size:17px}.studyCategoryTitle span{font-size:12px;color:#667085;font-weight:800}.studyCategoryBody{display:grid;grid-template-columns:130px 1fr;gap:18px;align-items:center;margin-top:15px}.studyDonut{width:120px;height:120px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#e5e7eb 0 100%);position:relative}.studyDonut:after{content:'';position:absolute;width:72px;height:72px;border-radius:50%;background:#fff}.studyDonut>div{z-index:1;text-align:center;display:flex;flex-direction:column}.studyDonut span{font-size:10px;color:#667085;font-weight:800}.studyDonut b{font-size:15px;color:#101828}.studyCategoryLegend{display:flex;flex-direction:column}.studyCategoryLegend>div{display:grid;grid-template-columns:12px 1fr auto;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid #eef2f7}.studyCategoryLegend>div:last-child{border-bottom:0}.studyCategoryLegend span{font-size:12px;font-weight:800;color:#475467}.studyCategoryLegend b{font-size:12px;color:#101828}.catDot{width:10px;height:10px;border-radius:50%}.catDot.word{background:#6d4ce8}.catDot.reading{background:#4b88e8}.catDot.quiz{background:#61c781}.studyTimeNotice{margin-top:12px;font-size:11px;line-height:1.55;color:#667085;padding:0 6px}@media(max-width:520px){.studyTimeHead{padding:15px 13px 6px}.studyTimeSummary{padding:9px 11px 14px;gap:6px}.studySummaryCard{padding:12px 4px}.studySummaryCard b{font-size:20px}.studySummaryCard small{font-size:9px}.studyChartCard,.studyCategoryCard{padding:14px}.studyBarChart{height:185px;gap:4px}.studyBarCol{min-width:29px}.studyCategoryBody{grid-template-columns:100px 1fr;gap:10px}.studyDonut{width:96px;height:96px}.studyDonut:after{width:58px;height:58px}.studyCategoryLegend span,.studyCategoryLegend b{font-size:10px}}
+
+/* v5.3.59 Day Loop Training */
+.dayLoopWrap{margin-top:16px;text-align:left}.dayLoopHero{padding:16px;border:1px solid #d8d3ff;border-radius:18px;background:linear-gradient(135deg,#f7f5ff,#eef2ff)}
+.dayLoopHeroTop{display:flex;justify-content:space-between;align-items:center;gap:10px}.dayLoopTitle{font-size:20px;font-weight:950;color:#4338ca}.dayLoopSub{margin-top:5px;font-size:12px;line-height:1.5;color:#667085;font-weight:750}
+.dayLoopToggle{border:0;border-radius:12px;padding:11px 13px;font-weight:950;background:#e5e7eb;color:#344054;white-space:nowrap}.dayLoopToggle.active{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff}
+.dayLoopStatus{margin-top:10px;font-size:12px;font-weight:850;color:#5b4bd8}.dayLoopList{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.dayLoopCard{border:1px solid #e5e7eb;border-radius:16px;background:#fff;padding:14px;transition:.18s ease}.dayLoopCard.active{border:2px solid #7667e8;background:#faf9ff;box-shadow:0 6px 18px rgba(79,70,229,.12)}
+.dayLoopNo{font-size:11px;font-weight:900;color:#98a2b3;margin-bottom:7px}.dayLoopSentence{font-size:17px;line-height:1.65;font-weight:800;color:#1f2937}.dayLoopKo{font-size:12px;line-height:1.5;color:#667085;margin-top:8px}
+.dayLoopFooter{display:flex;gap:8px;margin-top:12px}.dayLoopFooter button{flex:1;border:1px solid #d0d5dd;background:#fff;border-radius:12px;padding:11px 8px;font-weight:900;color:#475467}
+@media(max-width:520px){.dayLoopHeroTop{align-items:flex-start}.dayLoopTitle{font-size:18px}.dayLoopSentence{font-size:15px}.dayLoopToggle{font-size:12px;padding:10px}}
 </style>
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
@@ -919,7 +929,7 @@ body.practiceReadingMode #morePanel{
     <button class="drawerItem" data-drawer-action="config"><span class="drawerIcon">⚙️</span><span class="drawerItemText">Config<small>음성·반복·퀴즈 설정</small></span></button>
     <button class="drawerItem" data-drawer-action="usage"><span class="drawerIcon">📘</span><span class="drawerItemText">사용 방법<small>MY VOCA 학습 방법과 기능 안내</small></span></button>
     <button class="drawerItem" data-drawer-action="whatsnew"><span class="drawerIcon">🆕</span><span class="drawerItemText">업데이트 내역<small>이번 버전 변경 사항</small></span></button>
-    <button class="drawerItem" data-drawer-action="info"><span class="drawerIcon">ℹ️</span><span class="drawerItemText">앱 정보<small>MY VOCA v5.3.58</small></span></button>
+    <button class="drawerItem" data-drawer-action="info"><span class="drawerIcon">ℹ️</span><span class="drawerItemText">앱 정보<small>MY VOCA v5.3.59</small></span></button>
   </nav>
 </aside>
 
@@ -929,7 +939,7 @@ body.practiceReadingMode #morePanel{
       <div>
         <div class="homeEyebrow" id="homeCourseEyebrow">MY VOCA UNIFIED COURSE · 69 DAYS</div>
         <h1 id="homeCourseTitle">MY VOCA</h1>
-        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.58 · MINIMAL PRACTICE</div>
+        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.59 · MINIMAL PRACTICE</div>
       </div>
       <div class="homeDayBadge"><b id="homeRegisteredDays">30</b><span>등록 Day</span></div>
     </section>
@@ -3073,6 +3083,7 @@ function resumeQuizPlayback(){
   if(quizAnswered)startCurrentQuizResultPlayback();
 }
 function goToNextQuizQuestion(){
+  stopDayLoop(true);
   clearQuizAutoNext();
   stopSpeech();
   if('speechSynthesis' in window)window.speechSynthesis.cancel();
@@ -3276,6 +3287,66 @@ function restoreLearnProgress(){
   $('bar').style.width=(i/deck.length*100)+'%';
 }
 
+
+let dayLoopActive=false,dayLoopToken=0,dayLoopRound=0,dayLoopIndex=-1;
+function stopDayLoop(cancelVoice=true){
+  dayLoopActive=false;dayLoopToken++;dayLoopIndex=-1;
+  if(cancelVoice){stopSpeech();if('speechSynthesis' in window)window.speechSynthesis.cancel();}
+  const b=$('dayLoopToggle');if(b){b.classList.remove('active');b.textContent='🔁 반복 듣기 OFF';}
+  const s=$('dayLoopStatus');if(s)s.textContent=dayLoopRound?`${dayLoopRound}회 반복 · 일시정지`:'반복 듣기 일시정지';
+}
+function dayLoopCards(){
+  return quizDeck.filter(q=>q&&q.isPracticeSentence&&sentenceText(q));
+}
+function renderDayLoopTraining(autoStart=true){
+  const cards=dayLoopCards();
+  if(!cards.length)return false;
+  $('qw').textContent=`DAY ${quizSelectedDay} Loop Training`;
+  $('quizMeta').textContent='50% 이상 가린 실전 문장을 먼저 떠올린 뒤 완전한 문장을 들어보세요.';
+  $('opts').innerHTML=`<div class="dayLoopWrap">
+    <div class="dayLoopHero">
+      <div class="dayLoopHeroTop"><div><div class="dayLoopTitle">🎧 Day Loop Training</div><div class="dayLoopSub">50% 가리기 · DAY 전체 문장 무한 반복</div></div><button id="dayLoopToggle" class="dayLoopToggle ${autoStart?'active':''}" type="button">🔁 반복 듣기 ${autoStart?'ON':'OFF'}</button></div>
+      <div id="dayLoopStatus" class="dayLoopStatus">전체 ${cards.length}문장 · Recall → 듣기</div>
+    </div>
+    <div id="dayLoopList" class="dayLoopList">${cards.map((q,i)=>`<div class="dayLoopCard" id="dayLoopCard${i}"><div class="dayLoopNo">Sentence ${i+1}</div><div class="dayLoopSentence">${sentenceMaskedHtml(q)}</div><div class="dayLoopKo">${recallEscape(sentenceKo(q))}</div></div>`).join('')}</div>
+    <div class="dayLoopFooter"><button id="dayLoopTop" type="button">↑ 맨 위로</button><button id="dayLoopRestart" type="button">↻ 처음부터</button></div>
+  </div>`;
+  $('quizFeedback').className='quizFeedback hidden';
+  $('nextq').classList.add('hidden');$('prevq').classList.add('hidden');
+  const toggle=$('dayLoopToggle');
+  toggle.onclick=()=>{if(dayLoopActive)stopDayLoop(true);else startDayLoopTraining(0,true)};
+  $('dayLoopTop').onclick=()=>document.getElementById('dayLoopCard0')?.scrollIntoView({behavior:'smooth',block:'center'});
+  $('dayLoopRestart').onclick=()=>{stopDayLoop(true);startDayLoopTraining(0,true)};
+  if(autoStart)setTimeout(()=>startDayLoopTraining(0,true),180);
+  return true;
+}
+async function startDayLoopTraining(startIndex=0,newRound=false){
+  const cards=dayLoopCards();if(!cards.length)return;
+  stopDayLoop(true);dayLoopActive=true;if(newRound)dayLoopRound=0;
+  const token=++dayLoopToken;
+  const btn=$('dayLoopToggle');if(btn){btn.classList.add('active');btn.textContent='🔁 반복 듣기 ON';}
+  const recallWait=Math.max(900,Math.min(3000,Number(appSettings.sentencePause)||1500));
+  let idx=Math.max(0,Math.min(startIndex,cards.length-1));
+  while(dayLoopActive&&token===dayLoopToken){
+    dayLoopRound++;
+    for(;idx<cards.length;idx++){
+      if(!dayLoopActive||token!==dayLoopToken)return;
+      dayLoopIndex=idx;
+      document.querySelectorAll('.dayLoopCard.active').forEach(el=>el.classList.remove('active'));
+      const card=$('dayLoopCard'+idx);if(card){card.classList.add('active');card.scrollIntoView({behavior:'smooth',block:'center'});}
+      const status=$('dayLoopStatus');if(status)status.textContent=`${dayLoopRound}회째 · ${idx+1}/${cards.length} · 먼저 말해보세요`;
+      await new Promise(r=>setTimeout(r,recallWait));
+      if(!dayLoopActive||token!==dayLoopToken)return;
+      if(status)status.textContent=`${dayLoopRound}회째 · ${idx+1}/${cards.length} · 정답 듣기`;
+      const text=sentenceText(cards[idx]);
+      if(text)await speakComplete(text,getSpeechRate(),'en-US');
+      if(!dayLoopActive||token!==dayLoopToken)return;
+      await new Promise(r=>setTimeout(r,Math.max(250,Math.min(1800,Number(appSettings.sentencePause)||700))));
+    }
+    idx=0;
+  }
+}
+
 function showQuizFinish(){
   quizSessionDone=true;
   quizCurrent=null;
@@ -3313,6 +3384,9 @@ function showQuizFinish(){
   $('idx').textContent=total;
   $('total').textContent=total;
   $('bar').style.width='100%';
+  if(quizMode==='sentence'&&sentenceSourceMode==='practice'&&total>0){
+    renderDayLoopTraining(true);
+  }
 }
 
 function recallText(value){return decodeDataEntities(value==null?'':String(value));}
@@ -3349,6 +3423,7 @@ async function startSentenceContinuousRepeat(q,stage=1){
 }
 
 function setQuizMode(mode){
+  stopDayLoop(true);
   clearQuizAutoNext();
   const nextMode=['choice','recall','sentence','favorite','lexical'].includes(mode)?mode:'choice';
   if(quizMode===nextMode)return;
@@ -4181,6 +4256,7 @@ $('speakQuiz').addEventListener('click',()=>{
 });
 const sentenceSourceExample=$('sentenceSourceExample'),sentenceSourcePractice=$('sentenceSourcePractice');
 function setSentenceSource(mode){
+  stopDayLoop(true);
   sentenceSourceMode=mode==='practice'?'practice':'example';
   quizFilterMode=(quizFilterMode==='wrong')?'wrong':'all';
   localStorage.setItem(packKey('sentenceSourceMode'),sentenceSourceMode);
@@ -4224,7 +4300,7 @@ $('quizAllWrongBtn').onclick=function(e){
 };
 
 
-// v5.3.58 Daily study time tracking
+// v5.3.59 Daily study time tracking
 const STUDY_TIME_KEY='myVocaStudyTimeV1';let studyRangeDays=7;let studyLastActivity=Date.now();
 function studyDateKey(d=new Date()){const y=d.getFullYear(),m=String(d.getMonth()+1).padStart(2,'0'),day=String(d.getDate()).padStart(2,'0');return `${y}-${m}-${day}`}
 function loadStudyTime(){try{return JSON.parse(localStorage.getItem(STUDY_TIME_KEY)||'{}')||{}}catch(e){return {}}}
@@ -4511,6 +4587,7 @@ function startSelectedAutoLearning(){
 }
 
 function openDay(day,tabName='learn'){
+  try{stopDayLoop(true)}catch(e){}
   try{ if(typeof hideStandalonePages==='function') hideStandalonePages(); }catch(e){}
   if(!window.__repeatInternalNavigation){
     stopRepeatWakeSession();
@@ -4557,6 +4634,7 @@ function stopAllReadingForNavigation(){
 }
 
 function goHome(){
+  try{stopDayLoop(true)}catch(e){}
   try{ if(typeof hideStandalonePages==='function') hideStandalonePages(); }catch(e){}
   document.body.classList.remove('practiceReadingMode');if(currentCardRepeatActive)stopCurrentCardRepeatImmediately();saveSelectedProgress();
   try{ if(typeof stopSentenceRepeat==='function') stopSentenceRepeat(true); }catch(e){}
@@ -4655,7 +4733,7 @@ $('card').addEventListener('touchend',e=>{
 
 
 
-window.APP_VERSION='V5.3.58-single-file';
+window.APP_VERSION='V5.3.59-single-file';
 window.addEventListener('pagehide',()=>{__repeatWakeSession=false;forceReleaseWakeLock();});
 
 
@@ -4917,7 +4995,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
     if(action==='config'){openConfiguration();return}
     if(action==='usage'){openUsagePage();return}
     if(action==='whatsnew'){openUsagePage();setTimeout(()=>document.querySelector('#usagePage .configSection')?.scrollIntoView({behavior:'smooth',block:'start'}),120);return}
-    if(action==='info'){alert('MY VOCA v5.3.58\n기존 UI를 유지하면서 실전 문장 학습과 학습 기록 내보내기를 추가했습니다.');return}
+    if(action==='info'){alert('MY VOCA v5.3.59\n기존 UI를 유지하면서 실전 문장 학습과 학습 기록 내보내기를 추가했습니다.');return}
     if(action==='continue'){
       const p=readSelectedProgress();
       if(p&&Array.isArray(p.days)&&p.days.length){
