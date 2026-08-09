@@ -1,4 +1,5 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.18 · Wake Lock Fix</title>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><!-- MY VOCA V5.3.48 SINGLE FILE: upload this index.html only -->
+<title>MY VOCA v5.3.18 · Wake Lock Fix</title>
 <style>
 
 *{box-sizing:border-box}body{margin:0;background:#eef2f7;font-family:system-ui,-apple-system,"Segoe UI","Noto Sans KR",sans-serif;color:#111827}.app{max-width:720px;margin:auto;padding:14px 14px 100px}header{display:flex;justify-content:space-between;align-items:center}h1{font-size:20px;margin:0}.sub{font-size:12px;color:#667085}.count{background:#fff;padding:8px 12px;border-radius:999px;font-weight:900}.progress{height:8px;background:#d8dee7;border-radius:99px;overflow:hidden;margin:12px 0}.bar{height:100%;background:#22c55e}.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}.tab{border:1px solid #e5e7eb;background:#fff;border-radius:14px;padding:11px;font-weight:900}.active{background:#111827;color:#fff}.card{background:#fff;border-radius:28px;overflow:hidden;box-shadow:0 18px 45px #0f172a1f}.hero{height:245px;position:relative;overflow:hidden;padding:18px;color:#fff;background:linear-gradient(135deg,#0f766e,#2563eb);display:flex;flex-direction:column;justify-content:space-between;isolation:isolate}.hero:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 75% 20%,rgba(255,255,255,.28),transparent 28%),linear-gradient(180deg,transparent 50%,rgba(15,23,42,.34));z-index:-1}.heroTop{display:flex;justify-content:space-between;align-items:flex-start}.visualScene{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:92px;filter:drop-shadow(0 16px 16px rgba(15,23,42,.24));transform:translateY(7px)}.heroCopy{position:relative;z-index:2;padding-right:64px}.memoryPhrase{font-size:22px;font-weight:950;line-height:1.2;text-shadow:0 2px 10px rgba(0,0,0,.25)}.memoryKo{font-size:13px;font-weight:750;margin-top:6px;opacity:.9}.flipHint{position:absolute;right:18px;bottom:17px;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.25);padding:7px 10px;border-radius:999px;font-size:12px;font-weight:850}.hero.flipped .visualScene{opacity:.14}.hero.flipped .memoryPhrase{font-size:34px}.hero.flipped .memoryKo{font-size:17px}.hero.flipped:after{content:"암기 카드";position:absolute;left:18px;top:58px;font-size:12px;font-weight:900;letter-spacing:.08em;opacity:.78}.tag{font-size:12px;font-weight:900;background:#ffffff2a;padding:7px 10px;border-radius:99px;height:max-content}.fav,.speak{border:0;background:#fff;border-radius:50%;width:46px;height:46px;font-size:21px}.fav{position:relative;z-index:20;pointer-events:auto;cursor:pointer;color:#cbd5e1;border:2px solid #cbd5e1;background:#fff;box-shadow:0 4px 14px rgba(15,23,42,.12);font-weight:900}.fav.is-favorite{color:#ef4444;border-color:#ef4444;background:#fff1f2;transform:scale(1.06)}.body{padding:23px}.row{display:flex;justify-content:space-between;gap:12px}.word{font-size:39px;font-weight:950;line-height:1.05}.meaning{font-size:22px;font-weight:900;margin-top:13px}.section{border-top:1px solid #e5e7eb;margin-top:19px;padding-top:17px}.label{font-size:12px;color:#667085;font-weight:900;margin-bottom:8px}.chip{display:inline-block;background:#f2f4f7;border-radius:99px;padding:8px 10px;font-weight:800}.toolbar{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}.select,.toggle{width:100%;border:1px solid #d0d5dd;background:#fff;border-radius:14px;padding:11px 12px;font-weight:800;color:#344054}.metaLine{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}.missBadge{display:inline-flex;align-items:center;gap:4px;border-radius:999px;padding:6px 9px;font-size:13px;font-weight:900;background:#f2f4f7;color:#475467}.missBadge.warm{background:#fef3c7;color:#92400e}.missBadge.hot{background:#ffedd5;color:#9a3412}.missBadge.fire{background:#fee2e2;color:#b91c1c}.autoStatus{font-size:12px;color:#667085;margin-top:6px}.reviewHead{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:12px}.reviewCount{font-size:13px;font-weight:900;border-radius:999px;padding:6px 9px;background:#f2f4f7}.modeNote{font-size:12px;color:#667085;margin:-6px 2px 12px}.startOverlay{position:fixed;inset:0;background:rgba(15,23,42,.58);display:flex;align-items:center;justify-content:center;padding:24px;z-index:99}.startBox{max-width:420px;background:#fff;border-radius:24px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.25);text-align:center}.startBox h2{margin:0 0 8px}.startBox p{color:#667085;line-height:1.6}.startBox button{width:100%;border:0;border-radius:16px;padding:15px;background:#111827;color:#fff;font-size:17px;font-weight:900}.streak{font-size:13px;color:#667085;font-weight:800}.example{font-size:20px;font-weight:800;line-height:1.5}.trans{margin-top:8px;color:#475467;line-height:1.55}.question{font-size:18px;font-weight:850}.small{display:flex;gap:8px;margin-top:14px}.small button{flex:1;border:1px solid #e5e7eb;background:#fff;border-radius:13px;padding:11px;font-weight:800}.bottom{position:fixed;left:0;right:0;bottom:0;background:#f8fafcf0;padding:10px 14px}.inner{max-width:720px;margin:auto;display:grid;grid-template-columns:1fr 1fr;gap:10px}.btn{border:0;border-radius:18px;padding:17px;font-size:18px;font-weight:900}.know{background:#fff}.learn{background:#111827;color:#fff}.hidden{display:none}.quiz,.review{background:#fff;border-radius:24px;padding:22px}.option{display:block;width:100%;text-align:left;margin:10px 0;padding:14px;border:1px solid #e5e7eb;background:#fff;border-radius:14px;font-weight:700}.correct{background:#dcfce7!important;border-color:#22c55e!important}.wrong{background:#fee2e2!important;border-color:#ef4444!important}.quizControls{display:flex;gap:8px;align-items:center;margin-bottom:14px}.quizFeedback{margin:14px 0 6px;padding:13px 14px;border-radius:14px;font-weight:900;line-height:1.45}.quizFeedback.ok{background:#dcfce7;color:#166534}.quizFeedback.no{background:#fee2e2;color:#991b1b}.quizMeta{font-size:13px;color:#667085;font-weight:800;margin-top:7px}.item{border:1px solid #e5e7eb;border-radius:14px;padding:13px;margin-bottom:9px}@media(max-width:480px){.hero{height:225px}.visualScene{font-size:82px}.memoryPhrase{font-size:20px}.word{font-size:37px}}
@@ -483,6 +484,9 @@
 .quizFilterLabel{font-size:13px;font-weight:950;color:#475467;white-space:nowrap}
 .quizFilterSelect{flex:1;min-width:0;border:0;background:#fff;border-radius:11px;padding:11px 12px;font-size:15px;font-weight:900;color:#101828;box-shadow:0 1px 3px rgba(16,24,40,.08)}
 .quizFilterCount{font-size:12px;font-weight:900;color:#667085;white-space:nowrap}
+.sentenceSourceBar{display:none;grid-template-columns:auto 1fr;gap:10px;align-items:center;margin:10px 0 13px;padding:10px 12px;background:#fff7fb;border:1px solid #fbcfe8;border-radius:14px}
+.sentenceSourceBar.show{display:grid}.sentenceSourceLabel{font-size:13px;font-weight:950;color:#9d174d;white-space:nowrap}.sentenceSourceSwitch{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:4px;background:#fce7f3;border-radius:12px}.sentenceSourceBtn{border:0;background:transparent;color:#9d174d;border-radius:9px;padding:10px 8px;font-size:14px;font-weight:950;cursor:pointer}.sentenceSourceBtn.active{background:#fff;color:#be185d;box-shadow:0 2px 8px rgba(190,24,93,.12)}
+@media(max-width:480px){.sentenceSourceBar{grid-template-columns:1fr}.sentenceSourceLabel{text-align:center}.sentenceSourceBtn{font-size:13px;padding:9px 5px}}
 .recallGuide{margin:10px 0 14px;padding:12px 13px;border-radius:14px;background:#eff6ff;color:#1e40af;font-size:14px;font-weight:800;line-height:1.5}
 .recallActions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:14px}
 .recallAction{border:0;border-radius:15px;padding:15px 10px;font-size:16px;font-weight:950;cursor:pointer}
@@ -497,8 +501,14 @@
 
 
 .sentenceRecallBox{margin-top:14px;padding:17px;border:1px solid #dbeafe;border-radius:18px;background:#f8fbff}
+.sentenceStageNav{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.sentenceStageNavBtn{border:1px solid #d0d5dd;background:#fff;color:#667085;border-radius:999px;padding:7px 11px;font-size:12px;font-weight:900;cursor:pointer}
+.sentenceStageNavBtn.active{background:#4f46e5;border-color:#4f46e5;color:#fff}
+.sentenceStageNavArrow{color:#98a2b3;font-weight:900;font-size:12px}
 .sentenceStageBadge{display:inline-flex;align-items:center;border-radius:999px;padding:6px 10px;background:#e0e7ff;color:#3730a3;font-size:12px;font-weight:950;margin-bottom:10px}
 .sentencePromptKo{font-size:19px;font-weight:900;line-height:1.55;color:#1f2937}
+.sentenceKoSupport{margin-top:12px;padding-top:11px;border-top:1px solid #e5e7eb;font-size:15px;font-weight:800;line-height:1.6;color:#667085}
+.sentencePatternPair{padding:7px 0;border-top:1px dashed #fbcfe8}.sentencePatternPair:first-of-type{border-top:0;padding-top:2px}.sentencePatternPair .patternText{display:block}.sentencePatternPair .patternKo{display:block}
 .sentenceEnglish .patternWord{color:#ec4899;font-weight:950}.sentenceEnglish .studyWord{color:#2563eb;font-weight:950}
 .sentenceEnglish{margin-top:13px;font-size:22px;font-weight:850;line-height:1.6;color:#111827;min-height:72px}
 .sentenceHiddenBox{margin-top:13px;min-height:78px;border:2px dashed #cbd5e1;border-radius:14px;display:flex;align-items:center;justify-content:center;padding:16px;color:#64748b;font-weight:900;text-align:center;background:#fff}
@@ -708,11 +718,152 @@ body.compare-sheet-open{overflow:hidden}
 .unknownWordGuideSecondary{border:1px solid #d0d5dd;background:#fff;color:#475467;margin-top:8px}
 @media(max-width:480px){.unknownWordGuideOverlay{padding:14px}.unknownWordGuideCard{border-radius:22px;padding:20px 16px}.unknownWordGuideCard h2{font-size:21px}.unknownWordGuideMessage{font-size:13px}}
 
+/* v5.3.40 ACTUAL INLINE practical-reading UI */
+.practiceStoryList{display:flex !important;flex-direction:column !important;gap:7px !important}
+.practiceStoryItem{
+  position:relative !important;display:grid !important;grid-template-columns:minmax(0,1fr) 46px !important;
+  gap:12px !important;align-items:center !important;padding:12px 14px !important;margin:0 !important;
+  border:1px solid #dde3ea !important;border-radius:16px !important;background:#fff !important;
+  box-shadow:0 1px 2px rgba(15,23,42,.02) !important;overflow:visible !important
+}
+.practiceCardCopy{min-width:0 !important}
+.practiceStorySentence{
+  display:block !important;margin:0 !important;padding:0 !important;font-size:17px !important;line-height:1.24 !important;
+  font-weight:850 !important;color:#111827 !important;letter-spacing:-.018em !important
+}
+.practiceStoryTranslation{
+  display:block !important;margin:5px 0 0 !important;padding:0 !important;border:0 !important;
+  font-size:11px !important;line-height:1.42 !important;font-weight:400 !important;color:#4b5563 !important
+}
+.practiceSpeakBtn{
+  appearance:none !important;-webkit-appearance:none !important;display:flex !important;align-items:center !important;
+  justify-content:center !important;width:42px !important;min-width:42px !important;height:42px !important;
+  padding:0 !important;margin:0 !important;border:0 !important;outline:0 !important;border-radius:999px !important;
+  background:#edf3ff !important;font-size:20px !important;line-height:1 !important;box-shadow:none !important;cursor:pointer !important
+}
+.practiceTargetWord{color:#ec4899 !important;font-weight:950 !important;background:transparent !important}
+.practicePatternPhrase{color:#2563eb !important;font-weight:950 !important;background:transparent !important}
+.practiceStoryItem.practiceReadingNow{
+  background:#eaf2ff !important;border:2px solid #2563eb !important;
+  box-shadow:0 0 0 1px rgba(37,99,235,.06),0 5px 14px rgba(37,99,235,.08) !important
+}
+.practiceStoryItem.practiceReadingNow .practiceSpeakBtn{background:#dbeafe !important}
+.practiceStoryItem .patternWord{font-size:inherit !important}
+
+.readingReferenceSummary{
+  margin-top:8px !important;padding:10px !important;border:1px solid #f4bfd8 !important;border-radius:16px !important;background:#fff7fb !important
+}
+.readingReferenceTitle{margin:0 0 8px !important;color:#c81e65 !important;font-size:13px !important;line-height:1.3 !important;font-weight:900 !important}
+.readingReferenceBox{padding:8px 10px !important;border-radius:12px !important;background:#fff !important}
+.readingReferenceWords{border:1px solid #f6c0d7 !important}
+.readingReferencePatterns{margin-top:8px !important;border:1px solid #bfd8ff !important}
+.readingReferenceSubTitle{margin:0 0 5px !important;font-size:11px !important;line-height:1.3 !important;font-weight:900 !important}
+.readingReferenceWords .readingReferenceSubTitle{color:#e11d74 !important}
+.readingReferencePatterns .readingReferenceSubTitle{color:#2563eb !important}
+.readingReferenceColumns{display:grid !important;grid-template-columns:1fr 1fr !important;gap:5px 22px !important}
+.readingCompactRow{
+  display:grid !important;grid-template-columns:minmax(72px,.62fr) minmax(96px,1fr) !important;gap:7px !important;
+  align-items:start !important;padding:1px 0 !important;margin:0 !important;border:0 !important;background:transparent !important;
+  font-size:10.5px !important;line-height:1.3 !important
+}
+.readingCompactRow b{color:#d81b60 !important;font-size:inherit !important;font-weight:850 !important}
+.readingCompactRow span{color:#374151 !important;font-size:inherit !important;font-weight:400 !important}
+.readingCompactPattern{grid-template-columns:minmax(140px,1.18fr) minmax(115px,.82fr) !important;font-size:9.8px !important}
+.readingCompactPattern b{color:#2563eb !important}
+.readingPatternColumns{gap:5px 18px !important}
+
+@media(max-width:640px){
+  .practiceStoryList{gap:6px !important}
+  .practiceStoryItem{grid-template-columns:minmax(0,1fr) 40px !important;gap:10px !important;padding:10px 11px !important;border-radius:14px !important}
+  .practiceStorySentence{font-size:15.5px !important;line-height:1.27 !important}
+  .practiceStoryTranslation{font-size:10.5px !important;line-height:1.4 !important}
+  .practiceSpeakBtn{width:38px !important;min-width:38px !important;height:38px !important;font-size:18px !important}
+  .readingReferenceSummary{padding:8px !important}
+  .readingReferenceColumns{gap:4px 12px !important}
+  .readingCompactRow{grid-template-columns:minmax(60px,.60fr) minmax(80px,1fr) !important;font-size:9.6px !important}
+  .readingCompactPattern{grid-template-columns:minmax(108px,1.06fr) minmax(94px,.94fr) !important;font-size:8.9px !important}
+}
+
+/* v5.3.40 remove ONLY outer legacy speakers; keep card speaker */
+body.practiceReadingMode #speakW,
+body.practiceReadingMode #speakE,
+body.practiceReadingMode #speakQ,
+body.practiceReadingMode #speakPattern,
+body.practiceReadingMode #speakPatternExamples,
+body.practiceReadingMode #speakAllCollocations,
+body.practiceReadingMode #speakAllSynonyms,
+body.practiceReadingMode .detailSpeakBtn{
+  display:none !important;
+}
+
+/* keep speaker inside each reading card */
+body.practiceReadingMode .practiceSpeakBtn{
+  display:flex !important;
+}
+
+/* reclaim width that legacy outside speaker controls used */
+body.practiceReadingMode #learn .section,
+body.practiceReadingMode #learn .sectionBody,
+body.practiceReadingMode #ex,
+body.practiceReadingMode .practiceStoryList{
+  width:100% !important;
+  max-width:none !important;
+}
+body.practiceReadingMode .practiceStoryItem{
+  width:100% !important;
+  max-width:none !important;
+  grid-template-columns:minmax(0,1fr) 42px !important;
+}
+body.practiceReadingMode .practiceCardCopy{
+  min-width:0 !important;
+  width:100% !important;
+}
+
+/* v5.3.40 vertical reading summary + hide legacy details */
+body.practiceReadingMode .readingReferenceColumns{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:0 !important;
+}
+body.practiceReadingMode .readingCompactRow,
+body.practiceReadingMode .readingCompactPattern{
+  display:grid !important;
+  grid-template-columns:minmax(145px,.9fr) minmax(0,1.1fr) !important;
+  gap:10px !important;
+  width:100% !important;
+  padding:7px 0 !important;
+  border-bottom:1px solid rgba(148,163,184,.18) !important;
+  font-size:11px !important;
+  line-height:1.4 !important;
+}
+body.practiceReadingMode .readingCompactRow b,
+body.practiceReadingMode .readingCompactPattern b,
+body.practiceReadingMode .readingCompactRow span,
+body.practiceReadingMode .readingCompactPattern span{
+  white-space:normal !important;
+  overflow:visible !important;
+  text-overflow:clip !important;
+  min-width:0 !important;
+}
+body.practiceReadingMode .readingCompactRow span,
+body.practiceReadingMode .readingCompactPattern span{
+  font-weight:400 !important;
+}
+body.practiceReadingMode .readingCompactRow:last-child,
+body.practiceReadingMode .readingCompactPattern:last-child{
+  border-bottom:0 !important;
+}
+
+/* practical reading ends at the 핵심 표현 summary */
+body.practiceReadingMode #morePanel{
+  display:none !important;
+}
+
 </style>
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<link rel="manifest" href="./manifest.webmanifest">
+
 
 </head><body>
 
@@ -750,9 +901,10 @@ body.compare-sheet-open{overflow:hidden}
     <div class="drawerSectionTitle">기록과 설정</div>
     <button class="drawerItem" data-drawer-action="score"><span class="drawerIcon">📊</span><span class="drawerItemText">학습 통계<small>스코어와 DAY별 기록</small></span></button>
     <button class="drawerItem" data-drawer-action="forget"><span class="drawerIcon">🧠</span><span class="drawerItemText">망각곡선<small>오늘의 복습 대상 확인</small></span></button>
+    <button class="drawerItem" data-drawer-action="export"><span class="drawerIcon">📤</span><span class="drawerItemText">학습 기록 내보내기<small>오답 · 모르는 단어 저장</small></span></button>
     <button class="drawerItem" data-drawer-action="config"><span class="drawerIcon">⚙️</span><span class="drawerItemText">Config & 사용방법<small>음성·반복 설정과 매뉴얼</small></span></button>
     <button class="drawerItem" data-drawer-action="whatsnew"><span class="drawerIcon">🆕</span><span class="drawerItemText">업데이트 내역<small>이번 버전 변경 사항</small></span></button>
-    <button class="drawerItem" data-drawer-action="info"><span class="drawerIcon">ℹ️</span><span class="drawerItemText">앱 정보<small>MY VOCA v5.1</small></span></button>
+    <button class="drawerItem" data-drawer-action="info"><span class="drawerIcon">ℹ️</span><span class="drawerItemText">앱 정보<small>MY VOCA v5.3.40</small></span></button>
   </nav>
 </aside>
 
@@ -762,7 +914,7 @@ body.compare-sheet-open{overflow:hidden}
       <div>
         <div class="homeEyebrow" id="homeCourseEyebrow">MY VOCA UNIFIED COURSE · 69 DAYS</div>
         <h1 id="homeCourseTitle">MY VOCA</h1>
-        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.1 · COMPARE CENTER</div>
+        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.40 · MINIMAL PRACTICE</div>
       </div>
       <div class="homeDayBadge"><b id="homeRegisteredDays">30</b><span>등록 Day</span></div>
     </section>
@@ -784,7 +936,7 @@ body.compare-sheet-open{overflow:hidden}
 <section class="homePlaybackCard">
       <div class="homePlaybackTitle">🎧 학습 재생 설정</div>
       <div class="homePlaybackGrid">
-        <div class="homePlaybackField"><label for="homeOrderMode">학습 순서</label><select id="homeOrderMode"><option value="book">📘 기본 순서</option><option value="quizWrongDesc">❌ 퀴즈 오답 많은 순</option><option value="quizWeak">🎯 틀린 단어만</option><option value="favorite">⭐ 모르는 단어</option><option value="wrongFav">🎯⭐ 틀린 단어 + 모르는 단어</option><option value="quizRateAsc">📉 퀴즈 정답률 낮은 순</option><option value="quizRateDesc">📈 퀴즈 정답률 높은 순</option><option value="random">🔀 랜덤</option></select></div>
+        <div class="homePlaybackField"><label for="homeOrderMode">학습 순서</label><select id="homeOrderMode"><option value="book">📘 기본 순서</option><option value="quizWrongDesc">❌ 퀴즈 오답 많은 순</option><option value="quizWeak">🎯 틀린 단어만</option><option value="favorite">⭐ 모르는 단어</option><option value="wrongFav">🎯⭐ 틀린 단어 + 모르는 단어</option><option value="quizRateAsc">📉 퀴즈 정답률 낮은 순</option><option value="quizRateDesc">📈 퀴즈 정답률 높은 순</option><option value="random">🔀 랜덤</option><option value="practiceSentence">🗣 실전 문장 연습</option></select></div>
         <div class="homePlaybackField"><label for="homeSpeechMode">자동 읽기 범위</label><select id="homeSpeechMode"><option value="off">🔇 자동 읽기 끄기</option><option value="word">🔤 단어 읽기 · 단어+뜻</option><option value="all">🎙 단어 + 예문 + 패러프레이즈</option><option value="full">🔊 전체 읽기</option></select></div>
       </div>
       <div class="homePlaybackHint">여기서 고른 값이 모든 Day 학습에 적용됩니다. 학습 중에는 화면 아래 고정 버튼으로 재생을 즉시 멈추거나 현재 카드부터 다시 시작할 수 있습니다.</div>
@@ -799,6 +951,7 @@ body.compare-sheet-open{overflow:hidden}
             <option value="wrong">틀린 단어만</option>
             <option value="favorite">모르는 단어</option>
             <option value="wrongFav">틀린 단어 + 모르는 단어</option>
+                      <option value="sentences">🗣 실전 문장만</option>
           </select>
           <select id="autoRepeat" class="repeatSelect" aria-label="연속 재생 학습 횟수"><option value="1" selected>1회</option><option value="2">2회</option><option value="3">3회</option><option value="5">5회</option><option value="10">10회</option></select>
           <button id="selectedStartBtn" class="selectedStartBtn" type="button">▶ DAY별 단어 학습</button>
@@ -933,7 +1086,7 @@ body.compare-sheet-open{overflow:hidden}
 </div>
 
 <div id="dayAppPage" class="hidden">
-<div class="app"><header class="dayHeader"><button id="homeBtn" class="homeBtn" aria-label="홈으로">⌂</button><div class="dayHeaderTitle"><h1>Speaking Priority VOCA · Day 1</h1><div class="sub">회화 활용도 중심 30일 코스</div></div><div class="count"><span id="idx">1</span>/<span id="total">57</span></div></header><div class="progress"><div id="bar" class="bar"></div></div><div class="tabs fourTabs"><button class="tab active" data-v="learn">학습</button><button class="tab" data-v="quiz">퀴즈</button><button class="tab" data-v="forget">망각곡선</button><button class="tab" data-v="score">스코어</button></div><div class="toolbar" id="toolbar"><select id="orderMode" class="select" aria-label="학습 순서"><option value="book">📘 기본 순서</option><option value="quizWrongDesc" selected>❌ 퀴즈 오답 많은 순</option><option value="quizWeak">🎯 틀린 단어만</option><option value="favorite">⭐ 모르는 단어</option><option value="wrongFav">🎯⭐ 틀린 단어 + 모르는 단어</option><option value="quizRateAsc">📉 퀴즈 정답률 낮은 순</option><option value="quizRateDesc">📈 퀴즈 정답률 높은 순</option><option value="random">🔀 랜덤</option></select><select id="speechMode" class="select" aria-label="자동 읽기"><option value="off">🔇 자동 읽기 끄기</option><option value="word">🔤 단어 읽기 · 단어+뜻</option><option value="all">🎙 단어 + 예문 + 패러프레이즈</option><option value="full" selected>🔊 전체 읽기</option></select></div><div class="modeNote" id="modeNote"></div>
+<div class="app"><header class="dayHeader"><button id="homeBtn" class="homeBtn" aria-label="홈으로">⌂</button><div class="dayHeaderTitle"><h1>Speaking Priority VOCA · Day 1</h1><div class="sub">회화 활용도 중심 30일 코스</div></div><div class="count"><span id="idx">1</span>/<span id="total">57</span></div></header><div class="progress"><div id="bar" class="bar"></div></div><div class="tabs fourTabs"><button class="tab active" data-v="learn">학습</button><button class="tab" data-v="quiz">퀴즈</button><button class="tab" data-v="forget">망각곡선</button><button class="tab" data-v="score">스코어</button></div><div class="toolbar" id="toolbar"><select id="orderMode" class="select" aria-label="학습 순서"><option value="book">📘 기본 순서</option><option value="quizWrongDesc" selected>❌ 퀴즈 오답 많은 순</option><option value="quizWeak">🎯 틀린 단어만</option><option value="favorite">⭐ 모르는 단어</option><option value="wrongFav">🎯⭐ 틀린 단어 + 모르는 단어</option><option value="quizRateAsc">📉 퀴즈 정답률 낮은 순</option><option value="quizRateDesc">📈 퀴즈 정답률 높은 순</option><option value="random">🔀 랜덤</option><option value="practiceSentence">🗣 실전 문장 연습</option></select><select id="speechMode" class="select" aria-label="자동 읽기"><option value="off">🔇 자동 읽기 끄기</option><option value="word">🔤 단어 읽기 · 단어+뜻</option><option value="all">🎙 단어 + 예문 + 패러프레이즈</option><option value="full" selected>🔊 전체 읽기</option></select></div><div class="modeNote" id="modeNote"></div>
 <section id="learn"><div id="autoPlayBadge" class="autoPlayBadge"></div><div class="card" id="card"><div class="hero" id="hero"><div class="heroTop"><span class="tag">DAY 1 · SPEAKING PRIORITY</span><button class="fav" id="fav">☆</button></div><div class="visualScene" id="visualScene">🎯</div><div class="heroCopy"><div class="memoryPhrase" id="memoryPhrase"></div><div class="memoryKo" id="memoryKo"></div></div><div class="flipHint">탭해서 카드 뒤집기</div></div><div class="body"><div class="row"><div><div class="word" id="word"></div><div class="pronunciation" id="pronunciation"></div></div><button class="speak" id="speakW">🔊</button></div><div class="meaning" id="meaning"></div><div class="metaLine"><div id="stars"></div><span class="streak" id="studyCountBadge">학습 0회</span><span class="streak" id="learnQuizCountBadge">퀴즈 오답 0회 / 시도 0회</span></div><div class="autoStatus" id="autoStatus">새 카드가 나오면 자동으로 읽어 줍니다.</div><div class="section"><div class="label">첫 번째 예문</div><div class="row"><div><div class="example" id="ex"></div><div class="trans" id="tr"></div></div><button class="speak" id="speakE">🔊</button></div></div><div class="section">
   <div class="label">🔄 패러프레이징 예문</div>
   <div id="synonymBadge" class="synonymBadge"></div>
@@ -1001,6 +1154,13 @@ body.compare-sheet-open{overflow:hidden}
     <option value="wrongFav">틀린 단어 + 모르는 단어</option>
   </select>
   <span id="quizFilterCount" class="quizFilterCount">0개</span>
+</div>
+<div id="sentenceSourceBar" class="sentenceSourceBar">
+  <span class="sentenceSourceLabel">문장 소스</span>
+  <div class="sentenceSourceSwitch" role="group" aria-label="문장 말하기 학습 소스">
+    <button id="sentenceSourceExample" class="sentenceSourceBtn active" type="button">학습 예문</button>
+    <button id="sentenceSourcePractice" class="sentenceSourceBtn" type="button">실전 리딩</button>
+  </div>
 </div>
 <div id="recallGuide" class="recallGuide hidden">문제를 보고 답을 소리 내어 말하세요. 말하지 못하면 바로 ‘오답’으로 기록하세요.</div>
 <div class="quizControls" style="flex-wrap:wrap"><select id="quizDirection" class="select" style="flex:1;min-width:160px"><option value="enKo">영어 → 한글</option><option value="koEn">한글 → 영어</option></select><button id="speakQuiz" class="speak" aria-label="퀴즈 단어 듣기">🔊</button></div><div class="metaLine" id="quizStatLine"><span class="missBadge" id="quizCorrectBadge">정답 0회</span><span class="missBadge" id="quizWrongBadge">오답 0회</span><span class="missBadge" id="quizStreakBadge">연속 정답 0회</span><span class="missBadge" id="quizAccuracyBadge">정답률 0%</span></div><div class="word" id="qw"></div><div class="quizMeta" id="quizMeta"></div><div id="opts"></div><div id="quizFeedback" class="quizFeedback hidden"></div><div class="quizQuestionNav quizQuestionNavThree"><button class="option quizNavNext" id="nextq" type="button">다음 →</button><button class="option quizNavPrev" id="prevq" type="button">← 이전</button><button id="quizPlayPause" class="option quizPlaybackToggle" type="button">🔁 자동 넘기기 ON</button></div></section><section id="score" class="hidden score">
@@ -1334,6 +1494,29 @@ function collectHighlightRanges(text,phrase){
   }
   return ranges;
 }
+function collectSentencePatternRanges(text,phrase){
+  text=String(text||'');
+  const raw=String(phrase||'').trim();
+  if(!raw)return [];
+  const cleaned=raw
+    .replace(/\b(one's|someone's|somebody's)\b/gi,'')
+    .replace(/\b(something|someone|somebody)\b/gi,'')
+    .replace(/-?ing\b/gi,'')
+    .replace(/[.…]+/g,' ')
+    .replace(/\s+/g,' ')
+    .trim();
+  const tokens=cleaned.toLowerCase().match(/[a-z][a-z'-]*/g)||[];
+  if(!tokens.length)return [];
+  const optionalAdv=String.raw`(?:\s+(?:(?:really|very|quite|rather|so|too|just|still|already|almost|actually|definitely|usually|often|mainly|mostly|largely|completely|gradually|highly|strongly|deeply|fully|simply|quickly|slowly)|[a-z]+ly)){0,2}\s+`;
+  const parts=tokens.map(t=>`(?:${highlightTokenPattern(t)})`);
+  const body=parts.map((x,i)=>i?`(?:\\s+|[-–—]\\s*|${optionalAdv})${x}`:x).join('');
+  const ranges=[];
+  try{
+    const rx=new RegExp(`\\b${body}\\b`,'gi');let m;
+    while((m=rx.exec(text))){ranges.push([m.index,m.index+m[0].length]);if(!m[0].length)rx.lastIndex++;}
+  }catch(e){}
+  return ranges;
+}
 function highlightPhrase(text,phrase,cls='studyWord'){
   text=String(text||'');phrase=String(phrase||'').trim();
   if(!phrase)return escHtml(text);
@@ -1367,6 +1550,42 @@ function highlightMultiplePhrases(text,phrases,cls='studyWord'){
   for(const [a,b] of merged){html+=escHtml(text.slice(pos,a))+`<span class="${cls}">${escHtml(text.slice(a,b))}</span>`;pos=b;}
   return html+escHtml(text.slice(pos));
 }
+
+let PRACTICE_SENTENCES_MINIMAL=[{"id":"P_D01_01","day":1,"no":1,"type":"story","situation":"생활 습관 개선","sentence":"A few months ago, I decided that I wanted to improve my daily routine.","translation":"몇 달 전, 저는 일상생활을 좀 더 나아지게 하고 싶다는 생각을 했습니다.","targets":["improve"],"targetMeanings":["나아지다, 향상시키다"],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D01_02","day":1,"no":2,"type":"story","situation":"생활 습관 개선","sentence":"It took me a while to adjust to my new schedule, especially because I wasn't used to waking up early.","translation":"새로운 생활 패턴에 적응하는 데 시간이 좀 걸렸는데, 특히 일찍 일어나는 것에 익숙하지 않았기 때문입니다.","targets":["adjust"],"targetMeanings":["적응하다, 조정하다"],"patterns":["It took me a while to"],"patternMeanings":["~하는 데 시간이 좀 걸렸다"],"opicLevel":"AL"},{"id":"P_D01_03","day":1,"no":3,"type":"story","situation":"생활 습관 개선","sentence":"At first, I tried to change too many things at once.","translation":"처음에는 너무 많은 것을 한꺼번에 바꾸려고 했습니다.","targets":[],"targetMeanings":[],"patterns":["At first"],"patternMeanings":["처음에는"],"opicLevel":"AL"},{"id":"P_D01_04","day":1,"no":4,"type":"story","situation":"생활 습관 개선","sentence":"It wasn't until I became exhausted that I realized I needed to take things one step at a time.","translation":"완전히 지치고 나서야 한 번에 하나씩 천천히 해야 한다는 것을 깨달았습니다.","targets":["realize"],"targetMeanings":["깨닫다, 알아차리다"],"patterns":["It wasn't until","that"],"patternMeanings":["~하고 나서야 비로소","~라는 것 / ~하도록 연결하는 표현"],"opicLevel":"AL"},{"id":"P_D01_05","day":1,"no":5,"type":"story","situation":"생활 습관 개선","sentence":"So I started with a few simple habits.","translation":"그래서 몇 가지 간단한 습관부터 시작했습니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D01_06","day":1,"no":6,"type":"story","situation":"생활 습관 개선","sentence":"I've been trying to exercise regularly, eat better, and practice English every day.","translation":"규칙적으로 운동하고, 더 건강하게 먹고, 매일 영어를 연습하려고 꾸준히 노력하고 있습니다.","targets":[],"targetMeanings":[],"patterns":["I've been trying to"],"patternMeanings":["계속 ~하려고 노력해 왔다"],"opicLevel":"AL"},{"id":"P_D01_07","day":1,"no":7,"type":"story","situation":"생활 습관 개선","sentence":"I also try to avoid checking my phone right before bed.","translation":"또한 잠자리에 들기 직전에는 휴대폰을 보는 것을 피하려고 합니다.","targets":["avoid"],"targetMeanings":["피하다"],"patterns":["I try to avoid"],"patternMeanings":["~하는 것을 피하려고 한다"],"opicLevel":"AL"},{"id":"P_D01_08","day":1,"no":8,"type":"story","situation":"생활 습관 개선","sentence":"Instead, I'd rather read a book or spend some quiet time with my family. I prefer to relax that way.","translation":"그 대신 책을 읽거나 가족과 조용한 시간을 보내는 편이 더 좋습니다. 저는 그렇게 쉬는 것을 더 선호합니다.","targets":["prefer"],"targetMeanings":["선호하다"],"patterns":["I'd rather"],"patternMeanings":["차라리 ~하는 편이 낫다"],"opicLevel":"AL"},{"id":"P_D01_09","day":1,"no":9,"type":"story","situation":"생활 습관 개선","sentence":"These small changes have helped me sleep better and feel more energetic during the day.","translation":"이런 작은 변화들 덕분에 잠도 더 잘 자고 낮에는 활력도 더 생겼습니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D01_10","day":1,"no":10,"type":"story","situation":"생활 습관 개선","sentence":"One thing that encouraged me was seeing small improvements every week.","translation":"저에게 힘이 되었던 것 중 하나는 매주 조금씩 나아지는 모습을 확인하는 것이었습니다.","targets":["encourage"],"targetMeanings":["장려하다, 격려하다"],"patterns":["One thing that encouraged me was"],"patternMeanings":["나에게 힘이 되었던 한 가지는 ~였다"],"opicLevel":"AL"},{"id":"P_D01_11","day":1,"no":11,"type":"story","situation":"생활 습관 개선","sentence":"Eventually, I finally managed to stick to my routine even on busy days.","translation":"결국 바쁜 날에도 생활 습관을 유지하는 데 성공했습니다.","targets":["manage"],"targetMeanings":["해내다, 성공적으로 처리하다"],"patterns":["I finally managed to"],"patternMeanings":["마침내 ~하는 데 성공했다"],"opicLevel":"AL"},{"id":"P_D01_12","day":1,"no":12,"type":"story","situation":"생활 습관 개선","sentence":"I'm proud that I've accomplished something I had failed to do many times before.","translation":"예전에는 여러 번 실패했던 일을 이번에는 해냈다는 것이 자랑스럽습니다.","targets":["accomplish"],"targetMeanings":["성취하다, 이루어 내다"],"patterns":["I'm proud that"],"patternMeanings":["~한 것이 자랑스럽다"],"opicLevel":"AL"},{"id":"P_D01_13","day":1,"no":13,"type":"story","situation":"생활 습관 개선","sentence":"Through this experience, I've come to appreciate how important small habits can be.","translation":"이 경험을 통해 작은 습관이 얼마나 중요한지 그 가치를 알게 되었습니다.","targets":["appreciate"],"targetMeanings":["인식하다, 감사하다"],"patterns":["I've come to appreciate"],"patternMeanings":["~의 가치를 알게 되었다"],"opicLevel":"AL"},{"id":"P_D01_14","day":1,"no":14,"type":"story","situation":"생활 습관 개선","sentence":"If a friend wanted to make a similar change, I'd definitely recommend starting small rather than trying to change everything at once.","translation":"만약 친구가 비슷한 변화를 시도하고 싶다고 한다면, 모든 것을 한꺼번에 바꾸기보다는 작은 것부터 시작하라고 꼭 추천하고 싶습니다.","targets":["recommend"],"targetMeanings":["추천하다"],"patterns":["I'd definitely recommend"],"patternMeanings":["꼭 ~을 추천하고 싶다"],"opicLevel":"AL"},{"id":"P_D02_01","day":2,"no":1,"type":"story","situation":"영어 말하기 실력 향상","sentence":"A while ago, I decided to take my English more seriously because I wanted to become a more confident speaker.","translation":"얼마 전, 저는 좀 더 자신감 있게 영어를 말하고 싶어서 영어 공부를 더 진지하게 해보기로 결심했습니다.","targets":["decide"],"targetMeanings":["결정하다"],"patterns":["I decided to"],"patternMeanings":["~하기로 결심했다"],"opicLevel":"AL"},{"id":"P_D02_02","day":2,"no":2,"type":"story","situation":"영어 말하기 실력 향상","sentence":"One of the biggest challenges was speaking without translating everything in my head first.","translation":"가장 큰 어려움 중 하나는 머릿속에서 모든 것을 먼저 번역하지 않고 바로 말하는 것이었습니다.","targets":["challenge"],"targetMeanings":["도전/어려움"],"patterns":["One of the biggest challenges was"],"patternMeanings":["가장 큰 어려움 중 하나는 ~"],"opicLevel":"AL"},{"id":"P_D02_03","day":2,"no":3,"type":"story","situation":"영어 말하기 실력 향상","sentence":"I knew a lot of words, but using them naturally in a real conversation was a completely different challenge.","translation":"단어는 많이 알고 있었지만, 실제 대화에서 자연스럽게 사용하는 것은 완전히 다른 도전이었습니다.","targets":["challenge"],"targetMeanings":["도전/어려움"],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D02_04","day":2,"no":4,"type":"story","situation":"영어 말하기 실력 향상","sentence":"So, I've been working on ways to develop better speaking habits. Instead of worrying too much about grammar, I try to focus on getting my message across clearly.","translation":"그래서 더 좋은 말하기 습관을 기르기 위해 계속 노력해 왔습니다. 문법을 지나치게 걱정하기보다는 제가 하고 싶은 말을 명확하게 전달하는 데 집중하려고 합니다.","targets":["develop","focus"],"targetMeanings":["발전시키다","집중하다"],"patterns":["I've been working on","I try to focus on"],"patternMeanings":["계속 ~을 발전시키려고 노력하고 있다","~에 집중하려고 한다"],"opicLevel":"AL"},{"id":"P_D02_05","day":2,"no":5,"type":"story","situation":"영어 말하기 실력 향상","sentence":"At one point, I was considering spending more time studying grammar and memorizing vocabulary. But I soon recognized that knowing English and actually speaking it were two different things.","translation":"한때는 문법 공부와 단어 암기에 더 많은 시간을 투자할까 고민하기도 했습니다. 하지만 영어를 아는 것과 실제로 영어를 말하는 것은 서로 다른 일이라는 것을 곧 깨닫게 되었습니다.","targets":["consider","recognize"],"targetMeanings":["고려하다","알아보다/인식하다"],"patterns":["I'm considering"],"patternMeanings":["~을 고려하고 있다"],"opicLevel":"AL"},{"id":"P_D02_06","day":2,"no":6,"type":"story","situation":"영어 말하기 실력 향상","sentence":"That's when I started practicing out loud every day, even when I was alone. My goal is to achieve a level where I can express myself naturally without constantly thinking about grammar.","translation":"그때부터 혼자 있을 때도 매일 소리 내어 영어를 연습하기 시작했습니다. 제 목표는 문법을 계속 생각하지 않고도 자연스럽게 제 생각을 표현할 수 있는 수준에 도달하는 것입니다.","targets":["achieve"],"targetMeanings":["달성하다"],"patterns":["My goal is to"],"patternMeanings":["제 목표는 ~하는 것이다"],"opicLevel":"AL"},{"id":"P_D02_07","day":2,"no":7,"type":"story","situation":"영어 말하기 실력 향상","sentence":"Of course, there are still times when I get stuck or can't find the right word. Whenever that happens, I remind myself that making mistakes is simply part of the learning process.","translation":"물론 아직도 말이 막히거나 적절한 단어가 떠오르지 않을 때가 있습니다. 그럴 때마다 실수하는 것도 학습 과정의 일부라고 스스로에게 이야기합니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D02_08","day":2,"no":8,"type":"story","situation":"영어 말하기 실력 향상","sentence":"I'm grateful for the support I've received from the people around me. Their encouragement has helped me keep going, especially when I felt like I wasn't improving fast enough.","translation":"저는 주변 사람들에게 받은 응원과 도움에 감사하고 있습니다. 특히 실력이 생각만큼 빨리 늘지 않는다고 느낄 때 그들의 응원 덕분에 계속할 수 있었습니다.","targets":["support"],"targetMeanings":["지원하다/지지하다"],"patterns":["I'm grateful for"],"patternMeanings":["~에 감사하고 있다"],"opicLevel":"AL"},{"id":"P_D02_09","day":2,"no":9,"type":"story","situation":"영어 말하기 실력 향상","sentence":"Looking back, one of the best experiences I've had was realizing that I could actually have a long conversation in English without feeling nervous.","translation":"돌이켜보면, 제가 했던 최고의 경험 중 하나는 긴장하지 않고 영어로 긴 대화를 실제로 할 수 있다는 것을 깨달았던 순간입니다.","targets":["experience"],"targetMeanings":["경험하다/경험"],"patterns":["One of the best experiences I've had was"],"patternMeanings":["제가 했던 최고의 경험 중 하나는 ~"],"opicLevel":"AL"},{"id":"P_D02_10","day":2,"no":10,"type":"story","situation":"영어 말하기 실력 향상","sentence":"That experience gave me much more confidence and made me want to practice even more.","translation":"그 경험은 제게 훨씬 더 큰 자신감을 주었고 영어를 더욱 연습하고 싶게 만들었습니다.","targets":["experience"],"targetMeanings":["경험하다/경험"],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D02_11","day":2,"no":11,"type":"story","situation":"영어 말하기 실력 향상","sentence":"If someone asked me how to become a better English speaker, I'd suggest speaking as much as possible instead of waiting until your English is perfect.","translation":"누군가 영어 말하기를 잘하려면 어떻게 해야 하냐고 묻는다면, 영어가 완벽해질 때까지 기다리기보다 가능한 한 많이 말해보라고 권하고 싶습니다.","targets":["suggest"],"targetMeanings":["제안하다"],"patterns":["I'd suggest"],"patternMeanings":["~을 제안/추천하고 싶다"],"opicLevel":"AL"},{"id":"P_D02_12","day":2,"no":12,"type":"story","situation":"영어 말하기 실력 향상","sentence":"In the end, I've learned that progress doesn't happen overnight. The important thing is to focus on consistent practice and keep moving forward.","translation":"결국 발전은 하루아침에 이루어지지 않는다는 것을 배웠습니다. 중요한 것은 꾸준한 연습에 집중하면서 계속 앞으로 나아가는 것입니다.","targets":["focus"],"targetMeanings":["집중하다"],"patterns":["I try to focus on"],"patternMeanings":["~에 집중하려고 한다"],"opicLevel":"AL"},{"id":"P_D03_01","day":3,"no":1,"type":"story","situation":"해외여행과 새로운 경험","sentence":"Last year, I took a short trip abroad, and I was really impressed by how different everyday life felt there.","translation":"작년에 짧게 해외여행을 갔는데, 그곳의 일상이 얼마나 다른지 보고 정말 인상 깊었습니다.","targets":["impress"],"targetMeanings":["감동을 주다"],"patterns":["I was really impressed by"],"patternMeanings":["~에 정말 감동했어요"],"opicLevel":"AL"},{"id":"P_D03_02","day":3,"no":2,"type":"story","situation":"해외여행과 새로운 경험","sentence":"At first, I was a little nervous because I wasn't sure whether I could communicate clearly with local people.","translation":"처음에는 현지 사람들과 제대로 의사소통할 수 있을지 확신이 없어서 조금 긴장했습니다.","targets":["communicate"],"targetMeanings":["의사소통하다"],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D03_03","day":3,"no":3,"type":"story","situation":"해외여행과 새로운 경험","sentence":"But through that experience, I've learned to communicate even when I don't know the perfect word.","translation":"하지만 그 경험을 통해 완벽한 단어를 모르더라도 의사소통하는 법을 배웠습니다.","targets":["communicate"],"targetMeanings":["의사소통하다"],"patterns":["I've learned to"],"patternMeanings":["~하는 법을 배웠어요"],"opicLevel":"AL"},{"id":"P_D03_04","day":3,"no":4,"type":"story","situation":"해외여행과 새로운 경험","sentence":"I also realized that it's important to maintain a positive attitude when something doesn't go as planned.","translation":"또 일이 계획대로 되지 않을 때 긍정적인 태도를 유지하는 것이 중요하다는 것을 깨달았습니다.","targets":["maintain"],"targetMeanings":["유지하다"],"patterns":["It's important to"],"patternMeanings":["~하는 것이 중요해요"],"opicLevel":"AL"},{"id":"P_D03_05","day":3,"no":5,"type":"story","situation":"해외여행과 새로운 경험","sentence":"These days, I'm getting ready to take another trip, so I've been checking transportation, hotels, and places I want to visit.","translation":"요즘은 또 다른 여행을 준비하고 있어서 교통편, 호텔, 가보고 싶은 장소들을 확인하고 있습니다.","targets":["prepare"],"targetMeanings":["준비하다"],"patterns":["I'm getting ready to"],"patternMeanings":["~을 준비하고 있어요"],"opicLevel":"AL"},{"id":"P_D03_06","day":3,"no":6,"type":"story","situation":"해외여행과 새로운 경험","sentence":"On my last trip, I had a chance to participate in a small local event, and it turned out to be one of the most memorable parts of the trip.","translation":"지난 여행에서는 작은 현지 행사에 참여할 기회가 있었는데, 그 경험이 여행에서 가장 기억에 남는 순간 중 하나가 되었습니다.","targets":["participate"],"targetMeanings":["참여하다"],"patterns":["I had a chance to"],"patternMeanings":["~할 기회가 있었어요"],"opicLevel":"AL"},{"id":"P_D03_07","day":3,"no":7,"type":"story","situation":"해외여행과 새로운 경험","sentence":"Whenever I travel, I enjoy exploring neighborhoods that aren't crowded with tourists.","translation":"여행할 때면 관광객으로 붐비지 않는 동네를 둘러보는 것을 좋아합니다.","targets":["explore"],"targetMeanings":["탐험하다; 살펴보다"],"patterns":["I enjoy exploring"],"patternMeanings":["~을 둘러보는 것을 좋아해요"],"opicLevel":"AL"},{"id":"P_D03_08","day":3,"no":8,"type":"story","situation":"해외여행과 새로운 경험","sentence":"During one of those walks, I was surprised to find a tiny café that served some of the best food I had on the entire trip.","translation":"그렇게 걷던 중 작은 카페를 발견했는데, 여행 전체에서 먹었던 음식 중 손꼽힐 만큼 맛있어서 놀랐습니다.","targets":["discover"],"targetMeanings":["발견하다"],"patterns":["I was surprised to find"],"patternMeanings":["~을 발견해서 놀랐어요"],"opicLevel":"AL"},{"id":"P_D03_09","day":3,"no":9,"type":"story","situation":"해외여행과 새로운 경험","sentence":"Moments like that make me imagine what it would be like to live in another country for a few months.","translation":"그런 순간을 경험하면 몇 달 동안 다른 나라에서 살아보는 것이 어떨지 상상하게 됩니다.","targets":["imagine"],"targetMeanings":["상상하다"],"patterns":["I can imagine"],"patternMeanings":["~을 상상할 수 있어요"],"opicLevel":"AL"},{"id":"P_D03_10","day":3,"no":10,"type":"story","situation":"해외여행과 새로운 경험","sentence":"Of course, I can't afford to travel whenever I want, so I usually save money and plan my trips well in advance.","translation":"물론 제가 원할 때마다 여행할 만큼 여유가 있는 것은 아니어서, 보통 돈을 모으고 여행을 미리 계획합니다.","targets":["afford"],"targetMeanings":["~할 여유가 되다"],"patterns":["I can't afford to"],"patternMeanings":["~할 여유가 없어요"],"opicLevel":"AL"},{"id":"P_D03_11","day":3,"no":11,"type":"story","situation":"해외여행과 새로운 경험","sentence":"How often I travel really depends on my work schedule, my budget, and how much free time I have.","translation":"제가 얼마나 자주 여행하는지는 업무 일정, 예산, 그리고 여유 시간이 얼마나 있는지에 따라 달라집니다.","targets":["depend"],"targetMeanings":["~에 달려 있다; 의존하다"],"patterns":["It depends on"],"patternMeanings":["~에 따라 달라요"],"opicLevel":"AL"},{"id":"P_D03_12","day":3,"no":12,"type":"story","situation":"해외여행과 새로운 경험","sentence":"Still, whenever I get the opportunity, I try to go somewhere new because every trip teaches me something I couldn't learn by staying at home.","translation":"그래도 기회가 생기면 새로운 곳에 가려고 합니다. 여행할 때마다 집에만 있었다면 배울 수 없었던 무언가를 배우기 때문입니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D04_01","day":4,"no":1,"type":"story","situation":"직장에서 압박을 다루고 성장한 경험","sentence":"A few years ago, I took on a new role at work, and honestly, I didn't expect it to be as challenging as it was.","translation":"몇 년 전, 저는 회사에서 새로운 역할을 맡았는데, 솔직히 그렇게까지 어려울 줄은 몰랐습니다.","targets":["expect"],"targetMeanings":["예상하다"],"patterns":["I didn't expect"],"patternMeanings":["~할 줄은 몰랐어요"],"opicLevel":"AL"},{"id":"P_D04_02","day":4,"no":2,"type":"story","situation":"직장에서 압박을 다루고 성장한 경험","sentence":"During the first few weeks, I couldn't help noticing how quickly experienced coworkers made decisions, even when they were under a lot of pressure.","translation":"처음 몇 주 동안은 경험이 많은 동료들이 큰 압박을 받는 상황에서도 얼마나 빠르게 결정을 내리는지가 계속 눈에 들어왔습니다.","targets":["notice"],"targetMeanings":["알아차리다"],"patterns":["I couldn't help noticing"],"patternMeanings":["~이 자꾸 눈에 띄었어요"],"opicLevel":"AL"},{"id":"P_D04_03","day":4,"no":3,"type":"story","situation":"직장에서 압박을 다루고 성장한 경험","sentence":"Watching them work reminded me of how important it is to stay calm instead of reacting emotionally.","translation":"그들이 일하는 모습을 보면서 감정적으로 반응하기보다 침착함을 유지하는 것이 얼마나 중요한지 다시 생각하게 되었습니다.","targets":["remind"],"targetMeanings":["생각나게 하다"],"patterns":["It reminds me of"],"patternMeanings":["~이 생각나요"],"opicLevel":"AL"},{"id":"P_D04_04","day":4,"no":4,"type":"story","situation":"직장에서 압박을 다루고 성장한 경험","sentence":"At first, I wasn't confident that I knew how to handle difficult situations, especially when several problems happened at the same time.","translation":"처음에는 특히 여러 문제가 동시에 발생했을 때 어려운 상황을 어떻게 처리해야 하는지 제가 제대로 알고 있다는 자신감이 없었습니다.","targets":["handle"],"targetMeanings":["처리하다; 감당하다"],"patterns":["I know how to handle"],"patternMeanings":["~을 어떻게 처리하는지 알아요"],"opicLevel":"AL"},{"id":"P_D04_05","day":4,"no":5,"type":"story","situation":"직장에서 압박을 다루고 성장한 경험","sentence":"One senior colleague told me, \"You've worked hard to get here, and you deserve to trust yourself a little more.\"","translation":"한 선배가 저에게 \"여기까지 오기 위해 열심히 노력했으니 이제는 스스로를 조금 더 믿어도 돼\"라고 말했습니다.","targets":["deserve"],"targetMeanings":["~할 자격이 있다"],"patterns":["You deserve to"],"patternMeanings":["당신은 ~할 자격이 있어요"],"opicLevel":"AL"},{"id":"P_D04_06","day":4,"no":6,"type":"story","situation":"직장에서 압박을 다루고 성장한 경험","sentence":"That advice really stayed with me. He also said, \"Don't hesitate to ask for help when you're not sure what to do.\"","translation":"그 조언은 오랫동안 기억에 남았습니다. 또 무엇을 해야 할지 확신이 없을 때는 도움을 요청하는 것을 주저하지 말라고 했습니다.","targets":["hesitate"],"targetMeanings":["망설이다"],"patterns":["Don't hesitate to"],"patternMeanings":["주저하지 말고 ~하세요"],"opicLevel":"AL"},{"id":"P_D04_07","day":4,"no":7,"type":"story","situation":"직장에서 압박을 다루고 성장한 경험","sentence":"Over time, I learned that the best way to deal with pressure is to break a big problem into smaller tasks and focus on one thing at a time.","translation":"시간이 지나면서 압박에 대처하는 가장 좋은 방법은 큰 문제를 작은 일로 나누고 한 번에 하나씩 집중하는 것이라는 것을 배웠습니다.","targets":["deal"],"targetMeanings":["대처하다; 다루다"],"patterns":["The best way to deal with"],"patternMeanings":["~에 대처하는 가장 좋은 방법은"],"opicLevel":"AL"},{"id":"P_D04_08","day":4,"no":8,"type":"story","situation":"직장에서 압박을 다루고 성장한 경험","sentence":"Looking back, I regret not asking more questions when I first started. I used to think that asking for help made me look inexperienced.","translation":"돌이켜보면 처음 일을 시작했을 때 질문을 더 많이 하지 않았던 것이 후회됩니다. 예전에는 도움을 요청하면 제가 경험이 부족해 보인다고 생각했습니다.","targets":["regret"],"targetMeanings":["후회하다"],"patterns":["I regret not"],"patternMeanings":["~하지 않은 것을 후회해요"],"opicLevel":"AL"},{"id":"P_D04_09","day":4,"no":9,"type":"story","situation":"직장에서 압박을 다루고 성장한 경험","sentence":"Now I see it completely differently. Whenever possible, I'd like to contribute to creating an environment where people feel comfortable sharing their concerns and ideas.","translation":"지금은 완전히 다르게 생각합니다. 가능하다면 사람들이 자신의 걱정과 생각을 편하게 공유할 수 있는 환경을 만드는 데 기여하고 싶습니다.","targets":["contribute"],"targetMeanings":["기여하다"],"patterns":["I'd like to contribute to"],"patternMeanings":["~에 기여하고 싶어요"],"opicLevel":"AL"},{"id":"P_D04_10","day":4,"no":10,"type":"story","situation":"직장에서 압박을 다루고 성장한 경험","sentence":"Of course, building that kind of workplace doesn't happen overnight. It requires patience, trust, and good communication.","translation":"물론 그런 직장 분위기가 하루아침에 만들어지는 것은 아닙니다. 인내심과 신뢰, 그리고 원활한 의사소통이 필요합니다.","targets":["require"],"targetMeanings":["필요로 하다"],"patterns":["It requires"],"patternMeanings":["그것에는 ~이 필요해요"],"opicLevel":"AL"},{"id":"P_D04_11","day":4,"no":11,"type":"story","situation":"직장에서 압박을 다루고 성장한 경험","sentence":"These days, I still face stressful situations from time to time, but I don't panic the way I used to.","translation":"요즘도 가끔 스트레스가 큰 상황을 겪지만, 예전처럼 당황하지는 않습니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D04_12","day":4,"no":12,"type":"story","situation":"직장에서 압박을 다루고 성장한 경험","sentence":"I've learned that being good at your job doesn't mean having all the answers. Sometimes, it simply means knowing how to stay calm, communicate clearly, and keep moving forward.","translation":"일을 잘한다는 것이 모든 답을 알고 있다는 뜻은 아니라는 것을 배웠습니다. 때로는 침착함을 유지하고, 명확하게 소통하고, 계속 앞으로 나아갈 줄 아는 것이 더 중요합니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D05_01","day":5,"no":1,"type":"story","situation":"일과 삶의 균형과 생활 습관 개선","sentence":"These days, I try to manage my time more carefully because having a clear schedule allows me to balance my work and personal life better.","translation":"요즘 저는 시간을 좀 더 신중하게 관리하려고 합니다. 명확한 일정을 세워두면 일과 개인 생활의 균형을 더 잘 맞출 수 있기 때문입니다.","targets":["allow"],"targetMeanings":["허용하다; 가능하게 하다"],"patterns":["It allows me to"],"patternMeanings":["그것 덕분에 ~할 수 있어요"],"opicLevel":"AL"},{"id":"P_D05_02","day":5,"no":2,"type":"story","situation":"일과 삶의 균형과 생활 습관 개선","sentence":"My job involves dealing with a lot of different tasks, so there are days when I feel like I have too much on my plate.","translation":"제 업무는 여러 가지 다양한 일을 처리하는 것을 포함하기 때문에 일이 너무 많다고 느껴지는 날도 있습니다.","targets":["involve"],"targetMeanings":["포함하다; 수반하다"],"patterns":["It involves"],"patternMeanings":["그것은 ~을 포함해요"],"opicLevel":"AL"},{"id":"P_D05_03","day":5,"no":3,"type":"story","situation":"일과 삶의 균형과 생활 습관 개선","sentence":"Whenever work gets busy, I tend to focus too much on getting things done and forget to take proper breaks.","translation":"업무가 바빠지면 저는 일을 끝내는 데 지나치게 집중하고 제대로 쉬는 것을 잊어버리는 편입니다.","targets":["tend"],"targetMeanings":["~하는 경향이 있다"],"patterns":["I tend to"],"patternMeanings":["저는 ~하는 편이에요"],"opicLevel":"AL"},{"id":"P_D05_04","day":5,"no":4,"type":"story","situation":"일과 삶의 균형과 생활 습관 개선","sentence":"At first, it seemed like working longer hours was the best way to be more productive, but I eventually realized that wasn't always true.","translation":"처음에는 더 오랜 시간 일하는 것이 생산성을 높이는 가장 좋은 방법인 것처럼 느껴졌지만, 결국 항상 그런 것은 아니라는 것을 깨달았습니다.","targets":["seem"],"targetMeanings":["~인 것 같다"],"patterns":["It seems like"],"patternMeanings":["~인 것 같아요"],"opicLevel":"AL"},{"id":"P_D05_05","day":5,"no":5,"type":"story","situation":"일과 삶의 균형과 생활 습관 개선","sentence":"In fact, I benefited a lot from making a few simple changes to my daily routine, such as taking short breaks and exercising regularly.","translation":"실제로 짧게 휴식을 취하고 규칙적으로 운동하는 등 일상생활에 몇 가지 간단한 변화를 주면서 많은 도움을 받았습니다.","targets":["benefit"],"targetMeanings":["도움이 되다; 혜택"],"patterns":["I benefited a lot from"],"patternMeanings":["~에서 많은 도움을 받았어요"],"opicLevel":"AL"},{"id":"P_D05_06","day":5,"no":6,"type":"story","situation":"일과 삶의 균형과 생활 습관 개선","sentence":"I also learned that one way to reduce stress is to separate work from my personal time as much as possible.","translation":"또한 스트레스를 줄이는 한 가지 방법은 가능한 한 업무와 개인 시간을 분리하는 것이라는 것을 배웠습니다.","targets":["reduce"],"targetMeanings":["줄이다"],"patterns":["One way to reduce... is"],"patternMeanings":["~을 줄이는 한 가지 방법은 ~예요"],"opicLevel":"AL"},{"id":"P_D05_07","day":5,"no":7,"type":"story","situation":"일과 삶의 균형과 생활 습관 개선","sentence":"Since I started doing that, the amount of quality time I spend with my family has increased significantly.","translation":"그렇게 하기 시작한 이후로 가족과 의미 있게 보내는 시간이 크게 늘었습니다.","targets":["increase"],"targetMeanings":["늘리다; 증가하다"],"patterns":["It has increased significantly"],"patternMeanings":["그것이 크게 늘었어요"],"opicLevel":"AL"},{"id":"P_D05_08","day":5,"no":8,"type":"story","situation":"일과 삶의 균형과 생활 습관 개선","sentence":"It wasn't easy at first, but I was able to overcome the habit of constantly checking work messages after I got home.","translation":"처음에는 쉽지 않았지만 집에 돌아온 후에도 계속 업무 메시지를 확인하던 습관을 극복할 수 있었습니다.","targets":["overcome"],"targetMeanings":["극복하다"],"patterns":["I was able to overcome"],"patternMeanings":["~을 극복할 수 있었어요"],"opicLevel":"AL"},{"id":"P_D05_09","day":5,"no":9,"type":"story","situation":"일과 삶의 균형과 생활 습관 개선","sentence":"Of course, it took me some time to adapt to this new routine because I had been used to thinking about work almost all the time.","translation":"물론 거의 항상 일에 대해 생각하는 데 익숙해져 있었기 때문에 새로운 생활 방식에 적응하는 데 시간이 좀 걸렸습니다.","targets":["adapt"],"targetMeanings":["적응하다"],"patterns":["It took me some time to adapt to"],"patternMeanings":["~에 적응하는 데 시간이 좀 걸렸어요"],"opicLevel":"AL"},{"id":"P_D05_10","day":5,"no":10,"type":"story","situation":"일과 삶의 균형과 생활 습관 개선","sentence":"Looking back, this change had a big effect on both my energy level and my overall mood.","translation":"돌이켜보면 이러한 변화는 제 에너지 수준과 전반적인 기분에 큰 영향을 미쳤습니다.","targets":["affect"],"targetMeanings":["영향을 미치다"],"patterns":["It had a big effect on"],"patternMeanings":["그것은 ~에 큰 영향을 미쳤어요"],"opicLevel":"AL"},{"id":"P_D05_11","day":5,"no":11,"type":"story","situation":"일과 삶의 균형과 생활 습관 개선","sentence":"Now I feel much more refreshed when I go to work, and I can concentrate better because I don't feel exhausted all the time.","translation":"지금은 출근할 때 훨씬 더 상쾌하고, 항상 지쳐 있지 않기 때문에 업무에도 더 잘 집중할 수 있습니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D05_12","day":5,"no":12,"type":"story","situation":"일과 삶의 균형과 생활 습관 개선","sentence":"Through this experience, I've learned that working efficiently isn't about working longer. It's about knowing when to focus, when to rest, and how to make the most of your time.","translation":"이 경험을 통해 효율적으로 일한다는 것이 단순히 더 오래 일하는 것을 의미하지 않는다는 것을 배웠습니다. 언제 집중하고, 언제 쉬고, 시간을 어떻게 최대한 잘 활용해야 하는지를 아는 것이 중요합니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D06_01","day":6,"no":1,"type":"story","situation":"중요한 업무 회의 준비와 문제 대응","sentence":"A few months ago, I was asked to attend an important meeting at work where I had to present some of our team's ideas.","translation":"몇 달 전, 회사에서 중요한 회의에 참석해 우리 팀의 아이디어 몇 가지를 발표해 달라는 요청을 받았습니다.","targets":["attend"],"targetMeanings":["참석하다"],"patterns":["I had the opportunity to attend"],"patternMeanings":["~에 참석할 기회가 있었어요"],"opicLevel":"AL"},{"id":"P_D06_02","day":6,"no":2,"type":"story","situation":"중요한 업무 회의 준비와 문제 대응","sentence":"Before the meeting, I arranged to meet with my team members so we could go over the key points together.","translation":"회의 전에 핵심 내용을 함께 점검할 수 있도록 팀원들과 미팅 일정을 잡았습니다.","targets":["arrange"],"targetMeanings":["준비하다; 일정을 잡다"],"patterns":["I arranged to"],"patternMeanings":["~하기로 일정을 잡았어요"],"opicLevel":"AL"},{"id":"P_D06_03","day":6,"no":3,"type":"story","situation":"중요한 업무 회의 준비와 문제 대응","sentence":"I also sent an email because I just wanted to confirm that everyone understood their role and knew what they needed to prepare.","translation":"또한 모두가 자신의 역할과 준비해야 할 내용을 이해하고 있는지 확인하고 싶어서 이메일도 보냈습니다.","targets":["confirm"],"targetMeanings":["확인하다"],"patterns":["I just wanted to confirm that"],"patternMeanings":["~인지 확인하고 싶었어요"],"opicLevel":"AL"},{"id":"P_D06_04","day":6,"no":4,"type":"story","situation":"중요한 업무 회의 준비와 문제 대응","sentence":"To be honest, there was a lot of work to do, but I didn't have much to complain about because everyone was willing to contribute and help each other.","translation":"솔직히 해야 할 일이 많기는 했지만, 모두가 기꺼이 기여하고 서로 도와주었기 때문에 크게 불평할 것은 없었습니다.","targets":["complain"],"targetMeanings":["불평하다"],"patterns":["I don't have much to complain about"],"patternMeanings":["~에 대해 크게 불평할 것은 없어요"],"opicLevel":"AL"},{"id":"P_D06_05","day":6,"no":5,"type":"story","situation":"중요한 업무 회의 준비와 문제 대응","sentence":"If I had to describe the atmosphere, I'd say it was a little tense at first, but everyone remained focused and tried to maintain a positive attitude.","translation":"그때 분위기를 설명하라고 한다면 처음에는 약간 긴장되어 있었지만, 모두 집중력을 유지하면서 긍정적인 태도를 지키려고 했다고 말할 것 같습니다.","targets":["describe"],"targetMeanings":["묘사하다; 설명하다"],"patterns":["If I had to describe..., I'd say"],"patternMeanings":["~을 설명하라면 ~라고 말할 것 같아요"],"opicLevel":"AL"},{"id":"P_D06_06","day":6,"no":6,"type":"story","situation":"중요한 업무 회의 준비와 문제 대응","sentence":"One of the biggest challenges was that it was hard to determine whether we had enough information to make a final decision.","translation":"가장 어려웠던 점 중 하나는 최종 결정을 내리기에 충분한 정보가 있는지 판단하기가 쉽지 않았다는 것입니다.","targets":["determine"],"targetMeanings":["결정하다; 판단하다"],"patterns":["It's hard to determine whether"],"patternMeanings":["~인지 판단하기 어려워요"],"opicLevel":"AL"},{"id":"P_D06_07","day":6,"no":7,"type":"story","situation":"중요한 업무 회의 준비와 문제 대응","sentence":"So instead of rushing, we took some time to evaluate the situation carefully and compare several possible options.","translation":"그래서 서두르지 않고 상황을 신중하게 평가하면서 여러 가지 선택지를 비교했습니다.","targets":["evaluate"],"targetMeanings":["평가하다"],"patterns":["It's important to evaluate"],"patternMeanings":["~을 평가하는 것이 중요해요"],"opicLevel":"AL"},{"id":"P_D06_08","day":6,"no":8,"type":"story","situation":"중요한 업무 회의 준비와 문제 대응","sentence":"During the discussion, I'd like to emphasize that clear communication made a huge difference. People didn't hesitate to ask questions when something wasn't clear.","translation":"논의 과정에서 특히 강조하고 싶은 것은 명확한 의사소통이 정말 큰 차이를 만들었다는 것입니다. 이해가 되지 않는 부분이 있으면 아무도 질문하는 것을 주저하지 않았습니다.","targets":["emphasize"],"targetMeanings":["강조하다"],"patterns":["I'd like to emphasize that"],"patternMeanings":["~을 강조하고 싶어요"],"opicLevel":"AL"},{"id":"P_D06_09","day":6,"no":9,"type":"story","situation":"중요한 업무 회의 준비와 문제 대응","sentence":"At one point, someone raised a concern that I hadn't expected, and I wasn't sure how to respond to it right away.","translation":"한때는 예상하지 못했던 문제를 누군가 제기했는데, 바로 어떻게 대응해야 할지 확신이 없었습니다.","targets":["respond"],"targetMeanings":["대응하다; 응답하다"],"patterns":["I wasn't sure how to respond to"],"patternMeanings":["~에 어떻게 대응해야 할지 확신이 없었어요"],"opicLevel":"AL"},{"id":"P_D06_10","day":6,"no":10,"type":"story","situation":"중요한 업무 회의 준비와 문제 대응","sentence":"Rather than giving an uncertain answer, I admitted that I needed to check the facts first. Looking back, I think that was the right decision.","translation":"확실하지 않은 답을 하는 대신 먼저 사실을 확인해야 한다고 솔직하게 말했습니다. 돌이켜보면 그것이 올바른 판단이었다고 생각합니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D06_11","day":6,"no":11,"type":"story","situation":"중요한 업무 회의 준비와 문제 대응","sentence":"We also talked about possible risks, and we agreed that the best way to prevent the same problem from happening again is to identify the cause early and take action before it becomes serious.","translation":"또한 발생 가능한 위험에 대해서도 이야기했고, 같은 문제가 다시 발생하는 것을 예방하는 가장 좋은 방법은 원인을 조기에 발견하고 문제가 심각해지기 전에 조치하는 것이라는 데 의견을 모았습니다.","targets":["prevent"],"targetMeanings":["막다; 예방하다"],"patterns":["The best way to prevent... is to"],"patternMeanings":["~을 예방하는 가장 좋은 방법은 ~하는 거예요"],"opicLevel":"AL"},{"id":"P_D06_12","day":6,"no":12,"type":"story","situation":"중요한 업무 회의 준비와 문제 대응","sentence":"By the end of the meeting, we had managed to adapt our original plan and accomplish what we had set out to do.","translation":"회의가 끝날 무렵에는 기존 계획을 상황에 맞게 조정했고, 우리가 하려고 했던 일을 결국 해낼 수 있었습니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D06_13","day":6,"no":13,"type":"story","situation":"중요한 업무 회의 준비와 문제 대응","sentence":"That experience helped me recognize that a successful meeting isn't about having all the answers. It's about listening carefully, evaluating the situation, and responding in a thoughtful way.","translation":"그 경험을 통해 성공적인 회의란 모든 답을 알고 있는 것이 아니라는 점을 깨달았습니다. 상대방의 말을 잘 듣고, 상황을 평가하고, 신중하게 대응하는 것이 더 중요합니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D07_01","day":7,"no":1,"type":"story","situation":"새로운 업무 환경에서 자신감과 문제 해결 능력을 키운 경험","sentence":"A while ago, I was given a new responsibility at work, and I wasn't sure whether I was capable of handling it at first.","translation":"얼마 전 회사에서 새로운 책임을 맡게 되었는데, 처음에는 제가 그 일을 감당할 능력이 있는지 확신이 없었습니다.","targets":["capable"],"targetMeanings":["~할 능력이 있는"],"patterns":["I wasn't sure whether I was capable of"],"patternMeanings":["제가 ~할 능력이 있는지 확신이 없었어요"],"opicLevel":"AL"},{"id":"P_D07_02","day":7,"no":2,"type":"story","situation":"새로운 업무 환경에서 자신감과 문제 해결 능력을 키운 경험","sentence":"The job was more complicated than I had expected because I was responsible for coordinating several tasks and communicating with different people.","translation":"그 업무는 제가 예상했던 것보다 복잡했습니다. 여러 업무를 조율하면서 다양한 사람들과 소통해야 할 책임이 있었기 때문입니다.","targets":["responsible"],"targetMeanings":["책임이 있는"],"patterns":["I was responsible for"],"patternMeanings":["저는 ~을 담당했습니다"],"opicLevel":"AL"},{"id":"P_D07_03","day":7,"no":3,"type":"story","situation":"새로운 업무 환경에서 자신감과 문제 해결 능력을 키운 경험","sentence":"In my previous role, I was accustomed to working independently, so having to constantly communicate with others wasn't customary for me.","translation":"이전 업무에서는 혼자 일하는 방식에 익숙했기 때문에 다른 사람들과 계속 소통하면서 일하는 방식은 저에게 익숙한 것이 아니었습니다.","targets":["accustomed"],"targetMeanings":["익숙한"],"patterns":["I was accustomed to"],"patternMeanings":["저는 ~에 익숙했습니다"],"opicLevel":"AL"},{"id":"P_D07_04","day":7,"no":4,"type":"story","situation":"새로운 업무 환경에서 자신감과 문제 해결 능력을 키운 경험","sentence":"At first, I struggled with keeping track of everything. There were so many things going on that it was sometimes difficult to determine what I should deal with first.","translation":"처음에는 모든 일을 놓치지 않고 관리하는 데 어려움을 겪었습니다. 동시에 너무 많은 일이 벌어져서 무엇부터 처리해야 할지 판단하기 어려울 때도 있었습니다.","targets":["struggle"],"targetMeanings":["어려움을 겪다"],"patterns":["I struggled with"],"patternMeanings":["저는 ~하는 데 어려움을 겪었습니다"],"opicLevel":"AL"},{"id":"P_D07_05","day":7,"no":5,"type":"story","situation":"새로운 업무 환경에서 자신감과 문제 해결 능력을 키운 경험","sentence":"Instead of trying to solve everything by myself, I made an effort to ask experienced coworkers for advice and carefully evaluate the situation before making important decisions.","translation":"모든 것을 혼자 해결하려고 하기보다는 경험이 많은 동료들에게 조언을 구하려고 노력했고, 중요한 결정을 내리기 전에 상황을 신중하게 평가했습니다.","targets":["effort"],"targetMeanings":["노력"],"patterns":["I made an effort to"],"patternMeanings":["저는 ~하려고 노력했습니다"],"opicLevel":"AL"},{"id":"P_D07_06","day":7,"no":6,"type":"story","situation":"새로운 업무 환경에서 자신감과 문제 해결 능력을 키운 경험","sentence":"One thing I gradually became aware of was that asking for help doesn't mean you're incapable. In fact, it often contributes to better decisions because you can hear different perspectives.","translation":"제가 점차 깨닫게 된 한 가지는 도움을 요청한다고 해서 능력이 부족한 것은 아니라는 점이었습니다. 오히려 다양한 관점을 들을 수 있기 때문에 더 좋은 결정을 내리는 데 도움이 되는 경우가 많습니다.","targets":["aware"],"targetMeanings":["알고 있는; 인식하는"],"patterns":["I became aware of"],"patternMeanings":["저는 ~을 깨닫게 되었습니다"],"opicLevel":"AL"},{"id":"P_D07_07","day":7,"no":7,"type":"story","situation":"새로운 업무 환경에서 자신감과 문제 해결 능력을 키운 경험","sentence":"There were also times when my original plan didn't hold up to unexpected problems, so I had to change my approach and adapt quickly.","translation":"또 원래 세웠던 계획이 예상치 못한 문제를 견디지 못하는 경우도 있어서 접근 방식을 바꾸고 빠르게 적응해야 했습니다.","targets":["approach"],"targetMeanings":["접근 방식"],"patterns":["I had to change my approach"],"patternMeanings":["접근 방식을 바꿔야 했습니다"],"opicLevel":"AL"},{"id":"P_D07_08","day":7,"no":8,"type":"story","situation":"새로운 업무 환경에서 자신감과 문제 해결 능력을 키운 경험","sentence":"What I found particularly useful was writing down my priorities every morning. It helped me maintain my focus even when several issues came up at the same time.","translation":"제가 특히 유용하다고 느꼈던 것은 매일 아침 우선순위를 적어두는 것이었습니다. 여러 문제가 동시에 발생하더라도 집중력을 유지하는 데 도움이 되었습니다.","targets":["useful"],"targetMeanings":["유용한"],"patterns":["What I found particularly useful was"],"patternMeanings":["제가 특히 유용하다고 느낀 것은 ~였습니다"],"opicLevel":"AL"},{"id":"P_D07_09","day":7,"no":9,"type":"story","situation":"새로운 업무 환경에서 자신감과 문제 해결 능력을 키운 경험","sentence":"As I gained more experience, I became more comfortable with making decisions under pressure. I also stopped hesitating every time I had to express a different opinion.","translation":"경험이 쌓이면서 압박 속에서 결정을 내리는 것도 점점 편해졌습니다. 다른 의견을 말해야 할 때마다 주저하던 습관도 줄었습니다.","targets":["comfortable"],"targetMeanings":["편안한; 익숙한"],"patterns":["I became more comfortable with"],"patternMeanings":["저는 ~하는 것이 점점 편해졌습니다"],"opicLevel":"AL"},{"id":"P_D07_10","day":7,"no":10,"type":"story","situation":"새로운 업무 환경에서 자신감과 문제 해결 능력을 키운 경험","sentence":"Eventually, I came to realize that confidence doesn't mean knowing everything. It means being willing to make a decision, learn from the result, and take responsibility for it.","translation":"결국 자신감이라는 것이 모든 것을 알고 있다는 뜻은 아니라는 것을 깨달았습니다. 결정을 내리고, 그 결과에서 배우고, 그 결정에 책임을 질 수 있는 자세가 중요하다는 것입니다.","targets":["realize"],"targetMeanings":["깨닫다"],"patterns":["I came to realize that"],"patternMeanings":["저는 결국 ~라는 것을 깨달았습니다"],"opicLevel":"AL"},{"id":"P_D07_11","day":7,"no":11,"type":"story","situation":"새로운 업무 환경에서 자신감과 문제 해결 능력을 키운 경험","sentence":"Looking back, I'm satisfied with how much I've improved because I managed to accomplish something that initially seemed overwhelming.","translation":"돌이켜보면 처음에는 감당하기 벅차 보였던 일을 결국 해냈기 때문에 제가 얼마나 발전했는지 만족스럽게 생각합니다.","targets":["satisfied"],"targetMeanings":["만족하는"],"patterns":["I'm satisfied with"],"patternMeanings":["저는 ~에 만족합니다"],"opicLevel":"AL"},{"id":"P_D07_12","day":7,"no":12,"type":"story","situation":"새로운 업무 환경에서 자신감과 문제 해결 능력을 키운 경험","sentence":"More importantly, the experience helped me recognize one of my weaknesses: I used to spend too much time worrying about making the perfect decision.","translation":"더 중요한 것은 이 경험을 통해 제 약점 하나를 깨달았다는 것입니다. 저는 완벽한 결정을 내려야 한다는 생각 때문에 지나치게 많은 시간을 고민하곤 했습니다.","targets":["recognize"],"targetMeanings":["인식하다; 알아차리다"],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D07_13","day":7,"no":13,"type":"story","situation":"새로운 업무 환경에서 자신감과 문제 해결 능력을 키운 경험","sentence":"These days, I try to gather enough information, make the best decision I can, and move forward rather than overthinking every possibility.","translation":"요즘은 모든 가능성을 지나치게 고민하기보다는 충분한 정보를 모으고, 제가 할 수 있는 최선의 결정을 내린 다음 앞으로 나아가려고 합니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D07_14","day":7,"no":14,"type":"story","situation":"새로운 업무 환경에서 자신감과 문제 해결 능력을 키운 경험","sentence":"As far as I'm concerned, that's one of the most important lessons I've learned at work.","translation":"제 생각에는 이것이 직장 생활을 하면서 배운 가장 중요한 교훈 중 하나입니다.","targets":["concerned"],"targetMeanings":["관련된; 걱정하는"],"patterns":["As far as I'm concerned"],"patternMeanings":["제 생각에는"],"opicLevel":"AL"},{"id":"P_D08_01","day":8,"no":1,"type":"story","situation":"중요한 업무 발표에서 예상치 못한 문제를 해결한 경험","sentence":"Hmm, where do I even start? A few months ago, I had to give an important presentation at work, and the whole experience was more overwhelming than I expected.","translation":"음, 어디서부터 말해야 할까요? 몇 달 전 회사에서 중요한 발표를 해야 했는데, 전체 경험이 예상했던 것보다 훨씬 벅찼습니다.","targets":[],"targetMeanings":[],"patterns":["Hmm, where do I even start?"],"patternMeanings":["음, 어디서부터 말해야 할까요?"],"opicLevel":"AL"},{"id":"P_D08_02","day":8,"no":2,"type":"story","situation":"중요한 업무 발표에서 예상치 못한 문제를 해결한 경험","sentence":"How do I put this... I was responsible for coordinating several people's work, and it was difficult to keep track of every detail at the same time.","translation":"어떻게 말해야 할까요... 여러 사람의 업무를 조율해야 했고, 동시에 모든 세부 사항을 계속 파악하는 것이 쉽지 않았습니다.","targets":[],"targetMeanings":[],"patterns":["How do I put this..."],"patternMeanings":["어떻게 말해야 할까요..."],"opicLevel":"AL"},{"id":"P_D08_03","day":8,"no":3,"type":"story","situation":"중요한 업무 발표에서 예상치 못한 문제를 해결한 경험","sentence":"I guess you could say I was under a lot of pressure because we still had to determine which information was important enough to include.","translation":"뭐랄까, 어떤 정보를 발표에 포함할 만큼 중요한지 판단해야 했기 때문에 압박을 많이 받고 있었다고 할 수 있을 것 같습니다.","targets":[],"targetMeanings":[],"patterns":["I guess you could say..."],"patternMeanings":["뭐랄까 / ~라고 할 수 있을 것 같아요"],"opicLevel":"AL"},{"id":"P_D08_04","day":8,"no":4,"type":"story","situation":"중요한 업무 발표에서 예상치 못한 문제를 해결한 경험","sentence":"I'm not gonna lie, there were moments when I seriously wondered whether our original plan would hold up.","translation":"솔직히 말하면, 원래 계획이 제대로 버틸 수 있을지 진지하게 걱정했던 순간도 있었습니다.","targets":[],"targetMeanings":[],"patterns":["I'm not gonna lie..."],"patternMeanings":["솔직히 말하면..."],"opicLevel":"AL"},{"id":"P_D08_05","day":8,"no":5,"type":"story","situation":"중요한 업무 발표에서 예상치 못한 문제를 해결한 경험","sentence":"We had to evaluate the situation again and change a few priorities, if that makes sense.","translation":"상황을 다시 평가하고 몇 가지 우선순위를 바꿔야 했습니다. 무슨 말인지 아시겠죠?","targets":[],"targetMeanings":[],"patterns":["if that makes sense"],"patternMeanings":["무슨 말인지 알겠죠? / 제 말이 이해된다면"],"opicLevel":"AL"},{"id":"P_D08_06","day":8,"no":6,"type":"story","situation":"중요한 업무 발표에서 예상치 못한 문제를 해결한 경험","sentence":"It's kind of hard to explain, but the biggest problem wasn't the amount of work itself. It was trying to maintain clear communication while everyone had a different perspective.","translation":"설명하기 조금 어렵지만, 가장 큰 문제는 업무량 자체가 아니었습니다. 모두가 서로 다른 관점을 가진 상황에서 명확한 의사소통을 유지하는 것이었습니다.","targets":[],"targetMeanings":[],"patterns":["It's kind of hard to explain, but..."],"patternMeanings":["설명하기 좀 어렵지만..."],"opicLevel":"AL"},{"id":"P_D08_07","day":8,"no":7,"type":"story","situation":"중요한 업무 발표에서 예상치 못한 문제를 해결한 경험","sentence":"Personally, I feel like the turning point came when people stopped hesitating and started sharing their concerns openly.","translation":"개인적으로는 사람들이 주저하지 않고 자신의 우려를 솔직하게 이야기하기 시작했을 때 상황이 바뀌기 시작했다고 생각합니다.","targets":[],"targetMeanings":[],"patterns":["Personally, I feel like..."],"patternMeanings":["개인적으로는 ~라고 느껴요"],"opicLevel":"AL"},{"id":"P_D08_08","day":8,"no":8,"type":"story","situation":"중요한 업무 발표에서 예상치 못한 문제를 해결한 경험","sentence":"Once everyone began to contribute ideas, we were able to adapt the presentation and make the message much clearer.","translation":"모두가 아이디어를 내기 시작하자 발표 내용을 상황에 맞게 조정할 수 있었고 메시지도 훨씬 명확해졌습니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D08_09","day":8,"no":9,"type":"story","situation":"중요한 업무 발표에서 예상치 못한 문제를 해결한 경험","sentence":"Then, right before the presentation, one of the files suddenly wouldn't open. That was a close one!","translation":"그런데 발표 직전에 파일 하나가 갑자기 열리지 않았습니다. 정말 아슬아슬했습니다!","targets":[],"targetMeanings":[],"patterns":["That was a close one!"],"patternMeanings":["정말 아슬아슬했어요!"],"opicLevel":"AL"},{"id":"P_D08_10","day":8,"no":10,"type":"story","situation":"중요한 업무 발표에서 예상치 못한 문제를 해결한 경험","sentence":"Fortunately, we had a backup copy, and we managed to solve the problem without delaying the meeting.","translation":"다행히 백업 파일이 있었고 회의를 지연시키지 않고 문제를 해결할 수 있었습니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D08_11","day":8,"no":11,"type":"story","situation":"중요한 업무 발표에서 예상치 못한 문제를 해결한 경험","sentence":"The way I see it, that experience taught me that being prepared is important, but being able to adapt when something goes wrong is even more valuable.","translation":"제가 보기에는 그 경험을 통해 준비하는 것도 중요하지만 문제가 생겼을 때 상황에 맞게 대응하는 능력이 훨씬 더 중요하다는 것을 배웠습니다.","targets":[],"targetMeanings":[],"patterns":["The way I see it..."],"patternMeanings":["제가 보기에는..."],"opicLevel":"AL"},{"id":"P_D08_12","day":8,"no":12,"type":"story","situation":"중요한 업무 발표에서 예상치 못한 문제를 해결한 경험","sentence":"To be honest with you, I felt exhausted afterward, but I was also proud that our team had accomplished what we set out to do.","translation":"솔직히 말하면 끝나고 나서는 완전히 지쳤지만, 우리 팀이 하려고 했던 일을 해냈다는 것이 자랑스럽기도 했습니다.","targets":[],"targetMeanings":[],"patterns":["To be honest with you..."],"patternMeanings":["솔직히 말하면..."],"opicLevel":"AL"},{"id":"P_D08_13","day":8,"no":13,"type":"story","situation":"중요한 업무 발표에서 예상치 못한 문제를 해결한 경험","sentence":"Looking back, I recognize that I used to focus too much on avoiding mistakes instead of listening to other people's perspectives.","translation":"돌이켜보면 예전에는 다른 사람들의 관점을 듣기보다 실수를 피하는 데 지나치게 집중했다는 것을 깨닫습니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D08_14","day":8,"no":14,"type":"story","situation":"중요한 업무 발표에서 예상치 못한 문제를 해결한 경험","sentence":"Now, when I face a complicated situation, I try to evaluate what's happening, set clear priorities, and communicate before I rush into a decision.","translation":"이제는 복잡한 상황을 마주하면 서둘러 결정하기 전에 상황을 평가하고, 명확한 우선순위를 정하고, 먼저 소통하려고 합니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D09_01","day":9,"no":1,"type":"story","situation":"기대했던 콘서트에서 예상치 못한 문제를 겪고 결국 즐거운 경험으로 바꾼 이야기","sentence":"Well, the thing is... I had been looking forward to a concert for months, so I was incredibly excited when the day finally came.","translation":"있잖아요, 몇 달 동안 그 콘서트를 기다려 왔기 때문에 드디어 그날이 왔을 때 정말 신이 났습니다.","targets":[],"targetMeanings":[],"patterns":["Well, the thing is..."],"patternMeanings":["있잖아, 그게..."],"opicLevel":"AL"},{"id":"P_D09_02","day":9,"no":2,"type":"story","situation":"기대했던 콘서트에서 예상치 못한 문제를 겪고 결국 즐거운 경험으로 바꾼 이야기","sentence":"I had high hopes, but the area around the venue was absolutely packed with people, and the whole situation felt a little overwhelming.","translation":"기대가 정말 컸는데 공연장 주변이 사람들로 완전히 꽉 차 있었고, 전체 상황이 조금 감당하기 벅차게 느껴졌습니다.","targets":["packed"],"targetMeanings":["사람으로 꽉 찬"],"patterns":["I had high hopes, but...","be absolutely packed with people"],"patternMeanings":["기대가 컸는데...","사람들로 완전히 꽉 차 있다"],"opicLevel":"AL"},{"id":"P_D09_03","day":9,"no":3,"type":"story","situation":"기대했던 콘서트에서 예상치 못한 문제를 겪고 결국 즐거운 경험으로 바꾼 이야기","sentence":"At first, I tried to maintain a positive attitude and keep track of where my friends were, but the crowd kept getting bigger.","translation":"처음에는 긍정적인 태도를 유지하면서 친구들이 어디에 있는지 계속 확인하려고 했지만, 사람은 계속 더 많아졌습니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D09_04","day":9,"no":4,"type":"story","situation":"기대했던 콘서트에서 예상치 못한 문제를 겪고 결국 즐거운 경험으로 바꾼 이야기","sentence":"Out of nowhere, it started pouring, and everyone rushed toward the entrance at the same time.","translation":"갑자기 비가 쏟아지기 시작했고, 모든 사람이 동시에 입구 쪽으로 몰려갔습니다.","targets":[],"targetMeanings":[],"patterns":["Out of nowhere..."],"patternMeanings":["갑자기 뜬금없이..."],"opicLevel":"AL"},{"id":"P_D09_05","day":9,"no":5,"type":"story","situation":"기대했던 콘서트에서 예상치 못한 문제를 겪고 결국 즐거운 경험으로 바꾼 이야기","sentence":"I couldn't take it anymore, so I stepped away from the crowd for a few minutes and tried to evaluate what I should do next.","translation":"더 이상 견디기 힘들어서 잠시 사람들 사이에서 빠져나와 다음에 무엇을 해야 할지 판단해 보았습니다.","targets":[],"targetMeanings":[],"patterns":["I couldn't take it anymore."],"patternMeanings":["더 이상 못 참겠더라."],"opicLevel":"AL"},{"id":"P_D09_06","day":9,"no":6,"type":"story","situation":"기대했던 콘서트에서 예상치 못한 문제를 겪고 결국 즐거운 경험으로 바꾼 이야기","sentence":"For a moment, getting inside didn't feel like my top priority anymore. I just wanted somewhere quiet to calm down.","translation":"잠시 동안은 공연장 안으로 들어가는 것이 더 이상 제 최우선순위처럼 느껴지지 않았습니다. 그냥 조용한 곳에서 진정하고 싶었습니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D09_07","day":9,"no":7,"type":"story","situation":"기대했던 콘서트에서 예상치 못한 문제를 겪고 결국 즐거운 경험으로 바꾼 이야기","sentence":"When one of my friends suggested leaving, I hesitated because we had already spent so much time preparing for the concert.","translation":"친구 한 명이 그냥 가자고 했을 때, 이미 공연을 위해 너무 많은 시간을 준비했기 때문에 저는 망설였습니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D09_08","day":9,"no":8,"type":"story","situation":"기대했던 콘서트에서 예상치 못한 문제를 겪고 결국 즐거운 경험으로 바꾼 이야기","sentence":"Eventually, I just gave up at that point and told myself that maybe it just wasn't meant to be.","translation":"결국 그 시점에서는 그냥 포기했고, 아마 이번에는 그냥 안 되는 일이었나 보다 하고 생각했습니다.","targets":[],"targetMeanings":[],"patterns":["I just gave up at that point.","It just wasn't meant to be."],"patternMeanings":["그 시점에 그냥 포기했어.","그냥 안 되는 거였어."],"opicLevel":"AL"},{"id":"P_D09_09","day":9,"no":9,"type":"story","situation":"기대했던 콘서트에서 예상치 못한 문제를 겪고 결국 즐거운 경험으로 바꾼 이야기","sentence":"Then something unexpected happened. A staff member opened another entrance, and suddenly the line started moving much faster.","translation":"그런데 예상하지 못한 일이 생겼습니다. 직원이 다른 입구를 열었고 갑자기 줄이 훨씬 빠르게 움직이기 시작했습니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D09_10","day":9,"no":10,"type":"story","situation":"기대했던 콘서트에서 예상치 못한 문제를 겪고 결국 즐거운 경험으로 바꾼 이야기","sentence":"We had to adapt quickly, but we finally made it inside just a few minutes before the show started.","translation":"우리는 빠르게 상황에 맞춰 움직여야 했지만, 결국 공연 시작 몇 분 전에 안으로 들어갈 수 있었습니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D09_11","day":9,"no":11,"type":"story","situation":"기대했던 콘서트에서 예상치 못한 문제를 겪고 결국 즐거운 경험으로 바꾼 이야기","sentence":"The moment the band came on stage, I was on cloud nine. All the stress from earlier disappeared almost instantly.","translation":"밴드가 무대에 올라오는 순간 정말 날아갈 듯 기뻤습니다. 그전까지 받았던 스트레스가 거의 바로 사라졌습니다.","targets":[],"targetMeanings":[],"patterns":["I was on cloud nine."],"patternMeanings":["기분이 하늘을 나는 것 같았어."],"opicLevel":"AL"},{"id":"P_D09_12","day":9,"no":12,"type":"story","situation":"기대했던 콘서트에서 예상치 못한 문제를 겪고 결국 즐거운 경험으로 바꾼 이야기","sentence":"I'd heard the same songs hundreds of times before, but hearing them live just hit different.","translation":"같은 노래를 전에 수백 번 들었지만, 라이브로 들으니 정말 느낌이 남달랐습니다.","targets":[],"targetMeanings":[],"patterns":["It hit different."],"patternMeanings":["뭔가 남달랐어."],"opicLevel":"AL"},{"id":"P_D09_13","day":9,"no":13,"type":"story","situation":"기대했던 콘서트에서 예상치 못한 문제를 겪고 결국 즐거운 경험으로 바꾼 이야기","sentence":"Looking back, I could've done so much better at planning the trip, especially when it came to transportation and meeting up with my friends.","translation":"돌이켜보면 특히 교통편과 친구들과 만나는 계획을 세울 때 훨씬 더 잘 준비할 수 있었던 것 같습니다.","targets":[],"targetMeanings":[],"patterns":["I could've done so much better."],"patternMeanings":["훨씬 잘할 수 있었는데."],"opicLevel":"AL"},{"id":"P_D09_14","day":9,"no":14,"type":"story","situation":"기대했던 콘서트에서 예상치 못한 문제를 겪고 결국 즐거운 경험으로 바꾼 이야기","sentence":"Still, the experience changed my perspective. Sometimes an imperfect day can become more memorable than a perfectly planned one, and in the end, we accomplished what we had gone there to do: enjoy the music together.","translation":"그래도 그 경험은 제 관점을 바꿨습니다. 때로는 완벽하지 않은 하루가 완벽하게 계획된 하루보다 더 기억에 남을 수 있고, 결국 우리는 함께 음악을 즐기겠다는 원래 목적을 해냈습니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D10_01","day":10,"no":1,"type":"story","situation":"여행 중 렌터카에 문제가 생겨 업체와 해결하는 경험","sentence":"When I was traveling, I decided to rent a car because it was practically impossible to get around without one. Initially, everything went smoothly. I called the rental company and said, “I’d like to make a rental reservation. I’m interested in renting a small SUV. What do you have in stock right now?” After comparing a few options, I settled on a compact SUV.","translation":"여행 중에 차가 없으면 돌아다니기가 사실상 불가능해서 렌터카를 빌리기로 했습니다. 처음에는 모든 일이 순조로웠습니다. 렌터카 회사에 전화해 “대여 예약을 하고 싶어요. 소형 SUV를 빌리고 싶은데요. 지금 재고가 어떻게 되나요?”라고 물었습니다. 몇 가지 옵션을 비교한 뒤 소형 SUV로 결정했습니다.","targets":["practically","initially"],"targetMeanings":["거의","처음에"],"patterns":["I'm interested in renting a...","What do you have in stock right now?"],"patternMeanings":["~를 대여하고 싶은데요","지금 재고가 어떻게 되나요?"],"opicLevel":"AL"},{"id":"P_D10_02","day":10,"no":2,"type":"story","situation":"여행 중 렌터카에 문제가 생겨 업체와 해결하는 경험","sentence":"The first couple of days were great, but then the car started giving me trouble. It had been acting up a little, and one morning, it just stopped working out of nowhere. I’m not used to dealing with car problems, especially when I’m traveling, so it was quite a challenge.","translation":"처음 며칠은 아주 좋았지만, 그 후 차에 문제가 생기기 시작했습니다. 조금씩 말썽을 부리더니 어느 날 아침 갑자기 아무 이유 없이 작동을 멈췄습니다. 특히 여행 중에는 자동차 문제를 처리하는 데 익숙하지 않아서 꽤 큰 난관이었습니다.","targets":["challenge"],"targetMeanings":["문제, 난제"],"patterns":["It's been giving me trouble.","It's been acting up lately.","It just stopped working out of nowhere.","I'm not used to ...ing"],"patternMeanings":["계속 문제가 생기고 있어요","요즘 자꾸 말썽이에요","갑자기 아무 이유 없이 작동을 멈췄어요","~하는 데 익숙하지 않아요"],"opicLevel":"AL"},{"id":"P_D10_03","day":10,"no":3,"type":"story","situation":"여행 중 렌터카에 문제가 생겨 업체와 해결하는 경험","sentence":"I called the rental company right away and explained what had happened. I said, “It’s been giving me trouble since yesterday. Is there any way to get this fixed?” The employee told me, “I totally get it. No worries. We’ll try to sort it out.”","translation":"바로 렌터카 회사에 전화해 무슨 일이 있었는지 설명했습니다. “어제부터 계속 문제가 생기고 있어요. 이거 수리할 방법이 있을까요?”라고 했습니다. 직원은 “완전히 이해합니다. 걱정 마세요. 해결해 보겠습니다.”라고 말했습니다.","targets":[],"targetMeanings":[],"patterns":["It's been giving me trouble.","Is there any way to get this fixed?","I totally get it","no worries"],"patternMeanings":["계속 문제가 생기고 있어요","이거 수리할 방법이 있을까요?","완전히 이해해요","괜찮아요, 걱정 마세요"],"opicLevel":"AL"},{"id":"P_D10_04","day":10,"no":4,"type":"story","situation":"여행 중 렌터카에 문제가 생겨 업체와 해결하는 경험","sentence":"The chief problem was that I was staying in a fairly remote area, so getting another car immediately was potentially difficult. The employee came up with a clever solution. He said they could send someone to inspect the car first and, if necessary, arrange a replacement.","translation":"가장 큰 문제는 제가 꽤 외진 지역에 머물고 있어서 즉시 다른 차를 받는 것이 어려울 수도 있다는 점이었습니다. 직원은 영리한 해결책을 생각해 냈습니다. 먼저 사람을 보내 차를 점검하고 필요하면 대체 차량을 준비할 수 있다고 했습니다.","targets":["chief","potentially","clever"],"targetMeanings":["주요한","어쩌면","영리한"],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D10_05","day":10,"no":5,"type":"story","situation":"여행 중 렌터카에 문제가 생겨 업체와 해결하는 경험","sentence":"I thought that was an ingenious idea because it would save me from having to find my own way back to the rental office. I told him, “That makes sense. Please keep me posted.”","translation":"렌터카 사무실까지 직접 돌아갈 방법을 찾지 않아도 되기 때문에 정말 기발한 생각이라고 느꼈습니다. 저는 “그게 말이 되네요. 계속 상황을 알려 주세요.”라고 했습니다.","targets":["ingenious"],"targetMeanings":["기발한, 독창적인"],"patterns":["That makes sense","keep me posted"],"patternMeanings":["이해가 되네요","계속 알려주세요"],"opicLevel":"AL"},{"id":"P_D10_06","day":10,"no":6,"type":"story","situation":"여행 중 렌터카에 문제가 생겨 업체와 해결하는 경험","sentence":"A little later, he called me back and said, “Everything is ready on our end. We’ll follow up as soon as the driver leaves.” Apparently, a minor electrical problem had caused the engine to cease working properly, but luckily, it wasn’t anything serious.","translation":"조금 뒤 그가 다시 전화해 “저희 쪽에서는 모든 준비가 됐습니다. 기사가 출발하는 대로 다시 연락드리겠습니다.”라고 했습니다. 알고 보니 작은 전기 문제가 엔진의 정상 작동을 멈추게 했지만 다행히 심각한 문제는 아니었습니다.","targets":["cease"],"targetMeanings":["멈추다, 끝나다"],"patterns":["on my end / on your end","I'll follow up"],"patternMeanings":["내 쪽에서 / 상대방 쪽에서","추후 연락하겠습니다"],"opicLevel":"AL"},{"id":"P_D10_07","day":10,"no":7,"type":"story","situation":"여행 중 렌터카에 문제가 생겨 업체와 해결하는 경험","sentence":"While I was waiting, the weather started to intensify, and a storm seemed to be brewing. I was worried that it might complicate the situation, but fortunately, the replacement car arrived before the rain really started to pour.","translation":"기다리는 동안 날씨가 점점 심해졌고 폭풍이 몰려올 것 같았습니다. 상황이 더 복잡해질까 걱정했지만 다행히 비가 본격적으로 쏟아지기 전에 대체 차량이 도착했습니다.","targets":["intensify"],"targetMeanings":["강화하다"],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D10_08","day":10,"no":8,"type":"story","situation":"여행 중 렌터카에 문제가 생겨 업체와 해결하는 경험","sentence":"The employee apologized for the inconvenience, but I told him, “No worries. Take your time. I appreciate your understanding and your help.” In the end, we managed to work everything out without ruining my travel plans.","translation":"직원은 불편을 끼쳐 미안하다고 했지만 저는 “괜찮아요. 천천히 하세요. 이해해 주시고 도와주셔서 감사합니다.”라고 했습니다. 결국 여행 계획을 망치지 않고 모든 문제를 해결할 수 있었습니다.","targets":[],"targetMeanings":[],"patterns":["no worries","take your time","I appreciate your understanding","work something out"],"patternMeanings":["괜찮아요, 걱정 마세요","천천히 하세요","이해해 주셔서 감사합니다","해결책을 찾다"],"opicLevel":"AL"},{"id":"P_D10_09","day":10,"no":9,"type":"story","situation":"여행 중 렌터카에 문제가 생겨 업체와 해결하는 경험","sentence":"Looking back, what impressed me most was how clearly the staff conveyed the information and handled the problem. The whole experience could have precipitated a much bigger problem, but their quick response helped buffer the impact on my trip.","translation":"돌이켜보면 가장 인상 깊었던 것은 직원들이 정보를 얼마나 명확하게 전달하고 문제를 처리했는지였습니다. 이 경험은 훨씬 더 큰 문제를 촉발할 수도 있었지만, 직원들의 빠른 대응 덕분에 여행에 미치는 영향을 완화할 수 있었습니다.","targets":["buffer"],"targetMeanings":["완충하다, 보호하다"],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D10_10","day":10,"no":10,"type":"story","situation":"여행 중 렌터카에 문제가 생겨 업체와 해결하는 경험","sentence":"By the time we wrapped up the call, I actually felt relieved. The experience taught me that when an unexpected problem comes up while traveling, the best thing to do is stay calm, explain the situation clearly, and work with people to find a solution.","translation":"통화를 마무리할 때쯤에는 정말 안도감이 들었습니다. 이 경험을 통해 여행 중 예상치 못한 문제가 생기면 침착하게 상황을 명확히 설명하고 사람들과 함께 해결책을 찾는 것이 가장 좋다는 것을 배웠습니다.","targets":[],"targetMeanings":[],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D11_01","day":11,"no":1,"type":"story","situation":"가족과 함께 오래된 시골집을 리모델링한 경험","sentence":"A few years ago, my family decided to renovate an old house in the countryside instead of letting it sit deserted. Looking back, I naively thought it would be a simple weekend project, but it ended up being far more laborious and costly than I had expected.","translation":"몇 년 전, 우리 가족은 시골의 오래된 집을 버려진 채 두는 대신 수리하기로 했습니다. 돌이켜 보면 저는 순진하게도 간단한 주말 프로젝트라고 생각했지만, 결국 예상보다 훨씬 힘들고 비용도 많이 들었습니다.","targets":["costly","laborious","naively"],"targetMeanings":["돈이 많이 드는","수고를 요하는, 힘든","솔직하게, 순진하게"],"patterns":["Looking back, ...","end up -ing"],"patternMeanings":["돌이켜 보면","결국 ~하게 되다"],"opicLevel":"AL"},{"id":"P_D11_02","day":11,"no":2,"type":"story","situation":"가족과 함께 오래된 시골집을 리모델링한 경험","sentence":"At first, we had to define exactly what we wanted to change. The outermost wall was cracked, the rooms felt dark and dense, and an old cabinet had started to detach from the wall. From those signs, we could deduce that the house needed more than a fresh coat of paint.","translation":"처음에는 정확히 무엇을 바꿀지 분명히 해야 했습니다. 가장 바깥쪽 벽에는 금이 가 있었고 방들은 어둡고 답답했으며 오래된 수납장은 벽에서 떨어지기 시작했습니다. 그런 징후를 보고 단순히 페인트칠만 새로 해서는 안 된다는 것을 추론할 수 있었습니다.","targets":["deduce","define","dense","detach","outermost"],"targetMeanings":["추론하다","분명히 하다","밀집한, 빽빽한","분리하다","가장 바깥의"],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D11_03","day":11,"no":3,"type":"story","situation":"가족과 함께 오래된 시골집을 리모델링한 경험","sentence":"We made a crude sketch of the new layout and used a miniature model to depict how the rooms might look. My wife wanted a clean, modern style with a few dainty ornaments, while I wanted to preserve the house’s intrinsic character. We eventually settled on a design that combined both ideas.","translation":"우리는 새 구조를 대략적으로 스케치하고 작은 모형을 이용해 방들이 어떻게 보일지 표현했습니다. 아내는 몇 가지 섬세한 장식이 있는 깔끔하고 현대적인 스타일을 원했고, 저는 집 고유의 분위기를 살리고 싶었습니다. 결국 두 아이디어를 결합한 디자인으로 결정했습니다.","targets":["crude","dainty","depict","intrinsic","miniature"],"targetMeanings":["가공하지 않은","우아한, 섬세한","묘사하다","고유의, 타고난","소형의"],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D11_04","day":11,"no":4,"type":"story","situation":"가족과 함께 오래된 시골집을 리모델링한 경험","sentence":"The biggest matter was the roof. Heavy rain had dampened part of the ceiling, and leaves had formed a small dam in the gutter, preventing water from draining properly. We deemed the damage serious enough to call a professional rather than trying to defend our original low-budget plan.","translation":"가장 큰 문제는 지붕이었습니다. 폭우로 천장 일부가 젖었고, 낙엽이 배수로를 막아 물이 제대로 빠지지 않고 있었습니다. 우리는 원래의 저예산 계획을 고집하기보다 전문가를 불러야 할 만큼 손상이 심각하다고 판단했습니다.","targets":["dam","defend","matter"],"targetMeanings":["막다","방어하다, 지키다","1. 물질 / 2. 사안"],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D11_05","day":11,"no":5,"type":"story","situation":"가족과 함께 오래된 시골집을 리모델링한 경험","sentence":"The contractor showed us an intricate repair plan. Some materials were surprisingly malleable, so they could be shaped to fit the older parts of the house. The work was sometimes intrusive because the noise would interrupt our conversations, but we gradually got used to living around the construction.","translation":"시공업자는 복잡한 수리 계획을 보여주었습니다. 일부 자재는 놀랄 만큼 유연해서 집의 오래된 부분에 맞게 형태를 바꿀 수 있었습니다. 공사 소음이 대화를 방해해서 때로는 거슬렸지만, 우리는 점차 공사 중인 환경에서 생활하는 데 익숙해졌습니다.","targets":["interrupt","intricate","intrusive","malleable"],"targetMeanings":["중단시키다","복잡한","끼어드는, 참견하는","유연한, 변형하기 쉬운"],"patterns":["get used to -ing"],"patternMeanings":["~하는 데 익숙해지다"],"opicLevel":"AL"},{"id":"P_D11_06","day":11,"no":6,"type":"story","situation":"가족과 함께 오래된 시골집을 리모델링한 경험","sentence":"We also learned that a higher price did not always denote better quality. One company tried to sell us a deluxe package, claiming it would raise the value of the house and make it more lucrative as a rental property. However, we decided that comfort mattered more than turning the house into an investment.","translation":"또한 가격이 높다고 항상 더 좋은 품질을 의미하는 것은 아니라는 것도 배웠습니다. 한 업체는 고급 패키지가 집의 가치를 높이고 임대용으로 더 수익성 있게 만들어 줄 거라며 판매하려 했습니다. 하지만 우리는 집을 투자 대상으로 만드는 것보다 편안함이 더 중요하다고 결정했습니다.","targets":["deluxe","denote","lucrative"],"targetMeanings":["호화로운","나타내다, 표시하다","수익성이 좋은, 유리한"],"patterns":[],"patternMeanings":[],"opicLevel":"AL"},{"id":"P_D11_07","day":11,"no":7,"type":"story","situation":"가족과 함께 오래된 시골집을 리모델링한 경험","sentence":"The garden required just as much attention. It had become so luxuriant that plants covered most of the walkway. Cutting everything back was hard work, and at one point the amount of work almost crushed my motivation. Still, everyone did their fair share, which helped us catch up.","translation":"정원도 그만큼 손이 많이 갔습니다. 식물이 너무 무성하게 자라 산책로 대부분을 덮고 있었습니다. 모두 잘라내는 일은 힘들었고 한때는 엄청난 작업량 때문에 의욕이 거의 꺾일 정도였습니다. 그래도 모두가 자기 몫을 공평하게 해서 밀린 일을 따라잡을 수 있었습니다.","targets":["luxuriant"],"targetMeanings":["무성한"],"patterns":["catch up in","do one's fair share"],"patternMeanings":["~에서 따라잡다","자기 몫을 공평하게 하다"],"opicLevel":"AL"},{"id":"P_D11_08","day":11,"no":8,"type":"story","situation":"가족과 함께 오래된 시골집을 리모델링한 경험","sentence":"That's when I realized how much I had taken my family’s help for granted. My wife was mainly responsible for choosing the interior materials, I was in charge of repairs, and the kids helped ornament the rooms with small pictures and plants. Each person had an important role to play.","translation":"그때 저는 가족의 도움을 얼마나 당연하게 여겨 왔는지 깨달았습니다. 아내는 주로 인테리어 자재 선택을 담당했고, 저는 수리를 맡았으며, 아이들은 작은 그림과 식물로 방을 꾸미는 일을 도왔습니다. 각자 중요한 역할이 있었습니다.","targets":["ornament"],"targetMeanings":["장식하다"],"patterns":["have an important role to play","be mainly responsible for","be in charge of","take something for granted","That's when I realized..."],"patternMeanings":["중요한 역할을 하다","주로 ~을 담당하다","~을 담당하다","~을 당연하게 여기다","그때 비로소 ~을 깨달았다"],"opicLevel":"AL"},{"id":"P_D11_09","day":11,"no":9,"type":"story","situation":"가족과 함께 오래된 시골집을 리모델링한 경험","sentence":"By the time we finished, the change was marvelous. The renovation had a profound impact on how we used the house, and the time we spent there began to rise steadily. More importantly, working together contributed significantly to making us feel closer as a family.","translation":"공사가 끝났을 때 변화는 정말 놀라웠습니다. 리모델링은 우리가 그 집을 이용하는 방식에 큰 영향을 미쳤고, 그곳에서 보내는 시간도 꾸준히 늘기 시작했습니다. 무엇보다 함께 일한 경험은 가족이 더 가까워지는 데 크게 기여했습니다.","targets":["marvelous"],"targetMeanings":["놀라운"],"patterns":["contribute significantly to","rise steadily","have a profound impact on"],"patternMeanings":["~에 크게 기여하다/영향을 주다","꾸준히 증가하다","~에 지대한 영향을 미치다"],"opicLevel":"AL"},{"id":"P_D11_10","day":11,"no":10,"type":"story","situation":"가족과 함께 오래된 시골집을 리모델링한 경험","sentence":"I learned from my mistakes, especially my unrealistic budget and schedule. Renovating an old house has both benefits and drawbacks, but for us, preserving a meaningful family space was no longer a choice but a necessity. In the end, the experience taught me that the people who share a home matter much more than how luxurious the home looks.","translation":"특히 비현실적인 예산과 일정 같은 제 실수에서 많은 것을 배웠습니다. 오래된 집을 고치는 데는 장단점이 있지만, 우리에게 의미 있는 가족 공간을 보존하는 것은 더 이상 선택이 아니라 필요였습니다. 결국 이 경험을 통해 집이 얼마나 호화로워 보이는지보다 그 집을 함께 사용하는 사람들이 훨씬 더 중요하다는 것을 배웠습니다.","targets":["matter"],"targetMeanings":["1. 물질 / 2. 사안"],"patterns":["no longer a choice but a necessity","benefits and drawbacks","learn from my mistakes"],"patternMeanings":["더 이상 선택이 아니라 필수","장점과 단점","실수에서 배우다"],"opicLevel":"AL"}];
+function parseMasterCsvRows(text){
+  const rows=[];let row=[],cell='',quoted=false;
+  for(let i=0;i<text.length;i++){const ch=text[i];
+    if(quoted){if(ch==='"'&&text[i+1]==='"'){cell+='"';i++;}else if(ch==='"')quoted=false;else cell+=ch;}
+    else{if(ch==='"')quoted=true;else if(ch===','){row.push(cell);cell='';}else if(ch==='\n'){row.push(cell.replace(/\r$/,''));rows.push(row);row=[];cell='';}else cell+=ch;}
+  }
+  if(cell.length||row.length){row.push(cell.replace(/\r$/,''));rows.push(row);}
+  if(!rows.length)return[];
+  const headers=rows[0].map((h,i)=>i===0?h.replace(/^\uFEFF/,''):h);
+  return rows.slice(1).filter(r=>r.some(v=>String(v||'').trim())).map(r=>{const o={};headers.forEach((h,i)=>o[h]=r[i]??'');return o;});
+}
+function safeJsonArray(value){try{const v=JSON.parse(value||'[]');return Array.isArray(v)?v:[]}catch(e){return[]}}
+async function loadPracticeReadingFromMaster(){
+  // Single-file build: Day 1~11 practical-reading data is embedded in PRACTICE_SENTENCES_MINIMAL.
+  PRACTICE_MASTER_CSV_LOADED=true;
+  console.info('[MY VOCA] Single-file embedded practical reading:',PRACTICE_SENTENCES_MINIMAL.length);
+  return true;
+}
+
+function practiceSentenceCardsMinimal(days){
+  const wanted=new Set((Array.isArray(days)?days:[days]).map(Number));
+  return PRACTICE_SENTENCES_MINIMAL.filter(x=>wanted.has(Number(x.day))).map(x=>{
+    const key='__practice__'+x.id;
+    if(!stats[key])stats[key]={miss:0,streak:0,lastMiss:0,lastSeen:0,quizWrong:0,quizCorrect:0,quizStreak:0,lastQuizWrong:0,studyCount:0,reviewStep:0,dueAt:0};
+    return {
+      isPracticeSentence:true,practiceId:x.id,sentenceStatsKey:key,practiceType:x.type,situation:x.situation,targetWords:x.targets||[],targetWordMeanings:x.targetMeanings||[],practicePatterns:x.patterns||[],practicePatternMeanings:x.patternMeanings||[],
+      word:x.sentence,meaning:x.translation,example:x.sentence,translation:x.translation,
+      paraphrase:'',paraphraseTranslation:'',newDay:Number(x.day),newNo:Number(x.no),
+      rating:5,collocation:'',collocations2:[],collocationsKo:[],synonyms:[],pack:currentPack,
+      theme:'Practical Speaking',themeKo:'실전 문장 연습',phrase:'',pattern:''
+    };
+  });
+}
+
 function cardKey(w){
   if(!w)return '';
   return `${w.newDay||''}|${w.newNo||''}|${w.word||''}`;
@@ -1458,7 +1677,7 @@ function highlightStudyExample(w){
   const pattern=decodeHtmlEntities(String(w?.collocation||w?.phrase||'').trim());
   const word=decodeHtmlEntities(String(w?.word||'').trim());
 
-  const patternRanges=pattern?collectHighlightRanges(text,pattern):[];
+  const patternRanges=pattern?collectSentencePatternRanges(text,pattern):[];
   const wordRanges=word?collectHighlightRanges(text,word):[];
   if(!patternRanges.length&&!wordRanges.length)return escHtml(text);
 
@@ -1494,7 +1713,233 @@ function fallbackSynonymsOf(w){
   return normalizeLexicalItems(w.synonyms).filter(x=>x.en&&x.ko);
 }
 function antonymsOf(w){return normalizeLexicalItems(w.antonyms||w.antonyms2||w.antonym||[])}
-function render(autoSpeak=true){const thisRender=++__renderVersion;if(document.getElementById('morePanel'))$('morePanel').classList.remove('hidden');let w=cur();if(w&&w.newDay)currentDay=w.newDay;if(!w){$('learn').innerHTML='<div class="empty">이 모드에 해당하는 단어가 없습니다.</div>';return}$('idx').textContent=i+1;$('total').textContent=deck.length;$('bar').style.width=((i+1)/deck.length*100)+'%';$('word').textContent=w.word;$('pronunciation').textContent='/ '+(IPA_MAP[w.word]||w.word)+' /';$('meaning').textContent=w.meaning;$('stars').textContent='회화 활용도 '+'★'.repeat(w.rating)+'☆'.repeat(5-w.rating);$('ex').innerHTML=highlightStudyExample(w);$('tr').textContent=w.translation;const usedSynonymInfo=actualSynonymInfo(w);const usedSynonym=usedSynonymInfo?.surface||'';$('q').innerHTML=highlightMultiplePhrases(w.paraphrase||'',[usedSynonym],'synonymWord');$('paraTr').textContent=w.paraphraseTranslation||'';$('synonymBadge').innerHTML=usedSynonymInfo?'사용된 유의어: <span class="synonymWord">'+escHtml(usedSynonymInfo.surface)+'</span>'+(usedSynonymInfo.ko?' - '+escHtml(usedSynonymInfo.ko):''):'';const paraLabel=document.querySelector('#q')?.closest('.section')?.querySelector('.label');if(paraLabel)paraLabel.textContent=currentPack==='opic'?'🔄 패러프레이징 예문':'🔄 패러프레이징 예문';
+
+
+function escapeRegexPractice(value){
+  return String(value||'').replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+}
+function practicePatternCandidates(x,raw){
+  const out=[];
+  const add=v=>{
+    v=String(v||'').trim();
+    if(v&&!out.some(z=>z.toLowerCase()===v.toLowerCase()))out.push(v);
+  };
+  add(x.pattern);add(x.collocation);add(x.phrase);
+  [
+    "No wonder",
+    "I usually",
+    "I couldn't",
+    "I realized",
+    "It took them a while to",
+    "I made a deliberate decision to",
+    "They were trying to",
+    "I'm fed up with",
+    "Being late once is understandable"
+  ].forEach(p=>{
+    if(String(raw||'').toLowerCase().includes(p.toLowerCase()))add(p);
+  });
+  return out;
+}
+function highlightPracticeTextSafe(raw,targets,patterns){
+  const text=String(raw||'');
+  const marks=[];
+  const add=(phrase,cls)=>{
+    phrase=String(phrase||'').trim();
+    if(!phrase)return;
+    const rx=new RegExp(escapeRegexPractice(phrase),'gi');
+    let m;
+    while((m=rx.exec(text))){
+      marks.push({start:m.index,end:m.index+m[0].length,cls});
+      if(m[0].length===0)rx.lastIndex++;
+    }
+  };
+  (patterns||[]).forEach(p=>add(p,'practicePatternPhrase'));
+  (targets||[]).forEach(p=>add(p,'practiceTargetWord'));
+  marks.sort((a,b)=>a.start-b.start || (a.cls==='practiceTargetWord'?-1:1) || (b.end-a.end));
+  const accepted=[];
+  for(const m of marks){
+    const overlapIndex=accepted.findIndex(a=>m.start<a.end&&m.end>a.start);
+    if(overlapIndex>=0){
+      if(m.cls==='practiceTargetWord'&&accepted[overlapIndex].cls!=='practiceTargetWord')accepted[overlapIndex]=m;
+      continue;
+    }
+    accepted.push(m);
+  }
+  accepted.sort((a,b)=>a.start-b.start);
+  let pos=0,html='';
+  for(const m of accepted){
+    html+=escHtml(text.slice(pos,m.start));
+    html+=`<span class="${m.cls}">${escHtml(text.slice(m.start,m.end))}</span>`;
+    pos=m.end;
+  }
+  html+=escHtml(text.slice(pos));
+  return html;
+}
+
+
+const PRACTICE_READING_GROUPS=[[1],[2],[3,4],[5,6],[7],[8],[9],[10],[11],[12],[13,14]];
+function practiceReadingCards(cards){
+  const byNo=new Map(cards.map(x=>[Number(x.newNo),x]));
+  return PRACTICE_READING_GROUPS.map((nos,groupIndex)=>{
+    const items=nos.map(n=>byNo.get(Number(n))).filter(Boolean);
+    if(!items.length)return null;
+    return {
+      groupIndex,
+      items,
+      sentence:items.map(x=>x.example||x.word||'').join(' '),
+      translation:items.map(x=>x.translation||x.meaning||'').join(' '),
+      targetWords:[...new Set(items.flatMap(x=>x.targetWords||[]))],
+      patterns:[...new Set(items.flatMap(x=>x.practicePatterns||[]))],
+      situation:items[0].situation||''
+    };
+  }).filter(Boolean);
+}
+
+function practiceSentenceListHtml(cards){
+  const groups=practiceReadingCards(cards);
+  return `<div class="practiceStoryList">`+groups.map((g,n)=>{
+    const sentenceHtml=highlightPracticeTextSafe(g.sentence,g.targetWords,g.patterns);
+    return `<article class="practiceStoryItem" data-practice-index="${n}">
+      <div class="practiceCardCopy">
+        <div class="practiceStorySentence">${sentenceHtml}</div>
+        <div class="practiceStoryTranslation">${escHtml(g.translation)}</div>
+      </div>
+      <button class="practiceSpeakBtn" type="button" data-practice-speak="${n}" aria-label="문장 듣기">🔊</button>
+    </article>`;
+  }).join('')+`</div>`;
+}
+function scrollToPracticeSentence(index){
+  const el=document.querySelector(`.practiceStoryItem[data-practice-index="${index}"]`);
+  if(!el)return;
+  document.querySelectorAll('.practiceStoryItem.practiceReadingNow').forEach(x=>x.classList.remove('practiceReadingNow'));
+  el.classList.add('practiceReadingNow');
+  const fixedTop=112;
+  const y=Math.max(0,window.scrollY+el.getBoundingClientRect().top-fixedTop);
+  try{window.scrollTo({top:y,behavior:'smooth'})}catch(e){window.scrollTo(0,y)}
+}
+async function readPracticeStoryList(cards,renderVersion){
+  stopSpeech();
+  const groups=practiceReadingCards(cards);
+  const seq=TTS.seq;
+  const alive=()=>seq===TTS.seq&&renderVersion===__renderVersion&&!learningPlaybackPaused;
+  for(let n=0;n<groups.length;n++){
+    if(!alive())return false;
+    scrollToPracticeSentence(n);
+    $('idx').textContent=n+1;$('total').textContent=groups.length;$('bar').style.width=((n+1)/groups.length*100)+'%';
+    $('autoStatus').textContent=`실전 리딩 ${n+1}/${groups.length}`;
+    for(const item of groups[n].items){
+      if(!alive())return false;
+      await speakOne(item.example||item.word,.84,'en-US');
+      if(!alive())return false;
+      await new Promise(r=>setTimeout(r,220));
+    }
+    await new Promise(r=>setTimeout(r,320));
+  }
+  $('autoStatus').textContent='실전 리딩 완료 · 따라 말해 보세요.';
+  return true;
+}
+function renderPracticeSentenceList(cards,thisRender,autoSpeak){document.body.classList.add('practiceReadingMode');
+  const legacyMore=document.getElementById('morePanel');if(legacyMore)legacyMore.classList.add('hidden');
+  if(!cards.length)return;
+  currentDay=Number(cards[0].newDay||currentDay);
+  $('idx').textContent=1;$('total').textContent=cards.length;$('bar').style.width='0%';
+  $('word').textContent='실전 리딩';$('pronunciation').textContent='';
+  $('meaning').textContent=`${dayDisplayLabel(currentDay)} · ${cards.length} Sentences`;
+  $('stars').textContent='🗣 실전 리딩';
+  $('ex').innerHTML=practiceSentenceListHtml(cards);$('tr').textContent='';
+  const readingGroups=practiceReadingCards(cards);
+  requestAnimationFrame(()=>scrollToPracticeSentence(0));
+  document.querySelectorAll('.practiceSpeakBtn').forEach(btn=>{
+    btn.onclick=e=>{
+      e.preventDefault();e.stopPropagation();
+      const n=Number(btn.dataset.practiceSpeak||0);
+      const group=readingGroups[n];if(!group)return;
+      stopSpeech();
+      scrollToPracticeSentence(n);
+      (async()=>{
+        for(const item of group.items){
+          await speakOne(item.example||item.word,.84,'en-US');
+          await new Promise(r=>setTimeout(r,180));
+        }
+      })();
+    };
+  });
+  $('q').innerHTML='<b>학습 방법</b> · 전체 문장을 흐름대로 읽고 따라 말해 보세요.';
+  $('paraTr').textContent='자동 읽기 중에는 현재 읽는 문장 위치로 이동하고 해당 문장만 강조됩니다.';
+  $('synonymBadge').textContent='';
+  const firstLabel=document.querySelector('#ex')?.closest('.section')?.querySelector('.label');
+  if(firstLabel)firstLabel.textContent='🗣 실전 리딩';
+  const paraLabel=document.querySelector('#q')?.closest('.section')?.querySelector('.label');
+  if(paraLabel)paraLabel.textContent='🎯 실전 문장 연습';
+  const heroTag=document.querySelector('.heroTop .tag');if(heroTag)heroTag.textContent=`DAY ${currentDay} · 실전 문장`;
+  const headerTitle=document.querySelector('.dayHeaderTitle h1');if(headerTitle)headerTitle.textContent=`${dayDisplayLabel(currentDay)} · 실전 문장`;
+  const headerSub=document.querySelector('.dayHeaderTitle .sub');if(headerSub)headerSub.textContent=`${cards[0].situation||'실생활 회화'} · ${cards.length} Sentences`;
+  $('fav').textContent='💬';$('fav').classList.remove('is-favorite');
+  $('studyCountBadge').textContent=`문장 ${cards.length}개`;
+  $('learnQuizCountBadge').textContent='Story + Review';
+  $('visualScene').textContent='🗣';
+  $('memoryPhrase').textContent='전체 문장 흐름';
+  $('memoryKo').textContent='문장 하나씩 외우기보다 전체 흐름을 소리 내어 반복하세요.';
+  $('hero').classList.remove('flipped');
+  const readingVocabulary=[];
+  const addReadingVocabulary=(label,meaning,type)=>{
+    label=String(label||'').trim();meaning=String(meaning||'').trim();
+    if(!label)return;
+    if(!readingVocabulary.some(x=>x.label.toLowerCase()===label.toLowerCase()&&x.type===type)){
+      readingVocabulary.push({label,meaning,type});
+    }
+  };
+  cards.forEach(x=>{
+    (x.targetWords||[]).forEach((t,ti)=>{
+      const found=ALL_WORDS.find(w=>String(w.word||'').toLowerCase()===String(t||'').toLowerCase());
+      const csvMeaning=(x.targetWordMeanings||[])[ti]||'';
+      addReadingVocabulary(t,csvMeaning||found?.meaning||found?.ko||'', 'word');
+    });
+    (x.practicePatterns||[]).forEach((p,pi)=>{
+      const csvMeaning=(x.practicePatternMeanings||[])[pi]||'';
+      addReadingVocabulary(p,csvMeaning,'pattern');
+    });
+  });
+  const usedPattern=$('usedPattern');
+  if(usedPattern){usedPattern.textContent='실전 리딩 핵심 표현';usedPattern.classList.remove('patternEmpty');}
+  const usedPatternMeaning=$('usedPatternMeaning');
+  if(usedPatternMeaning)usedPatternMeaning.textContent='이번 스토리에서 실제로 사용된 학습 단어와 회화 패턴';
+  const usedPatternExamples=$('usedPatternExamples');
+  if(usedPatternExamples){
+    const words=readingVocabulary.filter(x=>x.type==='word');
+    const patterns=readingVocabulary.filter(x=>x.type==='pattern' && x.label!=='At first' && x.label!=='that');
+    const split=Math.ceil(words.length/2);
+    const leftWords=words.slice(0,split),rightWords=words.slice(split);
+    const psplit=Math.ceil(patterns.length/2);
+    const leftPatterns=patterns.slice(0,psplit),rightPatterns=patterns.slice(psplit);
+    const wordCell=x=>`<div class="readingCompactRow"><b>${escHtml(x.label)}</b><span>${escHtml(x.meaning||'')}</span></div>`;
+    const patternCell=x=>`<div class="readingCompactRow readingCompactPattern"><b>${escHtml(x.label)} ~</b><span>${escHtml(x.meaning||'')}</span></div>`;
+    usedPatternExamples.innerHTML=`
+      <div class="readingReferenceSummary">
+        <div class="readingReferenceTitle">💗 실전 리딩 핵심 표현 정리</div>
+        <section class="readingReferenceBox readingReferenceWords">
+          <div class="readingReferenceSubTitle">핵심 단어 (WORD)</div>
+          <div class="readingReferenceColumns">
+            <div>${leftWords.map(wordCell).join('')}</div>
+            <div>${rightWords.map(wordCell).join('')}</div>
+          </div>
+        </section>
+        <section class="readingReferenceBox readingReferencePatterns">
+          <div class="readingReferenceSubTitle">핵심 패턴 (PATTERN)</div>
+          <div class="readingReferenceColumns readingPatternColumns">
+            <div>${leftPatterns.map(patternCell).join('')}</div>
+            <div>${rightPatterns.map(patternCell).join('')}</div>
+          </div>
+        </section>
+      </div>`;
+  }
+  __renderedCardKey='practice-list-'+currentDay;
+  if(autoSpeak&&hasStarted&&!learningPlaybackPaused){
+    requestAnimationFrame(()=>requestAnimationFrame(()=>readPracticeStoryList(cards,thisRender)));
+  }
+}
+
+function render(autoSpeak=true){const thisRender=++__renderVersion;if(document.getElementById('morePanel'))$('morePanel').classList.remove('hidden');let w=cur();if(w&&w.newDay)currentDay=w.newDay;if(w&&w.isPracticeSentence){renderPracticeSentenceList([...deck],thisRender,autoSpeak);return}document.body.classList.remove('practiceReadingMode');if(!w){$('learn').innerHTML='<div class="empty">이 모드에 해당하는 단어가 없습니다.</div>';return}$('idx').textContent=i+1;$('total').textContent=deck.length;$('bar').style.width=((i+1)/deck.length*100)+'%';$('word').textContent=w.word;$('pronunciation').textContent='/ '+(IPA_MAP[w.word]||w.word)+' /';$('meaning').textContent=w.meaning;$('stars').textContent='회화 활용도 '+'★'.repeat(w.rating)+'☆'.repeat(5-w.rating);$('ex').innerHTML=highlightStudyExample(w);$('tr').textContent=w.translation;const usedSynonymInfo=actualSynonymInfo(w);const usedSynonym=usedSynonymInfo?.surface||'';$('q').innerHTML=highlightMultiplePhrases(w.paraphrase||'',[usedSynonym],'synonymWord');$('paraTr').textContent=w.paraphraseTranslation||'';$('synonymBadge').innerHTML=usedSynonymInfo?'사용된 유의어: <span class="synonymWord">'+escHtml(usedSynonymInfo.surface)+'</span>'+(usedSynonymInfo.ko?' - '+escHtml(usedSynonymInfo.ko):''):'';const paraLabel=document.querySelector('#q')?.closest('.section')?.querySelector('.label');if(paraLabel)paraLabel.textContent=currentPack==='opic'?'🔄 패러프레이징 예문':'🔄 패러프레이징 예문';
 const heroTag=document.querySelector('.heroTop .tag');if(heroTag)heroTag.textContent=`DAY ${w.newDay} · ${currentCfg().short}`;
 const headerTitle=document.querySelector('.dayHeaderTitle h1');if(headerTitle)headerTitle.textContent=`${currentCfg().short} · ${dayDisplayLabel(currentDay)}`;
 const headerSub=document.querySelector('.dayHeaderTitle .sub');if(headerSub)headerSub.textContent=`${w.theme} · ${w.themeKo} · ${W.length} Words`;
@@ -2206,9 +2651,9 @@ function applyQuizReviewResult(st,isCorrect){
 }
 function quizRateFor(w){let st=stats[w.word]||{};let total=(st.quizCorrect||0)+(st.quizWrong||0);return total?(st.quizCorrect||0)/total:0}
 function shuffleDeck(items){const a=[...items];for(let n=a.length-1;n>0;n--){const j=Math.floor(Math.random()*(n+1));[a[n],a[j]]=[a[j],a[n]]}return a}
-function applyStudyOrder(items,mode){let d=[...items];if(mode==='miss')mode='quizWrongDesc';if(mode==='weak')mode='quizWeak';if(mode==='studyAsc')mode='quizRateAsc';if(mode==='studyDesc')mode='quizRateDesc';if(mode==='quizWrongDesc')d.sort((a,b)=>(stats[b.word].quizWrong||0)-(stats[a.word].quizWrong||0)||(stats[b.word].lastQuizWrong||0)-(stats[a.word].lastQuizWrong||0));if(mode==='quizWeak')d=d.filter(w=>(stats[w.word].quizWrong||0)>0).sort((a,b)=>(stats[b.word].quizWrong||0)-(stats[a.word].quizWrong||0));if(mode==='quizRateAsc')d.sort((a,b)=>quizRateFor(a)-quizRateFor(b)||(stats[b.word].quizWrong||0)-(stats[a.word].quizWrong||0));if(mode==='quizRateDesc')d.sort((a,b)=>quizRateFor(b)-quizRateFor(a)||(stats[b.word].quizCorrect||0)-(stats[a.word].quizCorrect||0));if(mode==='random')d=shuffleDeck(d);if(mode==='favorite')d=d.filter(w=>favs.includes(w.word));if(mode==='wrongFav')d=d.filter(w=>(stats[w.word]?.quizWrong||0)>0||favs.includes(w.word)).sort((a,b)=>(stats[b.word]?.quizWrong||0)-(stats[a.word]?.quizWrong||0)||(favs.includes(b.word)?1:0)-(favs.includes(a.word)?1:0));return d}
-function buildDeck(mode){__lastStudyCountedKey='';let d=applyStudyOrder(W,mode);if(mode==='quizWeak'&&!d.length){alert('현재 학습 범위에 퀴즈에서 틀린 단어가 없습니다.');return false;}if(mode==='favorite'&&!d.length){alert('현재 학습 범위에 모르는 단어 단어가 없습니다.');return false;}if(mode==='wrongFav'&&!d.length){alert('현재 학습 범위에 틀린 단어 또는 모르는 단어 단어가 없습니다.');return false;}deck=d;i=0;let names={book:'기본 순서',quizWrongDesc:'퀴즈 오답 많은 순',quizWeak:'틀린 단어만',favorite:'모르는 단어',wrongFav:'틀린 단어 + 모르는 단어',quizRateAsc:'퀴즈 정답률 낮은 순',quizRateDesc:'퀴즈 정답률 높은 순',random:'무작위 순서'};$('modeNote').textContent='현재 학습 모드: '+(names[mode]||names.book);render()}
-function finishLearning(){stopSpeech();$('bottom').classList.add('hidden');$('bar').style.width='100%';let total=deck.length,wrong=deck.filter(w=>(stats[w.word].quizWrong||0)>0).length;let names={book:'기본 순서',quizWrongDesc:'퀴즈 오답 많은 순',quizWeak:'틀린 단어만',favorite:'모르는 단어',wrongFav:'틀린 단어 + 모르는 단어',quizRateAsc:'퀴즈 정답률 낮은 순',quizRateDesc:'퀴즈 정답률 높은 순',random:'랜덤'};$('finishSummary').innerHTML=`${names[$('orderMode').value]||'현재'} 학습 ${total}개를 모두 끝냈습니다.<br>퀴즈 오답 기록이 있는 단어는 ${wrong}개입니다.`;$('finishOverlay').classList.remove('hidden')}$('prev').onclick=()=>{stopSpeech();AUTO.token++;if(i){i--;render()}};$('next').onclick=()=>{stopSpeech();AUTO.token++;if(i<deck.length-1){i++;render()}else{finishLearning()}};$('reset').onclick=()=>{if(confirm('학습·퀴즈·복습 기록을 모두 초기화할까요?')){known=[];favs=[];stats={};W.forEach(w=>stats[w.word]={miss:0,streak:0,lastMiss:0,lastSeen:0,quizWrong:0,quizCorrect:0,quizStreak:0,lastQuizWrong:0,studyCount:0,reviewStep:0,dueAt:0});save();buildDeck('book')}};$('speakW').onclick=()=>{stopSpeech();speakOne(cur().word)};$('speakE').onclick=()=>{stopSpeech();speakTwice(cur().example,.84)};
+function applyStudyOrder(items,mode){let d=[...items];if(mode==='practiceSentence')return d.sort((a,b)=>(a.newDay-b.newDay)||(a.newNo-b.newNo));if(mode==='miss')mode='quizWrongDesc';if(mode==='weak')mode='quizWeak';if(mode==='studyAsc')mode='quizRateAsc';if(mode==='studyDesc')mode='quizRateDesc';if(mode==='quizWrongDesc')d.sort((a,b)=>(stats[b.word].quizWrong||0)-(stats[a.word].quizWrong||0)||(stats[b.word].lastQuizWrong||0)-(stats[a.word].lastQuizWrong||0));if(mode==='quizWeak')d=d.filter(w=>(stats[w.word].quizWrong||0)>0).sort((a,b)=>(stats[b.word].quizWrong||0)-(stats[a.word].quizWrong||0));if(mode==='quizRateAsc')d.sort((a,b)=>quizRateFor(a)-quizRateFor(b)||(stats[b.word].quizWrong||0)-(stats[a.word].quizWrong||0));if(mode==='quizRateDesc')d.sort((a,b)=>quizRateFor(b)-quizRateFor(a)||(stats[b.word].quizCorrect||0)-(stats[a.word].quizCorrect||0));if(mode==='random')d=shuffleDeck(d);if(mode==='favorite')d=d.filter(w=>favs.includes(w.word));if(mode==='wrongFav')d=d.filter(w=>(stats[w.word]?.quizWrong||0)>0||favs.includes(w.word)).sort((a,b)=>(stats[b.word]?.quizWrong||0)-(stats[a.word]?.quizWrong||0)||(favs.includes(b.word)?1:0)-(favs.includes(a.word)?1:0));return d}
+function buildDeck(mode){__lastStudyCountedKey='';let d=mode==='practiceSentence'?practiceSentenceCardsMinimal([currentDay]):applyStudyOrder(W,mode);if(mode==='quizWeak'&&!d.length){alert('현재 학습 범위에 퀴즈에서 틀린 단어가 없습니다.');return false;}if(mode==='favorite'&&!d.length){alert('현재 학습 범위에 모르는 단어 단어가 없습니다.');return false;}if(mode==='wrongFav'&&!d.length){alert('현재 학습 범위에 틀린 단어 또는 모르는 단어 단어가 없습니다.');return false;}deck=d;i=0;let names={practiceSentence:'실전 문장 연습',book:'기본 순서',quizWrongDesc:'퀴즈 오답 많은 순',quizWeak:'틀린 단어만',favorite:'모르는 단어',wrongFav:'틀린 단어 + 모르는 단어',quizRateAsc:'퀴즈 정답률 낮은 순',quizRateDesc:'퀴즈 정답률 높은 순',random:'무작위 순서'};$('modeNote').textContent='현재 학습 모드: '+(names[mode]||names.book);render()}
+function finishLearning(){stopSpeech();$('bottom').classList.add('hidden');$('bar').style.width='100%';let total=deck.length,wrong=deck.filter(w=>(stats[w.word].quizWrong||0)>0).length;let names={practiceSentence:'실전 문장 연습',book:'기본 순서',quizWrongDesc:'퀴즈 오답 많은 순',quizWeak:'틀린 단어만',favorite:'모르는 단어',wrongFav:'틀린 단어 + 모르는 단어',quizRateAsc:'퀴즈 정답률 낮은 순',quizRateDesc:'퀴즈 정답률 높은 순',random:'랜덤'};$('finishSummary').innerHTML=`${names[$('orderMode').value]||'현재'} 학습 ${total}개를 모두 끝냈습니다.<br>퀴즈 오답 기록이 있는 단어는 ${wrong}개입니다.`;$('finishOverlay').classList.remove('hidden')}$('prev').onclick=()=>{stopSpeech();AUTO.token++;if(i){i--;render()}};$('next').onclick=()=>{stopSpeech();AUTO.token++;if(i<deck.length-1){i++;render()}else{finishLearning()}};$('reset').onclick=()=>{if(confirm('학습·퀴즈·복습 기록을 모두 초기화할까요?')){known=[];favs=[];stats={};W.forEach(w=>stats[w.word]={miss:0,streak:0,lastMiss:0,lastSeen:0,quizWrong:0,quizCorrect:0,quizStreak:0,lastQuizWrong:0,studyCount:0,reviewStep:0,dueAt:0});save();buildDeck('book')}};$('speakW').onclick=()=>{stopSpeech();speakOne(cur().word)};$('speakE').onclick=()=>{stopSpeech();speakTwice(cur().example,.84)};
 $('speakQ').onclick=()=>{stopSpeech();speakTwice(cur().paraphrase||cur().example,.84)};$('speakPattern').onclick=()=>{stopSpeech();const w=cur();speakOne(w.pattern||w.used_pattern||w.collocation||w.phrase||'',.82)};$('speakPatternExamples').onclick=async()=>{stopSpeech();for(const x of patternExamplesOf(cur()))for(let n=0;n<settingInt('patternRepeat',1,1,3);n++)await speakComplete(x,getSpeechRate(),'en-US')};$('speakAllCollocations').onclick=async()=>{stopSpeech();const w=cur();const list=(w.collocations2&&w.collocations2.length?w.collocations2:(w.collocation?[w.collocation]:[])).map(x=>decodeHtmlEntities(String(x||''))).filter(Boolean);for(const x of list){for(let n=0;n<settingInt('collocationRepeat',1,1,3);n++)await speakComplete(x,getSpeechRate(),'en-US');await new Promise(r=>setTimeout(r,100));}};$('speakAllSynonyms').onclick=async()=>{stopSpeech();const w=cur();const list=[...fallbackSynonymsOf(w),...antonymsOf(w)].map(x=>x.en).filter(Boolean);for(const x of list){for(let n=0;n<settingInt('synonymRepeat',1,1,3);n++)await speakComplete(x,getSpeechRate(),'en-US');await new Promise(r=>setTimeout(r,100));}};document.addEventListener('click',e=>{const b=e.target.closest('.detailSpeakBtn');if(!b)return;e.preventDefault();e.stopPropagation();const text=decodeURIComponent(b.dataset.speak||'');if(!text)return;stopSpeech();speakComplete(text,.84,'en-US')});$('fav').onclick=(e)=>{e.preventDefault();e.stopPropagation();toggleCurrentFavorite()};$('fav').addEventListener('touchend',(e)=>{e.stopPropagation()});$('hero').onclick=e=>{if(e.target.closest('#fav'))return;$('hero').classList.toggle('flipped')};
 
 
@@ -2451,13 +2896,13 @@ $('orderMode').value=localStorage.getItem(packKey('order'))||'quizWrongDesc';
 const savedSpeechMode=localStorage.getItem(packKey('speech'));
 $('speechMode').value=(savedSpeechMode==='off'||savedSpeechMode==='word'||savedSpeechMode==='full'||savedSpeechMode==='all')?savedSpeechMode:'full';
 function focusModeFromOrder(mode){
-  return mode==='quizWeak'?'wrong':mode==='favorite'?'favorite':mode==='wrongFav'?'wrongFav':'all';
+  return mode==='practiceSentence'?'sentences':mode==='quizWeak'?'wrong':mode==='favorite'?'favorite':mode==='wrongFav'?'wrongFav':'all';
 }
 function orderModeFromFocus(mode){
-  return mode==='wrong'?'quizWeak':mode==='favorite'?'favorite':mode==='wrongFav'?'wrongFav':'book';
+  return mode==='sentences'?'practiceSentence':mode==='wrong'?'quizWeak':mode==='favorite'?'favorite':mode==='wrongFav'?'wrongFav':'book';
 }
 function syncSharedStudyMode(mode,source=''){
-  mode=['wrong','favorite','wrongFav'].includes(mode)?mode:'all';
+  mode=['wrong','favorite','wrongFav','sentences'].includes(mode)?mode:'all';
   const order=orderModeFromFocus(mode);
   const selected=document.getElementById('selectedStudyMode');
   const home=document.getElementById('homeOrderMode');
@@ -2466,11 +2911,12 @@ function syncSharedStudyMode(mode,source=''){
   if(selected)selected.value=mode;
   if(home)home.value=order;
   if(day)day.value=order;
-  if(quiz)quiz.value=mode;
+  const quizMode=mode==='sentences'?'all':mode;
+  if(quiz)quiz.value=quizMode;
   localStorage.setItem(selectedStudyModeKey(),mode);
   localStorage.setItem(packKey('order'),order);
-  localStorage.setItem(packKey('quizFilterMode'),mode);
-  if(typeof quizFilterMode!=='undefined')quizFilterMode=mode;
+  localStorage.setItem(packKey('quizFilterMode'),quizMode);
+  if(typeof quizFilterMode!=='undefined')quizFilterMode=quizMode;
 }
 $('orderMode').onchange=()=>{
   buildDeck($('orderMode').value);
@@ -2523,6 +2969,7 @@ $('startLearning').onclick=()=>{
   forceReleaseWakeLock();forceReleaseWakeLock();initTTS();unlockTTSFromGesture();hasStarted=true;$('startOverlay').classList.add('hidden');$('bottom').classList.remove('hidden');buildDeck($('orderMode').value)};$('restartLearning').onclick=()=>{stopSpeech();$('finishOverlay').classList.add('hidden');if(AUTO.selectedDays&&AUTO.selectedDays.length){document.querySelectorAll('.daySelectCheck').forEach(x=>x.checked=AUTO.selectedDays.includes(Number(x.dataset.checkDay)));startSelectedAutoLearning()}else{$('bottom').classList.remove('hidden');buildDeck($('orderMode').value)}};
 let quizMode='choice'; // choice: 객관식, recall: 단어 말하기, sentence: 문장 말하기, favorite: DAY 모르는 단어 선택, lexical: 유의어·반의어
 let quizFilterMode=localStorage.getItem(packKey('quizFilterMode'))||'all'; // all | wrong | favorite | wrongFav
+let sentenceSourceMode=localStorage.getItem(packKey('sentenceSourceMode'))||'example'; // example | practice
 let sentenceRecallTimer=null;
 let sentenceRecallStage=0;
 let sentenceRecallVisible=false;
@@ -2589,7 +3036,7 @@ function scheduleQuizAutoNext(){
 }
 let quizDeck=[], quizIndex=0, quizSessionDone=false, quizSessionWrong=[];
 
-function updateQuizStats(w){if(!w)return;const st=stats[w.word]||{};const correct=st.quizCorrect||0,wrong=st.quizWrong||0,total=correct+wrong;$('quizCorrectBadge').textContent='정답 '+correct+'회';$('quizWrongBadge').textContent='오답 '+wrong+'회';$('quizStreakBadge').textContent='연속 정답 '+(st.quizStreak||0)+'회';$('quizAccuracyBadge').textContent='정답률 '+(total?Math.round(correct*100/total):0)+'%'}
+function updateQuizStats(w){if(!w)return;const st=quizMode==='sentence'?ensureSentenceStats(w):(stats[w.word]||{});const correct=quizMode==='sentence'?(st.sentenceCorrect||0):(st.quizCorrect||0),wrong=quizMode==='sentence'?(st.sentenceWrong||0):(st.quizWrong||0),streak=quizMode==='sentence'?(st.sentenceStreak||0):(st.quizStreak||0),total=correct+wrong;$('quizCorrectBadge').textContent='정답 '+correct+'회';$('quizWrongBadge').textContent='오답 '+wrong+'회';$('quizStreakBadge').textContent='연속 정답 '+streak+'회';$('quizAccuracyBadge').textContent='정답률 '+(total?Math.round(correct*100/total):0)+'%'}
 
 let quizSelectedDay=1;
 let quizAllWrongMode=false;
@@ -2604,13 +3051,66 @@ function applyQuizFilter(items){
   if(quizFilterMode==='wrongFav')return source.filter(w=>(stats[w.word]?.quizWrong||0)>0||favs.includes(w.word));
   return source;
 }
+function sentenceSourceLabel(){return sentenceSourceMode==='practice'?'실전 리딩':'학습 예문';}
+function sentenceStatsKey(q){
+  if(!q)return '';
+  if(q.sentenceStatsKey)return q.sentenceStatsKey;
+  if(q.isPracticeSentence&&q.practiceId)return '__practice__'+q.practiceId;
+  return q.word||'';
+}
+function ensureSentenceStats(q){
+  const key=sentenceStatsKey(q);
+  if(!key)return {};
+  if(!stats[key])stats[key]={miss:0,streak:0,lastMiss:0,lastSeen:0,quizWrong:0,quizCorrect:0,quizStreak:0,lastQuizWrong:0,studyCount:0,reviewStep:0,dueAt:0};
+  const st=stats[key];
+  if(typeof st.sentenceWrong!=='number')st.sentenceWrong=0;
+  if(typeof st.sentenceCorrect!=='number')st.sentenceCorrect=0;
+  if(typeof st.sentenceStreak!=='number')st.sentenceStreak=0;
+  if(typeof st.lastSentenceWrong!=='number')st.lastSentenceWrong=0;
+  return st;
+}
+function isWeakSentence(q){
+  const st=ensureSentenceStats(q);
+  return (st.sentenceWrong||0)>0 && (st.sentenceStreak||0)<2;
+}
+function sentenceFilterLabel(){return quizFilterMode==='wrong'?'틀린 문장':'전체 문장';}
+function syncSentenceSourceUI(){
+  const bar=$('sentenceSourceBar');if(bar)bar.classList.toggle('show',quizMode==='sentence');
+  const ex=$('sentenceSourceExample'),pr=$('sentenceSourcePractice');
+  if(ex)ex.classList.toggle('active',sentenceSourceMode==='example');
+  if(pr)pr.classList.toggle('active',sentenceSourceMode==='practice');
+  const filter=$('quizFilterMode');
+  if(filter){
+    if(quizMode==='sentence'){
+      const current=(quizFilterMode==='wrong')?'wrong':'all';
+      filter.disabled=false;
+      filter.innerHTML='<option value="all">전체 문장</option><option value="wrong">틀린 문장</option>';
+      filter.value=current;
+      quizFilterMode=current;
+    }else{
+      const current=['all','wrong','favorite','wrongFav'].includes(quizFilterMode)?quizFilterMode:'all';
+      filter.disabled=false;
+      filter.innerHTML='<option value="all">전체 단어</option><option value="wrong">틀린 단어만</option><option value="favorite">모르는 단어</option><option value="wrongFav">틀린 단어 + 모르는 단어</option>';
+      filter.value=current;
+    }
+  }
+}
 function quizScopeLabel(){
   const scope=quizAllWrongMode ? '전체 Day 오답' : dayDisplayLabel(quizSelectedDay);
+  if(quizMode==='sentence')return `${scope} · ${sentenceSourceLabel()} · ${sentenceFilterLabel()}`;
   return `${scope} · ${quizFilterLabel()}`;
 }
 function updateQuizFilterCount(){
   const el=document.getElementById('quizFilterCount');
   if(!el)return;
+  if(quizMode==='sentence'){
+    const base=sentenceSourceMode==='practice'
+      ? practiceSentenceCardsMinimal([quizSelectedDay])
+      : ALL_WORDS.filter(w=>Number(w.newDay)===Number(quizSelectedDay));
+    const count=quizFilterMode==='wrong'?base.filter(isWeakSentence).length:base.length;
+    el.textContent=count+'문장';
+    return;
+  }
   const base=quizAllWrongMode
     ? ALL_WORDS.filter(w=>(stats[w.word]?.quizWrong||0)>0)
     : ALL_WORDS.filter(w=>Number(w.newDay)===Number(quizSelectedDay));
@@ -2622,8 +3122,8 @@ function updateQuizDayNav(){
   const label=$('quizDayLabel');
   if(!btn||!label)return;
   btn.classList.toggle('active',quizAllWrongMode);
-  btn.disabled=quizMode==='favorite';
-  btn.textContent=quizMode==='favorite'?'⭐ DAY 모르는 단어 선택':(quizAllWrongMode?'↩ 현재 Day로 돌아가기':'🔥 전체 Day 오답');
+  btn.disabled=quizMode==='favorite'||quizMode==='sentence';
+  btn.textContent=quizMode==='favorite'?'⭐ DAY 모르는 단어 선택':quizMode==='sentence'?'문장 말하기는 퀴즈 대상에서 선택':(quizAllWrongMode?'↩ 현재 Day로 돌아가기':'🔥 전체 Day 오답');
 
   if(quizAllWrongMode){
     const wrongCount=ALL_WORDS.filter(w=>(stats[w.word]?.quizWrong||0)>0).length;
@@ -2678,9 +3178,24 @@ function quizPool(){
 function buildQuizDeck(){
   const pool=quizPool();
   const lexicalEligible=pool.filter(w=>fallbackSynonymsOf(w).length||antonymsOf(w).length);
-  quizDeck = quizMode==='sentence'
-    ? [...pool].sort((a,b)=>(Number(a.newDay)||0)-(Number(b.newDay)||0)||(Number(a.newNo)||0)-(Number(b.newNo)||0)||(Number(a.originalNo)||0)-(Number(b.originalNo)||0))
-    : quizMode==='lexical' ? shuffleDeck(lexicalEligible) : shuffleDeck(pool);
+  if(quizMode==='sentence'){
+    quizAllWrongMode=false;
+    let sentencePool=sentenceSourceMode==='practice'
+      ? practiceSentenceCardsMinimal([quizSelectedDay])
+      : ALL_WORDS.filter(w=>Number(w.newDay)===Number(quizSelectedDay));
+    sentencePool.forEach(q=>ensureSentenceStats(q));
+    if(quizFilterMode==='wrong'){
+      sentencePool=sentencePool.filter(isWeakSentence).sort((a,b)=>{
+        const sa=ensureSentenceStats(a),sb=ensureSentenceStats(b);
+        return (sb.sentenceWrong||0)-(sa.sentenceWrong||0)||(sb.lastSentenceWrong||0)-(sa.lastSentenceWrong||0)||(Number(a.newNo)||0)-(Number(b.newNo)||0);
+      });
+    }else{
+      sentencePool=sentencePool.sort((a,b)=>(Number(a.newDay)||0)-(Number(b.newDay)||0)||(Number(a.newNo)||0)-(Number(b.newNo)||0)||(Number(a.originalNo)||0)-(Number(b.originalNo)||0));
+    }
+    quizDeck=sentencePool;
+  }else{
+    quizDeck = quizMode==='lexical' ? shuffleDeck(lexicalEligible) : shuffleDeck(pool);
+  }
   quizIndex = 0;
   quizSessionDone = false;
   quizSessionWrong = [];
@@ -2789,10 +3304,11 @@ function setQuizMode(mode){
   $('quiz').classList.toggle('selector-mode',quizMode==='favorite');
   $('recallGuide').classList.toggle('hidden',quizMode==='choice');
   if(quizMode==='recall')$('recallGuide').textContent='문제를 보고 답을 소리 내어 말한 뒤 정답을 확인하세요. 맞았어요/오답 기록은 기존 객관식 카운터와 공유됩니다.';
-  if(quizMode==='sentence')$('recallGuide').textContent='문장 말하기는 현재 Day의 등록 순서대로 진행됩니다. 한글 뜻을 보고 3초 동안 떠올린 뒤, 전체 문장 반복 듣기 → 패턴·단어 빈칸 말하기 → 문장 전체 말하기 순서로 연습합니다.';
+  if(quizMode==='sentence')$('recallGuide').textContent='문장 소스를 선택하세요. 1단계 전체 문장 반복 듣기·따라 말하기 → 2단계 핵심 표현과 50% 이상 빈칸 말하기 → 3단계 한글만 보고 전체 문장 말하기 순서입니다.';
   if(quizMode==='favorite')$('recallGuide').textContent='DAY 전체 단어를 먼저 훑어보고 모르는 단어를 체크하세요. 체크한 단어는 학습 화면의 모르는 단어와 즉시 연동됩니다.';
   if(quizMode==='lexical')$('recallGuide').textContent='유의어 뜻 맞추기·같은 뜻 찾기·패러프레이징에 사용된 유의어 찾기·반의어 찾기를 섞어서 연습합니다. 등록된 데이터가 있는 문제만 출제됩니다.';
   $('quizDirection').disabled=quizMode==='sentence'||quizMode==='favorite'||quizMode==='lexical';
+  syncSentenceSourceUI();
   updateQuizPlaybackButton();
   resetQuizSession();
 }
@@ -2848,21 +3364,37 @@ function choiceResultPlayback(q,selectedObj,isCorrect){
 function recordRecallResult(q,isCorrect){
   if(quizAnswered||!q)return;
   quizAnswered=true;
-  const st=stats[q.word];
+  const isSentence=quizMode==='sentence';
+  const st=isSentence?ensureSentenceStats(q):stats[q.word];
   if(isCorrect){
-    st.quizCorrect=(st.quizCorrect||0)+1;
-    st.quizStreak=(st.quizStreak||0)+1;
-    applyQuizReviewResult(st,true);
-    $('quizFeedback').className='quizFeedback ok';
-    $('quizFeedback').innerHTML='맞았어요! 기존 객관식과 같은 정답 카운터에 반영했습니다.';
+    if(isSentence){
+      st.sentenceCorrect=(st.sentenceCorrect||0)+1;
+      st.sentenceStreak=(st.sentenceStreak||0)+1;
+      $('quizFeedback').className='quizFeedback ok';
+      $('quizFeedback').innerHTML=st.sentenceStreak>=2?'맞았어요! 연속 2회 정답으로 틀린 문장 목록에서 졸업했습니다.':'맞았어요! 한 번 더 연속으로 맞히면 틀린 문장 목록에서 졸업합니다.';
+    }else{
+      st.quizCorrect=(st.quizCorrect||0)+1;
+      st.quizStreak=(st.quizStreak||0)+1;
+      applyQuizReviewResult(st,true);
+      $('quizFeedback').className='quizFeedback ok';
+      $('quizFeedback').innerHTML='맞았어요! 기존 객관식과 같은 정답 카운터에 반영했습니다.';
+    }
   }else{
-    st.quizWrong=(st.quizWrong||0)+1;
-    st.quizStreak=0;
-    st.lastQuizWrong=Date.now();
-    applyQuizReviewResult(st,false);
+    if(isSentence){
+      st.sentenceWrong=(st.sentenceWrong||0)+1;
+      st.sentenceStreak=0;
+      st.lastSentenceWrong=Date.now();
+      $('quizFeedback').className='quizFeedback no';
+      $('quizFeedback').innerHTML='오답으로 기록했습니다. 이 문장은 틀린 문장 집중 학습 대상에 포함됩니다.';
+    }else{
+      st.quizWrong=(st.quizWrong||0)+1;
+      st.quizStreak=0;
+      st.lastQuizWrong=Date.now();
+      applyQuizReviewResult(st,false);
+      $('quizFeedback').className='quizFeedback no';
+      $('quizFeedback').innerHTML='오답으로 기록했습니다. 기존 객관식과 같은 오답 카운터에 반영했습니다.';
+    }
     if(!quizSessionWrong.some(x=>x.word===q.word))quizSessionWrong.push({word:q.word,meaning:q.meaning});
-    $('quizFeedback').className='quizFeedback no';
-    $('quizFeedback').innerHTML='오답으로 기록했습니다. 기존 객관식과 같은 오답 카운터에 반영했습니다.';
   }
   document.querySelectorAll('#opts .recallAction').forEach(btn=>btn.disabled=true);
   $('nextq').classList.remove('hidden');
@@ -2951,7 +3483,7 @@ function newRecallQuestion(){
 
 function sentenceText(q,variant=sentenceRecallVariant){
   if(variant==='paraphrase')return recallText(q?.paraphrase||'').trim();
-  return recallText(q?.example||'').trim();
+  return recallText(q?.example||q?.sentence||q?.word||'').trim();
 }
 function sentenceKo(q,variant=sentenceRecallVariant){
   if(variant==='paraphrase')return recallText(q?.paraphraseTranslation||q?.translation||q?.meaning||'').trim();
@@ -2959,9 +3491,11 @@ function sentenceKo(q,variant=sentenceRecallVariant){
 }
 function sentencePattern(q,variant=sentenceRecallVariant){
   if(variant==='paraphrase')return recallText(q?.synonymUsed||'').trim();
+  if(q?.isPracticeSentence&&Array.isArray(q.practicePatterns))return q.practicePatterns.filter(Boolean).join(' · ');
   return recallText(q?.pattern||q?.used_pattern||q?.collocation||q?.phrase||'').trim();
 }
 function sentencePatternMeaning(q,variant=sentenceRecallVariant){
+  if(q?.isPracticeSentence&&Array.isArray(q.practicePatternMeanings))return q.practicePatternMeanings.filter(Boolean).join(' · ');
   if(variant==='paraphrase'){
     const target=recallText(q?.synonymUsed||'').trim().toLowerCase();
     const list=Array.isArray(q?.synonyms)?q.synonyms:[];
@@ -2994,8 +3528,10 @@ function sentenceMaskedHtml(q){
   if(!text)return '<span class="patternEmpty">등록된 학습 문장이 없습니다.</span>';
   const pattern=sentencePattern(q);
   const word=recallText(q?.word||'').trim();
-  const patternRanges=pattern?collectHighlightRanges(text,pattern):[];
-  const wordRanges=word?collectHighlightRanges(text,word):[];
+  const practicePatterns=q?.isPracticeSentence&&Array.isArray(q.practicePatterns)?q.practicePatterns.filter(Boolean):[];
+  const practiceWords=q?.isPracticeSentence&&Array.isArray(q.targetWords)?q.targetWords.filter(Boolean):[];
+  const patternRanges=q?.isPracticeSentence?practicePatterns.flatMap(x=>collectHighlightRanges(text,x)):(pattern?collectHighlightRanges(text,pattern):[]);
+  const wordRanges=q?.isPracticeSentence?practiceWords.flatMap(x=>collectHighlightRanges(text,x)):(word?collectHighlightRanges(text,word):[]);
 
   // 문장 내 영어 단어를 모두 토큰화한다. 2단계에서는 최소 50%를 가린다.
   const tokenRe=/[A-Za-z0-9]+(?:['’\-][A-Za-z0-9]+)*/g;
@@ -3064,8 +3600,10 @@ function sentenceHighlightedHtml(q){
   if(!text)return '<span class="patternEmpty">등록된 학습 문장이 없습니다.</span>';
   const pattern=sentencePattern(q);
   const word=recallText(q?.word||'').trim();
-  const patternRanges=pattern?collectHighlightRanges(text,pattern):[];
-  const wordRanges=word?collectHighlightRanges(text,word):[];
+  const practicePatterns=q?.isPracticeSentence&&Array.isArray(q.practicePatterns)?q.practicePatterns.filter(Boolean):[];
+  const practiceWords=q?.isPracticeSentence&&Array.isArray(q.targetWords)?q.targetWords.filter(Boolean):[];
+  const patternRanges=q?.isPracticeSentence?practicePatterns.flatMap(x=>collectHighlightRanges(text,x)):(pattern?collectHighlightRanges(text,pattern):[]);
+  const wordRanges=q?.isPracticeSentence?practiceWords.flatMap(x=>collectHighlightRanges(text,x)):(word?collectHighlightRanges(text,word):[]);
   const points=new Set([0,text.length]);
   [...patternRanges,...wordRanges].forEach(([a,b])=>{points.add(a);points.add(b)});
   const cuts=[...points].sort((a,b)=>a-b);
@@ -3106,14 +3644,22 @@ function renderSentenceStage(q,stage,visible=false){
   const isPara=sentenceRecallVariant==='paraphrase';
   const stagePattern=sentencePattern(q);
   const stagePatternKo=sentencePatternMeaning(q);
-  const patternInfo=(stagePattern||stagePatternKo)?`<div class="sentencePatternInfo"><b>${isPara?'패러프레이징 핵심 표현':'문장에서 사용된 회화 패턴'}</b>${stagePattern?`<span class="patternText">${recallEscape(stagePattern)}</span>`:''}${stagePatternKo?`<span class="patternKo">${recallEscape(stagePatternKo)}</span>`:''}</div>`:'';
+  let patternInfo='';
+  if(q?.isPracticeSentence && Array.isArray(q.practicePatterns) && q.practicePatterns.filter(Boolean).length){
+    const pp=q.practicePatterns.filter(Boolean);
+    const pm=Array.isArray(q.practicePatternMeanings)?q.practicePatternMeanings:[];
+    const rows=pp.map((pat,i)=>`<div class="sentencePatternPair"><span class="patternText">${recallEscape(pat)}</span>${pm[i]?`<span class="patternKo">${recallEscape(pm[i])}</span>`:''}</div>`).join('');
+    patternInfo=`<div class="sentencePatternInfo"><b>문장에서 사용된 회화 패턴</b>${rows}</div>`;
+  }else if(stagePattern||stagePatternKo){
+    patternInfo=`<div class="sentencePatternInfo"><b>${isPara?'패러프레이징 핵심 표현':'문장에서 사용된 회화 패턴'}</b><div class="sentencePatternPair">${stagePattern?`<span class="patternText">${recallEscape(stagePattern)}</span>`:''}${stagePatternKo?`<span class="patternKo">${recallEscape(stagePatternKo)}</span>`:''}</div></div>`;
+  }
   let content='';
   let actions='';
   if(stage===1){
     content=`<div class="sentenceEnglish">${full}</div>${patternInfo}`;
     actions=`<div class="sentenceStageActions one"><button id="sentenceToStage2" class="sentenceStageBtn sentencePrimary" type="button">2단계 · 빈칸 문장 말하기</button></div>`;
   }else if(stage===2){
-    content=`<div id="sentencePracticeText" class="sentenceEnglish">${visible?full:sentenceMaskedHtml(q)}</div>`;
+    content=`<div id="sentencePracticeText" class="sentenceEnglish">${visible?full:sentenceMaskedHtml(q)}</div>${patternInfo}`;
     actions=`<div class="sentenceStageActions"><button id="sentenceToggle" class="sentenceStageBtn sentenceSecondary" type="button">${visible?'문장 숨기기':'문장 보기 · 듣기'}</button><button id="sentenceToStage3" class="sentenceStageBtn sentencePrimary" type="button">3단계 · 전체 문장 말하기</button></div>`;
   }else{
     content=visible?`<div id="sentencePracticeText" class="sentenceEnglish">${full}</div>`:`<div id="sentencePracticeText" class="sentenceHiddenBox">영어 문장을 보지 않고 전체 문장을 말해 보세요.</div>`;
@@ -3123,8 +3669,22 @@ function renderSentenceStage(q,stage,visible=false){
       actions=`<div class="sentenceStageActions"><button id="sentenceToggle" class="sentenceStageBtn sentenceSecondary" type="button">${visible?'문장 숨기기':'문장 보기 · 듣기'}</button><button id="sentenceCorrect" class="sentenceStageBtn sentenceSuccess" type="button">맞았어요</button><button id="sentenceWrong" class="sentenceStageBtn sentenceDanger" type="button">오답</button><button id="sentenceListen" class="sentenceStageBtn sentenceSecondary" type="button">🔊 문장 다시 듣기</button></div>`;
     }
   }
-  const instruction=stage===1?'':stage===2?(isPara?'핵심 표현과 학습 단어를 가렸습니다. 빈칸을 직접 말해 보세요.':'분홍색은 패턴, 파란색은 핵심 단어입니다. 각 단어마다 빈칸 하나가 표시됩니다.'):'영어 문장을 보지 않고 처음부터 끝까지 말해 보세요.';
-  $('opts').innerHTML=`<div class="sentenceRecallBox"><div class="sentenceStageBadge">${variantLabel} · ${stage}단계 / 3단계</div><div class="sentencePromptKo">${ko}</div>${content}${instruction?`<div class="sentenceInstruction">${instruction}</div>`:''}${actions}</div>`;
+  const instruction=stage===1?'문장을 계속 들으면서 자연스럽게 따라 말하세요.':stage===2?(isPara?'핵심 표현과 학습 단어를 가렸습니다. 빈칸을 직접 말해 보세요.':'핵심 단어·표현을 우선 포함해 문장의 50% 이상을 가렸습니다. 보이는 부분을 단서로 전체 문장을 말해 보세요.'):'한글 뜻만 보고 영어 문장을 처음부터 끝까지 말해 보세요.';
+  const stageNav=`<div class="sentenceStageNav" aria-label="문장 말하기 단계 이동">
+    <button type="button" class="sentenceStageNavBtn ${stage===1?'active':''}" data-sentence-stage="1">① 듣고 따라하기</button>
+    <span class="sentenceStageNavArrow">→</span>
+    <button type="button" class="sentenceStageNavBtn ${stage===2?'active':''}" data-sentence-stage="2">② 빈칸 말하기</button>
+    <span class="sentenceStageNavArrow">→</span>
+    <button type="button" class="sentenceStageNavBtn ${stage===3?'active':''}" data-sentence-stage="3">③ 한글 보고 말하기</button>
+  </div>`;
+  $('opts').innerHTML=`<div class="sentenceRecallBox">${stageNav}<div class="sentenceStageBadge">${variantLabel} · ${stage}단계 / 3단계</div><div class="sentencePromptKo">${ko}</div>${content}${instruction?`<div class="sentenceInstruction">${instruction}</div>`:''}${actions}</div>`;
+  document.querySelectorAll('[data-sentence-stage]').forEach(btn=>{
+    btn.onclick=()=>{
+      const target=Number(btn.dataset.sentenceStage||stage);
+      if(target!==1)stopSentenceRepeat(true);
+      renderSentenceStage(q,target,false);
+    };
+  });
   $('quizMeta').textContent=`${quizScopeLabel()} · 문장 말하기 · Day 순서 · ${variantLabel} ${stage}단계 · ${quizIndex+1}/${quizDeck.length}`;
   if(stage===1){
     $('sentenceToStage2').onclick=()=>{
@@ -3173,25 +3733,16 @@ function newSentenceRecallQuestion(){
   clearSentenceRecallTimer();
   if(!quizDeck.length)buildQuizDeck();
   if(!quizDeck.length){
-    $('qw').textContent='완료 🎉';$('quizMeta').textContent=quizScopeLabel()+' 조건에 해당하는 문제가 없습니다.';$('opts').innerHTML='';$('quizFeedback').className='quizFeedback hidden';$('nextq').textContent='다시하기';$('nextq').classList.remove('hidden');quizSessionDone=true;return;
+    $('qw').textContent='완료 🎉';$('quizMeta').textContent=quizScopeLabel()+' 조건에 해당하는 문장이 없습니다.';$('opts').innerHTML='';$('quizFeedback').className='quizFeedback hidden';$('nextq').textContent='다시하기';$('nextq').classList.remove('hidden');quizSessionDone=true;return;
   }
   if(quizIndex>=quizDeck.length){showQuizFinish();return;}
-  quizAnswered=false;quizCurrent=quizDeck[quizIndex];sentenceRecallStage=0;sentenceRecallVisible=false;sentenceRecallVariant='original';
+  quizAnswered=false;quizCurrent=quizDeck[quizIndex];sentenceRecallStage=1;sentenceRecallVisible=true;sentenceRecallVariant='original';
   const q=quizCurrent;updateQuizProgress();updateQuestionNavButtons();updateQuizStats(q);
   $('quiz').classList.add('ko-en-mode');
-  $('qw').textContent=sentenceKo(q);
-  $('quizMeta').textContent=`${quizScopeLabel()} · 문장 말하기는 Day 등록 순서 · ${quizIndex+1}/${quizDeck.length}`;
+  $('qw').textContent=sentenceSourceMode==='practice'?`실전 문장 ${quizIndex+1}`:sentenceKo(q);
+  $('quizMeta').textContent=`${quizScopeLabel()} · Day 등록 순서 · ${quizIndex+1}/${quizDeck.length}`;
   $('quizFeedback').className='quizFeedback hidden';$('quizFeedback').textContent='';$('nextq').classList.remove('hidden');
-  $('opts').innerHTML=`<div class="sentenceRecallBox"><div class="sentenceStageBadge">준비</div><div class="sentencePromptKo">${recallEscape(sentenceKo(q))}</div><div id="sentenceCountdown" class="sentenceCountdown">${settingInt('recallDelay',3,1,10)}</div><div class="sentenceInstruction">설정한 시간 동안 영어 문장을 먼저 말해 보세요.</div></div>`;
-  let count=settingInt('recallDelay',3,1,10);
-  const tick=()=>{
-    if(quizMode!=='sentence'||quizCurrent!==q)return;
-    count--;
-    const el=$('sentenceCountdown');if(el)el.textContent=String(Math.max(count,0));
-    if(count<=0){sentenceRecallTimer=null;renderSentenceStage(q,1,true);}
-    else sentenceRecallTimer=setTimeout(tick,1000);
-  };
-  sentenceRecallTimer=setTimeout(tick,1000);
+  renderSentenceStage(q,1,true);
 }
 
 function updateQuestionNavButtons(){
@@ -3551,6 +4102,19 @@ $('speakQuiz').addEventListener('click',()=>{
   const direction=$('quizDirection').value;
   if(direction==='enKo')speakQuizWordRepeated(quizCurrent,.78);
 });
+const sentenceSourceExample=$('sentenceSourceExample'),sentenceSourcePractice=$('sentenceSourcePractice');
+function setSentenceSource(mode){
+  sentenceSourceMode=mode==='practice'?'practice':'example';
+  quizFilterMode=(quizFilterMode==='wrong')?'wrong':'all';
+  localStorage.setItem(packKey('sentenceSourceMode'),sentenceSourceMode);
+  localStorage.setItem(packKey('quizFilterMode'),quizFilterMode);
+  clearQuizAutoNext();clearSentenceRecallTimer();stopSentenceRepeat(true);stopSpeech();
+  quizAllWrongMode=false;syncSentenceSourceUI();updateQuizDayNav();buildQuizDeck();quizAnswered=false;newq();
+}
+if(sentenceSourceExample)sentenceSourceExample.onclick=()=>setSentenceSource('example');
+if(sentenceSourcePractice)sentenceSourcePractice.onclick=()=>setSentenceSource('practice');
+syncSentenceSourceUI();
+
 $('quizModeChoice').onclick=()=>setQuizMode('choice');
 $('quizModeRecall').onclick=()=>setQuizMode('recall');
 $('quizModeSentence').onclick=()=>setQuizMode('sentence');
@@ -3562,7 +4126,8 @@ if(quizFilterSelect){
   quizFilterSelect.onchange=()=>{
     clearQuizAutoNext();clearSentenceRecallTimer();stopSentenceRepeat(true);stopSpeech();
     quizFilterMode=quizFilterSelect.value||'all';
-    syncSharedStudyMode(quizFilterMode,'quiz');
+    localStorage.setItem(packKey('quizFilterMode'),quizFilterMode);
+    if(quizMode!=='sentence')syncSharedStudyMode(quizFilterMode,'quiz');
     buildQuizDeck();quizAnswered=false;newq();updateQuizDayNav();
   };
 }
@@ -3807,12 +4372,11 @@ function startSelectedAutoLearning(){
   localStorage.setItem(selectedRepeatKey(),String(repeats));
   localStorage.setItem(selectedStudyModeKey(),studyMode);
 
-  const allEligible=ALL_WORDS
-    .filter(w=>eligibleSelectedWord(w,days,studyMode))
+  const allEligible=(studyMode==='sentences'?practiceSentenceCardsMinimal(days):ALL_WORDS.filter(w=>eligibleSelectedWord(w,days,studyMode)))
     .sort((a,b)=>a.newDay-b.newDay||a.newNo-b.newNo);
 
   // 홈 화면에서 선택한 학습 순서를 선택 DAY 반복 학습에도 동일하게 적용한다.
-  const selectedOrder=$('orderMode')?.value||localStorage.getItem(packKey('order'))||'book';
+  const selectedOrder=studyMode==='sentences'?'practiceSentence':($('orderMode')?.value||localStorage.getItem(packKey('order'))||'book');
 
   if(!allEligible.length&&studyMode==='wrong'){
     alert('선택한 Day에 틀린 단어가 없습니다.');stopRepeatWakeSession();return;
@@ -3834,7 +4398,7 @@ function startSelectedAutoLearning(){
   AUTO.selectedDays=days;AUTO.repeats=repeats;AUTO.pass=resumed?Math.min(repeats,resumed.pass):1;AUTO.token++;
   currentDay=resumed?Number(selectedWords[resumed.index]?.newDay||days[0]):days[0];W=selectedWords;deck=[...W];i=resumed?resumed.index:0;
   const dayLabel=days.length<=6?days.map(d=>dayDisplayLabel(d,true)).join(', '):`${days.length}개 Day`;
-  const modeLabel=studyMode==='wrong'?'틀린 단어만':studyMode==='favorite'?'모르는 단어':studyMode==='wrongFav'?'틀린 단어 + 모르는 단어':'전체 반복';
+  const modeLabel=studyMode==='sentences'?'실전 문장만':studyMode==='wrong'?'틀린 단어만':studyMode==='favorite'?'모르는 단어':studyMode==='wrongFav'?'틀린 단어 + 모르는 단어':'전체 반복';
   document.querySelector('.dayHeaderTitle h1').textContent=`${currentCfg().short} · ${modeLabel}`;
   document.querySelector('.dayHeaderTitle .sub').textContent=`${dayLabel} · ${W.length} Cards · ${repeats}회 반복`;
   learningPlaybackPaused=false;updateLearningPlaybackButton();hasStarted=true;save();initTTS();unlockTTSFromGesture();
@@ -3895,7 +4459,10 @@ function stopAllReadingForNavigation(){
   }catch(e){}
 }
 
-function goHome(){if(currentCardRepeatActive)stopCurrentCardRepeatImmediately();saveSelectedProgress();
+function goHome(){document.body.classList.remove('practiceReadingMode');if(currentCardRepeatActive)stopCurrentCardRepeatImmediately();saveSelectedProgress();
+  try{ if(typeof stopSentenceRepeat==='function') stopSentenceRepeat(true); }catch(e){}
+  try{ if(typeof clearSentenceRecallTimer==='function') clearSentenceRecallTimer(); }catch(e){}
+  quizPendingPlaybackFactory=null;
   learningPlaybackPaused=true;updateLearningPlaybackButton();
   clearTimeout(readingScrollTimer);readingScrollSeq++;
   stopAllReadingForNavigation();
@@ -3938,7 +4505,7 @@ if(autoRepeatSelect)autoRepeatSelect.onchange=()=>{
   const cfg=$('cfgContinuousStudyRepeat');if(cfg)cfg.value=String(appSettings.continuousStudyRepeat);
 };
 const savedSelectedStudyMode=localStorage.getItem(selectedStudyModeKey())||focusModeFromOrder(localStorage.getItem(packKey('order'))||'book');
-if(document.getElementById('selectedStudyMode'))$('selectedStudyMode').value=['wrong','favorite','wrongFav'].includes(savedSelectedStudyMode)?savedSelectedStudyMode:'all';
+if(document.getElementById('selectedStudyMode'))$('selectedStudyMode').value=['wrong','favorite','wrongFav','sentences'].includes(savedSelectedStudyMode)?savedSelectedStudyMode:'all';
 const selectedStudyModeSelect=document.getElementById('selectedStudyMode');
 if(selectedStudyModeSelect)selectedStudyModeSelect.onchange=()=>syncSharedStudyMode(selectedStudyModeSelect.value,'selected');
 syncSharedStudyMode(selectedStudyModeSelect?.value||'all','restore');
@@ -3989,14 +4556,23 @@ $('card').addEventListener('touchend',e=>{
 
 
 
-window.APP_VERSION='v12.1-home-cleanup';
+window.APP_VERSION='V5.3.48-single-file';
 window.addEventListener('pagehide',()=>{__repeatWakeSession=false;forceReleaseWakeLock();});
 
 
-// Register companion PWA files on GitHub Pages/HTTPS.
-if('serviceWorker' in navigator && (location.protocol==='https:' || location.hostname==='localhost')){
-  window.addEventListener('load',()=>{
-    navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(()=>{});
+// Single-file deployment: remove old service workers/caches so index.html is always the source of truth.
+if('serviceWorker' in navigator){
+  window.addEventListener('load',async()=>{
+    try{
+      const regs=await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r=>r.unregister()));
+    }catch(e){}
+    try{
+      if('caches' in window){
+        const keys=await caches.keys();
+        await Promise.all(keys.map(k=>caches.delete(k)));
+      }
+    }catch(e){}
   });
 }
 
@@ -4115,15 +4691,14 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
   }
   window.openDrawerMenu=openDrawer;window.closeDrawerMenu=closeDrawer;
   function syncDrawerMenuVisibility(){
-    const home=document.getElementById('homePage');
-    const show=!!home&&!home.classList.contains('hidden');
-    menuBtn.classList.toggle('page-hidden',!show);
-    menuBtn.setAttribute('aria-hidden',String(!show));
-    if(!show&&document.body.classList.contains('drawer-open'))closeDrawer();
+    // Keep global navigation available on home, learn, quiz, forgetting-curve, score, and other app screens.
+    const show=true;
+    menuBtn.classList.remove('page-hidden');
+    menuBtn.setAttribute('aria-hidden','false');
   }
   window.syncDrawerMenuVisibility=syncDrawerMenuVisibility;
   const pageVisibilityObserver=new MutationObserver(syncDrawerMenuVisibility);
-  ['homePage','dayAppPage','configPage','comparePage'].forEach(id=>{const el=document.getElementById(id);if(el)pageVisibilityObserver.observe(el,{attributes:true,attributeFilter:['class']})});
+  ['homePage','dayAppPage','learn','quiz','configPage','comparePage'].forEach(id=>{const el=document.getElementById(id);if(el)pageVisibilityObserver.observe(el,{attributes:true,attributeFilter:['class']})});
   syncDrawerMenuVisibility();
   menuBtn.addEventListener('click',()=>document.body.classList.contains('drawer-open')?closeDrawer():openDrawer());
   backdrop.addEventListener('click',()=>closeDrawer());if(closeBtn)closeBtn.addEventListener('click',()=>closeDrawer());
@@ -4184,9 +4759,10 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
     if(action==='compare'){openCompareCenter();return}
     if(action==='score'){openDay(currentDay||1,'score');return}
     if(action==='forget'){openDay(currentDay||1,'forget');return}
+    if(action==='export'){window.exportMyVocaLearningRecords?.();return}
     if(action==='config'){openConfiguration();return}
     if(action==='whatsnew'){openConfiguration();setTimeout(()=>document.querySelector('.configSection')?.scrollIntoView({behavior:'smooth',block:'start'}),120);return}
-    if(action==='info'){alert('MY VOCA v5.3.18\nDrawer 집중 학습과 DAY·퀴즈 콤보박스의 학습 조건을 동기화했습니다.');return}
+    if(action==='info'){alert('MY VOCA v5.3.40\n기존 UI를 유지하면서 실전 문장 학습과 학습 기록 내보내기를 추가했습니다.');return}
     if(action==='continue'){
       const p=readSelectedProgress();
       if(p&&Array.isArray(p.days)&&p.days.length){
@@ -4370,5 +4946,38 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
     shell.insertAdjacentHTML('beforeend',`<section id="wakeLockManual" class="configSection"><div class="configSectionTitle">🔒 선택 학습 화면 꺼짐 방지</div><div class="configCopy"><b>선택 DAY 연속 학습</b><span>선택 학습이 재생되는 동안 화면 잠금을 유지합니다. 앱을 잠시 다른 화면으로 전환했다가 돌아와도 자동으로 다시 잠금을 요청합니다.</span></div><div class="configCopy" style="margin-top:12px"><b>잠금 해제 시점</b><span>재생 정지, 홈 이동, 학습 완료 또는 앱 종료 때만 화면 잠금을 해제합니다.</span></div></section>`);
   }
 })();
+
+
+
+window.exportMyVocaLearningRecords=function(){
+  try{
+    if(typeof save==='function')save();
+    const all=Array.isArray(ALL_WORDS)?ALL_WORDS:[];
+    const unknown=[...new Set(Array.isArray(favs)?favs:[])];
+    const wrong=all.filter(w=>Number(stats?.[w.word]?.quizWrong||0)>0).map(w=>w.word);
+    const words=[...new Set([...unknown,...wrong])];
+    const records=words.map(word=>{
+      const w=all.find(x=>x.word===word)||{};
+      const s=stats?.[word]||{};
+      return {
+        word,meaning:w.meaning||w.ko||'',day:Number(w.newDay||0),day_no:Number(w.newNo||0),
+        is_unknown:unknown.includes(word),is_wrong:Number(s.quizWrong||0)>0,
+        quiz_wrong_count:Number(s.quizWrong||0),quiz_correct_count:Number(s.quizCorrect||0),
+        study_count:Number(s.studyCount||0),last_seen:Number(s.lastSeen||0),
+        last_quiz_wrong:Number(s.lastQuizWrong||0),review_step:Number(s.reviewStep||0)
+      };
+    });
+    const payload={schema_version:'MY_VOCA_LEARNING_RECORD_V2',app_version:'5.3.25',exported_at:new Date().toISOString(),
+      wrong_words:wrong,unknown_words:unknown,records};
+    const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'});
+    const a=document.createElement('a'),d=new Date();
+    a.href=URL.createObjectURL(blob);
+    a.download='MY_VOCA_LEARNING_RECORD_'+d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'.json';
+    document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},400);
+  }catch(e){console.error(e);alert('학습 기록 내보내기에 실패했습니다.');}
+};
+
+
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',()=>loadPracticeReadingFromMaster());}else{loadPracticeReadingFromMaster();}
 </script></body></html>
 <style>.learningControlBtn.repeatCurrent{background:#fff;color:#7c3aed;border-color:#c4b5fd}.learningControlBtn.repeatActive{background:#7c3aed;color:#fff;border-color:#7c3aed}</style>
