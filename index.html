@@ -1,12 +1,33 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><!-- MY VOCA V5.3.80 SINGLE FILE: responsive quiz navigation -->
-<title>MY VOCA v5.3.96</title>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.97</title>
 
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 
-  <link rel="stylesheet" href="app.css?v=5.3.96">
+  <link rel="stylesheet" href="app.css?v=5.3.97">
+
+<script id="mv-v5397-migration">
+(async function(){
+  const KEY='mv_migrated_5.3.97';
+  if(localStorage.getItem(KEY)==='1') return;
+  try{
+    if('serviceWorker' in navigator){
+      const regs=await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r=>r.unregister()));
+    }
+    if('caches' in window){
+      const keys=await caches.keys();
+      await Promise.all(keys.map(k=>caches.delete(k)));
+    }
+  }catch(e){ console.warn('MY VOCA migration cleanup:',e); }
+  localStorage.setItem(KEY,'1');
+  const u=new URL(location.href);
+  u.searchParams.set('mv', '5.3.97');
+  location.replace(u.toString());
+})();
+</script>
+
 </head><body>
 
 <button id="drawerMenuButton" class="drawerMenuButton" type="button" aria-label="메뉴 열기" aria-expanded="false">☰</button>
@@ -48,7 +69,7 @@
     <button class="drawerItem" data-drawer-action="config"><span class="drawerIcon">⚙️</span><span class="drawerItemText">Config<small>음성·반복·퀴즈 설정</small></span></button>
     <button class="drawerItem" data-drawer-action="usage"><span class="drawerIcon">📘</span><span class="drawerItemText">사용 방법<small>MY VOCA 학습 방법과 기능 안내</small></span></button>
     <button class="drawerItem" data-drawer-action="whatsnew"><span class="drawerIcon">🆕</span><span class="drawerItemText">업데이트 내역<small>이번 버전 변경 사항</small></span></button>
-    <button class="drawerItem" data-drawer-action="info"><span class="drawerIcon">ℹ️</span><span class="drawerItemText">앱 정보<small>MY VOCA v5.3.96</small></span></button>
+    <button class="drawerItem" data-drawer-action="info"><span class="drawerIcon">ℹ️</span><span class="drawerItemText">앱 정보<small>MY VOCA v5.3.97</small></span></button>
   </nav>
 </aside>
 
@@ -58,7 +79,7 @@
       <div>
         <div class="homeEyebrow" id="homeCourseEyebrow">MY VOCA UNIFIED COURSE · 69 DAYS</div>
         <h1 id="homeCourseTitle">MY VOCA</h1>
-        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.96</div>
+        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.97</div>
       </div>
       <div class="homeDayBadge"><b id="homeRegisteredDays">30</b><span>등록 Day</span></div>
     </section>
@@ -611,7 +632,7 @@ Config의 <b>Day Loop 문장당 반복 횟수</b>에서 1회 / 2회 / 3회 / 5�
 
   
 <script id="mv-app-version">
-window.APP_VERSION = "5.3.96";
+window.APP_VERSION = "5.3.97";
 window.APP_NAME = "MY VOCA";
 document.documentElement.dataset.appVersion = window.APP_VERSION;
 document.title = `${window.APP_NAME} v${window.APP_VERSION}`;
@@ -637,14 +658,14 @@ window.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-<script src="app.js?v=5.3.96"></script>
+<script src="app.js?v=5.3.97"></script>
 
 <script id="mv-sw-register">
 (function(){
   if(!('serviceWorker' in navigator)) return;
   window.addEventListener('load', async () => {
     try{
-      const reg = await navigator.serviceWorker.register('./sw.js?v=5.3.96', {scope:'./'});
+      const reg = await navigator.serviceWorker.register('./sw.js?v=5.3.97', {scope:'./'});
       if(reg.waiting) reg.waiting.postMessage({type:'SKIP_WAITING'});
       reg.addEventListener('updatefound', () => {
         const worker = reg.installing;
