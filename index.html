@@ -610,5 +610,36 @@ Config의 <b>Day Loop 문장당 반복 횟수</b>에서 1회 / 2회 / 3회 / 5�
 
 
   <script src="app.js?v=5.3.95"></script>
+
+<script id="mv-sw-register">
+(function(){
+  if(!('serviceWorker' in navigator)) return;
+  window.addEventListener('load', async () => {
+    try{
+      const reg = await navigator.serviceWorker.register('./sw.js?v=5.3.95', {scope:'./'});
+      if(reg.waiting) reg.waiting.postMessage({type:'SKIP_WAITING'});
+      reg.addEventListener('updatefound', () => {
+        const worker = reg.installing;
+        if(!worker) return;
+        worker.addEventListener('statechange', () => {
+          if(worker.state === 'installed' && navigator.serviceWorker.controller){
+            worker.postMessage({type:'SKIP_WAITING'});
+          }
+        });
+      });
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if(!sessionStorage.getItem('mv_sw_reloaded')){
+          sessionStorage.setItem('mv_sw_reloaded','1');
+          location.reload();
+        }
+      });
+      reg.update().catch(()=>{});
+    }catch(err){
+      console.warn('MY VOCA service worker registration failed:', err);
+    }
+  });
+})();
+</script>
+
 </body></html>
 
