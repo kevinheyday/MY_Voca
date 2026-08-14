@@ -1,24 +1,25 @@
 <!doctype html>
 <html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MY VOCA v5.3.97 Cache Reset</title></head>
-<body style="font-family:sans-serif;padding:24px;line-height:1.6">
-<h2>MY VOCA 캐시 초기화</h2><p id="status">초기화 중...</p>
+<title>MY VOCA v5.3.99 Reset</title>
+<style>body{font-family:system-ui,sans-serif;padding:24px;line-height:1.7}button,a{font-size:18px}</style></head>
+<body><h2>MY VOCA 캐시 완전 초기화</h2><p id="s">초기화 중...</p>
+<p><a id="go" href="./launch_5_3_99.html?fresh=5_3_99" style="display:none">MY VOCA v5.3.99 새 파일로 열기</a></p>
 <script>
 (async()=>{
-  const s=document.getElementById('status');
-  try{
-    if('serviceWorker' in navigator){
-      const regs=await navigator.serviceWorker.getRegistrations();
-      await Promise.all(regs.map(r=>r.unregister()));
-    }
-    if('caches' in window){
-      const keys=await caches.keys();
-      await Promise.all(keys.map(k=>caches.delete(k)));
-    }
-    Object.keys(localStorage).filter(k=>k.startsWith('mv_migrated_')).forEach(k=>localStorage.removeItem(k));
-    s.innerHTML='완료되었습니다.<br>이 창을 닫고 MY VOCA 메인 페이지를 다시 여세요.';
-  }catch(e){
-    s.textContent='초기화 오류: '+e;
+ try{
+  if('serviceWorker' in navigator){
+    const regs=await navigator.serviceWorker.getRegistrations();
+    await Promise.all(regs.map(r=>r.unregister()));
   }
+  if('caches' in window){
+    const keys=await caches.keys();
+    await Promise.all(keys.map(k=>caches.delete(k)));
+  }
+  sessionStorage.clear();
+  document.getElementById('s').textContent='초기화 완료. 아래 링크를 눌러 새 파일명으로 실행하세요.';
+  document.getElementById('go').style.display='inline-block';
+ }catch(e){
+  document.getElementById('s').textContent='초기화 오류: '+e;
+ }
 })();
 </script></body></html>
