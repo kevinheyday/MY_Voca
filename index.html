@@ -1,12 +1,12 @@
 <!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><!-- MY VOCA V5.3.80 SINGLE FILE: responsive quiz navigation -->
-<title>MY VOCA v5.3.18 · Wake Lock Fix</title>
+<title>MY VOCA v5.3.96</title>
 
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 
-  <link rel="stylesheet" href="app.css?v=5.3.95">
+  <link rel="stylesheet" href="app.css?v=5.3.96">
 </head><body>
 
 <button id="drawerMenuButton" class="drawerMenuButton" type="button" aria-label="메뉴 열기" aria-expanded="false">☰</button>
@@ -48,7 +48,7 @@
     <button class="drawerItem" data-drawer-action="config"><span class="drawerIcon">⚙️</span><span class="drawerItemText">Config<small>음성·반복·퀴즈 설정</small></span></button>
     <button class="drawerItem" data-drawer-action="usage"><span class="drawerIcon">📘</span><span class="drawerItemText">사용 방법<small>MY VOCA 학습 방법과 기능 안내</small></span></button>
     <button class="drawerItem" data-drawer-action="whatsnew"><span class="drawerIcon">🆕</span><span class="drawerItemText">업데이트 내역<small>이번 버전 변경 사항</small></span></button>
-    <button class="drawerItem" data-drawer-action="info"><span class="drawerIcon">ℹ️</span><span class="drawerItemText">앱 정보<small>MY VOCA v5.3.95</small></span></button>
+    <button class="drawerItem" data-drawer-action="info"><span class="drawerIcon">ℹ️</span><span class="drawerItemText">앱 정보<small>MY VOCA v5.3.96</small></span></button>
   </nav>
 </aside>
 
@@ -58,7 +58,7 @@
       <div>
         <div class="homeEyebrow" id="homeCourseEyebrow">MY VOCA UNIFIED COURSE · 69 DAYS</div>
         <h1 id="homeCourseTitle">MY VOCA</h1>
-        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.83 · MY CLASS 02</div>
+        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.96</div>
       </div>
       <div class="homeDayBadge"><b id="homeRegisteredDays">30</b><span>등록 Day</span></div>
     </section>
@@ -609,14 +609,42 @@ Config의 <b>Day Loop 문장당 반복 횟수</b>에서 1회 / 2회 / 3회 / 5�
 
 
 
-  <script src="app.js?v=5.3.95"></script>
+  
+<script id="mv-app-version">
+window.APP_VERSION = "5.3.96";
+window.APP_NAME = "MY VOCA";
+document.documentElement.dataset.appVersion = window.APP_VERSION;
+document.title = `${window.APP_NAME} v${window.APP_VERSION}`;
+
+window.addEventListener('DOMContentLoaded', () => {
+  const versionText = `MY VOCA v${window.APP_VERSION}`;
+
+  // Replace visible stale MY VOCA version labels anywhere in the DOM.
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  const nodes = [];
+  while (walker.nextNode()) nodes.push(walker.currentNode);
+  nodes.forEach(node => {
+    if (!node.nodeValue) return;
+    if (/MY VOCA v\d+\.\d+(?:\.\d+)?/i.test(node.nodeValue)) {
+      node.nodeValue = node.nodeValue.replace(/MY VOCA v\d+\.\d+(?:\.\d+)?/ig, versionText);
+    }
+  });
+
+  // Common version holders / info areas.
+  document.querySelectorAll('[data-app-version], .appVersion, #appVersion, #versionText').forEach(el => {
+    el.textContent = window.APP_VERSION;
+  });
+});
+</script>
+
+<script src="app.js?v=5.3.96"></script>
 
 <script id="mv-sw-register">
 (function(){
   if(!('serviceWorker' in navigator)) return;
   window.addEventListener('load', async () => {
     try{
-      const reg = await navigator.serviceWorker.register('./sw.js?v=5.3.95', {scope:'./'});
+      const reg = await navigator.serviceWorker.register('./sw.js?v=5.3.96', {scope:'./'});
       if(reg.waiting) reg.waiting.postMessage({type:'SKIP_WAITING'});
       reg.addEventListener('updatefound', () => {
         const worker = reg.installing;
