@@ -1,11 +1,11 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.101</title>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.108</title>
 
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
 
-  <link rel="stylesheet" href="app_5_3_101.css">
+  <link rel="stylesheet" href="app.css?v=5.3.108">
 
 </head><body>
 
@@ -48,7 +48,7 @@
     <button class="drawerItem" data-drawer-action="config"><span class="drawerIcon">⚙️</span><span class="drawerItemText">Config<small>음성·반복·퀴즈 설정</small></span></button>
     <button class="drawerItem" data-drawer-action="usage"><span class="drawerIcon">📘</span><span class="drawerItemText">사용 방법<small>MY VOCA 학습 방법과 기능 안내</small></span></button>
     <button class="drawerItem" data-drawer-action="whatsnew"><span class="drawerIcon">🆕</span><span class="drawerItemText">업데이트 내역<small>이번 버전 변경 사항</small></span></button>
-    <button class="drawerItem" data-drawer-action="info"><span class="drawerIcon">ℹ️</span><span class="drawerItemText">앱 정보<small>MY VOCA v5.3.101</small></span></button>
+    <button class="drawerItem" data-drawer-action="info"><span class="drawerIcon">ℹ️</span><span class="drawerItemText">앱 정보<small>MY VOCA v5.3.108</small></span></button>
   </nav>
 </aside>
 
@@ -58,7 +58,7 @@
       <div>
         <div class="homeEyebrow" id="homeCourseEyebrow">MY VOCA UNIFIED COURSE · 69 DAYS</div>
         <h1 id="homeCourseTitle">MY VOCA</h1>
-        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.101</div>
+        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.108</div>
       </div>
       <div class="homeDayBadge"><b id="homeRegisteredDays">30</b><span>등록 Day</span></div>
     </section>
@@ -619,18 +619,29 @@ Config의 <b>Day Loop 문장당 반복 횟수</b>에서 1회 / 2회 / 3회 / 5�
 
 
 <script id="mv-version-5_3_99">
-window.APP_VERSION="5.3.101";
+window.APP_VERSION="5.3.108";
 window.APP_NAME="MY VOCA";
-document.title="MY VOCA v5.3.101";
+document.title="MY VOCA v5.3.108";
 window.addEventListener("DOMContentLoaded",function(){
   document.querySelectorAll(".appVersion").forEach(function(el){
-    el.textContent="MY VOCA v5.3.101";
+    el.textContent="MY VOCA v5.3.108";
   });
 });
 </script>
 
-<script src="app_5_3_101.js"></script>
+<script src="app.js?v=5.3.108"></script>
 
+
+
+<script>
+window.addEventListener('load', function () {
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(regs){
+      regs.forEach(function(reg){ reg.unregister(); });
+    }).catch(function(){});
+  }
+});
+</script>
 
 </body></html>
 

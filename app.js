@@ -26,7 +26,7 @@ const MY_CLASS_META={
   2:{title:'Native Patterns · Meeting & Sleep',goal:'<strong>이번 수업은 억양·Native Chunk·회의 진행 영어에 집중합니다.</strong> 단어마다 억양을 올렸다 내리지 말고 thought group을 Staircase처럼 말하며, 배운 표현을 한글 상황에서 2초 안에 꺼내는 연습을 합니다.'}
 };
 let myClassLessonNo=1;
-function myClassData(){return myClassLessonNo===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1;}
+function myClassData(){return Number(myClassLessonNo)===3?MY_CLASS_LESSON_3:(Number(myClassLessonNo)===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1);}
 function myClassUpdateHeader(){const m=MY_CLASS_META[myClassLessonNo]||MY_CLASS_META[1];const a=document.getElementById('myClassHeaderMain'),b=document.getElementById('myClassHeaderSub'),g=document.getElementById('myClassGoal');if(a)a.textContent=`MY 수업 · 수업 ${myClassLessonNo}`;if(b)b.textContent=m.title;if(g)g.innerHTML=m.goal;}
 let myClassTab='corrections';
 const MY_CLASS_PLAY={active:false,paused:true,token:0,index:0,repeatCurrent:false,currentText:'',currentEl:null};
@@ -41,7 +41,16 @@ function myClassPlaybackItems(){
   if(myClassTab==='speaking'){const out=[];myClassData().speaking.forEach((x,i)=>myClassSplitSentences(x.text).forEach((text,j)=>out.push({text,el:document.getElementById(`mySpeakSentence${i}_${j}`)})));return out;}
   return [];
 }
-function myClassSyncButtons(){const play=document.getElementById('myClassPlayPause'),rep=document.getElementById('myClassCurrentRepeat');if(play)play.innerHTML=MY_CLASS_PLAY.active&&!MY_CLASS_PLAY.paused?'⏸<br>전체 정지':'▶<br>재생 시작';if(rep){rep.classList.toggle('repeatOn',MY_CLASS_PLAY.repeatCurrent);rep.innerHTML=`🔁<br>${MY_CLASS_PLAY.repeatCurrent?'반복 ON':'현재 문장'}`;}}
+function myClassSyncButtons(){
+  const play=document.getElementById('myClassPlayPause'),rep=document.getElementById('myClassCurrentRepeat');
+  let playing=MY_CLASS_PLAY.active&&!MY_CLASS_PLAY.paused;
+  try{if(typeof M536!=='undefined')playing=(M536.mode==='full'||M536.mode==='infinite');}catch(e){}
+  if(play)play.innerHTML=playing?'⏸<br>전체 정지':'▶<br>재생 시작';
+  if(rep){
+    rep.classList.toggle('repeatOn',MY_CLASS_PLAY.repeatCurrent);
+    rep.innerHTML=`🔁<br>${MY_CLASS_PLAY.repeatCurrent?'반복 ON':'현재 문장'}`;
+  }
+}
 function myClassStop(clearCurrent=false){MY_CLASS_PLAY.token++;MY_CLASS_PLAY.active=false;MY_CLASS_PLAY.paused=true;stopSpeech();if(clearCurrent){MY_CLASS_PLAY.index=0;MY_CLASS_PLAY.currentText='';MY_CLASS_PLAY.repeatCurrent=false;myClassClearFocus();}myClassSyncButtons();myClassSetStatus(clearCurrent?'MY 수업 자동 재생 준비':'재생이 정지되었습니다',false);}
 async function myClassSpeakSequence(texts,{focusEl=null,statusPrefix='전체 듣기'}={}){
   const list=(Array.isArray(texts)?texts:[texts]).flatMap(myClassSplitSentences).filter(Boolean);if(!list.length)return;
@@ -56,7 +65,20 @@ async function myClassStartAuto(startIndex=null){
   myClassStop(false);const token=++MY_CLASS_PLAY.token;MY_CLASS_PLAY.active=true;MY_CLASS_PLAY.paused=false;myClassSyncButtons();const settings=loadAppSettings();const repeat=Math.max(1,parseInt(settings.myClassSentenceRepeat||2,10));const pause=Math.max(0,parseInt(settings.myClassPause||700,10));
   while(token===MY_CLASS_PLAY.token&&!MY_CLASS_PLAY.paused){const fresh=myClassPlaybackItems();if(!fresh.length)break;if(MY_CLASS_PLAY.index>=fresh.length)MY_CLASS_PLAY.index=0;const item=fresh[MY_CLASS_PLAY.index];MY_CLASS_PLAY.currentText=item.text;myClassFocus(item.el);const repeatCount=MY_CLASS_PLAY.repeatCurrent?999999:repeat;for(let r=0;r<repeatCount;r++){if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)break;myClassSetStatus(`${myClassTab==='corrections'?'핵심 교정':myClassTab==='chunks'?'Native Chunk':'말하기'} · ${MY_CLASS_PLAY.index+1}/${fresh.length} · ${MY_CLASS_PLAY.repeatCurrent?'∞':`${r+1}/${repeat}`}`,true);await speakOne(item.text,getSpeechRate(),'en-US');if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)break;await new Promise(res=>setTimeout(res,pause));}if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)break;if(MY_CLASS_PLAY.repeatCurrent)continue;MY_CLASS_PLAY.index++;if(MY_CLASS_PLAY.index>=fresh.length){MY_CLASS_PLAY.active=false;MY_CLASS_PLAY.paused=true;MY_CLASS_PLAY.index=0;myClassClearFocus();myClassSyncButtons();myClassSetStatus('이 탭의 자동 재생이 완료되었습니다',false);break;}}
 }
-function myClassTogglePlay(){if(MY_CLASS_PLAY.active&&!MY_CLASS_PLAY.paused)myClassStop(false);else myClassStartAuto(MY_CLASS_PLAY.index);}
+function myClassTogglePlay(){
+  if(typeof M536!=='undefined'){
+    if(M536.mode==='full'||M536.mode==='infinite'){
+      stopAllMyClassPlayback(false);
+      myClassSetStatus?.('재생 정지',false);
+      return;
+    }
+    if(typeof window.m536StartFull==='function'){
+      window.m536StartFull();
+      return;
+    }
+  }
+  myClassStartAuto(MY_CLASS_PLAY.index);
+}
 function myClassToggleCurrentRepeat(){const items=myClassPlaybackItems();if(!items.length)return;MY_CLASS_PLAY.repeatCurrent=!MY_CLASS_PLAY.repeatCurrent;myClassSyncButtons();if(MY_CLASS_PLAY.repeatCurrent){MY_CLASS_PLAY.index=Math.min(MY_CLASS_PLAY.index,items.length-1);myClassStartAuto(MY_CLASS_PLAY.index);}else if(MY_CLASS_PLAY.active&&!MY_CLASS_PLAY.paused){const next=Math.min(MY_CLASS_PLAY.index+1,items.length-1);MY_CLASS_PLAY.index=next;myClassStartAuto(next);}}
 function renderMyClass(){
  const root=document.getElementById('myClassContent');if(!root)return;
@@ -99,13 +121,53 @@ function myClassTitleInfinityToggle(btn,lesson,tab,index){
  MY_TITLE_INFINITY_KEY=turningOff?'':key;
  syncMyClassTitleInfinityButtons();
 }
+
+function stopAllMyClassPlayback(clearCurrent=true){
+  try{window.stopV534MyClassLoop?.()}catch(e){}
+  try{window.stopV535MyClassLoop?.()}catch(e){}
+  try{
+    if(typeof M536!=='undefined'){
+      M536.token++;
+      M536.mode='idle';
+      M536.infiniteKey='';
+      M536.infiniteItem=null;
+      M536.resumeWasFull=false;
+      M536.resumeCursor=0;
+      M536.busy=false;
+    }
+  }catch(e){}
+  try{
+    if(typeof MY_CLASS_PLAY!=='undefined'){
+      MY_CLASS_PLAY.token++;
+      MY_CLASS_PLAY.active=false;
+      MY_CLASS_PLAY.paused=true;
+      MY_CLASS_PLAY.repeatCurrent=false;
+      if(clearCurrent){
+        MY_CLASS_PLAY.index=0;
+        MY_CLASS_PLAY.currentText='';
+        MY_CLASS_PLAY.currentEl=null;
+      }
+    }
+  }catch(e){}
+  try{MY_TITLE_INFINITY_KEY=''}catch(e){}
+  try{stopSpeech()}catch(e){}
+  try{window.speechSynthesis?.cancel()}catch(e){}
+  try{stopRepeatWakeSession?.()}catch(e){}
+  try{myClassClearFocus?.()}catch(e){}
+  try{myClassSyncButtons?.()}catch(e){}
+  try{myClassSetStatus?.('재생 정지',false)}catch(e){}
+  try{syncMyClassTitleInfinityButtons?.()}catch(e){}
+  try{m536SyncInfinityButtons?.()}catch(e){}
+}
+window.stopAllMyClassPlayback=stopAllMyClassPlayback;
+
 function myClassMaybeAutoStart(){const cfg=loadAppSettings();if(cfg.myClassAutoPlay!==false&&myClassTab!=='habits')myClassStartAuto(0);else myClassSetStatus(myClassTab==='habits'?'습관 탭 · 행동 교정':'자동 재생 OFF · 하단 ▶ 재생 시작을 누르세요',false);}
-function openMyClassLesson(no=1){myClassLessonNo=Math.max(1,Math.min(3,Number(no)||1));stopSpeech();try{initTTS();unlockTTSFromGesture()}catch(e){}document.getElementById('homePage')?.classList.add('hidden');document.getElementById('dayAppPage')?.classList.add('hidden');if(typeof hideStandalonePages==='function')hideStandalonePages();document.getElementById('myClassPage')?.classList.remove('hidden');document.getElementById('myClassBottom')?.classList.remove('hidden');myClassTab='corrections';myClassUpdateHeader();renderMyClass();window.scrollTo(0,0);myClassMaybeAutoStart();}
+function openMyClassLesson(no=1){stopAllMyClassPlayback(true);myClassLessonNo=Math.max(1,Math.min(3,Number(no)||1));try{initTTS();unlockTTSFromGesture()}catch(e){}document.getElementById('homePage')?.classList.add('hidden');document.getElementById('dayAppPage')?.classList.add('hidden');if(typeof hideStandalonePages==='function')hideStandalonePages();document.getElementById('myClassPage')?.classList.remove('hidden');document.getElementById('myClassBottom')?.classList.remove('hidden');myClassTab='corrections';myClassUpdateHeader();renderMyClass();window.scrollTo(0,0);myClassSetStatus?.('재생 대기 · 버튼을 눌러 시작하세요',false);}
 function openMyClassLesson1(){openMyClassLesson(1)}
 function openMyClassLesson2(){openMyClassLesson(2)}
 function openMyClassLesson3(){openMyClassLesson(3)}
-function closeMyClassLesson(){myClassStop(true);document.getElementById('myClassBottom')?.classList.add('hidden');document.getElementById('myClassPage')?.classList.add('hidden');document.getElementById('homePage')?.classList.remove('hidden');window.scrollTo(0,0);}
-setTimeout(()=>{const c=document.getElementById('myClassLesson1Card');if(c){c.onclick=openMyClassLesson1;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson1()}}}const c2=document.getElementById('myClassLesson2Card');if(c2){c2.onclick=openMyClassLesson2;c2.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson2()}}}const c3=document.getElementById('myClassLesson3Card');if(c3){c3.onclick=openMyClassLesson3;c3.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson3()}}}const b=document.getElementById('myClassBack');if(b)b.onclick=closeMyClassLesson;document.querySelectorAll('.myClassTab').forEach(x=>x.onclick=()=>{myClassStop(true);myClassTab=x.dataset.myclassTab;renderMyClass();myClassMaybeAutoStart()});document.getElementById('myClassHomeBtn')?.addEventListener('click',closeMyClassLesson);document.getElementById('myClassPlayPause')?.addEventListener('click',myClassTogglePlay);document.getElementById('myClassCurrentRepeat')?.addEventListener('click',myClassToggleCurrentRepeat);document.getElementById('myClassConfigBtn')?.addEventListener('click',()=>{myClassStop(false);if(typeof openConfiguration==='function')openConfiguration()});},0);
+function closeMyClassLesson(){stopAllMyClassPlayback(true);document.getElementById('myClassBottom')?.classList.add('hidden');document.getElementById('myClassPage')?.classList.add('hidden');document.getElementById('homePage')?.classList.remove('hidden');window.scrollTo(0,0);}
+setTimeout(()=>{const c=document.getElementById('myClassLesson1Card');if(c){c.onclick=openMyClassLesson1;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson1()}}}const c2=document.getElementById('myClassLesson2Card');if(c2){c2.onclick=openMyClassLesson2;c2.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson2()}}}const c3=document.getElementById('myClassLesson3Card');if(c3){c3.onclick=openMyClassLesson3;c3.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson3()}}}const b=document.getElementById('myClassBack');if(b)b.onclick=closeMyClassLesson;document.querySelectorAll('.myClassTab').forEach(x=>x.onclick=()=>{stopAllMyClassPlayback(true);myClassTab=x.dataset.myclassTab;renderMyClass();myClassSetStatus?.('화면 전환 · 재생 정지',false)});document.getElementById('myClassHomeBtn')?.addEventListener('click',closeMyClassLesson);document.getElementById('myClassPlayPause')?.addEventListener('click',myClassTogglePlay);document.getElementById('myClassCurrentRepeat')?.addEventListener('click',myClassToggleCurrentRepeat);document.getElementById('myClassConfigBtn')?.addEventListener('click',()=>{myClassStop(false);if(typeof openConfiguration==='function')openConfiguration()});},0);
 
 const PACKS={
   unified:{key:'unified',name:'MY VOCA',short:'MY VOCA',desc:'TOEFL 1,680 Words + OPIC AL 268 Words & Expressions',days:TOEFL_DAY_COUNT+OPIC_DAY_COUNT,words:UNIFIED_WORDS.length,eyebrow:'MY VOCA UNIFIED COURSE · 69 DAYS'}
@@ -4213,6 +4275,7 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
     myQuizLesson: Number(localStorage.getItem('mv_myClassQuizLesson')||2) || 1,
     myLoopToken:0
   };
+  window.stopV534MyClassLoop=function(){V534.myLoopToken++;};
   const lessonCount=()=>Object.keys(MY_CLASS_META||{}).map(Number).filter(Number.isFinite).length||2;
   const lessonData=(n)=>Number(n)===3?MY_CLASS_LESSON_3:(Number(n)===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1);
 
@@ -4317,7 +4380,7 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
     // The previous build used addEventListener for play/pause, so clone once to remove the old captured handler.
     const oldPlay=document.getElementById('myClassPlayPause');
     if(oldPlay){const p=oldPlay.cloneNode(true);oldPlay.replaceWith(p);p.onclick=myClassTogglePlay;}
-    document.querySelectorAll('.myClassTab').forEach(x=>x.onclick=()=>{V534.myLoopToken++;myClassStop(true);myClassTab=x.dataset.myclassTab;oldRenderMyClass();updateFullRepeatChip();if(myClassTab!=='habits')myClassStartAuto(0);});
+    document.querySelectorAll('.myClassTab').forEach(x=>x.onclick=()=>{stopAllMyClassPlayback(true);myClassTab=x.dataset.myclassTab;oldRenderMyClass();updateFullRepeatChip();myClassSetStatus?.('화면 전환 · 재생 정지',false);});
   }
 
   function injectFullRepeatConfig(){
@@ -4529,12 +4592,18 @@ const V535={
   multiRun:false,
   runToken:0
 };
+window.stopV535MyClassLoop=function(){V535.runToken++;V535.multiRun=false;};
 function allLessons(){return Object.keys(MY_CLASS_META||{}).map(Number).filter(Number.isFinite).sort((a,b)=>a-b)}
 function getSelected(){
+  const raw=localStorage.getItem('mv_myClassSelectedLessons');
+  if(raw===null){
+    const initial=allLessons();
+    localStorage.setItem('mv_myClassSelectedLessons',JSON.stringify(initial));
+    return initial;
+  }
   let a=[];
-  try{a=JSON.parse(localStorage.getItem('mv_myClassSelectedLessons')||'[]')}catch(e){}
+  try{a=JSON.parse(raw)}catch(e){a=[]}
   a=(Array.isArray(a)?a:[]).map(Number).filter(n=>allLessons().includes(n));
-  if(!a.length)a=allLessons();
   return [...new Set(a)].sort((a,b)=>a-b);
 }
 function saveSelected(a){
@@ -4589,11 +4658,19 @@ function decorateMyClassHome(){
   const all=document.getElementById('myClassSelectAll'), clear=document.getElementById('myClassClearAll'), start=document.getElementById('myClassSelectedStart');
   if(all)all.onclick=()=>{saveSelected(allLessons());syncChecks()};
   if(clear)clear.onclick=()=>{saveSelected([]);syncChecks()};
-  if(start)start.onclick=()=>startSelectedLessons();
+  if(start)start.onclick=(e)=>{
+    e?.preventDefault?.();
+    e?.stopPropagation?.();
+    if(typeof window.startSelectedMyClassLessons==='function'){
+      window.startSelectedMyClassLessons();
+    }
+  };
   sec.querySelectorAll('.myClassSelectCheck').forEach(c=>c.onchange=()=>{
-    const n=Number(c.dataset.myLesson), s=getSelected().filter(x=>x!==n);
+    const n=Number(c.dataset.myLesson);
+    const s=[...V535.selected].filter(x=>x!==n);
     if(c.checked)s.push(n);
-    saveSelected(s);syncChecks();
+    saveSelected(s);
+    syncChecks();
   });
 }
 function syncChecks(){
@@ -4665,7 +4742,7 @@ async function runLessonTabs(lesson,token){
   }
   return true;
 }
-async function startSelectedLessons(){
+async function legacyStartSelectedLessons(){
   const lessons=V535.selected.length?V535.selected:getSelected();
   if(!lessons.length){alert('반복할 MY 수업을 하나 이상 체크해 주세요.');return}
   V535.multiRun=true;V535.runToken++;
@@ -4683,6 +4760,12 @@ async function startSelectedLessons(){
     myClassSetStatus(`체크한 수업 ${lessons.join(', ')} 1회 완료 · 다시 반복합니다`,true);
     await new Promise(r=>setTimeout(r,500));
   }
+}
+async function startSelectedLessons(){
+  if(typeof window.m536StartFull==='function'){
+    return window.m536StartFull();
+  }
+  return legacyStartSelectedLessons();
 }
 window.startSelectedMyClassLessons=startSelectedLessons;
 
@@ -4759,10 +4842,15 @@ const M536={
 function m536Sleep(ms){return new Promise(r=>setTimeout(r,ms))}
 function m536Lessons(){
   const all=Object.keys(MY_CLASS_META||{}).map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
+  const raw=localStorage.getItem('mv_myClassSelectedLessons');
+  if(raw===null){
+    localStorage.setItem('mv_myClassSelectedLessons',JSON.stringify(all));
+    return all;
+  }
   let selected=[];
-  try{selected=JSON.parse(localStorage.getItem('mv_myClassSelectedLessons')||'[]')}catch(e){}
+  try{selected=JSON.parse(raw)}catch(e){selected=[]}
   selected=(Array.isArray(selected)?selected:[]).map(Number).filter(n=>all.includes(n));
-  return selected.length?[...new Set(selected)].sort((a,b)=>a-b):all;
+  return [...new Set(selected)].sort((a,b)=>a-b);
 }
 function m536Data(n){return Number(n)===3?MY_CLASS_LESSON_3:(Number(n)===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1)}
 function m536Label(tab){return tab==='corrections'?'핵심 교정':tab==='chunks'?'Native Chunk':'말하기'}
@@ -4824,6 +4912,7 @@ async function m536RunFull(startAt=0){
   MY_CLASS_PLAY.active=true;MY_CLASS_PLAY.paused=false;
   m536Unlock();
   myClassSyncButtons?.();
+  myClassSyncButtons?.();
 
   // 사용자 터치 직후 첫 TTS가 시작되도록 불필요한 선행 await를 두지 않는다.
   while(token===M536.token && M536.mode==='full'){
@@ -4858,8 +4947,13 @@ async function m536RunInfinite(item){
   }
 }
 function m536StartFull(){
+  const chosen=m536Lessons();
+  if(!chosen.length){
+    alert('반복할 MY 수업을 하나 이상 체크해 주세요.');
+    return;
+  }
+  stopAllMyClassPlayback(true);
   m536Unlock();
-  m536StopController(true);
   M536.resumeWasFull=false;M536.resumeCursor=0;
   // 현재 페이지를 바로 MY 수업 재생 화면으로 전환한다.
   document.getElementById('homePage')?.classList.add('hidden');
@@ -4873,36 +4967,94 @@ function m536ToggleInfinite(lesson,tab,index){
   const d=m536Data(lesson);
   const src=tab==='corrections'?(d.corrections||[])[index]:tab==='chunks'?(d.chunks||[])[index]:(d.speaking||[])[index];
   if(!src)return;
-  const item={lesson:Number(lesson),tab,index:Number(index),text:tab==='corrections'?src.en:tab==='chunks'?(src.example||src.pattern):src.text,paragraph:tab==='speaking'};
+
+  const item={
+    lesson:Number(lesson),
+    tab,
+    index:Number(index),
+    text:tab==='corrections'?src.en:tab==='chunks'?(src.example||src.pattern):src.text,
+    paragraph:tab==='speaking'
+  };
   const key=m536ItemKey(item);
 
-  // 같은 ∞ 버튼을 다시 누르면 원래 전체 반복 위치로 즉시 Resume.
+  // ------------------------------------------------------------
+  // v5.3.108
+  // 1) 전체 반복 중 처음 집중 진입할 때만 resume 위치 저장
+  // 2) 집중 문장을 바꿔도 resume 위치 유지
+  // 3) 같은 집중 버튼을 다시 눌러 해제하면 전체 반복 Resume
+  // ------------------------------------------------------------
+
+  // 같은 집중 버튼을 다시 누름 = 집중 해제
   if(M536.mode==='infinite' && M536.infiniteKey===key){
-    const shouldResume=M536.resumeWasFull;
-    const resumeAt=M536.resumeCursor;
-    m536StopController(true);
-    M536.infiniteKey='';M536.infiniteItem=null;
+    const shouldResume = !!M536.resumeWasFull;
+    const resumeAt = Number.isFinite(M536.resumeCursor) ? M536.resumeCursor : 0;
+
+    // 현재 집중 반복만 즉시 종료
+    M536.token++;
+    try{stopSpeech()}catch(e){}
+    try{window.speechSynthesis?.cancel()}catch(e){}
+
+    M536.mode='idle';
+    M536.infiniteKey='';
+    M536.infiniteItem=null;
+    M536.busy=false;
+    MY_CLASS_PLAY.active=false;
+    MY_CLASS_PLAY.paused=true;
+    MY_CLASS_PLAY.repeatCurrent=false;
+    MY_TITLE_INFINITY_KEY='';
+
+    try{m536SyncInfinityButtons()}catch(e){}
+    try{syncMyClassTitleInfinityButtons?.()}catch(e){}
+
     if(shouldResume){
+      // resumeWasFull은 m536RunFull이 새 전체 반복을 시작하기 직전에 해제
       M536.resumeWasFull=false;
+      myClassSetStatus?.('∞ 집중 해제 · 전체 반복 Resume',true);
       m536RunFull(resumeAt);
+      setTimeout(()=>{try{myClassSyncButtons?.()}catch(e){}},0);
     }else{
-      M536.mode='idle';MY_CLASS_PLAY.active=false;MY_CLASS_PLAY.paused=true;
-      myClassSetStatus?.('무한 반복 해제',false);
-      m536SyncInfinityButtons();
+      myClassSetStatus?.('∞ 집중 반복 해제',false);
       try{stopRepeatWakeSession?.()}catch(e){}
     }
     return;
   }
 
-  // 다른 문장의 ∞ 버튼을 누르면 기존 전체 반복의 위치는 한 번만 저장한다.
+  // 전체 반복 중 처음 집중으로 들어갈 때 현재 전체 반복 위치 저장.
+  // v5.3.108부터 체크 수업 전체 반복은 M536 하나로 통일된다.
   if(M536.mode==='full'){
     M536.resumeWasFull=true;
-    M536.resumeCursor=M536.cursor;
+    M536.resumeCursor=Number.isFinite(M536.cursor)?M536.cursor:0;
   }
-  m536StopController(true);
+
+  // 다른 집중 문장으로 바꾸는 경우:
+  // resumeWasFull / resumeCursor는 절대 지우지 않는다.
+  if(M536.mode==='infinite' && M536.infiniteKey!==key){
+    M536.token++;
+    try{stopSpeech()}catch(e){}
+    try{window.speechSynthesis?.cancel()}catch(e){}
+    M536.mode='idle';
+    M536.infiniteKey='';
+    M536.infiniteItem=null;
+    M536.busy=false;
+    MY_CLASS_PLAY.active=false;
+    MY_CLASS_PLAY.paused=true;
+    MY_CLASS_PLAY.repeatCurrent=false;
+    MY_TITLE_INFINITY_KEY='';
+  }
+
+  // 구형 전체 반복 controller가 별도로 살아 있다면 재생만 중단.
+  // resume 정보는 M536가 보존한다.
+  try{window.stopV534MyClassLoop?.()}catch(e){}
+  try{window.stopV535MyClassLoop?.()}catch(e){}
+
+  // 새 집중 문장을 즉시 시작
   m536RunInfinite(item);
+  MY_TITLE_INFINITY_KEY=key;
+  try{syncMyClassTitleInfinityButtons?.()}catch(e){}
 }
 window.m536ToggleInfinite=m536ToggleInfinite;
+window.m536StartFull=m536StartFull;
+window.m536StartFull=m536StartFull;
 window.startSelectedMyClassLessons=m536StartFull;
 
 function m536AddInfinityButton(card,lesson,tab,index,label){
@@ -4943,12 +5095,20 @@ renderMyClass=function(){
 };
 
 // 홈의 기존 전체 반복 버튼 이벤트를 확실하게 교체한다.
+function m536WireBottomPlayButton(){
+  const b=document.getElementById('myClassPlayPause');
+  if(!b)return;
+  const clone=b.cloneNode(true);
+  b.parentNode.replaceChild(clone,b);
+  clone.onclick=(e)=>{e.preventDefault();e.stopPropagation();myClassTogglePlay();};
+  myClassSyncButtons?.();
+}
 function m536WireFullRepeatButton(){
   const b=document.getElementById('myClassSelectedStart');
   if(!b)return;
   const clone=b.cloneNode(true);
   b.parentNode.replaceChild(clone,b);
-  clone.onclick=(e)=>{e.preventDefault();e.stopPropagation();m536StartFull()};
+  clone.onclick=(e)=>{e.preventDefault();e.stopPropagation();window.m536StartFull?.()};
 }
 
 // a.m. / p.m. 때문에 문장 자체가 '2 a.' + 'm.'으로 갈라지는 문제 수정.
@@ -5084,6 +5244,7 @@ if(typeof m536PrevCards==='function'){
 // 화면 전환/홈 렌더 이후 이벤트와 버튼을 재연결한다.
 setTimeout(()=>{
   m536WireFullRepeatButton();
+  m536WireBottomPlayButton();
   m536DecorateCards();
   document.querySelectorAll('.myClassTab').forEach(b=>b.addEventListener('click',()=>setTimeout(m536DecorateCards,25)));
 },120);
@@ -5091,7 +5252,7 @@ setTimeout(()=>{
 // MY 수업 홈으로 돌아올 때 전체 반복 버튼이 다시 만들어지는 경우 대비.
 document.addEventListener('click',e=>{
   if(e.target?.closest?.('[data-home-mode="my"],#homeModeMyClass,[data-drawer-action="myClass"]')){
-    setTimeout(m536WireFullRepeatButton,120);
+    setTimeout(()=>{m536WireFullRepeatButton();m536WireBottomPlayButton();},120);
   }
 },true);
 
@@ -5397,9 +5558,11 @@ function goMyClassTab(dir){
   if(i<0)i=0;
   const ni=i+dir;
   if(ni<0||ni>=tabs.length)return;
+  stopAllMyClassPlayback(true);
   myClassTab=tabs[ni];
   renderMyClass();
   document.querySelectorAll('.myClassTab').forEach(b=>b.classList.toggle('active',b.dataset.myclassTab===myClassTab));
+  myClassSetStatus?.('화면 전환 · 재생 정지',false);
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
@@ -5528,7 +5691,7 @@ function legend(text,lesson){
 }
 function decorate(){
  if(typeof myClassTab==='undefined'||myClassTab!=='speaking')return;
- const lesson=Number(myClassLessonNo||1),data=(lesson===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1);
+ const lesson=Number(myClassLessonNo||1),data=(lesson===3?MY_CLASS_LESSON_3:(lesson===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1));
  (data.speaking||[]).forEach((x,i)=>{
   const block=document.getElementById(`mySpeakBlock${i}`),textEl=document.getElementById(`myspeak${i}`);if(!block||!textEl)return;
   const parts=myClassSplitSentences(x.text||'');
