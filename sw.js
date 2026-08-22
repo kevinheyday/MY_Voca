@@ -1,10 +1,10 @@
-// MY VOCA Service Worker v5.3.125
-const CACHE_VERSION = 'my-voca-v5.3.125';
+// MY VOCA Service Worker v5.3.126
+const CACHE_VERSION = 'my-voca-v5.3.126';
 const APP_SHELL = [
   './',
   './index.html',
-  './app.css?v=5.3.125',
-  './app.js?v=5.3.125',
+  './app.css?v=5.3.126',
+  './app.js?v=5.3.126',
   './MY_VOCA_MASTER.csv'
 ];
 

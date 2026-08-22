@@ -1,6 +1,7 @@
-MY VOCA V5.3.125
-- 무한 반복 버튼 ON 시 CSS만 의존하지 않고 inline important로 즉시 보라색 표시
-- MY 수업 재생 loop에 HARD STOP EPOCH 추가: 화면 이동 뒤 기존 async loop가 절대 다시 시작하지 못함
-- 홈/Config/탭/3줄 메뉴/하단 navigation 클릭을 capture 단계에서 즉시 중지
-- Samsung Internet 대응으로 화면 전환 시 speechSynthesis.cancel() 추가 실행
-- index.html 단일파일 코드와 app.js/app.css 모두 동일하게 갱신
+MY VOCA V5.3.126
+- 캡처 화면 기준으로 무한 반복 ON 시 두 곳을 동시에 표시:
+  1) CORRECTION/NATIVE CHUNK/SPEAKING의 '∞ 집중' 버튼 → 보라색 + '반복 중'
+  2) 상단 우측 '전체 반복 ∞' chip → 보라색 + '∞ 반복 중'
+- renderMyClass가 DOM을 다시 생성해도 MutationObserver로 ON 색상을 즉시 복원
+- M536 infinite loop 매 회차마다 visual sync 실행
+- 정지하면 두 곳 모두 원래 색으로 자동 복원

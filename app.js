@@ -101,6 +101,70 @@ function myClassInfinityLabel(tab,index){
  if(tab==='speaking')return `SPEAKING ${index+1}`;
  return `ITEM ${index+1}`;
 }
+
+function syncMyClassInfinityVisuals(){
+  let mode='idle', key='';
+  try{
+    mode=String(M536?.mode||'idle');
+    key=String(M536?.infiniteKey||MY_TITLE_INFINITY_KEY||'');
+  }catch(e){
+    key=String(MY_TITLE_INFINITY_KEY||'');
+  }
+
+  const infiniteOn=(mode==='infinite' && !!key);
+
+  document.querySelectorAll('.myTitleInfinityBtn').forEach(b=>{
+    const on=infiniteOn && String(b.dataset.infKey||'')===key;
+    b.classList.toggle('active',on);
+    b.setAttribute('aria-pressed',on?'true':'false');
+    b.dataset.repeatState=on?'on':'off';
+
+    const focus=b.querySelector('.myInfFocus');
+    if(focus)focus.textContent=on?'반복 중':'집중';
+
+    if(on){
+      b.style.cssText += ';background:linear-gradient(135deg,#4f46e5,#7c3aed)!important;color:#fff!important;border-color:#6d28d9!important;box-shadow:0 6px 16px rgba(109,40,217,.32)!important;';
+      b.querySelectorAll('.myInfLabel,.myInfSymbol,.myInfFocus').forEach(x=>{
+        x.style.setProperty('color','#fff','important');
+      });
+    }else{
+      b.style.removeProperty('background');
+      b.style.removeProperty('color');
+      b.style.removeProperty('border-color');
+      b.style.removeProperty('box-shadow');
+      b.querySelectorAll('.myInfLabel,.myInfSymbol,.myInfFocus').forEach(x=>{
+        x.style.removeProperty('color');
+      });
+    }
+  });
+
+  const status=document.getElementById('myClassPlaybackStatus');
+  const chip=status?.querySelector('.myClassAutoChip');
+  if(status)status.classList.toggle('infiniteRunning',infiniteOn);
+
+  if(chip){
+    chip.classList.toggle('infiniteRunning',infiniteOn);
+    if(infiniteOn){
+      chip.textContent='∞ 반복 중';
+      chip.style.setProperty('background','linear-gradient(135deg,#4f46e5,#7c3aed)','important');
+      chip.style.setProperty('color','#fff','important');
+      chip.style.setProperty('border','1px solid #6d28d9','important');
+      chip.style.setProperty('box-shadow','0 4px 12px rgba(109,40,217,.24)','important');
+    }else{
+      chip.style.removeProperty('background');
+      chip.style.removeProperty('color');
+      chip.style.removeProperty('border');
+      chip.style.removeProperty('box-shadow');
+      try{
+        chip.textContent=(typeof V534!=='undefined'&&V534.myFullRepeat)?'전체 반복 ∞':'현재 탭 반복';
+      }catch(e){
+        chip.textContent='전체 반복 ∞';
+      }
+    }
+  }
+}
+window.syncMyClassInfinityVisuals=syncMyClassInfinityVisuals;
+
 function syncMyClassTitleInfinityButtons(){
  const activeKey=(typeof M536!=='undefined'&&M536.mode==='infinite')
    ?String(M536.infiniteKey||'')
@@ -131,6 +195,7 @@ function syncMyClassTitleInfinityButtons(){
      b.querySelectorAll('.myInfLabel,.myInfSymbol,.myInfFocus').forEach(x=>x.style.removeProperty('color'));
    }
  });
+ try{syncMyClassInfinityVisuals()}catch(e){}
 }
 function myClassTitleInfinityToggle(btn,lesson,tab,index){
  const key=`${lesson}|${tab}|${index}`;
@@ -185,6 +250,7 @@ function stopAllMyClassPlayback(clearCurrent=true){
   try{myClassSetStatus?.('재생 정지',false)}catch(e){}
   try{syncMyClassTitleInfinityButtons?.()}catch(e){}
   try{m536SyncInfinityButtons?.()}catch(e){}
+  try{syncMyClassInfinityVisuals?.()}catch(e){}
 }
 
 window.stopAllMyClassPlayback=stopAllMyClassPlayback;
@@ -4680,7 +4746,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
 
 
 
-// ===== V5.3.125 · 자유 음성 녹음 학습 =====
+// ===== V5.3.126 · 자유 음성 녹음 학습 =====
 const VOICE_PRACTICE_RECENT_KEY='mv_voice_practice_recent_v1';
 
 function voicePracticeRecentList(){
@@ -5872,6 +5938,7 @@ async function m536RunInfinite(item){
   let n=1;
   while(token===M536.token && hardEpoch===MY_CLASS_HARD_STOP_EPOCH && M536.mode==='infinite' && M536.infiniteKey===m536ItemKey(item)){
     myClassSetStatus?.(`∞ 무한 반복 · 수업 ${item.lesson} · ${m536Label(item.tab)} ${item.index+1} · ${item.paragraph?'문단 전체':'현재 문장'} · ${n++}회`,true);
+    try{syncMyClassInfinityVisuals?.()}catch(e){}
     await m536Speak(item.text,item.paragraph);
     if(token!==M536.token || hardEpoch!==MY_CLASS_HARD_STOP_EPOCH || M536.mode!=='infinite')return;
     if(pause)await m536Sleep(pause);
@@ -5977,7 +6044,9 @@ function m536ToggleInfinite(lesson,tab,index){
   M536.infiniteKey=key;
   M536.infiniteItem=item;
   try{syncMyClassTitleInfinityButtons?.()}catch(e){}
+  try{syncMyClassInfinityVisuals?.()}catch(e){}
   m536RunInfinite(item);
+  try{syncMyClassInfinityVisuals?.()}catch(e){}
 }
 window.m536ToggleInfinite=m536ToggleInfinite;
 window.m536StartFull=m536StartFull;
@@ -6021,6 +6090,7 @@ const m536PrevRender=renderMyClass;
 renderMyClass=function(){
   m536PrevRender();
   m536DecorateCards();
+  try{syncMyClassInfinityVisuals?.()}catch(e){}
 };
 
 // 홈의 기존 전체 반복 버튼 이벤트를 확실하게 교체한다.
@@ -6763,7 +6833,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// ===== V5.3.125 MY 수업 HARD navigation stop =====
+// ===== V5.3.126 MY 수업 HARD navigation stop =====
 function myClassHardNavigationStop(){
   try{stopAllMyClassPlayback(true)}catch(e){}
   // Samsung Internet TTS cancel 안정성을 위해 짧게 한 번 더 취소한다.
@@ -6783,3 +6853,17 @@ document.addEventListener('click',(e)=>{
   );
   if(target) myClassHardNavigationStop();
 },true);
+
+
+// V5.3.126: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
+function installInfinityVisualObserver(){
+  const root=document.getElementById('myClassContent');
+  if(!root || root.dataset.infinityVisualObserver==='1')return;
+  root.dataset.infinityVisualObserver='1';
+  let raf=0;
+  new MutationObserver(()=>{
+    cancelAnimationFrame(raf);
+    raf=requestAnimationFrame(()=>{try{syncMyClassInfinityVisuals()}catch(e){}});
+  }).observe(root,{childList:true,subtree:true});
+}
+setTimeout(installInfinityVisualObserver,0);
