@@ -2818,6 +2818,9 @@ let sentenceRecordingStartedAt=0;
 let sentenceRecordingDuration=0;
 let sentenceRecordingTimer=null;
 let sentenceRecordingQuestion=null;
+let sentenceRecordingPreparedStream=null;
+let sentenceRecordingPreparePromise=null;
+let sentenceRecordingPreparedAt=0;
 let sentenceRecordingAudioCtx=null;
 let sentenceRecordingAnalyser=null;
 let sentenceRecordingSourceNode=null;
@@ -2834,6 +2837,55 @@ function sentenceRecordingMime(){
   if(!window.MediaRecorder)return '';
   const types=['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg;codecs=opus'];
   return types.find(t=>{try{return MediaRecorder.isTypeSupported(t)}catch(e){return false}})||'';
+}
+
+
+async function sentenceRecordingPrepareMic(){
+  if(sentenceRecordingPreparedStream && sentenceRecordingPreparedStream.active){
+    return sentenceRecordingPreparedStream;
+  }
+  if(sentenceRecordingPreparePromise){
+    return sentenceRecordingPreparePromise;
+  }
+  if(!sentenceRecordingAvailable()){
+    throw new Error('MIC_UNSUPPORTED');
+  }
+
+  sentenceRecordingPreparePromise=(async()=>{
+    try{
+      const stream=await navigator.mediaDevices.getUserMedia({
+        audio:{
+          echoCancellation:true,
+          noiseSuppression:true,
+          autoGainControl:true
+        }
+      });
+      sentenceRecordingPreparedStream=stream;
+      sentenceRecordingPreparedAt=Date.now();
+      return stream;
+    }finally{
+      sentenceRecordingPreparePromise=null;
+    }
+  })();
+
+  return sentenceRecordingPreparePromise;
+}
+
+function sentenceRecordingReleasePreparedMic(){
+  if(sentenceRecordingPreparedStream){
+    try{
+      sentenceRecordingPreparedStream.getTracks().forEach(t=>t.stop());
+    }catch(e){}
+    sentenceRecordingPreparedStream=null;
+  }
+  sentenceRecordingPreparedAt=0;
+}
+
+function sentenceRecordingWarmMic(){
+  // 3단계 진입 시 마이크를 미리 준비한다.
+  // 이미 권한이 있으면 버튼 누르기 전에 스트림이 준비되어 거의 즉시 녹음 가능.
+  if(!sentenceRecordingAvailable())return;
+  sentenceRecordingPrepareMic().catch(()=>{});
 }
 
 function sentenceRecordingStopWave(){
@@ -2992,10 +3044,11 @@ function sentenceRecordingStartWave(stream){
 function sentenceRecordingStopTracks(){
   sentenceRecordingStopWave();
   if(sentenceRecordingTimer){clearInterval(sentenceRecordingTimer);sentenceRecordingTimer=null;}
-  if(sentenceRecordingStream){
+  // 준비된 마이크 스트림은 유지해서 재녹음을 즉시 시작할 수 있게 한다.
+  if(sentenceRecordingStream && sentenceRecordingStream!==sentenceRecordingPreparedStream){
     sentenceRecordingStream.getTracks().forEach(t=>{try{t.stop()}catch(e){}});
-    sentenceRecordingStream=null;
   }
+  sentenceRecordingStream=null;
 }
 function sentenceRecordingReset(){
   if(sentenceRecordingRecorder&&sentenceRecordingRecorder.state==='recording'){
@@ -3045,6 +3098,14 @@ function sentenceRecordingMarkup(){
         <button id="sentenceRecordDelete" class="sentenceRecordDelete" type="button" aria-label="녹음 삭제">🗑</button>
       </div>
       <audio id="sentenceMyAudio" preload="metadata" src="${sentenceRecordingUrl}"></audio>
+    </div>
+    <div class="sentenceCompareBox sentenceCompareEmbedded">
+      <div class="sentenceCompareTitle">💡 들어보고 비교해 보세요</div>
+      <div class="sentenceCompareButtons">
+        <button id="sentenceCompareMine" type="button">▶ 내 녹음</button>
+        <button id="sentenceCompareAnswer" type="button">🔊 정답 듣기</button>
+      </div>
+      <div class="sentenceCompareTip">내 녹음 → 정답 → 내 녹음 순서로 들어보세요.</div>
     </div>`:''}
   </div>`;
 }
@@ -3063,34 +3124,62 @@ async function sentenceRecordingStart(q){
     sentenceRecordingToast('이 브라우저에서는 음성 녹음을 지원하지 않습니다.');
     return;
   }
+
   try{
     if(sentenceRecordingQuestion&&sentenceRecordingQuestion!==q)sentenceRecordingReset();
-    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
-    sentenceRecordingStream=stream;
-    sentenceRecordingChunks=[];
+
+    // 버튼 반응은 즉시: 먼저 UI를 녹음 상태로 바꾼다.
     sentenceRecordingQuestion=q;
+    sentenceRecordingStartedAt=Date.now();
+
+    const stream=await sentenceRecordingPrepareMic();
+    sentenceRecordingStream=stream;
+
     const mime=sentenceRecordingMime();
     const rec=mime?new MediaRecorder(stream,{mimeType:mime}):new MediaRecorder(stream);
+
+    sentenceRecordingChunks=[];
     sentenceRecordingRecorder=rec;
-    sentenceRecordingStartedAt=Date.now();
-    rec.ondataavailable=e=>{if(e.data&&e.data.size)sentenceRecordingChunks.push(e.data);};
-    rec.onerror=()=>{sentenceRecordingStopTracks();sentenceRecordingToast('녹음 중 오류가 발생했습니다.');};
+
+    rec.ondataavailable=e=>{
+      if(e.data&&e.data.size)sentenceRecordingChunks.push(e.data);
+    };
+
+    rec.onerror=()=>{
+      sentenceRecordingStopTracks();
+      sentenceRecordingRecorder=null;
+      sentenceRecordingToast('녹음 중 오류가 발생했습니다.');
+    };
+
     rec.onstop=()=>{
       sentenceRecordingDuration=(Date.now()-sentenceRecordingStartedAt)/1000;
       if(sentenceRecordingUrl)URL.revokeObjectURL(sentenceRecordingUrl);
-      const sentenceRecordingBlob=new Blob(sentenceRecordingChunks,{type:rec.mimeType||mime||'audio/webm'});
-      // 임시 메모리 재생 전용: 파일 저장/다운로드를 만들지 않는다.
+
+      const sentenceRecordingBlob=new Blob(
+        sentenceRecordingChunks,
+        {type:rec.mimeType||mime||'audio/webm'}
+      );
+
+      // 브라우저 메모리 재생 전용
       sentenceRecordingUrl=URL.createObjectURL(sentenceRecordingBlob);
+
       sentenceRecordingStopTracks();
       sentenceRecordingRecorder=null;
+
       if(quizMode==='sentence'&&quizCurrent===q&&sentenceRecallStage===3){
         renderSentenceStage(q,3,sentenceRecallVisible);
-        setTimeout(()=>sentenceCompareEnsure(q),0);
       }
     };
-    rec.start(150);
+
+    // timeslice를 작게 해서 시작 반응을 빠르게.
+    rec.start(80);
+
+    // recorder가 실제 recording 상태에 들어간 직후 UI 갱신
     renderSentenceStage(q,3,sentenceRecallVisible);
+
+    // 파형 즉시 시작
     sentenceRecordingStartWave(stream);
+
     sentenceRecordingTimer=setInterval(()=>{
       const elapsed=(Date.now()-sentenceRecordingStartedAt)/1000;
       const el=document.getElementById('sentenceRecordingClock');
@@ -3103,10 +3192,16 @@ async function sentenceRecordingStart(q){
         big.textContent=`${min}:${String(sec).padStart(2,'0')}.${tenth}`;
       }
     },100);
+
   }catch(e){
     sentenceRecordingStopTracks();
     sentenceRecordingRecorder=null;
-    sentenceRecordingToast(e&&e.name==='NotAllowedError'?'마이크 사용 권한을 허용해 주세요.':'마이크를 시작할 수 없습니다.');
+
+    if(e&&e.name==='NotAllowedError'){
+      sentenceRecordingToast('마이크 사용 권한을 허용해 주세요.');
+    }else{
+      sentenceRecordingToast('마이크를 시작할 수 없습니다.');
+    }
   }
 }
 function sentenceRecordingStop(){
@@ -3116,6 +3211,7 @@ function sentenceRecordingStop(){
 }
 
 function sentenceCompareEnsure(q){
+  if(document.getElementById('sentenceCompareMine'))return;
   if(!sentenceRecordingUrl)return;
   const box=document.querySelector('.sentenceRecallBox');
   if(!box)return;
@@ -3141,6 +3237,7 @@ function sentenceCompareEnsure(q){
 }
 
 function sentenceRecordingBind(q){
+  sentenceRecordingWarmMic();
   if(sentenceRecordingRecorder&&sentenceRecordingRecorder.state==='recording'&&sentenceRecordingStream){
     sentenceRecordingStopWave();
     sentenceRecordingStartWave(sentenceRecordingStream);
@@ -3161,6 +3258,17 @@ function sentenceRecordingBind(q){
   }
   const del=$('sentenceRecordDelete');
   if(del)del.onclick=()=>{sentenceRecordingReset();renderSentenceStage(q,3,sentenceRecallVisible);};
+
+  const compareMine=$('sentenceCompareMine');
+  if(compareMine)compareMine.onclick=()=>{
+    const a=$('sentenceMyAudio');
+    if(a){a.currentTime=0;a.play().catch(()=>{});}
+  };
+
+  const compareAnswer=$('sentenceCompareAnswer');
+  if(compareAnswer)compareAnswer.onclick=()=>speakSentenceOnce(q).then(()=>{
+    if(quizMode==='sentence'&&quizCurrent===q&&sentenceRecallStage===3)sentenceIncrementCount(q);
+  });
   const mine=$('sentenceCompareMine');
   if(mine)mine.onclick=()=>{const a=$('sentenceMyAudio');if(a){a.currentTime=0;a.play().catch(()=>{});}};
   const answer=$('sentenceCompareAnswer');
@@ -3199,7 +3307,7 @@ function renderSentenceStage(q,stage,visible=false){
     content=`<div id="sentencePracticeText" class="sentenceEnglish">${visible?full:sentenceMaskedHtml(q)}</div>${patternInfo}`;
     actions=`<div class="sentenceStage2Actions"><button id="sentenceStage2Repeat" class="sentenceStageBtn sentenceRepeatBtn ${sentenceStage2Repeat?'active':''}" type="button">🔁 반복 듣기 ${sentenceStage2Repeat?'ON':'OFF'}</button><button id="sentenceToStage3" class="sentenceStageBtn sentencePrimary" type="button">③ 전체 문장 말하기</button></div><div class="sentenceStage2Aux"><button id="sentenceToggle" class="sentenceStageBtn sentenceSecondary" type="button">${visible?'문장 숨기기':'👁 문장 보기'}</button></div>`;
   }else{
-    content=(visible?`<div id="sentencePracticeText" class="sentenceEnglish">${full}</div>`:`<div id="sentencePracticeText" class="sentenceHiddenBox">영어 문장을 보지 않고 전체 문장을 말해 보세요.</div>`)+sentenceRecordingMarkup()+(sentenceRecordingUrl?sentenceCompareMarkup():'');
+    content=(visible?`<div id="sentencePracticeText" class="sentenceEnglish">${full}</div>`:`<div id="sentencePracticeText" class="sentenceHiddenBox">영어 문장을 보지 않고 전체 문장을 말해 보세요.</div>`)+sentenceRecordingMarkup();
     if(!isPara && hasParaphraseSentence(q)){
       actions=`<div class="sentenceStageActions"><button id="sentenceToggle" class="sentenceStageBtn sentenceSecondary" type="button">${visible?'문장 숨기기':'문장 보기 · 듣기'}</button><button id="sentenceListen" class="sentenceStageBtn sentenceSecondary" type="button">🔊 문장 다시 듣기</button><button id="sentenceToParaphrase" class="sentenceStageBtn sentencePrimary" type="button">다음 · 패러프레이징 연습</button></div>`;
     }else{
@@ -3255,7 +3363,6 @@ function renderSentenceStage(q,stage,visible=false){
     };
   }else{
     sentenceRecordingBind(q);
-    sentenceCompareEnsure(q);
     $('sentenceToggle').onclick=()=>{
       const next=!sentenceRecallVisible;
       renderSentenceStage(q,3,next);
@@ -6178,4 +6285,18 @@ setTimeout(decorate,100);
 
 window.addEventListener('pagehide',()=>{
   try{sentenceRecordingReset();}catch(e){}
+});
+
+window.addEventListener('pagehide',()=>{
+  try{sentenceRecordingReleasePreparedMic();}catch(e){}
+});
+
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden){
+    try{sentenceRecordingReleasePreparedMic();}catch(e){}
+  }else{
+    try{
+      if(quizMode==='sentence'&&sentenceRecallStage===3)sentenceRecordingWarmMic();
+    }catch(e){}
+  }
 });
