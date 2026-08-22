@@ -1,4 +1,6 @@
-MY VOCA V5.3.110 SINGLEFILE
-- GitHub에는 이 폴더의 파일을 그대로 업로드하세요.
-- index.html 안에 CSS/JS가 포함되어 있어 로컬에서 열어도 화면 디자인이 깨지지 않습니다.
-- 마이크 녹음은 브라우저 보안 정책상 HTTPS(GitHub Pages)에서 최종 테스트하세요.
+MY VOCA V5.3.112
+- V5.3.111의 녹음 기능은 유지했습니다.
+- 실시간 파형은 raw mic signal 대신 smoothed voice envelope 방식으로 변경했습니다.
+- 작은 배경 노이즈는 noise gate로 숨기고 실제 말소리 위주로 표시합니다.
+- 볼륨은 긴 막대 대신 28개 segment meter로 표시됩니다.
+- GitHub에는 ZIP을 풀고 파일을 그대로 덮어쓰면 됩니다.

@@ -2850,19 +2850,41 @@ function sentenceRecordingStartWave(stream){
   try{
     const AC=window.AudioContext||window.webkitAudioContext;
     if(!AC)return;
+
     sentenceRecordingAudioCtx=new AC();
     sentenceRecordingAnalyser=sentenceRecordingAudioCtx.createAnalyser();
-    sentenceRecordingAnalyser.fftSize=512;
-    sentenceRecordingAnalyser.smoothingTimeConstant=.82;
+    sentenceRecordingAnalyser.fftSize=1024;
+    sentenceRecordingAnalyser.smoothingTimeConstant=.9;
     sentenceRecordingSourceNode=sentenceRecordingAudioCtx.createMediaStreamSource(stream);
     sentenceRecordingSourceNode.connect(sentenceRecordingAnalyser);
 
     const data=new Uint8Array(sentenceRecordingAnalyser.fftSize);
-    const draw=()=>{
+
+    // raw waveform 대신 "말소리 크기(envelope)"를 누적해서 보여준다.
+    // 작은 배경 소음은 noise gate로 제거하고, 말할 때만 부드럽게 봉우리가 생긴다.
+    const history=[];
+    const HISTORY_SIZE=54;
+    let displayedLevel=0;
+    let lastSampleAt=0;
+
+    const roundedRect=(ctx,x,y,w,h,r)=>{
+      const rr=Math.min(r,w/2,h/2);
+      ctx.beginPath();
+      ctx.moveTo(x+rr,y);
+      ctx.arcTo(x+w,y,x+w,y+h,rr);
+      ctx.arcTo(x+w,y+h,x,y+h,rr);
+      ctx.arcTo(x,y+h,x,y,rr);
+      ctx.arcTo(x,y,x+w,y,rr);
+      ctx.closePath();
+    };
+
+    const draw=now=>{
       const canvas=document.getElementById('sentenceWaveCanvas');
       const meter=document.getElementById('sentenceVolumeMeter');
-      const meterFill=document.getElementById('sentenceVolumeFill');
-      if(!sentenceRecordingAnalyser){return;}
+      const segments=document.querySelectorAll('.sentenceVolumeSegment');
+
+      if(!sentenceRecordingAnalyser)return;
+
       sentenceRecordingAnalyser.getByteTimeDomainData(data);
 
       let sum=0;
@@ -2870,44 +2892,103 @@ function sentenceRecordingStartWave(stream){
         const v=(data[i]-128)/128;
         sum+=v*v;
       }
+
       const rms=Math.sqrt(sum/data.length);
-      const level=Math.min(1,Math.max(0,rms*4.5));
-      if(meterFill)meterFill.style.width=`${Math.max(2,level*100)}%`;
-      if(meter)meter.setAttribute('aria-valuenow',String(Math.round(level*100)));
+
+      // 약한 상시 노이즈 제거: 일반적인 모바일 마이크의 바닥 노이즈는 거의 0으로 보이게 한다.
+      const noiseFloor=.018;
+      let voice=Math.max(0,rms-noiseFloor);
+
+      // 말소리 크기를 보기 좋은 범위로 확장하되 과도한 움직임은 제한.
+      voice=Math.min(1,voice*9.2);
+
+      // 빠르게 올라가고 천천히 내려오는 미터 동작.
+      const attack=.32;
+      const release=.10;
+      displayedLevel += (voice-displayedLevel) * (voice>displayedLevel?attack:release);
+
+      // 70ms마다 한 점만 저장해 화면이 떨리지 않도록 한다.
+      if(!lastSampleAt || now-lastSampleAt>=70){
+        let sample=displayedLevel;
+
+        // 아주 작은 값은 아예 평평하게 처리.
+        if(sample<.055)sample=0;
+
+        history.push(sample);
+        if(history.length>HISTORY_SIZE)history.shift();
+        lastSampleAt=now;
+      }
+
+      const pct=Math.round(displayedLevel*100);
+      if(meter)meter.setAttribute('aria-valuenow',String(pct));
+
+      // 볼륨은 길게 이어진 bar 대신 28개의 pill segment로 표시.
+      const activeCount=Math.round(displayedLevel*28);
+      segments.forEach((seg,i)=>{
+        seg.classList.toggle('active',i<activeCount);
+        seg.classList.toggle('hot',i>=21&&i<activeCount);
+      });
 
       if(canvas){
         const rect=canvas.getBoundingClientRect();
         const dpr=Math.min(2,window.devicePixelRatio||1);
         const w=Math.max(1,Math.floor(rect.width*dpr));
         const h=Math.max(1,Math.floor(rect.height*dpr));
-        if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
+        if(canvas.width!==w||canvas.height!==h){
+          canvas.width=w;
+          canvas.height=h;
+        }
+
         const ctx=canvas.getContext('2d');
         ctx.clearRect(0,0,w,h);
 
-        // center baseline
-        ctx.strokeStyle='rgba(239,68,68,.22)';
-        ctx.lineWidth=1*dpr;
-        ctx.beginPath();ctx.moveTo(0,h/2);ctx.lineTo(w,h/2);ctx.stroke();
+        const mid=h/2;
 
-        // live waveform
-        ctx.strokeStyle='#ef4444';
-        ctx.lineWidth=1.6*dpr;
+        // 아주 은은한 중앙선
+        ctx.strokeStyle='rgba(244,114,182,.17)';
+        ctx.lineWidth=1*dpr;
+        ctx.setLineDash([2*dpr,4*dpr]);
         ctx.beginPath();
-        const slice=w/(data.length-1);
-        for(let i=0;i<data.length;i++){
-          const x=i*slice;
-          const normalized=(data[i]-128)/128;
-          const y=h/2 + normalized*(h*.42);
-          if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
-        }
+        ctx.moveTo(8*dpr,mid);
+        ctx.lineTo(w-8*dpr,mid);
         ctx.stroke();
+        ctx.setLineDash([]);
+
+        // 중앙 정렬된 매끄러운 음성 봉우리.
+        // 삼성 녹음기처럼 "말한 덩어리"만 보이고 잔노이즈는 거의 드러나지 않는다.
+        const count=HISTORY_SIZE;
+        const gap=2.7*dpr;
+        const barW=Math.max(1.5*dpr,(w-28*dpr-gap*(count-1))/count);
+        const maxAmp=h*.41;
+        const minAmp=1.2*dpr;
+        const startX=(w-(barW*count+gap*(count-1)))/2;
+
+        for(let i=0;i<count;i++){
+          const value=history[Math.max(0,history.length-count+i)]||0;
+
+          // 이웃값과 살짝 섞어 spike를 둥글게.
+          const prev=history[Math.max(0,history.length-count+i-1)]||0;
+          const next=history[Math.max(0,history.length-count+i+1)]||0;
+          const smooth=value*.58+prev*.21+next*.21;
+
+          const amp=smooth<=0 ? minAmp : Math.max(minAmp, Math.pow(smooth,.72)*maxAmp);
+          const x=startX+i*(barW+gap);
+          const y=mid-amp;
+
+          const alpha=smooth<=0 ? .22 : Math.min(.96,.45+smooth*.55);
+          ctx.fillStyle=`rgba(244,63,94,${alpha})`;
+
+          roundedRect(ctx,x,y,barW,amp*2,barW/2);
+          ctx.fill();
+        }
       }
+
       sentenceRecordingWaveRAF=requestAnimationFrame(draw);
     };
-    draw();
+
+    sentenceRecordingWaveRAF=requestAnimationFrame(draw);
   }catch(e){}
 }
-
 function sentenceRecordingStopTracks(){
   sentenceRecordingStopWave();
   if(sentenceRecordingTimer){clearInterval(sentenceRecordingTimer);sentenceRecordingTimer=null;}
@@ -2951,7 +3032,7 @@ function sentenceRecordingMarkup(){
       <div class="sentenceVolumeRow">
         <span>볼륨</span>
         <div id="sentenceVolumeMeter" class="sentenceVolumeMeter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-          <div id="sentenceVolumeFill" class="sentenceVolumeFill"></div>
+          <i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i>
         </div>
       </div>
     </div>`:''}
