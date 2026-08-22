@@ -1600,7 +1600,7 @@ body.practiceReadingMode #morePanel{
   display:block!important;
 }
 
-/* ===== V5.3.120 · 중앙 고정 커서 + 스크롤 파형 ===== */
+/* ===== V5.3.121 · 중앙 고정 커서 + 스크롤 파형 ===== */
 .sentenceRecorderWave{
   height:112px;
   margin-top:8px;

@@ -1,101 +1,91 @@
-const CACHE_VERSION = 'my-voca-v5.3.120';
-const STATIC_CACHE = CACHE_VERSION + '-static';
-const DATA_CACHE = CACHE_VERSION + '-data';
-
-const STATIC_ASSETS = [
+// MY VOCA Service Worker v5.3.121
+const CACHE_VERSION = 'my-voca-v5.3.121';
+const APP_SHELL = [
   './',
   './index.html',
-  './app.css?v=5.3.120',
-  './app.js?v=5.3.120'
+  './app.css?v=5.3.121',
+  './app.js?v=5.3.121',
+  './MY_VOCA_MASTER.csv'
 ];
 
-self.addEventListener('install', event => {
+self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(STATIC_CACHE).then(cache => cache.addAll(STATIC_ASSETS))
+    caches.open(CACHE_VERSION).then((cache) => cache.addAll(APP_SHELL))
   );
 });
 
-self.addEventListener('activate', event => {
+self.addEventListener('activate', (event) => {
   event.waitUntil((async () => {
     const keys = await caches.keys();
     await Promise.all(
       keys
-        .filter(key => key.startsWith('my-voca-') && ![STATIC_CACHE, DATA_CACHE].includes(key))
-        .map(key => caches.delete(key))
+        .filter((key) => key !== CACHE_VERSION)
+        .map((key) => caches.delete(key))
     );
     await self.clients.claim();
   })());
 });
 
-self.addEventListener('message', event => {
-  if(event.data && event.data.type === 'SKIP_WAITING'){
-    self.skipWaiting();
-  }
-  if(event.data && event.data.type === 'CLEAR_MY_VOCA_CACHE'){
-    event.waitUntil((async () => {
-      const keys = await caches.keys();
-      await Promise.all(keys.filter(k => k.startsWith('my-voca-')).map(k => caches.delete(k)));
-    })());
-  }
-});
-
-async function networkFirst(request, cacheName){
-  const cache = await caches.open(cacheName);
-  try{
-    const fresh = await fetch(request, {cache:'no-store'});
-    if(fresh && fresh.ok){
+async function networkFirst(request) {
+  try {
+    const fresh = await fetch(request, { cache: 'no-store' });
+    const cache = await caches.open(CACHE_VERSION);
+    if (fresh && fresh.ok) {
       cache.put(request, fresh.clone());
     }
     return fresh;
-  }catch(err){
-    const cached = await cache.match(request, {ignoreSearch:true});
-    if(cached) return cached;
+  } catch (err) {
+    const cached = await caches.match(request);
+    if (cached) return cached;
+    if (request.mode === 'navigate') {
+      return caches.match('./index.html');
+    }
     throw err;
   }
 }
 
-async function staleWhileRevalidate(request, cacheName){
-  const cache = await caches.open(cacheName);
-  const cached = await cache.match(request, {ignoreSearch:true});
-  const fetchPromise = fetch(request, {cache:'no-store'})
-    .then(res => {
-      if(res && res.ok) cache.put(request, res.clone());
-      return res;
+async function cacheThenRefresh(request) {
+  const cache = await caches.open(CACHE_VERSION);
+  const cached = await cache.match(request);
+  const refresh = fetch(request, { cache: 'no-store' })
+    .then((response) => {
+      if (response && response.ok) cache.put(request, response.clone());
+      return response;
     })
-    .catch(() => cached);
-  return cached || fetchPromise;
+    .catch(() => null);
+
+  return cached || refresh || fetch(request);
 }
 
-self.addEventListener('fetch', event => {
+self.addEventListener('fetch', (event) => {
   const request = event.request;
-  if(request.method !== 'GET') return;
+  if (request.method !== 'GET') return;
 
   const url = new URL(request.url);
-  if(url.origin !== self.location.origin) return;
+  const sameOrigin = url.origin === self.location.origin;
 
-  const path = url.pathname;
+  // Always get the newest HTML and core app code when online.
+  const isNavigation = request.mode === 'navigate';
+  const isHtml = url.pathname.endsWith('/') || url.pathname.endsWith('/index.html');
+  const isCoreAsset =
+    url.pathname.endsWith('/app.js') ||
+    url.pathname.endsWith('/app.css') ||
+    url.pathname.endsWith('/sw.js');
 
-  // HTML/navigation: always try network first so new deployments appear quickly.
-  if(request.mode === 'navigate' || path.endsWith('/index.html') || path.endsWith('/')){
-    event.respondWith(networkFirst(request, STATIC_CACHE));
+  if (sameOrigin && (isNavigation || isHtml || isCoreAsset)) {
+    event.respondWith(networkFirst(request));
     return;
   }
 
-  // Main JS/CSS: network first, ignoring stale browser HTTP cache.
-  if(path.endsWith('/app.js') || path.endsWith('/app.css')){
-    event.respondWith(networkFirst(request, STATIC_CACHE));
-    return;
+  // Keep other same-origin assets fast, but refresh them in the background.
+  if (sameOrigin) {
+    event.respondWith(cacheThenRefresh(request));
   }
+});
 
-  // Master CSV: allow fast cached startup but refresh in background.
-  if(path.endsWith('/MY_VOCA_MASTER.csv')){
-    event.respondWith(staleWhileRevalidate(request, DATA_CACHE));
-    return;
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.type === 'SKIP_WAITING') {
+    self.skipWaiting();
   }
-
-  // Other local assets: normal network, cache fallback.
-  event.respondWith(
-    fetch(request).catch(() => caches.match(request, {ignoreSearch:true}))
-  );
 });

@@ -1,8 +1,9 @@
-MY VOCA V5.3.120
-- 삼성 녹음기처럼 빨간 세로선은 항상 중앙에 고정됩니다.
-- 녹음 중에는 새 파형이 중앙에서 생성되고 과거 파형이 왼쪽으로 자연스럽게 이동합니다.
-- 녹음 시간이 늘어날수록 말한 파형이 계속 누적됩니다.
-- 재생 중에는 저장된 전체 파형이 중앙의 빨간선 기준으로 오른쪽→왼쪽 이동합니다.
-- 재생된 부분은 보라색, 아직 재생되지 않은 부분은 회색으로 표시됩니다.
-- 시간은 현재 재생시간 / 전체시간으로 표시됩니다.
-- 기존 빠른 녹음 시작, 메모리 전용 저장, 내 녹음/정답 듣기 버튼 유지
+MY VOCA V5.3.121
+- 다른 브라우저/카카오톡 외부 브라우저에서 이전 버전이 열리는 캐시 문제를 완화했습니다.
+- Service Worker: skipWaiting() + clients.claim() 적용
+- 이전 버전 캐시 자동 삭제
+- index.html/app.js/app.css는 network-first + no-store fetch
+- Service Worker 등록 시 updateViaCache:'none' 사용
+- 새 Service Worker가 설치되면 controllerchange 시 자동 새로고침
+- HTML에 no-cache 메타 태그 추가
+- GitHub Pages에 전체 파일을 덮어쓴 뒤 1회 새로고침 권장
