@@ -1600,7 +1600,7 @@ body.practiceReadingMode #morePanel{
   display:block!important;
 }
 
-/* ===== V5.3.123 · 중앙 고정 커서 + 스크롤 파형 ===== */
+/* ===== V5.3.124 · 중앙 고정 커서 + 스크롤 파형 ===== */
 .sentenceRecorderWave{
   height:112px;
   margin-top:8px;
@@ -1620,7 +1620,7 @@ body.practiceReadingMode #morePanel{
 }
 
 
-/* ===== V5.3.123 · 음성 녹음 학습 (공용 Recorder 재사용) ===== */
+/* ===== V5.3.124 · 음성 녹음 학습 (공용 Recorder 재사용) ===== */
 .voicePracticePage{min-height:100vh;background:#f3f4f8;color:#111827;padding:12px 12px 42px}
 .voicePracticeShell{max-width:720px;margin:0 auto}
 .voicePracticeHeader{display:flex;align-items:flex-start;gap:12px;padding:8px 2px 4px}
@@ -1649,4 +1649,30 @@ body.practiceReadingMode #morePanel{
   .voicePracticeHeader h1{font-size:20px}
   .voicePracticePromptCard,.voicePracticeRecorderSection{padding:12px;border-radius:17px}
   .voicePracticeInput{font-size:15px;min-height:76px}
+}
+
+
+/* ===== V5.3.124 · MY 수업 무한 반복 상태 표시 ===== */
+.myTitleInfinityBtn.active,
+.myTitleInfinityBtn[aria-pressed="true"]{
+  background:linear-gradient(135deg,#4f46e5,#7c3aed)!important;
+  color:#fff!important;
+  border-color:#6d28d9!important;
+  box-shadow:0 6px 16px rgba(109,40,217,.28)!important;
+}
+.myTitleInfinityBtn.active .myInfLabel,
+.myTitleInfinityBtn.active .myInfSymbol,
+.myTitleInfinityBtn.active .myInfFocus,
+.myTitleInfinityBtn[aria-pressed="true"] .myInfLabel,
+.myTitleInfinityBtn[aria-pressed="true"] .myInfSymbol,
+.myTitleInfinityBtn[aria-pressed="true"] .myInfFocus{
+  color:#fff!important;
+}
+.myTitleInfinityBtn.active .myInfSymbol,
+.myTitleInfinityBtn[aria-pressed="true"] .myInfSymbol{
+  animation:mvInfinityActivePulse .9s ease-in-out infinite alternate;
+}
+@keyframes mvInfinityActivePulse{
+  from{transform:scale(1)}
+  to{transform:scale(1.08)}
 }

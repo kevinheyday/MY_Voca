@@ -100,15 +100,19 @@ function myClassInfinityLabel(tab,index){
  return `ITEM ${index+1}`;
 }
 function syncMyClassTitleInfinityButtons(){
+ const activeKey=(typeof M536!=='undefined'&&M536.mode==='infinite')
+   ?String(M536.infiniteKey||'')
+   :String(MY_TITLE_INFINITY_KEY||'');
+ MY_TITLE_INFINITY_KEY=activeKey;
  document.querySelectorAll('.myTitleInfinityBtn').forEach(b=>{
    const parts=(b.dataset.infKey||'').split('|');
    const tab=parts[1]||'';
    const idx=parseInt(parts[2]||'0',10)||0;
    const label=myClassInfinityLabel(tab,idx);
-   const on=b.dataset.infKey===MY_TITLE_INFINITY_KEY;
+   const on=!!activeKey && b.dataset.infKey===activeKey;
    b.classList.toggle('active',on);
    b.setAttribute('aria-pressed',on?'true':'false');
-   b.innerHTML=`<span class="myInfLabel">${label}</span><span class="myInfSymbol">∞</span><span class="myInfFocus">집중</span>`;
+   b.innerHTML=`<span class="myInfLabel">${label}</span><span class="myInfSymbol">∞</span><span class="myInfFocus">${on?'반복 중':'집중'}</span>`;
    b.title=on?'무한 반복 해제':`${label} 무한 반복 집중`;
  });
 }
@@ -117,8 +121,12 @@ function myClassTitleInfinityToggle(btn,lesson,tab,index){
  if(typeof window.m536ToggleInfinite==='function'){
    window.m536ToggleInfinite(Number(lesson),tab,Number(index));
  }
- const actuallyOn=(typeof M536!=='undefined'&&M536.mode==='infinite'&&M536.infiniteKey===key);
+ const actuallyOn=(typeof M536!=='undefined'&&M536.mode==='infinite'&&String(M536.infiniteKey||'')===key);
  MY_TITLE_INFINITY_KEY=actuallyOn?key:'';
+ if(btn){
+   btn.classList.toggle('active',actuallyOn);
+   btn.setAttribute('aria-pressed',actuallyOn?'true':'false');
+ }
  syncMyClassTitleInfinityButtons();
 }
 
@@ -160,7 +168,44 @@ function stopAllMyClassPlayback(clearCurrent=true){
   try{syncMyClassTitleInfinityButtons?.()}catch(e){}
   try{m536SyncInfinityButtons?.()}catch(e){}
 }
+
 window.stopAllMyClassPlayback=stopAllMyClassPlayback;
+
+// 화면 전환 경로가 추가되어도 MY 수업 페이지가 숨겨지는 순간 재생을 반드시 종료한다.
+function installMyClassPlaybackExitGuard(){
+  const page=document.getElementById('myClassPage');
+  if(!page || page.dataset.playbackExitGuard==='1')return;
+  page.dataset.playbackExitGuard='1';
+
+  const stopIfHidden=()=>{
+    if(!page.classList.contains('hidden'))return;
+
+    const isPlaying=
+      (typeof M536!=='undefined' && M536.mode!=='idle') ||
+      (typeof MY_CLASS_PLAY!=='undefined' && MY_CLASS_PLAY.active) ||
+      !!MY_TITLE_INFINITY_KEY;
+
+    if(isPlaying){
+      try{stopAllMyClassPlayback(true)}catch(e){}
+    }else{
+      try{stopSpeech()}catch(e){}
+      try{window.speechSynthesis?.cancel()}catch(e){}
+    }
+  };
+
+  new MutationObserver(stopIfHidden).observe(page,{
+    attributes:true,
+    attributeFilter:['class']
+  });
+
+  // 브라우저 뒤로가기/탭 전환 등에서도 화면 상태를 한 번 더 확인
+  window.addEventListener('popstate',()=>setTimeout(stopIfHidden,0));
+  document.addEventListener('visibilitychange',()=>{
+    if(document.hidden && page.classList.contains('hidden'))stopIfHidden();
+  });
+}
+setTimeout(installMyClassPlaybackExitGuard,0);
+
 
 function myClassMaybeAutoStart(){const cfg=loadAppSettings();if(cfg.myClassAutoPlay!==false&&myClassTab!=='habits')myClassStartAuto(0);else myClassSetStatus(myClassTab==='habits'?'습관 탭 · 행동 교정':'자동 재생 OFF · 하단 ▶ 재생 시작을 누르세요',false);}
 function openMyClassLesson(no=1){stopAllMyClassPlayback(true);myClassLessonNo=Math.max(1,Math.min(3,Number(no)||1));try{initTTS();unlockTTSFromGesture()}catch(e){}document.getElementById('homePage')?.classList.add('hidden');document.getElementById('dayAppPage')?.classList.add('hidden');if(typeof hideStandalonePages==='function')hideStandalonePages();document.getElementById('myClassPage')?.classList.remove('hidden');document.getElementById('myClassBottom')?.classList.remove('hidden');myClassTab='corrections';myClassUpdateHeader();renderMyClass();window.scrollTo(0,0);myClassSetStatus?.('재생 대기 · 버튼을 눌러 시작하세요',false);}
@@ -4380,6 +4425,7 @@ function stopAllReadingForNavigation(){
 }
 
 function goHome(){
+  try{stopAllMyClassPlayback(true)}catch(e){}
   try{if(typeof myClassStop==='function')myClassStop(true)}catch(e){}
   try{document.getElementById('myClassPage')?.classList.add('hidden');document.getElementById('myClassBottom')?.classList.add('hidden')}catch(e){}
   try{stopDayLoop(true)}catch(e){}
@@ -4616,7 +4662,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
 
 
 
-// ===== V5.3.123 · 자유 음성 녹음 학습 =====
+// ===== V5.3.124 · 자유 음성 녹음 학습 =====
 const VOICE_PRACTICE_RECENT_KEY='mv_voice_practice_recent_v1';
 
 function voicePracticeRecentList(){
@@ -4723,6 +4769,7 @@ function bindVoicePracticePage(){
   renderVoicePracticeRecent();
 }
 function openVoicePracticePage(){
+  try{stopAllMyClassPlayback(true)}catch(e){}
   try{closeDrawer()}catch(e){}
   try{stopSpeech()}catch(e){}
   try{sentenceRecordingReset()}catch(e){}
@@ -5936,11 +5983,13 @@ function m536DecorateCards(){
 }
 function m536SyncInfinityButtons(){
   document.querySelectorAll('.myInfinityBtn').forEach(b=>{
-    const on=M536.mode==='infinite' && b.dataset.infKey===M536.infiniteKey;
+    const on=M536.mode==='infinite' && String(b.dataset.infKey||'')===String(M536.infiniteKey||'');
     b.classList.toggle('active',on);
     b.classList.toggle('resumeHint',on && M536.returnToFull);
-    b.innerHTML=on?(M536.returnToFull?'∞ 반복 해제 · Resume':'∞ 반복 해제'):(b.dataset.infKey?.includes('|speaking|')?'∞ 문단 반복':'∞ 문장 반복');
+    b.setAttribute('aria-pressed',on?'true':'false');
+    b.innerHTML=on?(M536.returnToFull?'∞ 반복 중 · Resume':'∞ 반복 중'):(b.dataset.infKey?.includes('|speaking|')?'∞ 문단 반복':'∞ 문장 반복');
   });
+  try{syncMyClassTitleInfinityButtons?.()}catch(e){}
 }
 
 // 기존 render 뒤에 ∞ 버튼을 항상 복원한다.
@@ -6667,3 +6716,24 @@ document.addEventListener('visibilitychange',()=>{
     }catch(e){}
   }
 });
+
+
+// MY 수업 재생 중 다른 내비게이션을 누르면 클릭 순간 즉시 정지.
+document.addEventListener('click',(e)=>{
+  const myPage=document.getElementById('myClassPage');
+  if(!myPage || myPage.classList.contains('hidden'))return;
+
+  const nav=e.target.closest(
+    '#homeBtn,#myClassHomeBtn,#myClassBack,.drawerItem,.bottomNav button,[data-page],[data-nav],#navLearn,#navQuiz,#navHome'
+  );
+  if(!nav)return;
+
+  // MY 수업 내부의 무한반복/재생 컨트롤은 제외.
+  if(nav.closest('#myClassPage') &&
+     (nav.classList.contains('myTitleInfinityBtn') ||
+      nav.classList.contains('myInfinityBtn') ||
+      nav.id==='myClassPlayPause' ||
+      nav.id==='myClassCurrentRepeat'))return;
+
+  try{stopAllMyClassPlayback(true)}catch(err){}
+},true);
