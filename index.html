@@ -1,4 +1,4 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.118</title>
+<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.119</title>
 
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1574,6 +1574,40 @@ body.practiceReadingMode #morePanel{
   .sentenceRecorderSideBtn{min-height:54px}
 }
 
+/* ===== V5.3.119 · 3단계 진입 즉시 통합 녹음기 표시 ===== */
+.sentenceRecallBox .sentenceRecorderUnified{
+  order:-1;
+  margin-top:0;
+  margin-bottom:14px;
+}
+.sentenceRecorderUnified.ready{
+  border-color:#efe7ff;
+  background:linear-gradient(180deg,#fff 0%,#fdfcff 100%);
+}
+.sentenceRecorderUnified.ready .sentenceRecorderState{
+  color:#5b4ff4;
+}
+.sentenceRecorderUnified.ready .sentenceRecorderDot{
+  background:#5b4ff4;
+}
+.sentenceRecorderSideBtnMuted{
+  opacity:.38;
+  cursor:default!important;
+}
+.sentenceRecorderUnified.ready .sentenceRecorderWave{
+  min-height:92px;
+}
+.sentenceRecorderUnified.ready .sentenceRecorderMainBtn.record{
+  transform:scale(1.02);
+}
+.sentenceRecorderUnified.complete .sentenceRecorderWave,
+.sentenceRecorderUnified.recording .sentenceRecorderWave{
+  min-height:92px;
+}
+.sentenceRecorderUnified .sentenceCompareBox{
+  display:block!important;
+}
+
 </style>
 
 </head><body>
@@ -1617,7 +1651,7 @@ body.practiceReadingMode #morePanel{
     <button class="drawerItem" data-drawer-action="config"><span class="drawerIcon">⚙️</span><span class="drawerItemText">Config<small>음성·반복·퀴즈 설정</small></span></button>
     <button class="drawerItem" data-drawer-action="usage"><span class="drawerIcon">📘</span><span class="drawerItemText">사용 방법<small>MY VOCA 학습 방법과 기능 안내</small></span></button>
     <button class="drawerItem" data-drawer-action="whatsnew"><span class="drawerIcon">🆕</span><span class="drawerItemText">업데이트 내역<small>이번 버전 변경 사항</small></span></button>
-    <button class="drawerItem" data-drawer-action="info"><span class="drawerIcon">ℹ️</span><span class="drawerItemText">앱 정보<small>MY VOCA v5.3.118</small></span></button>
+    <button class="drawerItem" data-drawer-action="info"><span class="drawerIcon">ℹ️</span><span class="drawerItemText">앱 정보<small>MY VOCA v5.3.119</small></span></button>
   </nav>
 </aside>
 
@@ -1627,7 +1661,7 @@ body.practiceReadingMode #morePanel{
       <div>
         <div class="homeEyebrow" id="homeCourseEyebrow">MY VOCA UNIFIED COURSE · 69 DAYS</div>
         <h1 id="homeCourseTitle">MY VOCA</h1>
-        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.118</div>
+        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.119</div>
       </div>
       <div class="homeDayBadge"><b id="homeRegisteredDays">30</b><span>등록 Day</span></div>
     </section>
@@ -2188,12 +2222,12 @@ Config의 <b>Day Loop 문장당 반복 횟수</b>에서 1회 / 2회 / 3회 / 5�
 
 
 <script id="mv-version-5_3_99">
-window.APP_VERSION="5.3.118";
+window.APP_VERSION="5.3.119";
 window.APP_NAME="MY VOCA";
-document.title="MY VOCA v5.3.118";
+document.title="MY VOCA v5.3.119";
 window.addEventListener("DOMContentLoaded",function(){
   document.querySelectorAll(".appVersion").forEach(function(el){
-    el.textContent="MY VOCA v5.3.118";
+    el.textContent="MY VOCA v5.3.119";
   });
 });
 </script>
@@ -5297,7 +5331,7 @@ function sentenceRecordingMarkup(){
   const recording=!!(sentenceRecordingRecorder&&sentenceRecordingRecorder.state==='recording');
   const has=!!sentenceRecordingUrl;
 
-  const stateLabel = recording ? '녹음 중' : (has ? '녹음 완료' : '녹음 전');
+  const stateLabel = recording ? '녹음 중' : (has ? '녹음 완료' : '눌러서 말하기');
   const stateClass = recording ? 'recording' : (has ? 'complete' : 'ready');
 
   const total = sentenceRecordingTime(sentenceRecordingDuration||0);
@@ -5337,7 +5371,7 @@ function sentenceRecordingMarkup(){
                <span class="sentenceRecorderIcon">↻</span>
                <small>다시 녹음</small>
              </button>`
-          : `<button id="sentenceRecordDoneBtn" class="sentenceRecorderSideBtn" type="button" aria-label="완료">
+          : `<button class="sentenceRecorderSideBtn sentenceRecorderSideBtnMuted" type="button" aria-label="완료" disabled>
                <span class="sentenceRecorderIcon">■</span>
                <small>완료</small>
              </button>`
@@ -5498,6 +5532,16 @@ function sentenceCompareEnsure(q){
 function sentenceRecordingBind(q){
   sentenceRecordingWarmMic();
 
+  // 3단계 진입 직후부터 녹음기 UI와 빈 파형을 바로 표시
+  if(!sentenceRecordingRecorder && !sentenceRecordingUrl){
+    sentenceRecordingDrawWaveform({
+      canvasId:'sentenceWaveCanvas',
+      history:[],
+      progress:0,
+      recording:false
+    });
+  }
+
   const recordBtn=$('sentenceRecordBtn');
   if(recordBtn){
     recordBtn.onclick=()=>{
@@ -5593,9 +5637,15 @@ function sentenceRecordingBind(q){
   if(compareMine){
     compareMine.onclick=()=>{
       const a=$('sentenceMyAudio');
+      const main=$('sentenceMyPlay');
       if(a){
         a.currentTime=0;
         a.play().catch(()=>{});
+        if(main){
+          main.textContent='Ⅱ';
+          main.classList.add('playing');
+        }
+        sentenceRecordingAnimatePlayback();
       }
     };
   }
@@ -5640,7 +5690,7 @@ function renderSentenceStage(q,stage,visible=false){
     content=`<div id="sentencePracticeText" class="sentenceEnglish">${visible?full:sentenceMaskedHtml(q)}</div>${patternInfo}`;
     actions=`<div class="sentenceStage2Actions"><button id="sentenceStage2Repeat" class="sentenceStageBtn sentenceRepeatBtn ${sentenceStage2Repeat?'active':''}" type="button">🔁 반복 듣기 ${sentenceStage2Repeat?'ON':'OFF'}</button><button id="sentenceToStage3" class="sentenceStageBtn sentencePrimary" type="button">③ 전체 문장 말하기</button></div><div class="sentenceStage2Aux"><button id="sentenceToggle" class="sentenceStageBtn sentenceSecondary" type="button">${visible?'문장 숨기기':'👁 문장 보기'}</button></div>`;
   }else{
-    content=(visible?`<div id="sentencePracticeText" class="sentenceEnglish">${full}</div>`:`<div id="sentencePracticeText" class="sentenceHiddenBox">영어 문장을 보지 않고 전체 문장을 말해 보세요.</div>`)+sentenceRecordingMarkup();
+    content=sentenceRecordingMarkup()+(visible?`<div id="sentencePracticeText" class="sentenceEnglish">${full}</div>`:`<div id="sentencePracticeText" class="sentenceHiddenBox">영어 문장을 보지 않고 전체 문장을 말해 보세요.</div>`);
     if(!isPara && hasParaphraseSentence(q)){
       actions=`<div class="sentenceStageActions"><button id="sentenceToggle" class="sentenceStageBtn sentenceSecondary" type="button">${visible?'문장 숨기기':'문장 보기 · 듣기'}</button><button id="sentenceListen" class="sentenceStageBtn sentenceSecondary" type="button">🔊 문장 다시 듣기</button><button id="sentenceToParaphrase" class="sentenceStageBtn sentencePrimary" type="button">다음 · 패러프레이징 연습</button></div>`;
     }else{

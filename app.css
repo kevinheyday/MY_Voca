@@ -1565,3 +1565,37 @@ body.practiceReadingMode #morePanel{
   }
   .sentenceRecorderSideBtn{min-height:54px}
 }
+
+/* ===== V5.3.119 · 3단계 진입 즉시 통합 녹음기 표시 ===== */
+.sentenceRecallBox .sentenceRecorderUnified{
+  order:-1;
+  margin-top:0;
+  margin-bottom:14px;
+}
+.sentenceRecorderUnified.ready{
+  border-color:#efe7ff;
+  background:linear-gradient(180deg,#fff 0%,#fdfcff 100%);
+}
+.sentenceRecorderUnified.ready .sentenceRecorderState{
+  color:#5b4ff4;
+}
+.sentenceRecorderUnified.ready .sentenceRecorderDot{
+  background:#5b4ff4;
+}
+.sentenceRecorderSideBtnMuted{
+  opacity:.38;
+  cursor:default!important;
+}
+.sentenceRecorderUnified.ready .sentenceRecorderWave{
+  min-height:92px;
+}
+.sentenceRecorderUnified.ready .sentenceRecorderMainBtn.record{
+  transform:scale(1.02);
+}
+.sentenceRecorderUnified.complete .sentenceRecorderWave,
+.sentenceRecorderUnified.recording .sentenceRecorderWave{
+  min-height:92px;
+}
+.sentenceRecorderUnified .sentenceCompareBox{
+  display:block!important;
+}

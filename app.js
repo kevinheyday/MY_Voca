@@ -3096,7 +3096,7 @@ function sentenceRecordingMarkup(){
   const recording=!!(sentenceRecordingRecorder&&sentenceRecordingRecorder.state==='recording');
   const has=!!sentenceRecordingUrl;
 
-  const stateLabel = recording ? '녹음 중' : (has ? '녹음 완료' : '녹음 전');
+  const stateLabel = recording ? '녹음 중' : (has ? '녹음 완료' : '눌러서 말하기');
   const stateClass = recording ? 'recording' : (has ? 'complete' : 'ready');
 
   const total = sentenceRecordingTime(sentenceRecordingDuration||0);
@@ -3136,7 +3136,7 @@ function sentenceRecordingMarkup(){
                <span class="sentenceRecorderIcon">↻</span>
                <small>다시 녹음</small>
              </button>`
-          : `<button id="sentenceRecordDoneBtn" class="sentenceRecorderSideBtn" type="button" aria-label="완료">
+          : `<button class="sentenceRecorderSideBtn sentenceRecorderSideBtnMuted" type="button" aria-label="완료" disabled>
                <span class="sentenceRecorderIcon">■</span>
                <small>완료</small>
              </button>`
@@ -3297,6 +3297,16 @@ function sentenceCompareEnsure(q){
 function sentenceRecordingBind(q){
   sentenceRecordingWarmMic();
 
+  // 3단계 진입 직후부터 녹음기 UI와 빈 파형을 바로 표시
+  if(!sentenceRecordingRecorder && !sentenceRecordingUrl){
+    sentenceRecordingDrawWaveform({
+      canvasId:'sentenceWaveCanvas',
+      history:[],
+      progress:0,
+      recording:false
+    });
+  }
+
   const recordBtn=$('sentenceRecordBtn');
   if(recordBtn){
     recordBtn.onclick=()=>{
@@ -3392,9 +3402,15 @@ function sentenceRecordingBind(q){
   if(compareMine){
     compareMine.onclick=()=>{
       const a=$('sentenceMyAudio');
+      const main=$('sentenceMyPlay');
       if(a){
         a.currentTime=0;
         a.play().catch(()=>{});
+        if(main){
+          main.textContent='Ⅱ';
+          main.classList.add('playing');
+        }
+        sentenceRecordingAnimatePlayback();
       }
     };
   }
@@ -3439,7 +3455,7 @@ function renderSentenceStage(q,stage,visible=false){
     content=`<div id="sentencePracticeText" class="sentenceEnglish">${visible?full:sentenceMaskedHtml(q)}</div>${patternInfo}`;
     actions=`<div class="sentenceStage2Actions"><button id="sentenceStage2Repeat" class="sentenceStageBtn sentenceRepeatBtn ${sentenceStage2Repeat?'active':''}" type="button">🔁 반복 듣기 ${sentenceStage2Repeat?'ON':'OFF'}</button><button id="sentenceToStage3" class="sentenceStageBtn sentencePrimary" type="button">③ 전체 문장 말하기</button></div><div class="sentenceStage2Aux"><button id="sentenceToggle" class="sentenceStageBtn sentenceSecondary" type="button">${visible?'문장 숨기기':'👁 문장 보기'}</button></div>`;
   }else{
-    content=(visible?`<div id="sentencePracticeText" class="sentenceEnglish">${full}</div>`:`<div id="sentencePracticeText" class="sentenceHiddenBox">영어 문장을 보지 않고 전체 문장을 말해 보세요.</div>`)+sentenceRecordingMarkup();
+    content=sentenceRecordingMarkup()+(visible?`<div id="sentencePracticeText" class="sentenceEnglish">${full}</div>`:`<div id="sentencePracticeText" class="sentenceHiddenBox">영어 문장을 보지 않고 전체 문장을 말해 보세요.</div>`);
     if(!isPara && hasParaphraseSentence(q)){
       actions=`<div class="sentenceStageActions"><button id="sentenceToggle" class="sentenceStageBtn sentenceSecondary" type="button">${visible?'문장 숨기기':'문장 보기 · 듣기'}</button><button id="sentenceListen" class="sentenceStageBtn sentenceSecondary" type="button">🔊 문장 다시 듣기</button><button id="sentenceToParaphrase" class="sentenceStageBtn sentencePrimary" type="button">다음 · 패러프레이징 연습</button></div>`;
     }else{
