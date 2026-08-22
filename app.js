@@ -2908,12 +2908,11 @@ function sentenceRecordingStartWave(stream){
     sentenceRecordingAudioCtx=new AC();
     sentenceRecordingAnalyser=sentenceRecordingAudioCtx.createAnalyser();
     sentenceRecordingAnalyser.fftSize=1024;
-    sentenceRecordingAnalyser.smoothingTimeConstant=.9;
+    sentenceRecordingAnalyser.smoothingTimeConstant=.88;
     sentenceRecordingSourceNode=sentenceRecordingAudioCtx.createMediaStreamSource(stream);
     sentenceRecordingSourceNode.connect(sentenceRecordingAnalyser);
 
     const data=new Uint8Array(sentenceRecordingAnalyser.fftSize);
-    const HISTORY_LIMIT=130;
     let displayedLevel=0;
     let lastSampleAt=0;
 
@@ -2926,20 +2925,27 @@ function sentenceRecordingStartWave(stream){
         const v=(data[i]-128)/128;
         sum+=v*v;
       }
+
       const rms=Math.sqrt(sum/data.length);
 
+      // Light noise gate so the line stays calm between words.
       const noiseFloor=.017;
       let voice=Math.max(0,rms-noiseFloor);
-      voice=Math.min(1,voice*9.5);
+      voice=Math.min(1,voice*9.4);
 
-      const attack=.34, release=.10;
+      // Fast attack, slower release for a recorder-like envelope.
+      const attack=.36;
+      const release=.11;
       displayedLevel += (voice-displayedLevel) * (voice>displayedLevel?attack:release);
 
+      // Keep one envelope sample roughly every 65ms.
       if(!lastSampleAt || now-lastSampleAt>=65){
         let sample=displayedLevel;
-        if(sample<.05)sample=0;
+        if(sample<.045)sample=0;
         sentenceRecordingWaveHistory.push(sample);
-        if(sentenceRecordingWaveHistory.length>HISTORY_LIMIT){
+
+        // Safety cap only; about 5 minutes at ~65ms/sample.
+        if(sentenceRecordingWaveHistory.length>4800){
           sentenceRecordingWaveHistory.shift();
         }
         lastSampleAt=now;
@@ -2948,8 +2954,7 @@ function sentenceRecordingStartWave(stream){
       sentenceRecordingDrawWaveform({
         canvasId:'sentenceWaveCanvas',
         history:sentenceRecordingWaveHistory,
-        progress:1,
-        recording:true
+        mode:'recording'
       });
 
       sentenceRecordingWaveRAF=requestAnimationFrame(draw);
@@ -2958,8 +2963,12 @@ function sentenceRecordingStartWave(stream){
     sentenceRecordingWaveRAF=requestAnimationFrame(draw);
   }catch(e){}
 }
-
-function sentenceRecordingDrawWaveform({canvasId,history,progress=0,recording=false}){
+function sentenceRecordingDrawWaveform({
+  canvasId,
+  history,
+  mode='ready',
+  progress=0
+}){
   const canvas=document.getElementById(canvasId);
   if(!canvas)return;
 
@@ -2976,58 +2985,85 @@ function sentenceRecordingDrawWaveform({canvasId,history,progress=0,recording=fa
   ctx.clearRect(0,0,w,h);
 
   const mid=h/2;
-  const pad=10*dpr;
-  const count=Math.max(72,history.length||72);
-  const usable=w-pad*2;
-  const gap=1.9*dpr;
-  const barW=Math.max(1.2*dpr,(usable-gap*(count-1))/count);
-  const maxAmp=h*.37;
-  const minAmp=1.1*dpr;
-  const startX=pad;
+  const cursorX=w/2;
+  const step=4.0*dpr;
+  const barW=1.55*dpr;
+  const maxAmp=h*.39;
+  const minAmp=.9*dpr;
+  const count=history.length;
 
-  // subtle baseline
-  ctx.strokeStyle='rgba(148,163,184,.22)';
+  // Subtle baseline.
+  ctx.strokeStyle='rgba(148,163,184,.26)';
   ctx.lineWidth=1*dpr;
   ctx.setLineDash([2*dpr,4*dpr]);
   ctx.beginPath();
-  ctx.moveTo(pad,mid);
-  ctx.lineTo(w-pad,mid);
+  ctx.moveTo(6*dpr,mid);
+  ctx.lineTo(w-6*dpr,mid);
   ctx.stroke();
   ctx.setLineDash([]);
 
-  // center cursor while recording; playback cursor based on progress
-  const cursorX = recording ? w/2 : pad + Math.max(0,Math.min(1,progress))*usable;
+  if(count>0){
+    let currentIndex=0;
 
-  for(let i=0;i<count;i++){
-    const idx=Math.max(0,history.length-count+i);
-    const v=history[idx]||0;
-    const prev=history[Math.max(0,idx-1)]||0;
-    const next=history[Math.min(history.length-1,idx+1)]||0;
-    const smooth=v*.58+prev*.21+next*.21;
+    if(mode==='recording'){
+      currentIndex=count-1;
+    }else if(mode==='playback' || mode==='paused' || mode==='complete'){
+      currentIndex=Math.max(0,Math.min(count-1,progress*(count-1)));
+    }
 
-    const amp=smooth<=0?minAmp:Math.max(minAmp,Math.pow(smooth,.72)*maxAmp);
-    const x=startX+i*(barW+gap);
-    const y=mid-amp;
-    const played = !recording && x <= cursorX;
+    // Only draw samples that could be visible around the fixed center cursor.
+    const visibleEachSide=Math.ceil((w/2)/step)+4;
+    const first=Math.max(0,Math.floor(currentIndex-visibleEachSide));
+    const last=Math.min(count-1,Math.ceil(currentIndex+visibleEachSide));
 
-    ctx.fillStyle = recording
-      ? (x <= cursorX ? 'rgba(239,68,68,.92)' : 'rgba(203,213,225,.72)')
-      : (played ? 'rgba(79,70,229,.95)' : 'rgba(203,213,225,.86)');
+    for(let i=first;i<=last;i++){
+      const v=history[i]||0;
+      const prev=history[Math.max(0,i-1)]||0;
+      const next=history[Math.min(count-1,i+1)]||0;
+      const smooth=v*.58+prev*.21+next*.21;
 
-    ctx.beginPath();
-    const r=Math.min(barW/2,2*dpr);
-    ctx.roundRect(x,y,barW,amp*2,r);
-    ctx.fill();
+      const amp=smooth<=0
+        ? minAmp
+        : Math.max(minAmp,Math.pow(smooth,.72)*maxAmp);
+
+      const x=cursorX+(i-currentIndex)*step;
+      if(x<-barW || x>w+barW)continue;
+
+      const y=mid-amp;
+
+      let fill='rgba(203,213,225,.72)';
+
+      if(mode==='recording'){
+        // Past speech is red/pink, future space is empty.
+        fill = i<=currentIndex
+          ? 'rgba(244,63,94,.82)'
+          : 'rgba(203,213,225,.45)';
+      }else{
+        // Playback: already-played audio is purple, upcoming audio is gray.
+        fill = i<=currentIndex
+          ? 'rgba(91,79,244,.92)'
+          : 'rgba(203,213,225,.82)';
+      }
+
+      ctx.fillStyle=fill;
+      ctx.beginPath();
+      if(ctx.roundRect){
+        ctx.roundRect(x,y,barW,amp*2,barW/2);
+      }else{
+        ctx.rect(x,y,barW,amp*2);
+      }
+      ctx.fill();
+    }
   }
 
-  ctx.strokeStyle = recording ? '#ef4444' : '#ef4444';
-  ctx.lineWidth=1.5*dpr;
+  // Fixed center playback/record cursor.
+  ctx.strokeStyle='#ef4444';
+  ctx.lineWidth=1.45*dpr;
   ctx.beginPath();
-  ctx.moveTo(cursorX,8*dpr);
-  ctx.lineTo(cursorX,h-8*dpr);
+  ctx.moveTo(cursorX,7*dpr);
+  ctx.lineTo(cursorX,h-7*dpr);
   ctx.stroke();
 }
-
 function sentenceRecordingStopPlaybackAnimation(){
   if(sentenceRecordingPlaybackRAF){
     cancelAnimationFrame(sentenceRecordingPlaybackRAF);
@@ -3037,25 +3073,30 @@ function sentenceRecordingStopPlaybackAnimation(){
 
 function sentenceRecordingAnimatePlayback(){
   sentenceRecordingStopPlaybackAnimation();
+
   const audio=document.getElementById('sentenceMyAudio');
   if(!audio)return;
 
   const tick=()=>{
-    const progress=(audio.duration&&isFinite(audio.duration)&&audio.duration>0)
-      ? audio.currentTime/audio.duration
+    const duration=(audio.duration&&isFinite(audio.duration)&&audio.duration>0)
+      ? audio.duration
+      : sentenceRecordingDuration||0;
+
+    const progress=duration>0
+      ? Math.max(0,Math.min(1,(audio.currentTime||0)/duration))
       : 0;
 
     sentenceRecordingDrawWaveform({
       canvasId:'sentenceWaveCanvas',
       history:sentenceRecordingWaveHistory,
-      progress,
-      recording:false
+      mode:audio.paused?'paused':'playback',
+      progress
     });
 
     const big=document.getElementById('sentenceRecordingBigTime');
     if(big){
       const cur=sentenceRecordingTime(audio.currentTime||0);
-      const total=sentenceRecordingTime(audio.duration||sentenceRecordingDuration||0);
+      const total=sentenceRecordingTime(duration);
       big.textContent=`${cur} / ${total}`;
     }
 
@@ -3063,9 +3104,9 @@ function sentenceRecordingAnimatePlayback(){
       sentenceRecordingPlaybackRAF=requestAnimationFrame(tick);
     }
   };
+
   tick();
 }
-
 function sentenceRecordingStopTracks(){
   sentenceRecordingStopWave();
   if(sentenceRecordingTimer){clearInterval(sentenceRecordingTimer);sentenceRecordingTimer=null;}
@@ -3302,8 +3343,8 @@ function sentenceRecordingBind(q){
     sentenceRecordingDrawWaveform({
       canvasId:'sentenceWaveCanvas',
       history:[],
-      progress:0,
-      recording:false
+      mode:'ready',
+      progress:0
     });
   }
 
@@ -3344,8 +3385,8 @@ function sentenceRecordingBind(q){
     sentenceRecordingDrawWaveform({
       canvasId:'sentenceWaveCanvas',
       history:sentenceRecordingWaveHistory,
-      progress:0,
-      recording:false
+      mode:'complete',
+      progress:0
     });
 
     play.onclick=()=>{
@@ -3376,8 +3417,8 @@ function sentenceRecordingBind(q){
       sentenceRecordingDrawWaveform({
         canvasId:'sentenceWaveCanvas',
         history:sentenceRecordingWaveHistory,
-        progress:1,
-        recording:false
+        mode:'complete',
+        progress:1
       });
       const big=$('sentenceRecordingBigTime');
       if(big)big.textContent=`${sentenceRecordingTime(sentenceRecordingDuration)} / ${sentenceRecordingTime(sentenceRecordingDuration)}`;
@@ -3392,8 +3433,8 @@ function sentenceRecordingBind(q){
       sentenceRecordingDrawWaveform({
         canvasId:'sentenceWaveCanvas',
         history:sentenceRecordingWaveHistory,
-        progress:0,
-        recording:false
+        mode:'complete',
+        progress:0
       });
     };
   }

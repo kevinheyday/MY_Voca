@@ -1599,3 +1599,22 @@ body.practiceReadingMode #morePanel{
 .sentenceRecorderUnified .sentenceCompareBox{
   display:block!important;
 }
+
+/* ===== V5.3.120 · 중앙 고정 커서 + 스크롤 파형 ===== */
+.sentenceRecorderWave{
+  height:112px;
+  margin-top:8px;
+  background:linear-gradient(180deg,#fff 0%,#fefefe 100%);
+}
+.sentenceRecorderUnified.recording .sentenceRecorderWave{
+  background:linear-gradient(180deg,#fff 0%,#fffafb 100%);
+}
+.sentenceRecorderUnified.complete .sentenceRecorderWave{
+  background:linear-gradient(180deg,#fff 0%,#fdfcff 100%);
+}
+.sentenceRecorderHint{
+  margin-top:10px;
+}
+@media(max-width:480px){
+  .sentenceRecorderWave{height:88px}
+}
