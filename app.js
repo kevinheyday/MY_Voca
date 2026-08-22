@@ -113,6 +113,38 @@ function myClassInfinityLabel(tab,index){
  return `ITEM ${index+1}`;
 }
 
+
+function paintMyClassInfinityButton(btn,on){
+  if(!btn)return;
+  btn.classList.toggle('active',!!on);
+  btn.dataset.repeatState=on?'on':'off';
+  btn.setAttribute('aria-pressed',on?'true':'false');
+
+  const focus=btn.querySelector('.myInfFocus');
+  if(focus)focus.textContent=on?'반복 중':'집중';
+
+  const label=btn.querySelector('.myInfLabel');
+  const symbol=btn.querySelector('.myInfSymbol');
+
+  if(on){
+    btn.style.setProperty('background-color','#5b21b6','important');
+    btn.style.setProperty('background-image','linear-gradient(135deg,#4f46e5,#7c3aed)','important');
+    btn.style.setProperty('color','#fff','important');
+    btn.style.setProperty('border-color','#6d28d9','important');
+    btn.style.setProperty('box-shadow','0 6px 16px rgba(109,40,217,.34)','important');
+    [label,symbol,focus].forEach(x=>x&&x.style.setProperty('color','#fff','important'));
+  }else{
+    btn.style.removeProperty('background-color');
+    btn.style.removeProperty('background-image');
+    btn.style.removeProperty('background');
+    btn.style.removeProperty('color');
+    btn.style.removeProperty('border-color');
+    btn.style.removeProperty('box-shadow');
+    [label,symbol,focus].forEach(x=>x&&x.style.removeProperty('color'));
+  }
+}
+window.paintMyClassInfinityButton=paintMyClassInfinityButton;
+
 function syncMyClassInfinityVisuals(){
   let mode='idle', key='';
   try{
@@ -187,71 +219,36 @@ function syncMyClassTitleInfinityButtons(){
    const idx=parseInt(parts[2]||'0',10)||0;
    const label=myClassInfinityLabel(tab,idx);
    const on=!!activeKey && b.dataset.infKey===activeKey;
-   b.classList.toggle('active',on);
-   b.setAttribute('aria-pressed',on?'true':'false');
-   b.innerHTML=`<span class="myInfLabel">${label}</span><span class="myInfSymbol">∞</span><span class="myInfFocus">${on?'반복 중':'집중'}</span>`;
-   b.title=on?'무한 반복 해제':`${label} 무한 반복 집중`;
-   // Samsung/Android에서도 상태가 반드시 보이도록 핵심 색상은 inline으로 동기화한다.
-   if(on){
-     b.style.setProperty('background','linear-gradient(135deg,#4f46e5,#7c3aed)','important');
-     b.style.setProperty('color','#fff','important');
-     b.style.setProperty('border-color','#6d28d9','important');
-     b.style.setProperty('box-shadow','0 6px 16px rgba(109,40,217,.30)','important');
-     b.querySelectorAll('.myInfLabel,.myInfSymbol,.myInfFocus').forEach(x=>x.style.setProperty('color','#fff','important'));
-   }else{
-     b.style.removeProperty('background');
-     b.style.removeProperty('color');
-     b.style.removeProperty('border-color');
-     b.style.removeProperty('box-shadow');
-     b.querySelectorAll('.myInfLabel,.myInfSymbol,.myInfFocus').forEach(x=>x.style.removeProperty('color'));
-   }
+   paintMyClassInfinityButton(b,on);
  });
  try{syncMyClassInfinityVisuals()}catch(e){}
 }
 function myClassTitleInfinityToggle(btn,lesson,tab,index){
- const key=`${lesson}|${tab}|${index}`;
- const wasOn=(
-   (typeof M536!=='undefined' && M536.mode==='infinite' && String(M536.infiniteKey||'')===key) ||
-   String(MY_TITLE_INFINITY_KEY||'')===key
- );
+  const key=`${lesson}|${tab}|${index}`;
+  let isOn=false;
+  try{
+    isOn=(M536.mode==='infinite' && String(M536.infiniteKey||'')===key);
+  }catch(e){}
 
- // 사용자 터치 순간 먼저 상태를 시각적으로 확정한다.
- if(btn){
-   const nextOn=!wasOn;
-   btn.classList.toggle('active',nextOn);
-   btn.dataset.repeatState=nextOn?'on':'off';
-   btn.setAttribute('aria-pressed',nextOn?'true':'false');
-   const focus=btn.querySelector('.myInfFocus');
-   if(focus)focus.textContent=nextOn?'반복 중':'집중';
+  // Touch immediately paints expected NEXT state.
+  paintMyClassInfinityButton(btn,!isOn);
+  MY_TITLE_INFINITY_KEY=!isOn?key:'';
 
-   if(nextOn){
-     btn.style.setProperty('background','linear-gradient(135deg,#4f46e5,#7c3aed)','important');
-     btn.style.setProperty('color','#fff','important');
-     btn.style.setProperty('border-color','#6d28d9','important');
-     btn.style.setProperty('box-shadow','0 6px 16px rgba(109,40,217,.32)','important');
-     btn.querySelectorAll('*').forEach(x=>x.style.setProperty('color','#fff','important'));
-     MY_TITLE_INFINITY_KEY=key;
-   }else{
-     btn.style.removeProperty('background');
-     btn.style.removeProperty('color');
-     btn.style.removeProperty('border-color');
-     btn.style.removeProperty('box-shadow');
-     btn.querySelectorAll('*').forEach(x=>x.style.removeProperty('color'));
-     MY_TITLE_INFINITY_KEY='';
-   }
- }
+  if(typeof window.m536ToggleInfinite==='function'){
+    window.m536ToggleInfinite(Number(lesson),tab,Number(index));
+  }
 
- if(typeof window.m536ToggleInfinite==='function'){
-   window.m536ToggleInfinite(Number(lesson),tab,Number(index));
- }
-
- // controller의 최종 상태로 즉시 한 번 더 동기화한다.
- requestAnimationFrame(()=>{
-   try{syncMyClassTitleInfinityButtons()}catch(e){}
-   try{syncMyClassInfinityVisuals()}catch(e){}
- });
+  // Reconcile with controller after current event finishes.
+  setTimeout(()=>{
+    let controllerOn=false;
+    try{
+      controllerOn=(M536.mode==='infinite' && String(M536.infiniteKey||'')===key);
+    }catch(e){}
+    MY_TITLE_INFINITY_KEY=controllerOn?key:'';
+    paintMyClassInfinityButton(btn,controllerOn);
+    try{syncMyClassInfinityVisuals()}catch(e){}
+  },0);
 }
-
 function stopAllMyClassPlayback(clearCurrent=true){
   MY_CLASS_HARD_STOP_EPOCH++;
 
@@ -4787,7 +4784,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
 
 
 
-// ===== V5.3.127 · 자유 음성 녹음 학습 =====
+// ===== V5.3.128 · 자유 음성 녹음 학습 =====
 const VOICE_PRACTICE_RECENT_KEY='mv_voice_practice_recent_v1';
 
 function voicePracticeRecentList(){
@@ -6874,7 +6871,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// ===== V5.3.127 MY 수업 HARD navigation stop =====
+// ===== V5.3.128 MY 수업 HARD navigation stop =====
 function myClassHardNavigationStop(){
   try{stopAllMyClassPlayback(true)}catch(e){}
   // Samsung Internet TTS cancel 안정성을 위해 짧게 한 번 더 취소한다.
@@ -6896,7 +6893,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// V5.3.127: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
+// V5.3.128: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
 function installInfinityVisualObserver(){
   const root=document.getElementById('myClassContent');
   if(!root || root.dataset.infinityVisualObserver==='1')return;
@@ -6910,7 +6907,7 @@ function installInfinityVisualObserver(){
 setTimeout(installInfinityVisualObserver,0);
 
 
-// V5.3.127: 무한 반복 상태 표시 heartbeat.
+// V5.3.128: 무한 반복 상태 표시 heartbeat.
 // 브라우저/DOM 재렌더 방식과 무관하게 반복 중에는 250ms마다 active UI를 복구한다.
 if(!window.__mvInfinityHeartbeat){
   window.__mvInfinityHeartbeat=setInterval(()=>{
@@ -6938,3 +6935,29 @@ if(!window.__mvInfinityHeartbeat){
     }catch(e){}
   },250);
 }
+
+
+// V5.3.128: 모바일 touch/pointer 단계에서 즉시 색을 바꾼다.
+document.addEventListener('pointerdown',(e)=>{
+  const btn=e.target.closest('.myTitleInfinityBtn');
+  if(!btn)return;
+  const key=String(btn.dataset.infKey||'');
+  let currentlyOn=false;
+  try{
+    currentlyOn=(M536.mode==='infinite' && String(M536.infiniteKey||'')===key);
+  }catch(err){}
+  paintMyClassInfinityButton(btn,!currentlyOn);
+},true);
+
+
+function installVisibleBuildBadge(){
+  let badge=document.getElementById('mvBuildBadge');
+  if(!badge){
+    badge=document.createElement('div');
+    badge.id='mvBuildBadge';
+    badge.textContent='v5.3.128';
+    badge.title='현재 실행 중인 MY VOCA 빌드';
+    document.body.appendChild(badge);
+  }
+}
+setTimeout(installVisibleBuildBadge,0);
