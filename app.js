@@ -4616,7 +4616,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
 
 
 
-// ===== V5.3.122 · 자유 음성 녹음 학습 =====
+// ===== V5.3.123 · 자유 음성 녹음 학습 =====
 const VOICE_PRACTICE_RECENT_KEY='mv_voice_practice_recent_v1';
 
 function voicePracticeRecentList(){
@@ -4723,6 +4723,7 @@ function bindVoicePracticePage(){
   renderVoicePracticeRecent();
 }
 function openVoicePracticePage(){
+  try{closeDrawer()}catch(e){}
   try{stopSpeech()}catch(e){}
   try{sentenceRecordingReset()}catch(e){}
   try{sentenceRecordingReleasePreparedMic()}catch(e){}
@@ -4732,6 +4733,7 @@ function openVoicePracticePage(){
   document.getElementById('myClassBottom')?.classList.add('hidden');
   try{hideStandalonePages()}catch(e){}
   document.getElementById('voicePracticePage')?.classList.remove('hidden');
+  document.getElementById('voicePracticePage')?.setAttribute('aria-hidden','false');
   renderVoicePracticeRecorder();
   bindVoicePracticePage();
   window.scrollTo(0,0);
@@ -4743,6 +4745,7 @@ function closeVoicePracticePage(){
   const mount=document.getElementById('voicePracticeRecorderMount');
   if(mount)mount.innerHTML='';
   document.getElementById('voicePracticePage')?.classList.add('hidden');
+  document.getElementById('voicePracticePage')?.setAttribute('aria-hidden','true');
   document.getElementById('homePage')?.classList.remove('hidden');
   window.scrollTo(0,0);
 }
