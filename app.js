@@ -93,6 +93,8 @@ function renderMyClass(){
 }
 
 let MY_TITLE_INFINITY_KEY='';
+let MY_CLASS_HARD_STOP_EPOCH=0;
+
 function myClassInfinityLabel(tab,index){
  if(tab==='corrections')return `CORRECTION ${index+1}`;
  if(tab==='chunks')return `NATIVE CHUNK ${index+1}`;
@@ -114,6 +116,20 @@ function syncMyClassTitleInfinityButtons(){
    b.setAttribute('aria-pressed',on?'true':'false');
    b.innerHTML=`<span class="myInfLabel">${label}</span><span class="myInfSymbol">∞</span><span class="myInfFocus">${on?'반복 중':'집중'}</span>`;
    b.title=on?'무한 반복 해제':`${label} 무한 반복 집중`;
+   // Samsung/Android에서도 상태가 반드시 보이도록 핵심 색상은 inline으로 동기화한다.
+   if(on){
+     b.style.setProperty('background','linear-gradient(135deg,#4f46e5,#7c3aed)','important');
+     b.style.setProperty('color','#fff','important');
+     b.style.setProperty('border-color','#6d28d9','important');
+     b.style.setProperty('box-shadow','0 6px 16px rgba(109,40,217,.30)','important');
+     b.querySelectorAll('.myInfLabel,.myInfSymbol,.myInfFocus').forEach(x=>x.style.setProperty('color','#fff','important'));
+   }else{
+     b.style.removeProperty('background');
+     b.style.removeProperty('color');
+     b.style.removeProperty('border-color');
+     b.style.removeProperty('box-shadow');
+     b.querySelectorAll('.myInfLabel,.myInfSymbol,.myInfFocus').forEach(x=>x.style.removeProperty('color'));
+   }
  });
 }
 function myClassTitleInfinityToggle(btn,lesson,tab,index){
@@ -131,6 +147,8 @@ function myClassTitleInfinityToggle(btn,lesson,tab,index){
 }
 
 function stopAllMyClassPlayback(clearCurrent=true){
+  MY_CLASS_HARD_STOP_EPOCH++;
+
   try{window.stopV534MyClassLoop?.()}catch(e){}
   try{window.stopV535MyClassLoop?.()}catch(e){}
   try{
@@ -212,7 +230,7 @@ function openMyClassLesson(no=1){stopAllMyClassPlayback(true);myClassLessonNo=Ma
 function openMyClassLesson1(){openMyClassLesson(1)}
 function openMyClassLesson2(){openMyClassLesson(2)}
 function openMyClassLesson3(){openMyClassLesson(3)}
-function closeMyClassLesson(){stopAllMyClassPlayback(true);document.getElementById('myClassBottom')?.classList.add('hidden');document.getElementById('myClassPage')?.classList.add('hidden');document.getElementById('homePage')?.classList.remove('hidden');window.scrollTo(0,0);}
+function closeMyClassLesson(){myClassHardNavigationStop?.();document.getElementById('myClassBottom')?.classList.add('hidden');document.getElementById('myClassPage')?.classList.add('hidden');document.getElementById('homePage')?.classList.remove('hidden');window.scrollTo(0,0);}
 setTimeout(()=>{const c=document.getElementById('myClassLesson1Card');if(c){c.onclick=openMyClassLesson1;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson1()}}}const c2=document.getElementById('myClassLesson2Card');if(c2){c2.onclick=openMyClassLesson2;c2.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson2()}}}const c3=document.getElementById('myClassLesson3Card');if(c3){c3.onclick=openMyClassLesson3;c3.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson3()}}}const b=document.getElementById('myClassBack');if(b)b.onclick=closeMyClassLesson;document.querySelectorAll('.myClassTab').forEach(x=>x.onclick=()=>{stopAllMyClassPlayback(true);myClassTab=x.dataset.myclassTab;renderMyClass();myClassSetStatus?.('화면 전환 · 재생 정지',false)});document.getElementById('myClassHomeBtn')?.addEventListener('click',closeMyClassLesson);document.getElementById('myClassPlayPause')?.addEventListener('click',myClassTogglePlay);document.getElementById('myClassCurrentRepeat')?.addEventListener('click',myClassToggleCurrentRepeat);document.getElementById('myClassConfigBtn')?.addEventListener('click',()=>{myClassStop(false);if(typeof openConfiguration==='function')openConfiguration()});},0);
 
 const PACKS={
@@ -4619,7 +4637,7 @@ function showConfigSavedToast(){
   clearTimeout(window.__configSavedToastTimer);
   window.__configSavedToastTimer=setTimeout(()=>{toast.style.opacity='0'},1200);
 }
-function openConfiguration(){if(document.getElementById('myClassPage')&&!document.getElementById('myClassPage').classList.contains('hidden')){try{myClassStop(false)}catch(e){}}else stopSpeech();prepareSeparatedUsagePage();fillConfigurationForm();configReturnState=captureConfigReturnState();$('homePage').classList.add('hidden');$('dayAppPage').classList.add('hidden');$('myClassPage')?.classList.add('hidden');$('myClassBottom')?.classList.add('hidden');hideStandalonePages();$('configPage').classList.remove('hidden');window.scrollTo(0,0)}
+function openConfiguration(){if(document.getElementById('myClassPage')&&!document.getElementById('myClassPage').classList.contains('hidden')){try{myClassHardNavigationStop?.()}catch(e){}}else stopSpeech();prepareSeparatedUsagePage();fillConfigurationForm();configReturnState=captureConfigReturnState();$('homePage').classList.add('hidden');$('dayAppPage').classList.add('hidden');$('myClassPage')?.classList.add('hidden');$('myClassBottom')?.classList.add('hidden');hideStandalonePages();$('configPage').classList.remove('hidden');window.scrollTo(0,0)}
 function closeConfiguration(){stopSpeech();restoreConfigReturnState()}
 function openUsagePage(){stopSpeech();prepareSeparatedUsagePage();refreshUsageRecommendation();$('homePage').classList.add('hidden');$('dayAppPage').classList.add('hidden');hideStandalonePages();$('usagePage').classList.remove('hidden');window.scrollTo(0,0)}
 function closeUsagePage(){stopSpeech();$('usagePage').classList.add('hidden');$('homePage').classList.remove('hidden');window.scrollTo(0,0)}
@@ -4662,7 +4680,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
 
 
 
-// ===== V5.3.124 · 자유 음성 녹음 학습 =====
+// ===== V5.3.125 · 자유 음성 녹음 학습 =====
 const VOICE_PRACTICE_RECENT_KEY='mv_voice_practice_recent_v1';
 
 function voicePracticeRecentList(){
@@ -5820,22 +5838,23 @@ async function m536RunFull(startAt=0){
   M536.playlist=list;M536.cursor=Math.max(0,Math.min(list.length-1,startAt||0));
   M536.mode='full';M536.infiniteKey='';M536.infiniteItem=null;M536.busy=true;
   const token=++M536.token;
+  const hardEpoch=MY_CLASS_HARD_STOP_EPOCH;
   MY_CLASS_PLAY.active=true;MY_CLASS_PLAY.paused=false;
   m536Unlock();
   myClassSyncButtons?.();
   myClassSyncButtons?.();
 
   // 사용자 터치 직후 첫 TTS가 시작되도록 불필요한 선행 await를 두지 않는다.
-  while(token===M536.token && M536.mode==='full'){
+  while(token===M536.token && hardEpoch===MY_CLASS_HARD_STOP_EPOCH && M536.mode==='full'){
     const item=M536.playlist[M536.cursor];
     const el=m536RenderItem(item);
     const cfg=loadAppSettings(), reps=Math.max(1,parseInt(cfg.myClassSentenceRepeat||2,10)), pause=Math.max(0,parseInt(cfg.myClassPause||700,10));
     for(let r=0;r<reps;r++){
-      if(token!==M536.token || M536.mode!=='full')return;
+      if(token!==M536.token || hardEpoch!==MY_CLASS_HARD_STOP_EPOCH || M536.mode!=='full')return;
       MY_CLASS_PLAY.currentText=item.text;MY_CLASS_PLAY.currentEl=el;
       myClassSetStatus?.(`전체 반복 · 수업 ${item.lesson} · ${m536Label(item.tab)} ${item.index+1} · ${item.paragraph?'문단':'문장'} ${r+1}/${reps}`,true);
       await m536Speak(item.text,item.paragraph);
-      if(token!==M536.token || M536.mode!=='full')return;
+      if(token!==M536.token || hardEpoch!==MY_CLASS_HARD_STOP_EPOCH || M536.mode!=='full')return;
       if(pause)await m536Sleep(pause);
     }
     M536.cursor=(M536.cursor+1)%M536.playlist.length;
@@ -5844,16 +5863,17 @@ async function m536RunFull(startAt=0){
 async function m536RunInfinite(item){
   M536.mode='infinite';M536.infiniteItem=item;M536.infiniteKey=m536ItemKey(item);M536.busy=true;
   const token=++M536.token;
+  const hardEpoch=MY_CLASS_HARD_STOP_EPOCH;
   MY_CLASS_PLAY.active=true;MY_CLASS_PLAY.paused=false;
   m536Unlock();
   const el=m536RenderItem(item);
   m536SyncInfinityButtons();
   const pause=Math.max(0,parseInt(loadAppSettings().myClassPause||700,10));
   let n=1;
-  while(token===M536.token && M536.mode==='infinite' && M536.infiniteKey===m536ItemKey(item)){
+  while(token===M536.token && hardEpoch===MY_CLASS_HARD_STOP_EPOCH && M536.mode==='infinite' && M536.infiniteKey===m536ItemKey(item)){
     myClassSetStatus?.(`∞ 무한 반복 · 수업 ${item.lesson} · ${m536Label(item.tab)} ${item.index+1} · ${item.paragraph?'문단 전체':'현재 문장'} · ${n++}회`,true);
     await m536Speak(item.text,item.paragraph);
-    if(token!==M536.token || M536.mode!=='infinite')return;
+    if(token!==M536.token || hardEpoch!==MY_CLASS_HARD_STOP_EPOCH || M536.mode!=='infinite')return;
     if(pause)await m536Sleep(pause);
   }
 }
@@ -5951,9 +5971,13 @@ function m536ToggleInfinite(lesson,tab,index){
   try{window.stopV534MyClassLoop?.()}catch(e){}
   try{window.stopV535MyClassLoop?.()}catch(e){}
 
-  m536RunInfinite(item);
   MY_TITLE_INFINITY_KEY=key;
+  // 비동기 재생을 시작하기 전에 버튼 상태부터 즉시 ON으로 만든다.
+  M536.mode='infinite';
+  M536.infiniteKey=key;
+  M536.infiniteItem=item;
   try{syncMyClassTitleInfinityButtons?.()}catch(e){}
+  m536RunInfinite(item);
 }
 window.m536ToggleInfinite=m536ToggleInfinite;
 window.m536StartFull=m536StartFull;
@@ -6736,4 +6760,26 @@ document.addEventListener('click',(e)=>{
       nav.id==='myClassCurrentRepeat'))return;
 
   try{stopAllMyClassPlayback(true)}catch(err){}
+},true);
+
+
+// ===== V5.3.125 MY 수업 HARD navigation stop =====
+function myClassHardNavigationStop(){
+  try{stopAllMyClassPlayback(true)}catch(e){}
+  // Samsung Internet TTS cancel 안정성을 위해 짧게 한 번 더 취소한다.
+  try{window.speechSynthesis?.cancel()}catch(e){}
+  setTimeout(()=>{try{window.speechSynthesis?.cancel()}catch(e){}},60);
+  setTimeout(()=>{try{window.speechSynthesis?.cancel()}catch(e){}},180);
+}
+window.myClassHardNavigationStop=myClassHardNavigationStop;
+
+document.addEventListener('click',(e)=>{
+  const page=document.getElementById('myClassPage');
+  if(!page || page.classList.contains('hidden'))return;
+
+  const target=e.target.closest(
+    '#myClassHomeBtn,#myClassBack,#myClassConfigBtn,.myClassTab,.drawerItem,'+
+    '#homeBtn,#navHome,#navLearn,#navQuiz,.bottomNav button,[data-drawer-action],[data-page],[data-nav]'
+  );
+  if(target) myClassHardNavigationStop();
 },true);

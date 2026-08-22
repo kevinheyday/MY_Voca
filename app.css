@@ -1600,7 +1600,7 @@ body.practiceReadingMode #morePanel{
   display:block!important;
 }
 
-/* ===== V5.3.124 · 중앙 고정 커서 + 스크롤 파형 ===== */
+/* ===== V5.3.125 · 중앙 고정 커서 + 스크롤 파형 ===== */
 .sentenceRecorderWave{
   height:112px;
   margin-top:8px;
@@ -1620,7 +1620,7 @@ body.practiceReadingMode #morePanel{
 }
 
 
-/* ===== V5.3.124 · 음성 녹음 학습 (공용 Recorder 재사용) ===== */
+/* ===== V5.3.125 · 음성 녹음 학습 (공용 Recorder 재사용) ===== */
 .voicePracticePage{min-height:100vh;background:#f3f4f8;color:#111827;padding:12px 12px 42px}
 .voicePracticeShell{max-width:720px;margin:0 auto}
 .voicePracticeHeader{display:flex;align-items:flex-start;gap:12px;padding:8px 2px 4px}
@@ -1652,7 +1652,7 @@ body.practiceReadingMode #morePanel{
 }
 
 
-/* ===== V5.3.124 · MY 수업 무한 반복 상태 표시 ===== */
+/* ===== V5.3.125 · MY 수업 무한 반복 상태 표시 ===== */
 .myTitleInfinityBtn.active,
 .myTitleInfinityBtn[aria-pressed="true"]{
   background:linear-gradient(135deg,#4f46e5,#7c3aed)!important;
@@ -1676,3 +1676,10 @@ body.practiceReadingMode #morePanel{
   from{transform:scale(1)}
   to{transform:scale(1.08)}
 }
+
+/* V5.3.125: active infinity button hard visual */
+.myTitleInfinityBtn[aria-pressed="true"]{
+ background:linear-gradient(135deg,#4f46e5,#7c3aed)!important;
+ color:#fff!important;border-color:#6d28d9!important;
+}
+.myTitleInfinityBtn[aria-pressed="true"] *{color:#fff!important}
