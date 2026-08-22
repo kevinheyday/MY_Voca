@@ -83,7 +83,18 @@ function myClassToggleCurrentRepeat(){const items=myClassPlaybackItems();if(!ite
 function renderMyClass(){
  const root=document.getElementById('myClassContent');if(!root)return;
  document.querySelectorAll('.myClassTab').forEach(b=>b.classList.toggle('active',b.dataset.myclassTab===myClassTab));
- const infBtn=(tab,i,label)=>`<button class="myTitleInfinityBtn" type="button" data-inf-key="${myClassLessonNo}|${tab}|${i}" aria-label="${label} 무한 반복 집중" aria-pressed="false" title="${label} 무한 반복 집중" onclick="event.stopPropagation();myClassTitleInfinityToggle(this,${myClassLessonNo},'${tab}',${i})"></button>`;
+ const infBtn=(tab,i,label)=>{
+   const key=`${myClassLessonNo}|${tab}|${i}`;
+   let on=false;
+   try{
+     on=(typeof M536!=='undefined' && M536.mode==='infinite' && String(M536.infiniteKey||'')===key) || String(MY_TITLE_INFINITY_KEY||'')===key;
+   }catch(e){
+     on=String(MY_TITLE_INFINITY_KEY||'')===key;
+   }
+   const cls=`myTitleInfinityBtn${on?' active':''}`;
+   const style=on?'background:linear-gradient(135deg,#4f46e5,#7c3aed)!important;color:#fff!important;border-color:#6d28d9!important;box-shadow:0 6px 16px rgba(109,40,217,.32)!important;':'';
+   return `<button class="${cls}" style="${style}" type="button" data-inf-key="${key}" data-repeat-state="${on?'on':'off'}" aria-label="${label} 무한 반복 집중" aria-pressed="${on?'true':'false'}" title="${on?'무한 반복 해제':`${label} 무한 반복 집중`}" onclick="event.stopPropagation();this.classList.add('active');this.dataset.repeatState='on';this.style.setProperty('background','linear-gradient(135deg,#4f46e5,#7c3aed)','important');this.style.setProperty('color','#fff','important');this.style.setProperty('border-color','#6d28d9','important');myClassTitleInfinityToggle(this,${myClassLessonNo},'${tab}',${i})"><span class="myInfLabel" style="${on?'color:#fff!important;':''}">${myClassInfinityLabel(tab,i)}</span><span class="myInfSymbol" style="${on?'color:#fff!important;':''}">∞</span><span class="myInfFocus" style="${on?'color:#fff!important;':''}">${on?'반복 중':'집중'}</span></button>`;
+ };
  if(myClassTab==='corrections')root.innerHTML=`<div class="myClassList">${myClassData().corrections.map((x,i)=>`<div class="myStudyCard" id="myCorrectionCard${i}"><div class="myStudyNum"><span>CORRECTION ${i+1}</span>${infBtn('corrections',i,'현재 문장')}</div><div class="myStudyKo">${myClassEsc(x.ko)}</div><div class="myStudyBad">❌ ${myClassEsc(x.bad)}</div><div class="myStudyEn" id="myen${i}">${myClassEsc(x.en)}</div><div class="myStudyTip">💡 ${myClassEsc(x.tip)}</div><div class="myStudyActions"><button class="myStudyBtn" onclick="document.getElementById('myen${i}').classList.toggle('myHiddenEnglish')">🙈 가리기</button><button class="myStudyBtn primary" onclick="myClassSpeak(${JSON.stringify(x.en)},document.getElementById('myCorrectionCard${i}'))">🔊 듣기</button></div></div>`).join('')}</div>`;
  else if(myClassTab==='chunks')root.innerHTML=`<div class="myClassList">${myClassData().chunks.map((x,i)=>`<div class="myStudyCard" id="myChunkCard${i}"><div class="myStudyNum"><span>NATIVE CHUNK ${i+1}</span>${infBtn('chunks',i,'현재 문장')}</div><div class="myChunkPattern">${myClassEsc(x.pattern)}</div><div class="myStudyKo">${myClassEsc(x.ko)}</div><div class="myChunkExample">${myClassEsc(x.example)}</div>${x.exampleKo?`<div class="myStudyKo">${myClassEsc(x.exampleKo)}</div>`:''}<div class="myStudyActions"><button class="myStudyBtn primary" onclick="myClassSpeak(${JSON.stringify(x.example)},document.getElementById('myChunkCard${i}'))">🔊 예문 듣기</button></div></div>`).join('')}</div>`;
  else if(myClassTab==='speaking')root.innerHTML=myClassData().speaking.map((x,i)=>{const parts=myClassSplitSentences(x.text);return `<div class="mySpeakBlock" id="mySpeakBlock${i}"><div class="myStudyNum"><span>SPEAKING ${i+1}</span>${infBtn('speaking',i,'문단 전체')}</div><h3>${myClassEsc(x.prompt)}</h3>${x.promptKo?`<div class="myStudyKo">${myClassEsc(x.promptKo)}</div>`:''}<div class="mySpeakPrompt">먼저 30~60초 직접 답한 뒤 모범답안을 확인하세요.</div><div class="mySpeakText" id="myspeak${i}">${parts.map((t,j)=>`<span class="mySpeakSentence" id="mySpeakSentence${i}_${j}">${myClassEsc(t)}</span>`).join(' ')}</div>${x.ko?`<div class="myStudyKo" style="margin-top:12px">🇰🇷 ${myClassEsc(x.ko)}</div>`:''}<div class="myStudyActions"><button class="myStudyBtn" onclick="document.getElementById('myspeak${i}').classList.toggle('myHiddenEnglish')">🙈 가리기</button><button class="myStudyBtn primary" onclick='myClassSpeakSequence(${JSON.stringify(parts)},{focusEl:document.getElementById("mySpeakBlock${i}"),statusPrefix:"SPEAKING ${i+1} 전체 듣기"})'>🔊 전체 듣기</button></div></div>`}).join('');
@@ -199,16 +210,46 @@ function syncMyClassTitleInfinityButtons(){
 }
 function myClassTitleInfinityToggle(btn,lesson,tab,index){
  const key=`${lesson}|${tab}|${index}`;
+ const wasOn=(
+   (typeof M536!=='undefined' && M536.mode==='infinite' && String(M536.infiniteKey||'')===key) ||
+   String(MY_TITLE_INFINITY_KEY||'')===key
+ );
+
+ // 사용자 터치 순간 먼저 상태를 시각적으로 확정한다.
+ if(btn){
+   const nextOn=!wasOn;
+   btn.classList.toggle('active',nextOn);
+   btn.dataset.repeatState=nextOn?'on':'off';
+   btn.setAttribute('aria-pressed',nextOn?'true':'false');
+   const focus=btn.querySelector('.myInfFocus');
+   if(focus)focus.textContent=nextOn?'반복 중':'집중';
+
+   if(nextOn){
+     btn.style.setProperty('background','linear-gradient(135deg,#4f46e5,#7c3aed)','important');
+     btn.style.setProperty('color','#fff','important');
+     btn.style.setProperty('border-color','#6d28d9','important');
+     btn.style.setProperty('box-shadow','0 6px 16px rgba(109,40,217,.32)','important');
+     btn.querySelectorAll('*').forEach(x=>x.style.setProperty('color','#fff','important'));
+     MY_TITLE_INFINITY_KEY=key;
+   }else{
+     btn.style.removeProperty('background');
+     btn.style.removeProperty('color');
+     btn.style.removeProperty('border-color');
+     btn.style.removeProperty('box-shadow');
+     btn.querySelectorAll('*').forEach(x=>x.style.removeProperty('color'));
+     MY_TITLE_INFINITY_KEY='';
+   }
+ }
+
  if(typeof window.m536ToggleInfinite==='function'){
    window.m536ToggleInfinite(Number(lesson),tab,Number(index));
  }
- const actuallyOn=(typeof M536!=='undefined'&&M536.mode==='infinite'&&String(M536.infiniteKey||'')===key);
- MY_TITLE_INFINITY_KEY=actuallyOn?key:'';
- if(btn){
-   btn.classList.toggle('active',actuallyOn);
-   btn.setAttribute('aria-pressed',actuallyOn?'true':'false');
- }
- syncMyClassTitleInfinityButtons();
+
+ // controller의 최종 상태로 즉시 한 번 더 동기화한다.
+ requestAnimationFrame(()=>{
+   try{syncMyClassTitleInfinityButtons()}catch(e){}
+   try{syncMyClassInfinityVisuals()}catch(e){}
+ });
 }
 
 function stopAllMyClassPlayback(clearCurrent=true){
@@ -4746,7 +4787,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
 
 
 
-// ===== V5.3.126 · 자유 음성 녹음 학습 =====
+// ===== V5.3.127 · 자유 음성 녹음 학습 =====
 const VOICE_PRACTICE_RECENT_KEY='mv_voice_practice_recent_v1';
 
 function voicePracticeRecentList(){
@@ -6833,7 +6874,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// ===== V5.3.126 MY 수업 HARD navigation stop =====
+// ===== V5.3.127 MY 수업 HARD navigation stop =====
 function myClassHardNavigationStop(){
   try{stopAllMyClassPlayback(true)}catch(e){}
   // Samsung Internet TTS cancel 안정성을 위해 짧게 한 번 더 취소한다.
@@ -6855,7 +6896,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// V5.3.126: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
+// V5.3.127: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
 function installInfinityVisualObserver(){
   const root=document.getElementById('myClassContent');
   if(!root || root.dataset.infinityVisualObserver==='1')return;
@@ -6867,3 +6908,33 @@ function installInfinityVisualObserver(){
   }).observe(root,{childList:true,subtree:true});
 }
 setTimeout(installInfinityVisualObserver,0);
+
+
+// V5.3.127: 무한 반복 상태 표시 heartbeat.
+// 브라우저/DOM 재렌더 방식과 무관하게 반복 중에는 250ms마다 active UI를 복구한다.
+if(!window.__mvInfinityHeartbeat){
+  window.__mvInfinityHeartbeat=setInterval(()=>{
+    const page=document.getElementById('myClassPage');
+    if(!page || page.classList.contains('hidden'))return;
+    try{
+      if(typeof M536!=='undefined' && M536.mode==='infinite'){
+        const key=String(M536.infiniteKey||MY_TITLE_INFINITY_KEY||'');
+        if(key){
+          MY_TITLE_INFINITY_KEY=key;
+          const b=document.querySelector(`.myTitleInfinityBtn[data-inf-key="${CSS.escape(key)}"]`);
+          if(b){
+            b.classList.add('active');
+            b.dataset.repeatState='on';
+            b.setAttribute('aria-pressed','true');
+            b.style.setProperty('background','linear-gradient(135deg,#4f46e5,#7c3aed)','important');
+            b.style.setProperty('color','#fff','important');
+            b.style.setProperty('border-color','#6d28d9','important');
+            b.style.setProperty('box-shadow','0 6px 16px rgba(109,40,217,.32)','important');
+            b.querySelectorAll('*').forEach(x=>x.style.setProperty('color','#fff','important'));
+            const f=b.querySelector('.myInfFocus'); if(f)f.textContent='반복 중';
+          }
+        }
+      }
+    }catch(e){}
+  },250);
+}

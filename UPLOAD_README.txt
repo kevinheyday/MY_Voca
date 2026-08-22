@@ -1,7 +1,6 @@
-MY VOCA V5.3.126
-- 캡처 화면 기준으로 무한 반복 ON 시 두 곳을 동시에 표시:
-  1) CORRECTION/NATIVE CHUNK/SPEAKING의 '∞ 집중' 버튼 → 보라색 + '반복 중'
-  2) 상단 우측 '전체 반복 ∞' chip → 보라색 + '∞ 반복 중'
-- renderMyClass가 DOM을 다시 생성해도 MutationObserver로 ON 색상을 즉시 복원
-- M536 infinite loop 매 회차마다 visual sync 실행
-- 정지하면 두 곳 모두 원래 색으로 자동 복원
+MY VOCA V5.3.127
+- 무한 반복 버튼은 클릭 순간 controller보다 먼저 보라색으로 paint
+- renderMyClass가 버튼을 새로 만들 때도 M536 상태를 읽어 active 상태로 HTML 자체를 생성
+- 반복 중 250ms heartbeat가 active 색상을 강제로 유지
+- active 상태 문구는 '집중' -> '반복 중'
+- 기존 HARD STOP 로직 유지
