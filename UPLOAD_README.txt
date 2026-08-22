@@ -1,9 +1,11 @@
-MY VOCA V5.3.121
-- 다른 브라우저/카카오톡 외부 브라우저에서 이전 버전이 열리는 캐시 문제를 완화했습니다.
-- Service Worker: skipWaiting() + clients.claim() 적용
-- 이전 버전 캐시 자동 삭제
-- index.html/app.js/app.css는 network-first + no-store fetch
-- Service Worker 등록 시 updateViaCache:'none' 사용
-- 새 Service Worker가 설치되면 controllerchange 시 자동 새로고침
-- HTML에 no-cache 메타 태그 추가
-- GitHub Pages에 전체 파일을 덮어쓴 뒤 1회 새로고침 권장
+MY VOCA V5.3.122
+- 3줄 메뉴에 '🎙️ 음성 녹음 학습' 추가
+- 원하는 영어 문장 직접 입력
+- 입력 문장 TTS 정답 듣기
+- 자유 녹음 / 재생 / 다시 녹음
+- 내 녹음 / 정답 듣기 비교
+- '내 녹음 → 정답 → 내 녹음' 연속 비교
+- 최근 연습 문장 5개 저장(문장 텍스트만 localStorage)
+- 녹음 파일은 기기에 저장하지 않고 메모리에서만 사용
+- 핵심: 문장 말하기 3단계와 자유 녹음 학습은 동일한 sentenceRecordingMarkup / sentenceRecordingBind 공용 Recorder를 사용
+- 앞으로 Recorder UI/파형/재생 로직 수정은 공용 코드 한 곳만 수정하면 두 화면에 동시에 반영

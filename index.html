@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.121</title>
+<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.122</title>
 
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1611,7 +1611,7 @@ body.practiceReadingMode #morePanel{
   display:block!important;
 }
 
-/* ===== V5.3.121 · 중앙 고정 커서 + 스크롤 파형 ===== */
+/* ===== V5.3.122 · 중앙 고정 커서 + 스크롤 파형 ===== */
 .sentenceRecorderWave{
   height:112px;
   margin-top:8px;
@@ -1628,6 +1628,38 @@ body.practiceReadingMode #morePanel{
 }
 @media(max-width:480px){
   .sentenceRecorderWave{height:88px}
+}
+
+
+/* ===== V5.3.122 · 음성 녹음 학습 (공용 Recorder 재사용) ===== */
+.voicePracticePage{min-height:100vh;background:#f3f4f8;color:#111827;padding:12px 12px 42px}
+.voicePracticeShell{max-width:720px;margin:0 auto}
+.voicePracticeHeader{display:flex;align-items:flex-start;gap:12px;padding:8px 2px 4px}
+.voicePracticeBackBtn{width:42px;height:42px;border:1px solid #d0d5dd;background:#fff;border-radius:13px;font-size:23px;font-weight:900;flex:0 0 42px}
+.voicePracticeHeader h1{font-size:23px;margin:1px 0 2px;font-weight:950}
+.voicePracticeHeader p{font-size:12px;line-height:1.45;color:#667085;margin:0}
+.voicePracticePromptCard,.voicePracticeRecorderSection{background:#fff;border:1px solid #e5e7eb;border-radius:20px;padding:15px;margin-top:10px;box-shadow:0 7px 24px rgba(15,23,42,.05)}
+.voicePracticeLabel{font-size:13px;font-weight:950;color:#344054;margin-bottom:7px}
+.voicePracticeInput{display:block;width:100%;box-sizing:border-box;resize:vertical;min-height:82px;border:1px solid #d0d5dd;border-radius:14px;padding:12px 13px;font:inherit;font-size:16px;line-height:1.45;color:#111827;background:#fff;outline:none}
+.voicePracticeInput:focus{border-color:#8b7cf6;box-shadow:0 0 0 3px rgba(109,93,252,.10)}
+.voicePracticePromptActions{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:9px}
+.voicePracticeReferenceBtn,.voicePracticeClearBtn,.voicePracticeSequenceBtn{border:0;border-radius:13px;min-height:45px;font-weight:900;font-size:14px;cursor:pointer}
+.voicePracticeReferenceBtn{background:#ede9fe;color:#4338ca}
+.voicePracticeClearBtn{background:#f2f4f7;color:#475467;padding:0 15px}
+.voicePracticeRecentTitle{margin-top:13px;font-size:11px;font-weight:900;color:#98a2b3}
+.voicePracticeRecent{display:flex;gap:6px;overflow-x:auto;padding:7px 1px 2px;scrollbar-width:none}
+.voicePracticeRecent::-webkit-scrollbar{display:none}
+.voicePracticeRecentChip{flex:0 0 auto;max-width:270px;border:1px solid #e4e7ec;border-radius:999px;background:#fff;padding:7px 10px;color:#475467;font-size:11px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.voicePracticeRecentEmpty{font-size:11px;color:#98a2b3;padding:4px 0}
+.voicePracticeRecorderSection .sentenceRecorderUnified{margin-top:0}
+.voicePracticeSequenceBtn{width:100%;margin-top:10px;background:#5b4ff4;color:#fff}
+.voicePracticeSequenceBtn:disabled{opacity:.55}
+.voicePracticePrivacy{margin-top:9px;padding:9px 10px;background:#f8fafc;border-radius:11px;color:#667085;font-size:10.5px;line-height:1.45;text-align:center}
+@media(max-width:480px){
+  .voicePracticePage{padding:8px 8px 28px}
+  .voicePracticeHeader h1{font-size:20px}
+  .voicePracticePromptCard,.voicePracticeRecorderSection{padding:12px;border-radius:17px}
+  .voicePracticeInput{font-size:15px;min-height:76px}
 }
 
 </style>
@@ -1663,6 +1695,7 @@ body.practiceReadingMode #morePanel{
     <button class="drawerItem" data-drawer-action="favorite"><span class="drawerIcon">⭐</span><span class="drawerItemText">모르는 단어<small>모르는 단어만 학습</small></span></button>
     <button class="drawerItem" data-drawer-action="wrong"><span class="drawerIcon">❌</span><span class="drawerItemText">틀린 단어<small>퀴즈 오답 단어만 학습</small></span></button>
     <button class="drawerItem" data-drawer-action="wrongFav"><span class="drawerIcon">🎯</span><span class="drawerItemText">틀린 단어 + 모르는 단어<small>두 목록을 합쳐 집중 학습</small></span></button>
+    <button class="drawerItem" data-drawer-action="voicePractice"><span class="drawerIcon">🎙️</span><span class="drawerItemText">음성 녹음 학습<small>자유 문장 녹음 · 정답 음성 · 비교 듣기</small></span></button>
     <button class="drawerItem" data-drawer-action="practiceSpeaking"><span class="drawerIcon">🗣️</span><span class="drawerItemText">실전 문장 연습<small>현재 DAY의 실전 리딩 문장 말하기</small></span></button>
     <button class="drawerItem" data-drawer-action="compare"><span class="drawerIcon">🔎</span><span class="drawerItemText">단어 비교<small>비슷한 단어와 뜻·예문 비교</small></span></button>
     <div class="drawerDivider"></div>
@@ -1673,7 +1706,7 @@ body.practiceReadingMode #morePanel{
     <button class="drawerItem" data-drawer-action="config"><span class="drawerIcon">⚙️</span><span class="drawerItemText">Config<small>음성·반복·퀴즈 설정</small></span></button>
     <button class="drawerItem" data-drawer-action="usage"><span class="drawerIcon">📘</span><span class="drawerItemText">사용 방법<small>MY VOCA 학습 방법과 기능 안내</small></span></button>
     <button class="drawerItem" data-drawer-action="whatsnew"><span class="drawerIcon">🆕</span><span class="drawerItemText">업데이트 내역<small>이번 버전 변경 사항</small></span></button>
-    <button class="drawerItem" data-drawer-action="info"><span class="drawerIcon">ℹ️</span><span class="drawerItemText">앱 정보<small>MY VOCA v5.3.121</small></span></button>
+    <button class="drawerItem" data-drawer-action="info"><span class="drawerIcon">ℹ️</span><span class="drawerItemText">앱 정보<small>MY VOCA v5.3.122</small></span></button>
   </nav>
 </aside>
 
@@ -1683,7 +1716,7 @@ body.practiceReadingMode #morePanel{
       <div>
         <div class="homeEyebrow" id="homeCourseEyebrow">MY VOCA UNIFIED COURSE · 69 DAYS</div>
         <h1 id="homeCourseTitle">MY VOCA</h1>
-        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.121</div>
+        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.122</div>
       </div>
       <div class="homeDayBadge"><b id="homeRegisteredDays">30</b><span>등록 Day</span></div>
     </section>
@@ -1923,6 +1956,36 @@ Config의 <b>Day Loop 문장당 반복 횟수</b>에서 1회 / 2회 / 3회 / 5�
     </section>
     <section class="compareSection"><div class="compareSectionTitle">등록된 유의어</div><div class="compareSectionSub">마스터 데이터에 등록된 유의어와 각 단어 자체의 뜻입니다.</div><div id="compareSynonymList" class="compareGrid"></div></section>
     <section class="compareSection"><div class="compareSectionTitle">뜻이 비슷한 학습 단어</div><div class="compareSectionSub">한글 뜻의 핵심 의미가 겹치는 앱 내 단어를 찾아 보여줍니다.</div><div id="compareSimilarList" class="compareGrid"></div><div class="compareNote">비슷한 뜻이라고 항상 같은 상황에 바꿔 쓸 수 있는 것은 아닙니다. 각 단어의 예문과 고유 뜻을 함께 비교하세요.</div></section>
+  </div>
+</div>
+
+
+<div id="voicePracticePage" class="voicePracticePage hidden">
+  <div class="voicePracticeShell">
+    <header class="voicePracticeHeader">
+      <button id="voicePracticeBackBtn" class="voicePracticeBackBtn" type="button" aria-label="뒤로">←</button>
+      <div>
+        <h1>🎙️ 음성 녹음 학습</h1>
+        <p>원하는 영어 문장을 자유롭게 녹음하고 정답 음성과 비교해 보세요.</p>
+      </div>
+    </header>
+
+    <section class="voicePracticePromptCard">
+      <div class="voicePracticeLabel">연습할 문장</div>
+      <textarea id="voicePracticeInput" class="voicePracticeInput" rows="3" placeholder="예: What I'm trying to say is that we need more time."></textarea>
+      <div class="voicePracticePromptActions">
+        <button id="voicePracticeReferenceBtn" class="voicePracticeReferenceBtn" type="button">🔊 정답 듣기</button>
+        <button id="voicePracticeClearBtn" class="voicePracticeClearBtn" type="button">초기화</button>
+      </div>
+      <div class="voicePracticeRecentTitle">최근 연습 문장</div>
+      <div id="voicePracticeRecent" class="voicePracticeRecent"></div>
+    </section>
+
+    <section class="voicePracticeRecorderSection">
+      <div id="voicePracticeRecorderMount"></div>
+      <button id="voicePracticeCompareSequence" class="voicePracticeSequenceBtn" type="button">🔁 내 녹음 → 정답 → 내 녹음</button>
+      <div class="voicePracticePrivacy">녹음은 휴대폰에 파일로 저장하지 않고 현재 브라우저 메모리에서만 재생됩니다.</div>
+    </section>
   </div>
 </div>
 
@@ -2252,7 +2315,7 @@ Config의 <b>Day Loop 문장당 반복 횟수</b>에서 1회 / 2회 / 3회 / 5�
 
 <script>
 (() => {
-  const APP_VERSION = '5.3.121';
+  const APP_VERSION = '5.3.122';
 
   // Remove stale query-less SW registrations and force a fresh SW check.
   if ('serviceWorker' in navigator) {

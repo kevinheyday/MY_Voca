@@ -3125,8 +3125,49 @@ function sentenceRecordingReset(){
   sentenceRecordingChunks=[];
   sentenceRecordingQuestion=null;
   sentenceRecordingDuration=0;
+  sentenceRecordingWaveHistory=[];
+  sentenceRecordingStopPlaybackAnimation();
   if(sentenceRecordingUrl){URL.revokeObjectURL(sentenceRecordingUrl);sentenceRecordingUrl='';}
 }
+
+const voicePracticeContext={__freeVoicePractice:true};
+
+function voiceRecorderIsFreeContext(q){
+  return !!(q&&q.__freeVoicePractice);
+}
+
+function voiceRecorderCurrentPracticeText(){
+  return String(document.getElementById('voicePracticeInput')?.value||'').trim();
+}
+
+async function voiceRecorderSpeakReference(q){
+  if(!voiceRecorderIsFreeContext(q)){
+    return speakSentenceOnce(q);
+  }
+  const text=voiceRecorderCurrentPracticeText();
+  if(!text){
+    sentenceRecordingToast('먼저 연습할 영어 문장을 입력해 주세요.');
+    return;
+  }
+  try{
+    stopSpeech();
+    if('speechSynthesis' in window)window.speechSynthesis.cancel();
+    await speakOne(text,getSpeechRate(),'en-US');
+  }catch(e){
+    sentenceRecordingToast('정답 음성을 재생할 수 없습니다.');
+  }
+}
+
+function voiceRecorderRenderContext(q){
+  if(voiceRecorderIsFreeContext(q)){
+    renderVoicePracticeRecorder();
+    return;
+  }
+  if(quizMode==='sentence'&&quizCurrent===q&&sentenceRecallStage===3){
+    renderSentenceStage(q,3,sentenceRecallVisible);
+  }
+}
+
 function sentenceRecordingToast(msg){
   let el=document.getElementById('sentenceRecordingToast');
   if(!el){el=document.createElement('div');el.id='sentenceRecordingToast';el.className='sentenceRecordingToast';document.body.appendChild(el);}
@@ -3265,16 +3306,14 @@ async function sentenceRecordingStart(q){
       sentenceRecordingStopTracks();
       sentenceRecordingRecorder=null;
 
-      if(quizMode==='sentence'&&quizCurrent===q&&sentenceRecallStage===3){
-        renderSentenceStage(q,3,sentenceRecallVisible);
-      }
+      voiceRecorderRenderContext(q);
     };
 
     // timeslice를 작게 해서 시작 반응을 빠르게.
     rec.start(80);
 
-    // recorder가 실제 recording 상태에 들어간 직후 UI 갱신
-    renderSentenceStage(q,3,sentenceRecallVisible);
+    // recorder가 실제 recording 상태에 들어간 직후 공용 UI 갱신
+    voiceRecorderRenderContext(q);
 
     // 파형 즉시 시작
     sentenceRecordingStartWave(stream);
@@ -3330,8 +3369,8 @@ function sentenceCompareEnsure(q){
   };
 
   const answer=$('sentenceCompareAnswer');
-  if(answer)answer.onclick=()=>speakSentenceOnce(q).then(()=>{
-    if(quizMode==='sentence'&&quizCurrent===q&&sentenceRecallStage===3)sentenceIncrementCount(q);
+  if(answer)answer.onclick=()=>voiceRecorderSpeakReference(q).then(()=>{
+    if(!voiceRecorderIsFreeContext(q)&&quizMode==='sentence'&&quizCurrent===q&&sentenceRecallStage===3)sentenceIncrementCount(q);
   });
 }
 
@@ -3363,7 +3402,7 @@ function sentenceRecordingBind(q){
   if(rerecord){
     rerecord.onclick=()=>{
       sentenceRecordingReset();
-      renderSentenceStage(q,3,sentenceRecallVisible);
+      voiceRecorderRenderContext(q);
       setTimeout(()=>sentenceRecordingStart(q),40);
     };
   }
@@ -3458,8 +3497,8 @@ function sentenceRecordingBind(q){
 
   const compareAnswer=$('sentenceCompareAnswer');
   if(compareAnswer){
-    compareAnswer.onclick=()=>speakSentenceOnce(q).then(()=>{
-      if(quizMode==='sentence'&&quizCurrent===q&&sentenceRecallStage===3)sentenceIncrementCount(q);
+    compareAnswer.onclick=()=>voiceRecorderSpeakReference(q).then(()=>{
+      if(!voiceRecorderIsFreeContext(q)&&quizMode==='sentence'&&quizCurrent===q&&sentenceRecallStage===3)sentenceIncrementCount(q);
     });
   }
 }
@@ -4502,7 +4541,7 @@ function prepareSeparatedUsagePage(){
   [...shell.querySelectorAll('details.usageDetail')].forEach(el=>usageContent.appendChild(el));
   usageContent.dataset.ready='1';
 }
-function hideStandalonePages(){['configPage','usagePage','comparePage'].forEach(id=>{const el=$(id);if(el)el.classList.add('hidden')})}
+function hideStandalonePages(){['configPage','usagePage','comparePage','voicePracticePage'].forEach(id=>{const el=$(id);if(el)el.classList.add('hidden')})}
 let configReturnState={page:'home',scrollY:0};
 function captureConfigReturnState(){
   const home=$('homePage'),day=$('dayAppPage'),myclass=$('myClassPage');
@@ -4576,6 +4615,141 @@ async function speakCurrentQuizPrompt(){
 $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
 
 
+
+// ===== V5.3.122 · 자유 음성 녹음 학습 =====
+const VOICE_PRACTICE_RECENT_KEY='mv_voice_practice_recent_v1';
+
+function voicePracticeRecentList(){
+  try{
+    const arr=JSON.parse(localStorage.getItem(VOICE_PRACTICE_RECENT_KEY)||'[]');
+    return Array.isArray(arr)?arr.slice(0,5):[];
+  }catch(e){return []}
+}
+function voicePracticeSaveRecent(text){
+  text=String(text||'').trim();
+  if(!text)return;
+  const next=[text,...voicePracticeRecentList().filter(x=>x!==text)].slice(0,5);
+  localStorage.setItem(VOICE_PRACTICE_RECENT_KEY,JSON.stringify(next));
+  renderVoicePracticeRecent();
+}
+function renderVoicePracticeRecent(){
+  const box=document.getElementById('voicePracticeRecent');
+  if(!box)return;
+  const list=voicePracticeRecentList();
+  box.innerHTML=list.length
+    ? list.map((t,i)=>`<button type="button" class="voicePracticeRecentChip" data-voice-recent="${i}">${recallEscape(t)}</button>`).join('')
+    : '<span class="voicePracticeRecentEmpty">최근 연습 문장이 없습니다.</span>';
+  box.querySelectorAll('[data-voice-recent]').forEach(btn=>{
+    btn.onclick=()=>{
+      const text=voicePracticeRecentList()[Number(btn.dataset.voiceRecent||0)]||'';
+      const input=document.getElementById('voicePracticeInput');
+      if(input){input.value=text;input.focus()}
+    };
+  });
+}
+function renderVoicePracticeRecorder(){
+  const mount=document.getElementById('voicePracticeRecorderMount');
+  if(!mount)return;
+  mount.innerHTML=sentenceRecordingMarkup();
+  sentenceRecordingBind(voicePracticeContext);
+}
+function voicePracticeWaitForAudioEnd(audio){
+  return new Promise(resolve=>{
+    if(!audio){resolve();return}
+    const done=()=>{audio.removeEventListener('ended',done);audio.removeEventListener('error',done);resolve()};
+    audio.addEventListener('ended',done,{once:true});
+    audio.addEventListener('error',done,{once:true});
+  });
+}
+async function voicePracticePlayMine(){
+  const audio=document.getElementById('sentenceMyAudio');
+  if(!audio||!sentenceRecordingUrl){
+    sentenceRecordingToast('먼저 음성을 녹음해 주세요.');
+    return;
+  }
+  try{
+    audio.currentTime=0;
+    await audio.play();
+    await voicePracticeWaitForAudioEnd(audio);
+  }catch(e){}
+}
+async function voicePracticeCompareSequence(){
+  if(!sentenceRecordingUrl){
+    sentenceRecordingToast('먼저 음성을 녹음해 주세요.');
+    return;
+  }
+  const text=voiceRecorderCurrentPracticeText();
+  if(!text){
+    sentenceRecordingToast('먼저 연습할 영어 문장을 입력해 주세요.');
+    return;
+  }
+  const btn=document.getElementById('voicePracticeCompareSequence');
+  if(btn){btn.disabled=true;btn.textContent='비교 재생 중…'}
+  try{
+    voicePracticeSaveRecent(text);
+    await voicePracticePlayMine();
+    await new Promise(r=>setTimeout(r,250));
+    await voiceRecorderSpeakReference(voicePracticeContext);
+    await new Promise(r=>setTimeout(r,250));
+    await voicePracticePlayMine();
+  }finally{
+    if(btn){btn.disabled=false;btn.textContent='🔁 내 녹음 → 정답 → 내 녹음'}
+  }
+}
+function bindVoicePracticePage(){
+  const input=document.getElementById('voicePracticeInput');
+  const listen=document.getElementById('voicePracticeReferenceBtn');
+  const clear=document.getElementById('voicePracticeClearBtn');
+  const compare=document.getElementById('voicePracticeCompareSequence');
+  const back=document.getElementById('voicePracticeBackBtn');
+
+  if(input && !input.dataset.bound){
+    input.dataset.bound='1';
+    input.addEventListener('change',()=>voicePracticeSaveRecent(input.value));
+  }
+  if(listen)listen.onclick=async()=>{
+    const text=voiceRecorderCurrentPracticeText();
+    if(text)voicePracticeSaveRecent(text);
+    await voiceRecorderSpeakReference(voicePracticeContext);
+  };
+  if(clear)clear.onclick=()=>{
+    if(input)input.value='';
+    sentenceRecordingReset();
+    renderVoicePracticeRecorder();
+    input?.focus();
+  };
+  if(compare)compare.onclick=voicePracticeCompareSequence;
+  if(back)back.onclick=closeVoicePracticePage;
+  renderVoicePracticeRecent();
+}
+function openVoicePracticePage(){
+  try{stopSpeech()}catch(e){}
+  try{sentenceRecordingReset()}catch(e){}
+  try{sentenceRecordingReleasePreparedMic()}catch(e){}
+  document.getElementById('homePage')?.classList.add('hidden');
+  document.getElementById('dayAppPage')?.classList.add('hidden');
+  document.getElementById('myClassPage')?.classList.add('hidden');
+  document.getElementById('myClassBottom')?.classList.add('hidden');
+  try{hideStandalonePages()}catch(e){}
+  document.getElementById('voicePracticePage')?.classList.remove('hidden');
+  renderVoicePracticeRecorder();
+  bindVoicePracticePage();
+  window.scrollTo(0,0);
+}
+function closeVoicePracticePage(){
+  try{stopSpeech()}catch(e){}
+  try{sentenceRecordingReset()}catch(e){}
+  try{sentenceRecordingReleasePreparedMic()}catch(e){}
+  const mount=document.getElementById('voicePracticeRecorderMount');
+  if(mount)mount.innerHTML='';
+  document.getElementById('voicePracticePage')?.classList.add('hidden');
+  document.getElementById('homePage')?.classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+window.openVoicePracticePage=openVoicePracticePage;
+window.closeVoicePracticePage=closeVoicePracticePage;
+
+
 // MY VOCA v4.0 Drawer Menu
 (function initDrawerMenu(){
   const menuBtn=document.getElementById('drawerMenuButton');
@@ -4630,7 +4804,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
   }
   window.syncDrawerMenuVisibility=syncDrawerMenuVisibility;
   const pageVisibilityObserver=new MutationObserver(syncDrawerMenuVisibility);
-  ['homePage','dayAppPage','learn','quiz','configPage','comparePage'].forEach(id=>{const el=document.getElementById(id);if(el)pageVisibilityObserver.observe(el,{attributes:true,attributeFilter:['class']})});
+  ['homePage','dayAppPage','learn','quiz','configPage','comparePage','voicePracticePage'].forEach(id=>{const el=document.getElementById(id);if(el)pageVisibilityObserver.observe(el,{attributes:true,attributeFilter:['class']})});
   syncDrawerMenuVisibility();
   menuBtn.addEventListener('click',()=>document.body.classList.contains('drawer-open')?closeDrawer():openDrawer());
   backdrop.addEventListener('click',()=>closeDrawer());if(closeBtn)closeBtn.addEventListener('click',()=>closeDrawer());
@@ -4688,6 +4862,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
     if(action==='favorite'){setHomeOrder('favorite');return}
     if(action==='wrong'){setHomeOrder('quizWeak');return}
     if(action==='wrongFav'){setHomeOrder('wrongFav');return}
+    if(action==='voicePractice'){openVoicePracticePage();return}
     if(action==='practiceSpeaking'){
       openDay(currentDay||1,'quiz');
       setQuizMode('sentence');

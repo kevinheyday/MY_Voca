@@ -1600,7 +1600,7 @@ body.practiceReadingMode #morePanel{
   display:block!important;
 }
 
-/* ===== V5.3.121 · 중앙 고정 커서 + 스크롤 파형 ===== */
+/* ===== V5.3.122 · 중앙 고정 커서 + 스크롤 파형 ===== */
 .sentenceRecorderWave{
   height:112px;
   margin-top:8px;
@@ -1617,4 +1617,36 @@ body.practiceReadingMode #morePanel{
 }
 @media(max-width:480px){
   .sentenceRecorderWave{height:88px}
+}
+
+
+/* ===== V5.3.122 · 음성 녹음 학습 (공용 Recorder 재사용) ===== */
+.voicePracticePage{min-height:100vh;background:#f3f4f8;color:#111827;padding:12px 12px 42px}
+.voicePracticeShell{max-width:720px;margin:0 auto}
+.voicePracticeHeader{display:flex;align-items:flex-start;gap:12px;padding:8px 2px 4px}
+.voicePracticeBackBtn{width:42px;height:42px;border:1px solid #d0d5dd;background:#fff;border-radius:13px;font-size:23px;font-weight:900;flex:0 0 42px}
+.voicePracticeHeader h1{font-size:23px;margin:1px 0 2px;font-weight:950}
+.voicePracticeHeader p{font-size:12px;line-height:1.45;color:#667085;margin:0}
+.voicePracticePromptCard,.voicePracticeRecorderSection{background:#fff;border:1px solid #e5e7eb;border-radius:20px;padding:15px;margin-top:10px;box-shadow:0 7px 24px rgba(15,23,42,.05)}
+.voicePracticeLabel{font-size:13px;font-weight:950;color:#344054;margin-bottom:7px}
+.voicePracticeInput{display:block;width:100%;box-sizing:border-box;resize:vertical;min-height:82px;border:1px solid #d0d5dd;border-radius:14px;padding:12px 13px;font:inherit;font-size:16px;line-height:1.45;color:#111827;background:#fff;outline:none}
+.voicePracticeInput:focus{border-color:#8b7cf6;box-shadow:0 0 0 3px rgba(109,93,252,.10)}
+.voicePracticePromptActions{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:9px}
+.voicePracticeReferenceBtn,.voicePracticeClearBtn,.voicePracticeSequenceBtn{border:0;border-radius:13px;min-height:45px;font-weight:900;font-size:14px;cursor:pointer}
+.voicePracticeReferenceBtn{background:#ede9fe;color:#4338ca}
+.voicePracticeClearBtn{background:#f2f4f7;color:#475467;padding:0 15px}
+.voicePracticeRecentTitle{margin-top:13px;font-size:11px;font-weight:900;color:#98a2b3}
+.voicePracticeRecent{display:flex;gap:6px;overflow-x:auto;padding:7px 1px 2px;scrollbar-width:none}
+.voicePracticeRecent::-webkit-scrollbar{display:none}
+.voicePracticeRecentChip{flex:0 0 auto;max-width:270px;border:1px solid #e4e7ec;border-radius:999px;background:#fff;padding:7px 10px;color:#475467;font-size:11px;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.voicePracticeRecentEmpty{font-size:11px;color:#98a2b3;padding:4px 0}
+.voicePracticeRecorderSection .sentenceRecorderUnified{margin-top:0}
+.voicePracticeSequenceBtn{width:100%;margin-top:10px;background:#5b4ff4;color:#fff}
+.voicePracticeSequenceBtn:disabled{opacity:.55}
+.voicePracticePrivacy{margin-top:9px;padding:9px 10px;background:#f8fafc;border-radius:11px;color:#667085;font-size:10.5px;line-height:1.45;text-align:center}
+@media(max-width:480px){
+  .voicePracticePage{padding:8px 8px 28px}
+  .voicePracticeHeader h1{font-size:20px}
+  .voicePracticePromptCard,.voicePracticeRecorderSection{padding:12px;border-radius:17px}
+  .voicePracticeInput{font-size:15px;min-height:76px}
 }
