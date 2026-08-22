@@ -3078,10 +3078,15 @@ async function sentenceRecordingStart(q){
     rec.onstop=()=>{
       sentenceRecordingDuration=(Date.now()-sentenceRecordingStartedAt)/1000;
       if(sentenceRecordingUrl)URL.revokeObjectURL(sentenceRecordingUrl);
-      sentenceRecordingUrl=URL.createObjectURL(new Blob(sentenceRecordingChunks,{type:rec.mimeType||mime||'audio/webm'}));
+      const sentenceRecordingBlob=new Blob(sentenceRecordingChunks,{type:rec.mimeType||mime||'audio/webm'});
+      // 임시 메모리 재생 전용: 파일 저장/다운로드를 만들지 않는다.
+      sentenceRecordingUrl=URL.createObjectURL(sentenceRecordingBlob);
       sentenceRecordingStopTracks();
       sentenceRecordingRecorder=null;
-      if(quizMode==='sentence'&&quizCurrent===q&&sentenceRecallStage===3)renderSentenceStage(q,3,sentenceRecallVisible);
+      if(quizMode==='sentence'&&quizCurrent===q&&sentenceRecallStage===3){
+        renderSentenceStage(q,3,sentenceRecallVisible);
+        setTimeout(()=>sentenceCompareEnsure(q),0);
+      }
     };
     rec.start(150);
     renderSentenceStage(q,3,sentenceRecallVisible);
@@ -3109,6 +3114,32 @@ function sentenceRecordingStop(){
     try{sentenceRecordingRecorder.stop()}catch(e){}
   }
 }
+
+function sentenceCompareEnsure(q){
+  if(!sentenceRecordingUrl)return;
+  const box=document.querySelector('.sentenceRecallBox');
+  if(!box)return;
+  if(document.getElementById('sentenceCompareMine'))return;
+
+  const actions=box.querySelector('.sentenceStageActions');
+  if(actions){
+    actions.insertAdjacentHTML('beforebegin',sentenceCompareMarkup());
+  }else{
+    box.insertAdjacentHTML('beforeend',sentenceCompareMarkup());
+  }
+
+  const mine=$('sentenceCompareMine');
+  if(mine)mine.onclick=()=>{
+    const a=$('sentenceMyAudio');
+    if(a){a.currentTime=0;a.play().catch(()=>{});}
+  };
+
+  const answer=$('sentenceCompareAnswer');
+  if(answer)answer.onclick=()=>speakSentenceOnce(q).then(()=>{
+    if(quizMode==='sentence'&&quizCurrent===q&&sentenceRecallStage===3)sentenceIncrementCount(q);
+  });
+}
+
 function sentenceRecordingBind(q){
   if(sentenceRecordingRecorder&&sentenceRecordingRecorder.state==='recording'&&sentenceRecordingStream){
     sentenceRecordingStopWave();
@@ -3168,7 +3199,7 @@ function renderSentenceStage(q,stage,visible=false){
     content=`<div id="sentencePracticeText" class="sentenceEnglish">${visible?full:sentenceMaskedHtml(q)}</div>${patternInfo}`;
     actions=`<div class="sentenceStage2Actions"><button id="sentenceStage2Repeat" class="sentenceStageBtn sentenceRepeatBtn ${sentenceStage2Repeat?'active':''}" type="button">🔁 반복 듣기 ${sentenceStage2Repeat?'ON':'OFF'}</button><button id="sentenceToStage3" class="sentenceStageBtn sentencePrimary" type="button">③ 전체 문장 말하기</button></div><div class="sentenceStage2Aux"><button id="sentenceToggle" class="sentenceStageBtn sentenceSecondary" type="button">${visible?'문장 숨기기':'👁 문장 보기'}</button></div>`;
   }else{
-    content=(visible?`<div id="sentencePracticeText" class="sentenceEnglish">${full}</div>`:`<div id="sentencePracticeText" class="sentenceHiddenBox">영어 문장을 보지 않고 전체 문장을 말해 보세요.</div>`)+sentenceRecordingMarkup()+(visible?sentenceCompareMarkup():'');
+    content=(visible?`<div id="sentencePracticeText" class="sentenceEnglish">${full}</div>`:`<div id="sentencePracticeText" class="sentenceHiddenBox">영어 문장을 보지 않고 전체 문장을 말해 보세요.</div>`)+sentenceRecordingMarkup()+(sentenceRecordingUrl?sentenceCompareMarkup():'');
     if(!isPara && hasParaphraseSentence(q)){
       actions=`<div class="sentenceStageActions"><button id="sentenceToggle" class="sentenceStageBtn sentenceSecondary" type="button">${visible?'문장 숨기기':'문장 보기 · 듣기'}</button><button id="sentenceListen" class="sentenceStageBtn sentenceSecondary" type="button">🔊 문장 다시 듣기</button><button id="sentenceToParaphrase" class="sentenceStageBtn sentencePrimary" type="button">다음 · 패러프레이징 연습</button></div>`;
     }else{
@@ -3224,6 +3255,7 @@ function renderSentenceStage(q,stage,visible=false){
     };
   }else{
     sentenceRecordingBind(q);
+    sentenceCompareEnsure(q);
     $('sentenceToggle').onclick=()=>{
       const next=!sentenceRecallVisible;
       renderSentenceStage(q,3,next);
@@ -6143,3 +6175,7 @@ renderMyClass=function(){const r=prev.apply(this,arguments);if(myClassTab==='spe
 document.addEventListener('click',e=>{if(e.target?.closest?.('.myClassTab'))setTimeout(decorate,20)},true);
 setTimeout(decorate,100);
 })();
+
+window.addEventListener('pagehide',()=>{
+  try{sentenceRecordingReset();}catch(e){}
+});
