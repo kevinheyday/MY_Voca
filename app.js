@@ -2821,6 +2821,8 @@ let sentenceRecordingQuestion=null;
 let sentenceRecordingPreparedStream=null;
 let sentenceRecordingPreparePromise=null;
 let sentenceRecordingPreparedAt=0;
+let sentenceRecordingWaveHistory=[];
+let sentenceRecordingPlaybackRAF=null;
 let sentenceRecordingAudioCtx=null;
 let sentenceRecordingAnalyser=null;
 let sentenceRecordingSourceNode=null;
@@ -2911,32 +2913,12 @@ function sentenceRecordingStartWave(stream){
     sentenceRecordingSourceNode.connect(sentenceRecordingAnalyser);
 
     const data=new Uint8Array(sentenceRecordingAnalyser.fftSize);
-
-    // raw waveform 대신 "말소리 크기(envelope)"를 누적해서 보여준다.
-    // 작은 배경 소음은 noise gate로 제거하고, 말할 때만 부드럽게 봉우리가 생긴다.
-    const history=[];
-    const HISTORY_SIZE=54;
+    const HISTORY_LIMIT=130;
     let displayedLevel=0;
     let lastSampleAt=0;
 
-    const roundedRect=(ctx,x,y,w,h,r)=>{
-      const rr=Math.min(r,w/2,h/2);
-      ctx.beginPath();
-      ctx.moveTo(x+rr,y);
-      ctx.arcTo(x+w,y,x+w,y+h,rr);
-      ctx.arcTo(x+w,y+h,x,y+h,rr);
-      ctx.arcTo(x,y+h,x,y,rr);
-      ctx.arcTo(x,y,x+w,y,rr);
-      ctx.closePath();
-    };
-
     const draw=now=>{
-      const canvas=document.getElementById('sentenceWaveCanvas');
-      const meter=document.getElementById('sentenceVolumeMeter');
-      const segments=document.querySelectorAll('.sentenceVolumeSegment');
-
       if(!sentenceRecordingAnalyser)return;
-
       sentenceRecordingAnalyser.getByteTimeDomainData(data);
 
       let sum=0;
@@ -2944,96 +2926,31 @@ function sentenceRecordingStartWave(stream){
         const v=(data[i]-128)/128;
         sum+=v*v;
       }
-
       const rms=Math.sqrt(sum/data.length);
 
-      // 약한 상시 노이즈 제거: 일반적인 모바일 마이크의 바닥 노이즈는 거의 0으로 보이게 한다.
-      const noiseFloor=.018;
+      const noiseFloor=.017;
       let voice=Math.max(0,rms-noiseFloor);
+      voice=Math.min(1,voice*9.5);
 
-      // 말소리 크기를 보기 좋은 범위로 확장하되 과도한 움직임은 제한.
-      voice=Math.min(1,voice*9.2);
-
-      // 빠르게 올라가고 천천히 내려오는 미터 동작.
-      const attack=.32;
-      const release=.10;
+      const attack=.34, release=.10;
       displayedLevel += (voice-displayedLevel) * (voice>displayedLevel?attack:release);
 
-      // 70ms마다 한 점만 저장해 화면이 떨리지 않도록 한다.
-      if(!lastSampleAt || now-lastSampleAt>=70){
+      if(!lastSampleAt || now-lastSampleAt>=65){
         let sample=displayedLevel;
-
-        // 아주 작은 값은 아예 평평하게 처리.
-        if(sample<.055)sample=0;
-
-        history.push(sample);
-        if(history.length>HISTORY_SIZE)history.shift();
+        if(sample<.05)sample=0;
+        sentenceRecordingWaveHistory.push(sample);
+        if(sentenceRecordingWaveHistory.length>HISTORY_LIMIT){
+          sentenceRecordingWaveHistory.shift();
+        }
         lastSampleAt=now;
       }
 
-      const pct=Math.round(displayedLevel*100);
-      if(meter)meter.setAttribute('aria-valuenow',String(pct));
-
-      // 볼륨은 길게 이어진 bar 대신 28개의 pill segment로 표시.
-      const activeCount=Math.round(displayedLevel*28);
-      segments.forEach((seg,i)=>{
-        seg.classList.toggle('active',i<activeCount);
-        seg.classList.toggle('hot',i>=21&&i<activeCount);
+      sentenceRecordingDrawWaveform({
+        canvasId:'sentenceWaveCanvas',
+        history:sentenceRecordingWaveHistory,
+        progress:1,
+        recording:true
       });
-
-      if(canvas){
-        const rect=canvas.getBoundingClientRect();
-        const dpr=Math.min(2,window.devicePixelRatio||1);
-        const w=Math.max(1,Math.floor(rect.width*dpr));
-        const h=Math.max(1,Math.floor(rect.height*dpr));
-        if(canvas.width!==w||canvas.height!==h){
-          canvas.width=w;
-          canvas.height=h;
-        }
-
-        const ctx=canvas.getContext('2d');
-        ctx.clearRect(0,0,w,h);
-
-        const mid=h/2;
-
-        // 아주 은은한 중앙선
-        ctx.strokeStyle='rgba(244,114,182,.17)';
-        ctx.lineWidth=1*dpr;
-        ctx.setLineDash([2*dpr,4*dpr]);
-        ctx.beginPath();
-        ctx.moveTo(8*dpr,mid);
-        ctx.lineTo(w-8*dpr,mid);
-        ctx.stroke();
-        ctx.setLineDash([]);
-
-        // 중앙 정렬된 매끄러운 음성 봉우리.
-        // 삼성 녹음기처럼 "말한 덩어리"만 보이고 잔노이즈는 거의 드러나지 않는다.
-        const count=HISTORY_SIZE;
-        const gap=2.7*dpr;
-        const barW=Math.max(1.5*dpr,(w-28*dpr-gap*(count-1))/count);
-        const maxAmp=h*.41;
-        const minAmp=1.2*dpr;
-        const startX=(w-(barW*count+gap*(count-1)))/2;
-
-        for(let i=0;i<count;i++){
-          const value=history[Math.max(0,history.length-count+i)]||0;
-
-          // 이웃값과 살짝 섞어 spike를 둥글게.
-          const prev=history[Math.max(0,history.length-count+i-1)]||0;
-          const next=history[Math.max(0,history.length-count+i+1)]||0;
-          const smooth=value*.58+prev*.21+next*.21;
-
-          const amp=smooth<=0 ? minAmp : Math.max(minAmp, Math.pow(smooth,.72)*maxAmp);
-          const x=startX+i*(barW+gap);
-          const y=mid-amp;
-
-          const alpha=smooth<=0 ? .22 : Math.min(.96,.45+smooth*.55);
-          ctx.fillStyle=`rgba(244,63,94,${alpha})`;
-
-          roundedRect(ctx,x,y,barW,amp*2,barW/2);
-          ctx.fill();
-        }
-      }
 
       sentenceRecordingWaveRAF=requestAnimationFrame(draw);
     };
@@ -3041,6 +2958,114 @@ function sentenceRecordingStartWave(stream){
     sentenceRecordingWaveRAF=requestAnimationFrame(draw);
   }catch(e){}
 }
+
+function sentenceRecordingDrawWaveform({canvasId,history,progress=0,recording=false}){
+  const canvas=document.getElementById(canvasId);
+  if(!canvas)return;
+
+  const rect=canvas.getBoundingClientRect();
+  const dpr=Math.min(2,window.devicePixelRatio||1);
+  const w=Math.max(1,Math.floor(rect.width*dpr));
+  const h=Math.max(1,Math.floor(rect.height*dpr));
+  if(canvas.width!==w||canvas.height!==h){
+    canvas.width=w;
+    canvas.height=h;
+  }
+
+  const ctx=canvas.getContext('2d');
+  ctx.clearRect(0,0,w,h);
+
+  const mid=h/2;
+  const pad=10*dpr;
+  const count=Math.max(72,history.length||72);
+  const usable=w-pad*2;
+  const gap=1.9*dpr;
+  const barW=Math.max(1.2*dpr,(usable-gap*(count-1))/count);
+  const maxAmp=h*.37;
+  const minAmp=1.1*dpr;
+  const startX=pad;
+
+  // subtle baseline
+  ctx.strokeStyle='rgba(148,163,184,.22)';
+  ctx.lineWidth=1*dpr;
+  ctx.setLineDash([2*dpr,4*dpr]);
+  ctx.beginPath();
+  ctx.moveTo(pad,mid);
+  ctx.lineTo(w-pad,mid);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  // center cursor while recording; playback cursor based on progress
+  const cursorX = recording ? w/2 : pad + Math.max(0,Math.min(1,progress))*usable;
+
+  for(let i=0;i<count;i++){
+    const idx=Math.max(0,history.length-count+i);
+    const v=history[idx]||0;
+    const prev=history[Math.max(0,idx-1)]||0;
+    const next=history[Math.min(history.length-1,idx+1)]||0;
+    const smooth=v*.58+prev*.21+next*.21;
+
+    const amp=smooth<=0?minAmp:Math.max(minAmp,Math.pow(smooth,.72)*maxAmp);
+    const x=startX+i*(barW+gap);
+    const y=mid-amp;
+    const played = !recording && x <= cursorX;
+
+    ctx.fillStyle = recording
+      ? (x <= cursorX ? 'rgba(239,68,68,.92)' : 'rgba(203,213,225,.72)')
+      : (played ? 'rgba(79,70,229,.95)' : 'rgba(203,213,225,.86)');
+
+    ctx.beginPath();
+    const r=Math.min(barW/2,2*dpr);
+    ctx.roundRect(x,y,barW,amp*2,r);
+    ctx.fill();
+  }
+
+  ctx.strokeStyle = recording ? '#ef4444' : '#ef4444';
+  ctx.lineWidth=1.5*dpr;
+  ctx.beginPath();
+  ctx.moveTo(cursorX,8*dpr);
+  ctx.lineTo(cursorX,h-8*dpr);
+  ctx.stroke();
+}
+
+function sentenceRecordingStopPlaybackAnimation(){
+  if(sentenceRecordingPlaybackRAF){
+    cancelAnimationFrame(sentenceRecordingPlaybackRAF);
+    sentenceRecordingPlaybackRAF=null;
+  }
+}
+
+function sentenceRecordingAnimatePlayback(){
+  sentenceRecordingStopPlaybackAnimation();
+  const audio=document.getElementById('sentenceMyAudio');
+  if(!audio)return;
+
+  const tick=()=>{
+    const progress=(audio.duration&&isFinite(audio.duration)&&audio.duration>0)
+      ? audio.currentTime/audio.duration
+      : 0;
+
+    sentenceRecordingDrawWaveform({
+      canvasId:'sentenceWaveCanvas',
+      history:sentenceRecordingWaveHistory,
+      progress,
+      recording:false
+    });
+
+    const big=document.getElementById('sentenceRecordingBigTime');
+    if(big){
+      const cur=sentenceRecordingTime(audio.currentTime||0);
+      const total=sentenceRecordingTime(audio.duration||sentenceRecordingDuration||0);
+      big.textContent=`${cur} / ${total}`;
+    }
+
+    if(!audio.paused && !audio.ended){
+      sentenceRecordingPlaybackRAF=requestAnimationFrame(tick);
+    }
+  };
+  tick();
+}
+
 function sentenceRecordingStopTracks(){
   sentenceRecordingStopWave();
   if(sentenceRecordingTimer){clearInterval(sentenceRecordingTimer);sentenceRecordingTimer=null;}
@@ -3070,43 +3095,75 @@ function sentenceRecordingToast(msg){
 function sentenceRecordingMarkup(){
   const recording=!!(sentenceRecordingRecorder&&sentenceRecordingRecorder.state==='recording');
   const has=!!sentenceRecordingUrl;
-  return `<div class="sentenceRecordingCard">
-    <div class="sentenceRecordingMain">
-      <button id="sentenceRecordBtn" class="sentenceRecordBtn ${recording?'recording':''}" type="button" aria-label="${recording?'녹음 종료':'녹음 시작'}">${recording?'■':'🎙'}</button>
-      <div class="sentenceRecordingCopy">
-        <b>${recording?'말하기 완료':'눌러서 말하기'}</b>
-        <span>${recording?'영어 문장을 끝까지 말한 뒤 버튼을 다시 누르세요.':'한글 뜻만 보고 영어 문장을 말해 보세요.'}</span>
-        ${recording?'<em id="sentenceRecordingClock">● 녹음 중</em>':''}
+
+  const stateLabel = recording ? '녹음 중' : (has ? '녹음 완료' : '녹음 전');
+  const stateClass = recording ? 'recording' : (has ? 'complete' : 'ready');
+
+  const total = sentenceRecordingTime(sentenceRecordingDuration||0);
+
+  return `<div class="sentenceRecorderUnified ${stateClass}">
+    <div class="sentenceRecorderStateRow">
+      <div class="sentenceRecorderState">
+        <span class="sentenceRecorderDot"></span>
+        <b>${stateLabel}</b>
       </div>
     </div>
-    ${recording?`<div class="sentenceLivePanel">
-      <div id="sentenceRecordingBigTime" class="sentenceRecordingBigTime">0:00.0</div>
-      <canvas id="sentenceWaveCanvas" class="sentenceWaveCanvas" aria-label="실시간 음성 파형"></canvas>
-      <div class="sentenceVolumeRow">
-        <span>볼륨</span>
-        <div id="sentenceVolumeMeter" class="sentenceVolumeMeter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-          <i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i><i class="sentenceVolumeSegment"></i>
-        </div>
-      </div>
-    </div>`:''}
-    ${has?`<div class="sentenceMyVoice">
-      <div class="sentenceMyVoiceTitle">내가 말한 문장</div>
-      <div class="sentenceMyVoiceRow">
-        <button id="sentenceMyPlay" class="sentenceRoundPlay" type="button">▶</button>
-        <div class="sentenceAudioTrack"><div id="sentenceAudioProgress" class="sentenceAudioProgress"></div></div>
-        <span id="sentenceAudioDuration">${sentenceRecordingTime(sentenceRecordingDuration)}</span>
-        <button id="sentenceRecordDelete" class="sentenceRecordDelete" type="button" aria-label="녹음 삭제">🗑</button>
-      </div>
+
+    <div id="sentenceRecordingBigTime" class="sentenceRecorderTime">
+      ${recording ? '0:00.0' : (has ? total : '0:00.0')}
+    </div>
+    <div class="sentenceRecorderMode">기본 모드</div>
+
+    <canvas id="sentenceWaveCanvas" class="sentenceRecorderWave" aria-label="음성 파형"></canvas>
+
+    <div class="sentenceRecorderControls">
+      <button type="button" class="sentenceRecorderSideBtn" id="sentenceBookmarkBtn" aria-label="북마크">
+        <span class="sentenceRecorderIcon">🔖</span>
+        <small>북마크</small>
+      </button>
+
+      ${
+        recording
+          ? `<button id="sentenceRecordBtn" class="sentenceRecorderMainBtn stop" type="button" aria-label="녹음 종료">■</button>`
+          : has
+            ? `<button id="sentenceMyPlay" class="sentenceRecorderMainBtn play" type="button" aria-label="내 녹음 재생">▶</button>`
+            : `<button id="sentenceRecordBtn" class="sentenceRecorderMainBtn record" type="button" aria-label="녹음 시작">🎙</button>`
+      }
+
+      ${
+        has
+          ? `<button id="sentenceRerecordBtn" class="sentenceRecorderSideBtn" type="button" aria-label="다시 녹음">
+               <span class="sentenceRecorderIcon">↻</span>
+               <small>다시 녹음</small>
+             </button>`
+          : `<button id="sentenceRecordDoneBtn" class="sentenceRecorderSideBtn" type="button" aria-label="완료">
+               <span class="sentenceRecorderIcon">■</span>
+               <small>완료</small>
+             </button>`
+      }
+    </div>
+
+    <div class="sentenceRecorderHint">
+      ${
+        recording
+          ? '말을 하고 가운데 버튼을 누르면 녹음이 완료됩니다.'
+          : has
+            ? '재생 버튼을 눌러 내 목소리를 들어보세요.'
+            : '빨간색 버튼을 누르면 바로 녹음이 시작됩니다.'
+      }
+    </div>
+
+    ${
+      has ? `
       <audio id="sentenceMyAudio" preload="metadata" src="${sentenceRecordingUrl}"></audio>
-    </div>
-    <div class="sentenceCompareBox sentenceCompareEmbedded">
-      <div class="sentenceCompareTitle">💡 들어보고 비교해 보세요</div>
-      <div class="sentenceCompareButtons">
-        <button id="sentenceCompareMine" type="button">▶ 내 녹음</button>
-        <button id="sentenceCompareAnswer" type="button">🔊 정답 듣기</button>
-      </div>
-      <div class="sentenceCompareTip">내 녹음 → 정답 → 내 녹음 순서로 들어보세요.</div>
-    </div>`:''}
+      <div class="sentenceCompareBox sentenceCompareEmbedded">
+        <div class="sentenceCompareTitle">💡 들어보고 비교해 보세요</div>
+        <div class="sentenceCompareButtons">
+          <button id="sentenceCompareMine" type="button">▶ 내 녹음</button>
+          <button id="sentenceCompareAnswer" type="button">🔊 정답 듣기</button>
+        </div>
+      </div>` : ''
+    }
   </div>`;
 }
 function sentenceCompareMarkup(){
@@ -3139,6 +3196,7 @@ async function sentenceRecordingStart(q){
     const rec=mime?new MediaRecorder(stream,{mimeType:mime}):new MediaRecorder(stream);
 
     sentenceRecordingChunks=[];
+    sentenceRecordingWaveHistory=[];
     sentenceRecordingRecorder=rec;
 
     rec.ondataavailable=e=>{
@@ -3238,41 +3296,115 @@ function sentenceCompareEnsure(q){
 
 function sentenceRecordingBind(q){
   sentenceRecordingWarmMic();
-  if(sentenceRecordingRecorder&&sentenceRecordingRecorder.state==='recording'&&sentenceRecordingStream){
-    sentenceRecordingStopWave();
-    sentenceRecordingStartWave(sentenceRecordingStream);
-  }
+
   const recordBtn=$('sentenceRecordBtn');
-  if(recordBtn)recordBtn.onclick=()=>{
-    if(sentenceRecordingRecorder&&sentenceRecordingRecorder.state==='recording')sentenceRecordingStop();
-    else sentenceRecordingStart(q);
-  };
-  const audio=$('sentenceMyAudio'),play=$('sentenceMyPlay'),bar=$('sentenceAudioProgress');
-  if(audio&&play){
-    play.onclick=()=>audio.paused?audio.play().catch(()=>{}):audio.pause();
-    audio.onplay=()=>play.textContent='❚❚';
-    audio.onpause=()=>play.textContent='▶';
-    audio.onended=()=>{play.textContent='▶';if(bar)bar.style.width='0%';};
-    audio.ontimeupdate=()=>{if(bar&&isFinite(audio.duration)&&audio.duration>0)bar.style.width=`${Math.min(100,audio.currentTime/audio.duration*100)}%`;};
-    audio.onloadedmetadata=()=>{const d=$('sentenceAudioDuration');if(d&&isFinite(audio.duration)){sentenceRecordingDuration=audio.duration;d.textContent=sentenceRecordingTime(audio.duration);}};
+  if(recordBtn){
+    recordBtn.onclick=()=>{
+      if(sentenceRecordingRecorder&&sentenceRecordingRecorder.state==='recording'){
+        sentenceRecordingStop();
+      }else{
+        sentenceRecordingStart(q);
+      }
+    };
   }
-  const del=$('sentenceRecordDelete');
-  if(del)del.onclick=()=>{sentenceRecordingReset();renderSentenceStage(q,3,sentenceRecallVisible);};
+
+  const rerecord=$('sentenceRerecordBtn');
+  if(rerecord){
+    rerecord.onclick=()=>{
+      sentenceRecordingReset();
+      renderSentenceStage(q,3,sentenceRecallVisible);
+      setTimeout(()=>sentenceRecordingStart(q),40);
+    };
+  }
+
+  const done=$('sentenceRecordDoneBtn');
+  if(done){
+    done.onclick=()=>{
+      if(sentenceRecordingRecorder&&sentenceRecordingRecorder.state==='recording'){
+        sentenceRecordingStop();
+      }
+    };
+  }
+
+  const audio=$('sentenceMyAudio');
+  const play=$('sentenceMyPlay');
+
+  if(audio&&play){
+    // show the saved waveform immediately
+    sentenceRecordingDrawWaveform({
+      canvasId:'sentenceWaveCanvas',
+      history:sentenceRecordingWaveHistory,
+      progress:0,
+      recording:false
+    });
+
+    play.onclick=()=>{
+      if(audio.paused){
+        audio.play().catch(()=>{});
+      }else{
+        audio.pause();
+      }
+    };
+
+    audio.onplay=()=>{
+      play.textContent='Ⅱ';
+      play.classList.add('playing');
+      sentenceRecordingAnimatePlayback();
+    };
+
+    audio.onpause=()=>{
+      play.textContent='▶';
+      play.classList.remove('playing');
+      sentenceRecordingStopPlaybackAnimation();
+      sentenceRecordingAnimatePlayback();
+    };
+
+    audio.onended=()=>{
+      play.textContent='▶';
+      play.classList.remove('playing');
+      sentenceRecordingStopPlaybackAnimation();
+      sentenceRecordingDrawWaveform({
+        canvasId:'sentenceWaveCanvas',
+        history:sentenceRecordingWaveHistory,
+        progress:1,
+        recording:false
+      });
+      const big=$('sentenceRecordingBigTime');
+      if(big)big.textContent=`${sentenceRecordingTime(sentenceRecordingDuration)} / ${sentenceRecordingTime(sentenceRecordingDuration)}`;
+    };
+
+    audio.onloadedmetadata=()=>{
+      if(isFinite(audio.duration)&&audio.duration>0){
+        sentenceRecordingDuration=audio.duration;
+      }
+      const big=$('sentenceRecordingBigTime');
+      if(big)big.textContent=sentenceRecordingTime(sentenceRecordingDuration);
+      sentenceRecordingDrawWaveform({
+        canvasId:'sentenceWaveCanvas',
+        history:sentenceRecordingWaveHistory,
+        progress:0,
+        recording:false
+      });
+    };
+  }
 
   const compareMine=$('sentenceCompareMine');
-  if(compareMine)compareMine.onclick=()=>{
-    const a=$('sentenceMyAudio');
-    if(a){a.currentTime=0;a.play().catch(()=>{});}
-  };
+  if(compareMine){
+    compareMine.onclick=()=>{
+      const a=$('sentenceMyAudio');
+      if(a){
+        a.currentTime=0;
+        a.play().catch(()=>{});
+      }
+    };
+  }
 
   const compareAnswer=$('sentenceCompareAnswer');
-  if(compareAnswer)compareAnswer.onclick=()=>speakSentenceOnce(q).then(()=>{
-    if(quizMode==='sentence'&&quizCurrent===q&&sentenceRecallStage===3)sentenceIncrementCount(q);
-  });
-  const mine=$('sentenceCompareMine');
-  if(mine)mine.onclick=()=>{const a=$('sentenceMyAudio');if(a){a.currentTime=0;a.play().catch(()=>{});}};
-  const answer=$('sentenceCompareAnswer');
-  if(answer)answer.onclick=()=>speakSentenceOnce(q).then(()=>{if(quizMode==='sentence'&&quizCurrent===q&&sentenceRecallStage===3)sentenceIncrementCount(q)});
+  if(compareAnswer){
+    compareAnswer.onclick=()=>speakSentenceOnce(q).then(()=>{
+      if(quizMode==='sentence'&&quizCurrent===q&&sentenceRecallStage===3)sentenceIncrementCount(q);
+    });
+  }
 }
 
 function renderSentenceStage(q,stage,visible=false){

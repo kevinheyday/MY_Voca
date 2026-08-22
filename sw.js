@@ -1,12 +1,12 @@
-const CACHE_VERSION = 'my-voca-v5.3.117';
+const CACHE_VERSION = 'my-voca-v5.3.118';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 const DATA_CACHE = CACHE_VERSION + '-data';
 
 const STATIC_ASSETS = [
   './',
   './index.html',
-  './app.css?v=5.3.117',
-  './app.js?v=5.3.117'
+  './app.css?v=5.3.118',
+  './app.js?v=5.3.118'
 ];
 
 self.addEventListener('install', event => {
