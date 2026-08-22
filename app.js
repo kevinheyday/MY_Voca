@@ -114,11 +114,11 @@ function syncMyClassTitleInfinityButtons(){
 }
 function myClassTitleInfinityToggle(btn,lesson,tab,index){
  const key=`${lesson}|${tab}|${index}`;
- const turningOff=MY_TITLE_INFINITY_KEY===key;
  if(typeof window.m536ToggleInfinite==='function'){
    window.m536ToggleInfinite(Number(lesson),tab,Number(index));
  }
- MY_TITLE_INFINITY_KEY=turningOff?'':key;
+ const actuallyOn=(typeof M536!=='undefined'&&M536.mode==='infinite'&&M536.infiniteKey===key);
+ MY_TITLE_INFINITY_KEY=actuallyOn?key:'';
  syncMyClassTitleInfinityButtons();
 }
 
@@ -132,6 +132,7 @@ function stopAllMyClassPlayback(clearCurrent=true){
       M536.infiniteKey='';
       M536.infiniteItem=null;
       M536.resumeWasFull=false;
+      M536.returnToFull=false;
       M536.resumeCursor=0;
       M536.busy=false;
     }
@@ -2807,6 +2808,253 @@ async function speakSentenceTwice(q){
   if(quizMode==='sentence'&&quizCurrent===q)await speakSentenceOnce(q);
 }
 
+
+// ===== V5.3.110 · 문장 말하기 3단계 녹음/비교 =====
+let sentenceRecordingRecorder=null;
+let sentenceRecordingStream=null;
+let sentenceRecordingChunks=[];
+let sentenceRecordingUrl='';
+let sentenceRecordingStartedAt=0;
+let sentenceRecordingDuration=0;
+let sentenceRecordingTimer=null;
+let sentenceRecordingQuestion=null;
+let sentenceRecordingAudioCtx=null;
+let sentenceRecordingAnalyser=null;
+let sentenceRecordingSourceNode=null;
+let sentenceRecordingWaveRAF=null;
+
+function sentenceRecordingTime(sec){
+  sec=Math.max(0,Math.round(Number(sec)||0));
+  return `${Math.floor(sec/60)}:${String(sec%60).padStart(2,'0')}`;
+}
+function sentenceRecordingAvailable(){
+  return !!(window.MediaRecorder&&navigator.mediaDevices&&navigator.mediaDevices.getUserMedia);
+}
+function sentenceRecordingMime(){
+  if(!window.MediaRecorder)return '';
+  const types=['audio/webm;codecs=opus','audio/webm','audio/mp4','audio/ogg;codecs=opus'];
+  return types.find(t=>{try{return MediaRecorder.isTypeSupported(t)}catch(e){return false}})||'';
+}
+
+function sentenceRecordingStopWave(){
+  if(sentenceRecordingWaveRAF){cancelAnimationFrame(sentenceRecordingWaveRAF);sentenceRecordingWaveRAF=null;}
+  try{if(sentenceRecordingSourceNode)sentenceRecordingSourceNode.disconnect();}catch(e){}
+  sentenceRecordingSourceNode=null;
+  sentenceRecordingAnalyser=null;
+  if(sentenceRecordingAudioCtx){
+    try{sentenceRecordingAudioCtx.close();}catch(e){}
+    sentenceRecordingAudioCtx=null;
+  }
+}
+function sentenceRecordingStartWave(stream){
+  try{
+    const AC=window.AudioContext||window.webkitAudioContext;
+    if(!AC)return;
+    sentenceRecordingAudioCtx=new AC();
+    sentenceRecordingAnalyser=sentenceRecordingAudioCtx.createAnalyser();
+    sentenceRecordingAnalyser.fftSize=512;
+    sentenceRecordingAnalyser.smoothingTimeConstant=.82;
+    sentenceRecordingSourceNode=sentenceRecordingAudioCtx.createMediaStreamSource(stream);
+    sentenceRecordingSourceNode.connect(sentenceRecordingAnalyser);
+
+    const data=new Uint8Array(sentenceRecordingAnalyser.fftSize);
+    const draw=()=>{
+      const canvas=document.getElementById('sentenceWaveCanvas');
+      const meter=document.getElementById('sentenceVolumeMeter');
+      const meterFill=document.getElementById('sentenceVolumeFill');
+      if(!sentenceRecordingAnalyser){return;}
+      sentenceRecordingAnalyser.getByteTimeDomainData(data);
+
+      let sum=0;
+      for(let i=0;i<data.length;i++){
+        const v=(data[i]-128)/128;
+        sum+=v*v;
+      }
+      const rms=Math.sqrt(sum/data.length);
+      const level=Math.min(1,Math.max(0,rms*4.5));
+      if(meterFill)meterFill.style.width=`${Math.max(2,level*100)}%`;
+      if(meter)meter.setAttribute('aria-valuenow',String(Math.round(level*100)));
+
+      if(canvas){
+        const rect=canvas.getBoundingClientRect();
+        const dpr=Math.min(2,window.devicePixelRatio||1);
+        const w=Math.max(1,Math.floor(rect.width*dpr));
+        const h=Math.max(1,Math.floor(rect.height*dpr));
+        if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
+        const ctx=canvas.getContext('2d');
+        ctx.clearRect(0,0,w,h);
+
+        // center baseline
+        ctx.strokeStyle='rgba(239,68,68,.22)';
+        ctx.lineWidth=1*dpr;
+        ctx.beginPath();ctx.moveTo(0,h/2);ctx.lineTo(w,h/2);ctx.stroke();
+
+        // live waveform
+        ctx.strokeStyle='#ef4444';
+        ctx.lineWidth=1.6*dpr;
+        ctx.beginPath();
+        const slice=w/(data.length-1);
+        for(let i=0;i<data.length;i++){
+          const x=i*slice;
+          const normalized=(data[i]-128)/128;
+          const y=h/2 + normalized*(h*.42);
+          if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+        }
+        ctx.stroke();
+      }
+      sentenceRecordingWaveRAF=requestAnimationFrame(draw);
+    };
+    draw();
+  }catch(e){}
+}
+
+function sentenceRecordingStopTracks(){
+  sentenceRecordingStopWave();
+  if(sentenceRecordingTimer){clearInterval(sentenceRecordingTimer);sentenceRecordingTimer=null;}
+  if(sentenceRecordingStream){
+    sentenceRecordingStream.getTracks().forEach(t=>{try{t.stop()}catch(e){}});
+    sentenceRecordingStream=null;
+  }
+}
+function sentenceRecordingReset(){
+  if(sentenceRecordingRecorder&&sentenceRecordingRecorder.state==='recording'){
+    try{sentenceRecordingRecorder.stop()}catch(e){}
+  }
+  sentenceRecordingStopTracks();
+  sentenceRecordingRecorder=null;
+  sentenceRecordingChunks=[];
+  sentenceRecordingQuestion=null;
+  sentenceRecordingDuration=0;
+  if(sentenceRecordingUrl){URL.revokeObjectURL(sentenceRecordingUrl);sentenceRecordingUrl='';}
+}
+function sentenceRecordingToast(msg){
+  let el=document.getElementById('sentenceRecordingToast');
+  if(!el){el=document.createElement('div');el.id='sentenceRecordingToast';el.className='sentenceRecordingToast';document.body.appendChild(el);}
+  el.textContent=msg;el.classList.add('show');
+  clearTimeout(el._timer);el._timer=setTimeout(()=>el.classList.remove('show'),2200);
+}
+function sentenceRecordingMarkup(){
+  const recording=!!(sentenceRecordingRecorder&&sentenceRecordingRecorder.state==='recording');
+  const has=!!sentenceRecordingUrl;
+  return `<div class="sentenceRecordingCard">
+    <div class="sentenceRecordingMain">
+      <button id="sentenceRecordBtn" class="sentenceRecordBtn ${recording?'recording':''}" type="button" aria-label="${recording?'녹음 종료':'녹음 시작'}">${recording?'■':'🎙'}</button>
+      <div class="sentenceRecordingCopy">
+        <b>${recording?'말하기 완료':'눌러서 말하기'}</b>
+        <span>${recording?'영어 문장을 끝까지 말한 뒤 버튼을 다시 누르세요.':'한글 뜻만 보고 영어 문장을 말해 보세요.'}</span>
+        ${recording?'<em id="sentenceRecordingClock">● 녹음 중</em>':''}
+      </div>
+    </div>
+    ${recording?`<div class="sentenceLivePanel">
+      <div id="sentenceRecordingBigTime" class="sentenceRecordingBigTime">0:00.0</div>
+      <canvas id="sentenceWaveCanvas" class="sentenceWaveCanvas" aria-label="실시간 음성 파형"></canvas>
+      <div class="sentenceVolumeRow">
+        <span>볼륨</span>
+        <div id="sentenceVolumeMeter" class="sentenceVolumeMeter" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div id="sentenceVolumeFill" class="sentenceVolumeFill"></div>
+        </div>
+      </div>
+    </div>`:''}
+    ${has?`<div class="sentenceMyVoice">
+      <div class="sentenceMyVoiceTitle">내가 말한 문장</div>
+      <div class="sentenceMyVoiceRow">
+        <button id="sentenceMyPlay" class="sentenceRoundPlay" type="button">▶</button>
+        <div class="sentenceAudioTrack"><div id="sentenceAudioProgress" class="sentenceAudioProgress"></div></div>
+        <span id="sentenceAudioDuration">${sentenceRecordingTime(sentenceRecordingDuration)}</span>
+        <button id="sentenceRecordDelete" class="sentenceRecordDelete" type="button" aria-label="녹음 삭제">🗑</button>
+      </div>
+      <audio id="sentenceMyAudio" preload="metadata" src="${sentenceRecordingUrl}"></audio>
+    </div>`:''}
+  </div>`;
+}
+function sentenceCompareMarkup(){
+  return `<div class="sentenceCompareBox">
+    <div class="sentenceCompareTitle">💡 들어보고 비교해 보세요</div>
+    <div class="sentenceCompareButtons">
+      <button id="sentenceCompareMine" type="button" ${sentenceRecordingUrl?'':'disabled'}>▶ 내 녹음</button>
+      <button id="sentenceCompareAnswer" type="button">🔊 정답 듣기</button>
+    </div>
+    <div class="sentenceCompareTip">내 녹음 → 정답 → 내 녹음 순서로 들어보세요.</div>
+  </div>`;
+}
+async function sentenceRecordingStart(q){
+  if(!sentenceRecordingAvailable()){
+    sentenceRecordingToast('이 브라우저에서는 음성 녹음을 지원하지 않습니다.');
+    return;
+  }
+  try{
+    if(sentenceRecordingQuestion&&sentenceRecordingQuestion!==q)sentenceRecordingReset();
+    const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    sentenceRecordingStream=stream;
+    sentenceRecordingChunks=[];
+    sentenceRecordingQuestion=q;
+    const mime=sentenceRecordingMime();
+    const rec=mime?new MediaRecorder(stream,{mimeType:mime}):new MediaRecorder(stream);
+    sentenceRecordingRecorder=rec;
+    sentenceRecordingStartedAt=Date.now();
+    rec.ondataavailable=e=>{if(e.data&&e.data.size)sentenceRecordingChunks.push(e.data);};
+    rec.onerror=()=>{sentenceRecordingStopTracks();sentenceRecordingToast('녹음 중 오류가 발생했습니다.');};
+    rec.onstop=()=>{
+      sentenceRecordingDuration=(Date.now()-sentenceRecordingStartedAt)/1000;
+      if(sentenceRecordingUrl)URL.revokeObjectURL(sentenceRecordingUrl);
+      sentenceRecordingUrl=URL.createObjectURL(new Blob(sentenceRecordingChunks,{type:rec.mimeType||mime||'audio/webm'}));
+      sentenceRecordingStopTracks();
+      sentenceRecordingRecorder=null;
+      if(quizMode==='sentence'&&quizCurrent===q&&sentenceRecallStage===3)renderSentenceStage(q,3,sentenceRecallVisible);
+    };
+    rec.start(150);
+    renderSentenceStage(q,3,sentenceRecallVisible);
+    sentenceRecordingStartWave(stream);
+    sentenceRecordingTimer=setInterval(()=>{
+      const elapsed=(Date.now()-sentenceRecordingStartedAt)/1000;
+      const el=document.getElementById('sentenceRecordingClock');
+      const big=document.getElementById('sentenceRecordingBigTime');
+      if(el)el.textContent='● 녹음 중';
+      if(big){
+        const min=Math.floor(elapsed/60);
+        const sec=Math.floor(elapsed%60);
+        const tenth=Math.floor((elapsed-Math.floor(elapsed))*10);
+        big.textContent=`${min}:${String(sec).padStart(2,'0')}.${tenth}`;
+      }
+    },100);
+  }catch(e){
+    sentenceRecordingStopTracks();
+    sentenceRecordingRecorder=null;
+    sentenceRecordingToast(e&&e.name==='NotAllowedError'?'마이크 사용 권한을 허용해 주세요.':'마이크를 시작할 수 없습니다.');
+  }
+}
+function sentenceRecordingStop(){
+  if(sentenceRecordingRecorder&&sentenceRecordingRecorder.state==='recording'){
+    try{sentenceRecordingRecorder.stop()}catch(e){}
+  }
+}
+function sentenceRecordingBind(q){
+  if(sentenceRecordingRecorder&&sentenceRecordingRecorder.state==='recording'&&sentenceRecordingStream){
+    sentenceRecordingStopWave();
+    sentenceRecordingStartWave(sentenceRecordingStream);
+  }
+  const recordBtn=$('sentenceRecordBtn');
+  if(recordBtn)recordBtn.onclick=()=>{
+    if(sentenceRecordingRecorder&&sentenceRecordingRecorder.state==='recording')sentenceRecordingStop();
+    else sentenceRecordingStart(q);
+  };
+  const audio=$('sentenceMyAudio'),play=$('sentenceMyPlay'),bar=$('sentenceAudioProgress');
+  if(audio&&play){
+    play.onclick=()=>audio.paused?audio.play().catch(()=>{}):audio.pause();
+    audio.onplay=()=>play.textContent='❚❚';
+    audio.onpause=()=>play.textContent='▶';
+    audio.onended=()=>{play.textContent='▶';if(bar)bar.style.width='0%';};
+    audio.ontimeupdate=()=>{if(bar&&isFinite(audio.duration)&&audio.duration>0)bar.style.width=`${Math.min(100,audio.currentTime/audio.duration*100)}%`;};
+    audio.onloadedmetadata=()=>{const d=$('sentenceAudioDuration');if(d&&isFinite(audio.duration)){sentenceRecordingDuration=audio.duration;d.textContent=sentenceRecordingTime(audio.duration);}};
+  }
+  const del=$('sentenceRecordDelete');
+  if(del)del.onclick=()=>{sentenceRecordingReset();renderSentenceStage(q,3,sentenceRecallVisible);};
+  const mine=$('sentenceCompareMine');
+  if(mine)mine.onclick=()=>{const a=$('sentenceMyAudio');if(a){a.currentTime=0;a.play().catch(()=>{});}};
+  const answer=$('sentenceCompareAnswer');
+  if(answer)answer.onclick=()=>speakSentenceOnce(q).then(()=>{if(quizMode==='sentence'&&quizCurrent===q&&sentenceRecallStage===3)sentenceIncrementCount(q)});
+}
+
 function renderSentenceStage(q,stage,visible=false){
   if(!q||quizMode!=='sentence')return;
   clearSentenceRecallTimer();
@@ -2839,7 +3087,7 @@ function renderSentenceStage(q,stage,visible=false){
     content=`<div id="sentencePracticeText" class="sentenceEnglish">${visible?full:sentenceMaskedHtml(q)}</div>${patternInfo}`;
     actions=`<div class="sentenceStage2Actions"><button id="sentenceStage2Repeat" class="sentenceStageBtn sentenceRepeatBtn ${sentenceStage2Repeat?'active':''}" type="button">🔁 반복 듣기 ${sentenceStage2Repeat?'ON':'OFF'}</button><button id="sentenceToStage3" class="sentenceStageBtn sentencePrimary" type="button">③ 전체 문장 말하기</button></div><div class="sentenceStage2Aux"><button id="sentenceToggle" class="sentenceStageBtn sentenceSecondary" type="button">${visible?'문장 숨기기':'👁 문장 보기'}</button></div>`;
   }else{
-    content=visible?`<div id="sentencePracticeText" class="sentenceEnglish">${full}</div>`:`<div id="sentencePracticeText" class="sentenceHiddenBox">영어 문장을 보지 않고 전체 문장을 말해 보세요.</div>`;
+    content=(visible?`<div id="sentencePracticeText" class="sentenceEnglish">${full}</div>`:`<div id="sentencePracticeText" class="sentenceHiddenBox">영어 문장을 보지 않고 전체 문장을 말해 보세요.</div>`)+sentenceRecordingMarkup()+(visible?sentenceCompareMarkup():'');
     if(!isPara && hasParaphraseSentence(q)){
       actions=`<div class="sentenceStageActions"><button id="sentenceToggle" class="sentenceStageBtn sentenceSecondary" type="button">${visible?'문장 숨기기':'문장 보기 · 듣기'}</button><button id="sentenceListen" class="sentenceStageBtn sentenceSecondary" type="button">🔊 문장 다시 듣기</button><button id="sentenceToParaphrase" class="sentenceStageBtn sentencePrimary" type="button">다음 · 패러프레이징 연습</button></div>`;
     }else{
@@ -2894,6 +3142,7 @@ function renderSentenceStage(q,stage,visible=false){
       renderSentenceStage(q,3,false);
     };
   }else{
+    sentenceRecordingBind(q);
     $('sentenceToggle').onclick=()=>{
       const next=!sentenceRecallVisible;
       renderSentenceStage(q,3,next);
@@ -2930,6 +3179,7 @@ function newSentenceRecallQuestion(){
     $('qw').textContent='완료 🎉';$('quizMeta').textContent=quizScopeLabel()+' 조건에 해당하는 문장이 없습니다.';$('opts').innerHTML='';$('quizFeedback').className='quizFeedback hidden';$('nextq').textContent='다시하기';$('nextq').classList.remove('hidden');quizSessionDone=true;return;
   }
   if(quizIndex>=quizDeck.length){showQuizFinish();return;}
+  sentenceRecordingReset();
   quizAnswered=false;quizCurrent=quizDeck[quizIndex];sentenceRecallStage=1;sentenceRecallVisible=true;sentenceRecallVariant='original';
   const q=quizCurrent;updateQuizProgress();updateQuestionNavButtons();updateQuizStats(q);
   $('quiz').classList.add('ko-en-mode');
@@ -4400,7 +4650,33 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
   }
   function myClassDetectedPatterns(lessonNo,text){
     const t=String(text||'').toLowerCase(), rows=[];
-    const bank=Number(lessonNo)===1?[
+    const lesson=Number(lessonNo);
+    const bank3=[
+      ["I forgot that I hadn't ~","~하지 않았다는 걸 깜빡했다","i forgot that i hadn't"],
+      ["enter a PIN","비밀번호(PIN)를 입력하다","pin"],
+      ["get blocked","카드가 정지되다","got blocked"],
+      ["spend + time + ~ing","~하는 데 시간을 쓰다","spent over 25 minutes trying to"],
+      ["catch a cab","택시를 잡다","catch a cab"],
+      ["I didn't realize that ~","~라는 것을 미처 몰랐다","i didn't realize"],
+      ["get something unblocked","~의 정지를 풀다","get it unblocked"],
+      ["mess up my schedule","내 일정을 꼬이게 하다","messed up my schedule"],
+      ["Based on your experience, ~","경험에 비추어 보면 ~","based on your experience"],
+      ["If you joined ~, what would you ~?","~에 합류한다면 무엇을 ~하겠는가","if you joined my team"],
+      ["assess experience and insight","경험과 통찰력을 평가하다","assess their experience and insight"],
+      ["One of the biggest problems is ~ing","가장 큰 문제 중 하나는 ~하는 것이다","one of the biggest problems is"],
+      ["deal with ~","~을 처리하다 / 다루다","dealing with"],
+      ["screen out ~","~을 걸러내다","screen out"],
+      ["That's why I felt that ~","그래서 나는 ~라고 느꼈다","that's why i felt that"],
+      ["the problems engineers face","엔지니어들이 겪는 문제","the problems engineers face"],
+      ["Even if ~","비록 ~하더라도","even if"],
+      ["be a good fit for the team","팀에 잘 맞다","good fit for the team"],
+      ["get along and work well with others","다른 사람들과 잘 지내고 협업하다","get along and work well with others"],
+      ["a top priority","최우선 사항","a top priority"],
+      ["communication and collaboration skills","의사소통과 협업 능력","communication and collaboration skills"],
+      ["alarm goes off","알람이 울리다","alarm goes off"],
+      ["hit the snooze button","스누즈 버튼을 누르다","hit the snooze button"]
+    ];
+    const bank=lesson===3?bank3:lesson===1?[
       ["feels like ~","~처럼 느껴지다","feels like"],
       ["one of my biggest goals","나의 가장 큰 목표 중 하나","one of my biggest goals"],
       ["make up my mind to ~","~하기로 마음먹다","made up my mind to"],
@@ -4834,6 +5110,7 @@ const M536={
   cursor:0,
   resumeCursor:0,
   resumeWasFull:false,
+  returnToFull:false,       // v5.3.109: focus 해제 후 전체 반복 복귀 여부를 독립 보존
   infiniteKey:'',
   infiniteItem:null,
   busy:false
@@ -4898,7 +5175,7 @@ function m536StopController(keepResume=false){
   M536.busy=false;
   try{stopSpeech()}catch(e){}
   if(!keepResume){
-    M536.mode='idle';M536.infiniteKey='';M536.infiniteItem=null;M536.resumeWasFull=false;
+    M536.mode='idle';M536.infiniteKey='';M536.infiniteItem=null;M536.resumeWasFull=false;M536.returnToFull=false;
     try{stopRepeatWakeSession?.()}catch(e){}
   }
   m536SyncInfinityButtons();
@@ -4977,19 +5254,11 @@ function m536ToggleInfinite(lesson,tab,index){
   };
   const key=m536ItemKey(item);
 
-  // ------------------------------------------------------------
-  // v5.3.108
-  // 1) 전체 반복 중 처음 집중 진입할 때만 resume 위치 저장
-  // 2) 집중 문장을 바꿔도 resume 위치 유지
-  // 3) 같은 집중 버튼을 다시 눌러 해제하면 전체 반복 Resume
-  // ------------------------------------------------------------
-
-  // 같은 집중 버튼을 다시 누름 = 집중 해제
+  // 같은 집중 버튼을 다시 누르면: 집중만 종료하고, 전체 반복에서 들어왔다면 즉시 Resume.
   if(M536.mode==='infinite' && M536.infiniteKey===key){
-    const shouldResume = !!M536.resumeWasFull;
-    const resumeAt = Number.isFinite(M536.resumeCursor) ? M536.resumeCursor : 0;
+    const shouldResume=!!M536.returnToFull;
+    const resumeAt=Number.isFinite(M536.resumeCursor)?M536.resumeCursor:0;
 
-    // 현재 집중 반복만 즉시 종료
     M536.token++;
     try{stopSpeech()}catch(e){}
     try{window.speechSynthesis?.cancel()}catch(e){}
@@ -5007,27 +5276,29 @@ function m536ToggleInfinite(lesson,tab,index){
     try{syncMyClassTitleInfinityButtons?.()}catch(e){}
 
     if(shouldResume){
-      // resumeWasFull은 m536RunFull이 새 전체 반복을 시작하기 직전에 해제
+      // 복귀 정보는 새 full loop가 실제 시작될 때까지 보존.
+      const savedCursor=resumeAt;
       M536.resumeWasFull=false;
-      myClassSetStatus?.('∞ 집중 해제 · 전체 반복 Resume',true);
-      m536RunFull(resumeAt);
-      setTimeout(()=>{try{myClassSyncButtons?.()}catch(e){}},0);
-    }else{
-      myClassSetStatus?.('∞ 집중 반복 해제',false);
-      try{stopRepeatWakeSession?.()}catch(e){}
+      M536.returnToFull=false;
+      myClassSetStatus?.('∞ 집중 해제 · 전체 반복 이어서 재생',true);
+      m536RunFull(savedCursor);
+      return;
     }
+
+    myClassSetStatus?.('∞ 집중 반복 해제',false);
+    try{stopRepeatWakeSession?.()}catch(e){}
     return;
   }
 
-  // 전체 반복 중 처음 집중으로 들어갈 때 현재 전체 반복 위치 저장.
-  // v5.3.108부터 체크 수업 전체 반복은 M536 하나로 통일된다.
+  // 전체 반복에서 집중으로 처음 진입할 때, 복귀 위치를 독립 상태로 저장.
   if(M536.mode==='full'){
-    M536.resumeWasFull=true;
     M536.resumeCursor=Number.isFinite(M536.cursor)?M536.cursor:0;
+    M536.resumeWasFull=true;
+    M536.returnToFull=true;
   }
 
-  // 다른 집중 문장으로 바꾸는 경우:
-  // resumeWasFull / resumeCursor는 절대 지우지 않는다.
+  // 이미 다른 집중 문장을 재생 중이라면 기존 집중만 끊는다.
+  // returnToFull / resumeCursor는 절대 건드리지 않는다.
   if(M536.mode==='infinite' && M536.infiniteKey!==key){
     M536.token++;
     try{stopSpeech()}catch(e){}
@@ -5042,12 +5313,10 @@ function m536ToggleInfinite(lesson,tab,index){
     MY_TITLE_INFINITY_KEY='';
   }
 
-  // 구형 전체 반복 controller가 별도로 살아 있다면 재생만 중단.
-  // resume 정보는 M536가 보존한다.
+  // 구형 controller token만 끊고 M536 복귀 정보는 보존.
   try{window.stopV534MyClassLoop?.()}catch(e){}
   try{window.stopV535MyClassLoop?.()}catch(e){}
 
-  // 새 집중 문장을 즉시 시작
   m536RunInfinite(item);
   MY_TITLE_INFINITY_KEY=key;
   try{syncMyClassTitleInfinityButtons?.()}catch(e){}
@@ -5082,8 +5351,8 @@ function m536SyncInfinityButtons(){
   document.querySelectorAll('.myInfinityBtn').forEach(b=>{
     const on=M536.mode==='infinite' && b.dataset.infKey===M536.infiniteKey;
     b.classList.toggle('active',on);
-    b.classList.toggle('resumeHint',on && M536.resumeWasFull);
-    b.innerHTML=on?(M536.resumeWasFull?'∞ 반복 해제 · Resume':'∞ 반복 해제'):(b.dataset.infKey?.includes('|speaking|')?'∞ 문단 반복':'∞ 문장 반복');
+    b.classList.toggle('resumeHint',on && M536.returnToFull);
+    b.innerHTML=on?(M536.returnToFull?'∞ 반복 해제 · Resume':'∞ 반복 해제'):(b.dataset.infKey?.includes('|speaking|')?'∞ 문단 반복':'∞ 문장 반복');
   });
 }
 
@@ -5204,6 +5473,39 @@ const M536_PATTERNS={
     ['give someone nightmares','누구에게 악몽을 꾸게 하다',/\bgave me nightmares\b/i],
     ['Now that things have settled down','이제 상황이 정리되었으니',/\bNow that things have finally settled down\b/i],
     ['feel much more relaxed','훨씬 마음이 편해지다',/\bfeel much more relaxed\b/i]
+  ],
+  3:[
+    ["I forgot that I hadn't ~","~하지 않았다는 걸 깜빡했다",/\bI forgot that I hadn't\b[^,.!?]*/i],
+    ["enter a PIN","비밀번호(PIN)를 입력하다",/\bentered\b[^,.!?]*\bPIN\b/i],
+    ["get blocked","카드가 정지되다",/\bgot blocked\b/i],
+    ["spend + time + ~ing","~하는 데 시간을 쓰다",/\bspent over 25 minutes trying to\b[^,.!?]*/i],
+    ["catch a cab","택시를 잡다",/\bcatch a cab\b/i],
+    ["I didn't realize that ~","~라는 것을 미처 몰랐다",/\bI didn't realize that\b[^,.!?]*/i],
+    ["had already been ~","이미 ~된 상태였다",/\bhad already been blocked\b/i],
+    ["get something unblocked","~의 정지를 풀다",/\bget my card unblocked\b/i],
+    ["mess up my schedule","내 일정을 꼬이게 하다",/\bmessed up my schedule\b/i],
+    ["interview candidates","지원자들을 면접하다",/\binterviewed four candidates\b/i],
+    ["two more qualified candidates","적합한 지원자 두 명을 더",/\btwo more qualified candidates\b/i],
+    ["Based on your experience, ~","당신의 경험에 비추어 보면 ~",/\bBased on your experience\b/i],
+    ["the biggest problem with ~","~의 가장 큰 문제",/\bthe biggest problem with\b[^,.!?]*/i],
+    ["If you joined ~, what would you ~?","~에 합류한다면 무엇을 ~하겠는가",/\bIf you joined my team\b[^?]*/i],
+    ["assess someone's experience and insight","경험과 통찰력을 평가하다",/\bassess their experience and insight\b/i],
+    ["One of the biggest problems is ~ing","가장 큰 문제 중 하나는 ~하는 것이다",/\bOne of the biggest problems is\b[^,.!?]*/i],
+    ["deal with ~","~을 처리하다 / 다루다",/\bdealing with\b[^,.!?]*/i],
+    ["develop an AI-based system","AI 기반 시스템을 개발하다",/\bdevelop an AI-based system\b/i],
+    ["screen out ~","~을 걸러내다",/\bscreen out false interlocks\b/i],
+    ["has been developing ~ since ...","...부터 계속 ~을 개발해오고 있다",/\bhas actually been developing\b[^,.!?]*\bsince\b[^,.!?]*/i],
+    ["That's why I felt that ~","그래서 나는 ~라고 느꼈다",/\bThat's why I felt that\b[^,.!?]*/i],
+    ["the problems engineers face","엔지니어들이 겪는 문제",/\bthe problems engineers face\b/i],
+    ["Even if ~","비록 ~하더라도",/\bEven if\b[^,]*/i],
+    ["be a good fit for the team","팀에 잘 맞다",/\ba good fit for the team\b/i],
+    ["get along and work well with others","다른 사람들과 잘 지내고 협업하다",/\bget along and work well with others\b/i],
+    ["a top priority","최우선 사항",/\ba top priority\b/i],
+    ["communication and collaboration skills","의사소통과 협업 능력",/\bcommunication and collaboration skills\b/i],
+    ["more important than technical skills","기술 능력보다 더 중요하다",/\bmore important than technical skills\b/i],
+    ["be going to ~","~할 것이다 / ~하려고 하다",/\bgoing to snooze\b/i],
+    ["alarm goes off","알람이 울리다",/\balarm goes off\b/i],
+    ["hit the snooze button","스누즈 버튼을 누르다",/\bhit the snooze button\b/i]
   ]
 };
 function m536PatternRows(lesson,text){
@@ -5399,6 +5701,31 @@ const V538_PAT = {
     ["have nightmares about ~","~에 대한 악몽을 꾸다",/\bhad nightmares about him\b/i],
     ["Now that ~","이제 ~이므로",/\bNow that things have finally settled down\b/i],
     ["feel much more relaxed","훨씬 마음이 편해지다",/\bfeel much more relaxed\b/i]
+  ],
+  3: [
+    ["I forgot that I hadn't ~","~하지 않았다는 걸 깜빡했다",/\bI forgot that I hadn't\b/i],
+    ["enter a PIN","비밀번호(PIN)를 입력하다",/\bentered\b[^.!?]*\bPIN\b/i],
+    ["get blocked","카드가 정지되다",/\bgot blocked\b/i],
+    ["spend + time + ~ing","~하는 데 시간을 쓰다",/\bspent over 25 minutes trying to\b/i],
+    ["catch a cab","택시를 잡다",/\bcatch a cab\b/i],
+    ["I didn't realize that ~","~라는 것을 미처 몰랐다",/\bI didn't realize that\b/i],
+    ["get something unblocked","~의 정지를 풀다",/\bget my card unblocked\b/i],
+    ["mess up my schedule","내 일정을 꼬이게 하다",/\bmessed up my schedule\b/i],
+    ["Based on your experience, ~","경험에 비추어 보면 ~",/\bBased on your experience\b/i],
+    ["If you joined ~, what would you ~?","~에 합류한다면 무엇을 ~하겠는가",/\bIf you joined my team\b/i],
+    ["assess their experience and insight","경험과 통찰력을 평가하다",/\bassess their experience and insight\b/i],
+    ["One of the biggest problems is ~ing","가장 큰 문제 중 하나는 ~하는 것이다",/\bOne of the biggest problems is\b/i],
+    ["deal with ~","~을 처리하다 / 다루다",/\bdealing with\b/i],
+    ["screen out ~","~을 걸러내다",/\bscreen out false interlocks\b/i],
+    ["That's why I felt that ~","그래서 나는 ~라고 느꼈다",/\bThat's why I felt that\b/i],
+    ["the problems engineers face","엔지니어들이 겪는 문제",/\bthe problems engineers face\b/i],
+    ["Even if ~","비록 ~하더라도",/\bEven if\b/i],
+    ["be a good fit for the team","팀에 잘 맞다",/\ba good fit for the team\b/i],
+    ["get along and work well with others","다른 사람들과 잘 지내고 협업하다",/\bget along and work well with others\b/i],
+    ["a top priority","최우선 사항",/\ba top priority\b/i],
+    ["communication and collaboration skills","의사소통과 협업 능력",/\bcommunication and collaboration skills\b/i],
+    ["alarm goes off","알람이 울리다",/\balarm goes off\b/i],
+    ["hit the snooze button","스누즈 버튼을 누르다",/\bhit the snooze button\b/i]
   ]
 };
 
@@ -5662,6 +5989,35 @@ const PATS={
 {id:'ask_clear',en:'ask clear questions',ko:'명확한 질문을 하다',re:/\bask clear questions\b/gi},
 {id:'move_discussion',en:'move the discussion forward',ko:'논의를 앞으로 이끌다',re:/\bmove the discussion forward\b/gi},
 {id:'summarize_decisions',en:'summarize decisions',ko:'결정사항을 정리하다',re:/\bsummarize decisions\b/gi}
+],
+3:[
+{id:'forgot_hadnt',en:"I forgot that I hadn't ~",ko:'~하지 않았다는 걸 깜빡했다',re:/\bI forgot that I hadn't\b/gi},
+{id:'enter_pin',en:'enter a PIN',ko:'비밀번호(PIN)를 입력하다',re:/\bentered\b(?=[^.!?]*\bPIN\b)/gi},
+{id:'get_blocked',en:'get blocked',ko:'카드가 정지되다',re:/\bgot blocked\b/gi},
+{id:'spend_time_ing',en:'spend + time + ~ing',ko:'~하는 데 시간을 쓰다',re:/\bspent over 25 minutes trying to\b/gi},
+{id:'catch_cab',en:'catch a cab',ko:'택시를 잡다',re:/\bcatch a cab\b/gi},
+{id:'didnt_realize',en:"I didn't realize that ~",ko:'~라는 것을 미처 몰랐다',re:/\bI didn't realize\b/gi},
+{id:'get_unblocked',en:'get something unblocked',ko:'~의 정지를 풀다',re:/\bget (?:it|my card) unblocked\b/gi},
+{id:'mess_schedule',en:'mess up my schedule',ko:'내 일정을 꼬이게 하다',re:/\bmessed up my schedule\b/gi},
+{id:'interview_candidates',en:'interview candidates',ko:'지원자를 면접하다',re:/\binterview candidates\b|\binterviewed four candidates\b/gi},
+{id:'qualified_candidates',en:'qualified candidates',ko:'자격을 갖춘 지원자',re:/\bqualified candidates\b/gi},
+{id:'based_experience',en:'Based on your experience, ~',ko:'경험에 비추어 보면 ~',re:/\bBased on your experience\b/gi},
+{id:'biggest_problem_with',en:'the biggest problem with ~',ko:'~의 가장 큰 문제',re:/\bthe biggest problem with\b/gi},
+{id:'if_joined',en:'If you joined ~, what would you ~?',ko:'~에 합류한다면 무엇을 ~하겠는가',re:/\bIf you joined my team\b/gi},
+{id:'assess_experience',en:'assess experience and insight',ko:'경험과 통찰력을 평가하다',re:/\bassess their experience and insight\b/gi},
+{id:'one_biggest_problem',en:'One of the biggest problems is ~ing',ko:'가장 큰 문제 중 하나는 ~하는 것이다',re:/\bOne of the biggest problems is\b/gi},
+{id:'deal_with',en:'deal with ~',ko:'~을 처리하다 / 다루다',re:/\bdealing with\b/gi},
+{id:'ai_based',en:'develop an AI-based system',ko:'AI 기반 시스템을 개발하다',re:/\bdevelop an AI-based system\b/gi},
+{id:'screen_out',en:'screen out ~',ko:'~을 걸러내다',re:/\bscreen out\b/gi},
+{id:'thats_why',en:"That's why I felt that ~",ko:'그래서 나는 ~라고 느꼈다',re:/\bThat's why I felt that\b/gi},
+{id:'problems_engineers_face',en:'the problems engineers face',ko:'엔지니어들이 겪는 문제',re:/\bthe problems engineers face\b/gi},
+{id:'even_if',en:'Even if ~',ko:'비록 ~하더라도',re:/\bEven if\b/gi},
+{id:'good_fit',en:'be a good fit for the team',ko:'팀에 잘 맞다',re:/\ba good fit for the team\b/gi},
+{id:'get_along_work',en:'get along and work well with others',ko:'다른 사람들과 잘 지내고 협업하다',re:/\bget along and work well with others\b/gi},
+{id:'top_priority',en:'a top priority',ko:'최우선 사항',re:/\ba top priority\b/gi},
+{id:'comm_collab',en:'communication and collaboration skills',ko:'의사소통과 협업 능력',re:/\bcommunication and collaboration skills\b/gi},
+{id:'alarm_goes_off',en:'alarm goes off',ko:'알람이 울리다',re:/\balarm goes off\b/gi},
+{id:'snooze_button',en:'hit the snooze button',ko:'스누즈 버튼을 누르다',re:/\bhit the snooze button\b/gi}
 ]
 };
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
