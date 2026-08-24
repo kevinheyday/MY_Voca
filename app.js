@@ -34,6 +34,19 @@ function myClassEsc(x){return String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;',
 function myClassSplitSentences(text){const t=String(text||'').replace(/\s+/g,' ').trim();if(!t)return[];return (t.match(/[^.!?]+(?:[.!?]+|$)/g)||[t]).map(x=>x.trim()).filter(Boolean);}
 function myClassSetStatus(text,playing=false){const el=document.getElementById('myClassPlaybackStatus');if(!el)return;const copy=el.querySelector('.myClassMiniStatus');if(copy)copy.textContent=text||'';el.classList.toggle('paused',!playing);}
 function myClassClearFocus(){document.querySelectorAll('.myClassNow,.myClassSentenceNow').forEach(el=>el.classList.remove('myClassNow','myClassSentenceNow'));}
+
+function myClassHighlightSpeakingSentence(el){
+  document.querySelectorAll('.myClassSentenceNow').forEach(x=>x.classList.remove('myClassSentenceNow'));
+  if(!el)return;
+  el.classList.add('myClassSentenceNow');
+  try{
+    el.scrollIntoView({behavior:'smooth',block:'center',inline:'nearest'});
+  }catch(e){}
+}
+function myClassClearSpeakingSentenceHighlight(){
+  document.querySelectorAll('.myClassSentenceNow').forEach(x=>x.classList.remove('myClassSentenceNow'));
+}
+
 function myClassFocus(el){myClassClearFocus();if(!el)return;MY_CLASS_PLAY.currentEl=el;el.classList.add(el.classList.contains('mySpeakSentence')?'myClassSentenceNow':'myClassNow');try{el.scrollIntoView({behavior:'smooth',block:'center'})}catch(e){}}
 function myClassPlaybackItems(){
   if(myClassTab==='corrections')return myClassData().corrections.map((x,i)=>({text:x.en,el:document.getElementById(`myCorrectionCard${i}`)}));
@@ -51,13 +64,53 @@ function myClassSyncButtons(){
     rep.innerHTML=`🔁<br>${MY_CLASS_PLAY.repeatCurrent?'반복 ON':'현재 문장'}`;
   }
 }
-function myClassStop(clearCurrent=false){MY_CLASS_PLAY.token++;MY_CLASS_PLAY.active=false;MY_CLASS_PLAY.paused=true;stopSpeech();if(clearCurrent){MY_CLASS_PLAY.index=0;MY_CLASS_PLAY.currentText='';MY_CLASS_PLAY.repeatCurrent=false;myClassClearFocus();}myClassSyncButtons();myClassSetStatus(clearCurrent?'MY 수업 자동 재생 준비':'재생이 정지되었습니다',false);}
+function myClassStop(clearCurrent=false){MY_CLASS_PLAY.token++;MY_CLASS_PLAY.active=false;MY_CLASS_PLAY.paused=true;stopSpeech();myClassClearSpeakingSentenceHighlight();if(clearCurrent){MY_CLASS_PLAY.index=0;MY_CLASS_PLAY.currentText='';MY_CLASS_PLAY.repeatCurrent=false;myClassClearFocus();}myClassSyncButtons();myClassSetStatus(clearCurrent?'MY 수업 자동 재생 준비':'재생이 정지되었습니다',false);}
 async function myClassSpeakSequence(texts,{focusEl=null,statusPrefix='전체 듣기'}={}){
-  const list=(Array.isArray(texts)?texts:[texts]).flatMap(myClassSplitSentences).filter(Boolean);if(!list.length)return;
-  myClassStop(false);const token=++MY_CLASS_PLAY.token;MY_CLASS_PLAY.active=true;MY_CLASS_PLAY.paused=false;if(focusEl)myClassFocus(focusEl);myClassSyncButtons();
-  for(let k=0;k<list.length;k++){if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)return;MY_CLASS_PLAY.currentText=list[k];myClassSetStatus(`${statusPrefix} · ${k+1}/${list.length}`,true);await speakOne(list[k],getSpeechRate(),'en-US');if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)return;if(k<list.length-1)await new Promise(r=>setTimeout(r,Number(loadAppSettings().myClassPause||700)));}
-  if(token===MY_CLASS_PLAY.token){MY_CLASS_PLAY.active=false;MY_CLASS_PLAY.paused=true;myClassSyncButtons();myClassSetStatus('재생 완료',false);}
+  const list=(Array.isArray(texts)?texts:[texts]).flatMap(myClassSplitSentences).filter(Boolean);
+  if(!list.length)return;
+
+  myClassStop(false);
+  const token=++MY_CLASS_PLAY.token;
+  MY_CLASS_PLAY.active=true;
+  MY_CLASS_PLAY.paused=false;
+
+  if(focusEl)myClassFocus(focusEl);
+  myClassSyncButtons();
+
+  const sentenceEls=focusEl
+    ? Array.from(focusEl.querySelectorAll('.mySpeakSentence'))
+    : [];
+
+  for(let k=0;k<list.length;k++){
+    if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)return;
+
+    MY_CLASS_PLAY.currentText=list[k];
+
+    if(sentenceEls[k]){
+      myClassHighlightSpeakingSentence(sentenceEls[k]);
+    }
+
+    myClassSetStatus(`${statusPrefix} · ${k+1}/${list.length}`,true);
+
+    await speakOne(list[k],getSpeechRate(),'en-US');
+
+    if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)return;
+
+    if(k<list.length-1){
+      await new Promise(r=>setTimeout(r,Number(loadAppSettings().myClassPause||700)));
+    }
+  }
+
+  myClassClearSpeakingSentenceHighlight();
+
+  if(token===MY_CLASS_PLAY.token){
+    MY_CLASS_PLAY.active=false;
+    MY_CLASS_PLAY.paused=true;
+    myClassSyncButtons();
+    myClassSetStatus('재생 완료',false);
+  }
 }
+
 function myClassSpeak(text,el=null){myClassSpeakSequence(text,{focusEl:el,statusPrefix:'선택 듣기'});}
 async function myClassStartAuto(startIndex=null){
   const items=myClassPlaybackItems();if(!items.length){myClassStop(false);myClassSetStatus(myClassTab==='habits'?'습관 탭은 읽기 대신 행동 교정에 집중합니다.':'재생할 문장이 없습니다.',false);return;}
@@ -215,6 +268,7 @@ function myClassTitleInfinityToggle(btn,lesson,tab,index){
   }
 }
 function stopAllMyClassPlayback(clearCurrent=true){
+  try{myClassClearSpeakingSentenceHighlight()}catch(e){}
   MY_CLASS_HARD_STOP_EPOCH++;
 
   try{window.stopV534MyClassLoop?.()}catch(e){}
@@ -4749,7 +4803,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
 
 
 
-// ===== V5.3.129 · 자유 음성 녹음 학습 =====
+// ===== V5.3.130 · 자유 음성 녹음 학습 =====
 const VOICE_PRACTICE_RECENT_KEY='mv_voice_practice_recent_v1';
 
 function voicePracticeRecentList(){
@@ -5882,10 +5936,40 @@ function m536RenderItem(item){
   return el;
 }
 async function m536Speak(text,paragraph){
-  // speakComplete는 긴 답변을 안전한 길이로만 자르고, 질문별 답변 전체를 한 학습 단위로 유지한다.
+  // 일반 문장/Chunk는 기존 방식 유지
   if(paragraph && typeof speakComplete==='function')await speakComplete(text,getSpeechRate(),'en-US');
   else await speakOne(text,getSpeechRate(),'en-US');
 }
+
+async function m536SpeakItem(item,focusEl){
+  // SPEAKING 문단은 실제 문장별로 재생하면서 현재 문장을 표시한다.
+  if(item && item.tab==='speaking'){
+    const parts=myClassSplitSentences(item.text);
+    const block=focusEl || document.getElementById(`mySpeakBlock${item.index}`);
+    const sentenceEls=block ? Array.from(block.querySelectorAll('.mySpeakSentence')) : [];
+
+    for(let i=0;i<parts.length;i++){
+      if(sentenceEls[i])myClassHighlightSpeakingSentence(sentenceEls[i]);
+
+      myClassSetStatus?.(
+        `SPEAKING ${item.index+1} · 현재 문장 ${i+1}/${parts.length}`,
+        true
+      );
+
+      await speakOne(parts[i],getSpeechRate(),'en-US');
+
+      if(i<parts.length-1){
+        await new Promise(r=>setTimeout(r,Math.min(350,Number(loadAppSettings().myClassPause||700))));
+      }
+    }
+
+    myClassClearSpeakingSentenceHighlight();
+    return;
+  }
+
+  await m536Speak(item?.text||'',!!item?.paragraph);
+}
+
 function m536Unlock(){
   try{initTTS?.();unlockTTSFromGesture?.()}catch(e){}
   try{startRepeatWakeSession?.()}catch(e){}
@@ -5922,7 +6006,7 @@ async function m536RunFull(startAt=0){
       if(token!==M536.token || hardEpoch!==MY_CLASS_HARD_STOP_EPOCH || M536.mode!=='full')return;
       MY_CLASS_PLAY.currentText=item.text;MY_CLASS_PLAY.currentEl=el;
       myClassSetStatus?.(`전체 반복 · 수업 ${item.lesson} · ${m536Label(item.tab)} ${item.index+1} · ${item.paragraph?'문단':'문장'} ${r+1}/${reps}`,true);
-      await m536Speak(item.text,item.paragraph);
+      await m536SpeakItem(item,el);
       if(token!==M536.token || hardEpoch!==MY_CLASS_HARD_STOP_EPOCH || M536.mode!=='full')return;
       if(pause)await m536Sleep(pause);
     }
@@ -5942,7 +6026,7 @@ async function m536RunInfinite(item){
   while(token===M536.token && hardEpoch===MY_CLASS_HARD_STOP_EPOCH && M536.mode==='infinite' && M536.infiniteKey===m536ItemKey(item)){
     myClassSetStatus?.(`∞ 무한 반복 · 수업 ${item.lesson} · ${m536Label(item.tab)} ${item.index+1} · ${item.paragraph?'문단 전체':'현재 문장'} · ${n++}회`,true);
     try{syncMyClassInfinityVisuals?.()}catch(e){}
-    await m536Speak(item.text,item.paragraph);
+    await m536SpeakItem(item,el);
     if(token!==M536.token || hardEpoch!==MY_CLASS_HARD_STOP_EPOCH || M536.mode!=='infinite')return;
     if(pause)await m536Sleep(pause);
   }
@@ -6842,7 +6926,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// ===== V5.3.129 MY 수업 HARD navigation stop =====
+// ===== V5.3.130 MY 수업 HARD navigation stop =====
 function myClassHardNavigationStop(){
   try{stopAllMyClassPlayback(true)}catch(e){}
   // Samsung Internet TTS cancel 안정성을 위해 짧게 한 번 더 취소한다.
@@ -6864,7 +6948,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// V5.3.129: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
+// V5.3.130: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
 function installInfinityVisualObserver(){
   const root=document.getElementById('myClassContent');
   if(!root || root.dataset.infinityVisualObserver==='1')return;
@@ -6878,7 +6962,7 @@ function installInfinityVisualObserver(){
 setTimeout(installInfinityVisualObserver,0);
 
 
-// V5.3.129: 무한 반복 상태 표시 heartbeat.
+// V5.3.130: 무한 반복 상태 표시 heartbeat.
 // 브라우저/DOM 재렌더 방식과 무관하게 반복 중에는 250ms마다 active UI를 복구한다.
 if(!window.__mvInfinityHeartbeat){
   window.__mvInfinityHeartbeat=setInterval(()=>{
@@ -6915,7 +6999,7 @@ function installVisibleBuildBadge(){
   if(!badge){
     badge=document.createElement('div');
     badge.id='mvBuildBadge';
-    badge.textContent='v5.3.129';
+    badge.textContent='v5.3.130';
     badge.title='현재 실행 중인 MY VOCA 빌드';
     document.body.appendChild(badge);
   }
