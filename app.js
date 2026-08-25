@@ -130,9 +130,12 @@ async function myClassSpeakSequence(texts,{focusEl=null,statusPrefix='전체 듣
 
     MY_CLASS_PLAY.currentText=list[k];
 
-    const sentenceEl=sentenceEls[k]||null;
+    let sentenceEl=sentenceEls[k]||null;
+    if(!sentenceEl&&focusEl){
+      sentenceEl=focusEl.querySelector('.myStudyEn,.myChunkExample');
+    }
     if(sentenceEl){
-      myClassHighlightSpeakingSentence(sentenceEl);
+      mvDomStartHighlight(list[k],sentenceEl);
     }
 
     myClassSetStatus(`${statusPrefix} · ${k+1}/${list.length}`,true);
@@ -1393,7 +1396,7 @@ function stopAutoLearning(){
   stopRepeatWakeSession();AUTO.active=false; forceReleaseWakeLock();AUTO.token++;clearReadingFocus();updateAutoBadge()}
 
 let __lastSpokenLang='';
-function stopSpeech(){try{mvTtsClearHighlight()}catch(e){}
+function stopSpeech(){try{mvDomClearHighlight()}catch(e){}
   TTS.seq++;
   __lastSpokenLang='';
   if(ttsSupported()){try{window.speechSynthesis.cancel()}catch(e){}}
@@ -1412,58 +1415,114 @@ function normalizeTextForTTS(text,lang='en-US'){
   return content;
 }
 
-// ===== V5.3.134 STANDARD TTS HIGHLIGHT =====
-const MV_TTS_HL={sentence:null,word:null,restore:null};
-function mvTtsClearHighlight(){
+// ===== V5.3.136 · COMMON DOM TTS HIGHLIGHT =====
+const MV_DOM_HL={sentence:null,word:null,wrapped:[],spoken:''};
+function mvDomNorm(v){return String(v||'').replace(/\s+/g,' ').trim()}
+function mvDomVisible(el){
+  if(!el||!el.isConnected)return false;
+  const st=getComputedStyle(el);if(st.display==='none'||st.visibility==='hidden')return false;
+  const r=el.getBoundingClientRect();return r.width>0&&r.height>0;
+}
+function mvDomClearHighlight(){
   try{
-    document.querySelectorAll('.mvTtsSentenceNow,.mvTtsWordNow').forEach(x=>x.classList.remove('mvTtsSentenceNow','mvTtsWordNow'));
-    if(MV_TTS_HL.restore){MV_TTS_HL.restore();MV_TTS_HL.restore=null}
-    MV_TTS_HL.sentence=null;MV_TTS_HL.word=null;
+    if(MV_DOM_HL.word)MV_DOM_HL.word.classList.remove('mvTtsWordNow');
+    if(MV_DOM_HL.sentence)MV_DOM_HL.sentence.classList.remove('mvTtsSentenceNow');
+    // unwrap only the spans created by this highlighter; preserve all existing pattern markup.
+    for(const sp of MV_DOM_HL.wrapped){
+      if(!sp||!sp.isConnected)continue;
+      sp.replaceWith(document.createTextNode(sp.textContent||''));
+    }
+    if(MV_DOM_HL.sentence)MV_DOM_HL.sentence.normalize();
   }catch(e){}
+  MV_DOM_HL.sentence=null;MV_DOM_HL.word=null;MV_DOM_HL.wrapped=[];MV_DOM_HL.spoken='';
 }
-function mvTtsNorm(v){return String(v||'').replace(/\s+/g,' ').trim()}
-function mvTtsFindSentence(text){
-  const t=mvTtsNorm(text);if(!t)return null;
-  const primary=[...document.querySelectorAll('.mySpeakSentence,.myClassSentence,.sentence,.studySentence,.quizSentence,.chunkSentence,.nativeChunk,.exampleSentence,[data-tts-text]')];
-  let hit=primary.filter(el=>{
-    const v=mvTtsNorm(el.dataset?.ttsText||el.textContent);
-    return v===t||(t.length>15&&(v.includes(t)||t.includes(v)));
-  }).sort((a,b)=>Math.abs(mvTtsNorm(a.textContent).length-t.length)-Math.abs(mvTtsNorm(b.textContent).length-t.length))[0];
-  if(hit)return hit;
-  return [...document.querySelectorAll('p,li,button,div,span')].find(el=>{
-    if(el.children.length>6)return false;
-    const r=el.getBoundingClientRect();if(!r.width||!r.height)return false;
-    const v=mvTtsNorm(el.textContent);
-    return v===t||(t.length>20&&v.includes(t));
-  })||null;
-}
-function mvTtsStartHighlight(text){
-  mvTtsClearHighlight();
-  const el=mvTtsFindSentence(text);if(!el)return;
-  MV_TTS_HL.sentence=el;el.classList.add('mvTtsSentenceNow');
-  // Plain text only: safely split into word spans. Pattern-colored HTML is preserved.
-  if(el.childElementCount===0){
-    const original=el.textContent,frag=document.createDocumentFragment();let pos=0;
-    original.split(/(\s+)/).forEach(part=>{
-      if(!part)return;
-      if(/^\s+$/.test(part)){frag.appendChild(document.createTextNode(part));pos+=part.length;return}
-      const sp=document.createElement('span');sp.className='mvTtsWord';
-      sp.dataset.start=String(pos);sp.dataset.end=String(pos+part.length);sp.textContent=part;
-      frag.appendChild(sp);pos+=part.length;
+function mvDomFindSentence(text){
+  const t=mvDomNorm(text);if(!t)return null;
+  const selectors=[
+    '.myStudyEn','.myChunkExample','.mySpeakSentence',
+    '.sentenceEnglish','#sentencePracticeText',
+    '.quizSentence','.studySentence','.exampleSentence','.example',
+    '.nativeChunk','.chunkSentence','.cardSentence','[data-tts-text]',
+    'p','li','h1','h2','h3','button','div','span'
+  ];
+  const seen=new Set(), exact=[], contains=[];
+  for(const sel of selectors){
+    document.querySelectorAll(sel).forEach(el=>{
+      if(seen.has(el)||!mvDomVisible(el))return;seen.add(el);
+      const v=mvDomNorm(el.dataset?.ttsText||el.textContent);
+      if(!v)return;
+      const rect=el.getBoundingClientRect();
+      const score=(rect.width*rect.height)+(el.children.length*1000);
+      if(v===t)exact.push({el,score});
+      else if(t.length>18&&v.includes(t))contains.push({el,score:score+(v.length-t.length)*100});
     });
-    el.textContent='';el.appendChild(frag);
-    MV_TTS_HL.restore=()=>{if(el.isConnected)el.textContent=original};
   }
+  const list=exact.length?exact:contains;
+  list.sort((a,b)=>a.score-b.score);
+  return list[0]?.el||null;
+}
+function mvDomWrapWords(el,spoken){
+  if(!el)return;
+  const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,{
+    acceptNode(node){
+      if(!node.nodeValue||!node.nodeValue.trim())return NodeFilter.FILTER_REJECT;
+      const p=node.parentElement;
+      if(!p||p.closest('script,style,.mvTtsWord'))return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    }
+  });
+  const nodes=[];let n;while((n=walker.nextNode()))nodes.push(n);
+  let logicalPos=0;
+  for(const node of nodes){
+    const text=node.nodeValue;
+    const frag=document.createDocumentFragment();
+    const pieces=text.split(/(\s+)/);
+    for(const piece of pieces){
+      if(!piece)continue;
+      if(/^\s+$/.test(piece)){
+        frag.appendChild(document.createTextNode(piece));
+        logicalPos+=1; // normalize any whitespace run to one logical space
+      }else{
+        const sp=document.createElement('span');sp.className='mvTtsWord';sp.textContent=piece;
+        sp.dataset.start=String(logicalPos);sp.dataset.end=String(logicalPos+piece.length);
+        logicalPos+=piece.length;
+        frag.appendChild(sp);MV_DOM_HL.wrapped.push(sp);
+      }
+    }
+    node.replaceWith(frag);
+  }
+}
+function mvDomStartHighlight(text,preferredEl=null){
+  mvDomClearHighlight();
+  const el=preferredEl||mvDomFindSentence(text);if(!el)return null;
+  MV_DOM_HL.sentence=el;MV_DOM_HL.spoken=mvDomNorm(text);
+  el.classList.add('mvTtsSentenceNow');
+  mvDomWrapWords(el,MV_DOM_HL.spoken);
   try{el.scrollIntoView({behavior:'smooth',block:'center',inline:'nearest'})}catch(e){}
+  return el;
 }
-function mvTtsBoundary(charIndex){
-  const el=MV_TTS_HL.sentence;if(!el)return;
+function mvDomBoundary(charIndex){
+  const el=MV_DOM_HL.sentence;if(!el)return;
   const i=Number(charIndex)||0;
-  const words=[...el.querySelectorAll(':scope > .mvTtsWord')];
-  const hit=words.find(w=>i>=Number(w.dataset.start)&&i<Number(w.dataset.end));
-  if(MV_TTS_HL.word&&MV_TTS_HL.word!==hit)MV_TTS_HL.word.classList.remove('mvTtsWordNow');
-  if(hit){hit.classList.add('mvTtsWordNow');MV_TTS_HL.word=hit}
+  const words=[...el.querySelectorAll('.mvTtsWord')];
+  let hit=words.find(w=>i>=Number(w.dataset.start||0)&&i<Number(w.dataset.end||0));
+  if(!hit){
+    // fallback by word text when Android boundary positions differ slightly after normalization
+    const t=MV_DOM_HL.spoken;let a=Math.max(0,Math.min(i,t.length-1));
+    while(a>0&&!/\s/.test(t[a-1]))a--;let b=a;while(b<t.length&&!/\s/.test(t[b]))b++;
+    const token=t.slice(a,b).replace(/^[^\w']+|[^\w']+$/g,'').toLowerCase();
+    if(token){
+      const startAfter=MV_DOM_HL.word?words.indexOf(MV_DOM_HL.word)+1:0;
+      hit=words.slice(startAfter).find(w=>(w.textContent||'').replace(/^[^\w']+|[^\w']+$/g,'').toLowerCase()===token)
+        ||words.find(w=>(w.textContent||'').replace(/^[^\w']+|[^\w']+$/g,'').toLowerCase()===token);
+    }
+  }
+  if(MV_DOM_HL.word&&MV_DOM_HL.word!==hit)MV_DOM_HL.word.classList.remove('mvTtsWordNow');
+  if(hit){hit.classList.add('mvTtsWordNow');MV_DOM_HL.word=hit}
 }
+window.mvDomClearHighlight=mvDomClearHighlight;
+window.mvDomStartHighlight=mvDomStartHighlight;
+window.mvDomBoundary=mvDomBoundary;
 
 function speakOne(text,rate=getSpeechRate(),lang='en-US'){
   const sessionSeq=TTS.seq;
@@ -1483,9 +1542,10 @@ function speakOne(text,rate=getSpeechRate(),lang='en-US'){
     try{if(window.speechSynthesis.paused)window.speechSynthesis.resume()}catch(e){}
 
     setTimeout(()=>{
-      if(sessionSeq!==TTS.seq){try{mvTtsClearHighlight()}catch(e){}resolve();return}
+      if(sessionSeq!==TTS.seq){resolve();return}
       try{
-        mvTtsStartHighlight(content);
+        // Every utterance, including the first/only sentence, gets highlighted.
+        mvDomStartHighlight(content);
         const u=new SpeechSynthesisUtterance(content);
         u.lang=lang;
         u.rate=getSpeechRate();
@@ -1504,11 +1564,17 @@ function speakOne(text,rate=getSpeechRate(),lang='en-US'){
           finished=true;
           if(watchdog)clearTimeout(watchdog);
           __lastSpokenLang=lang;
-          try{mvTtsClearHighlight()}catch(e){}
+          try{mvDomClearHighlight()}catch(e){}
           resolve();
         };
 
-        u.onboundary=(event)=>{try{if(typeof event.charIndex==='number')mvTtsBoundary(event.charIndex)}catch(e){}};
+        u.onboundary=(event)=>{
+          try{
+            if(typeof event.charIndex==='number'){
+              mvDomBoundary(event.charIndex);
+            }
+          }catch(e){}
+        };
         u.onend=finish;
         u.onerror=(event)=>{
           // 일부 모바일 브라우저는 interrupted/canceled를 정상 전환에서도 보낸다.
@@ -4906,7 +4972,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
 
 
 
-// ===== V5.3.134 · 자유 음성 녹음 학습 =====
+// ===== V5.3.136 · 자유 음성 녹음 학습 =====
 const VOICE_PRACTICE_RECENT_KEY='mv_voice_practice_recent_v1';
 
 function voicePracticeRecentList(){
@@ -6072,7 +6138,7 @@ async function m536SpeakItem(item,focusEl){
         block?.querySelectorAll('.mySpeakSentence')?.[i] ||
         null;
 
-      if(sentenceEl)myClassHighlightSpeakingSentence(sentenceEl);
+      if(sentenceEl)mvDomStartHighlight(parts[i],sentenceEl);
 
       myClassSetStatus?.(
         `SPEAKING ${item.index+1} · 현재 문장 ${i+1}/${parts.length}`,
@@ -6090,6 +6156,14 @@ async function m536SpeakItem(item,focusEl){
     return;
   }
 
+  const exactEl=item?.tab==='corrections'
+    ? focusEl?.querySelector('.myStudyEn')
+    : item?.tab==='chunks'
+      ? focusEl?.querySelector('.myChunkExample')
+      : null;
+  if(exactEl){
+    mvDomStartHighlight(item?.text||'',exactEl);
+  }
   await m536Speak(item?.text||'',!!item?.paragraph);
 }
 
@@ -7049,7 +7123,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// ===== V5.3.134 MY 수업 HARD navigation stop =====
+// ===== V5.3.136 MY 수업 HARD navigation stop =====
 function myClassHardNavigationStop(){
   try{stopAllMyClassPlayback(true)}catch(e){}
   // Samsung Internet TTS cancel 안정성을 위해 짧게 한 번 더 취소한다.
@@ -7071,7 +7145,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// V5.3.134: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
+// V5.3.136: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
 function installInfinityVisualObserver(){
   const root=document.getElementById('myClassContent');
   if(!root || root.dataset.infinityVisualObserver==='1')return;
@@ -7085,7 +7159,7 @@ function installInfinityVisualObserver(){
 setTimeout(installInfinityVisualObserver,0);
 
 
-// V5.3.134: 무한 반복 상태 표시 heartbeat.
+// V5.3.136: 무한 반복 상태 표시 heartbeat.
 // 브라우저/DOM 재렌더 방식과 무관하게 반복 중에는 250ms마다 active UI를 복구한다.
 if(!window.__mvInfinityHeartbeat){
   window.__mvInfinityHeartbeat=setInterval(()=>{
@@ -7122,7 +7196,7 @@ function installVisibleBuildBadge(){
   if(!badge){
     badge=document.createElement('div');
     badge.id='mvBuildBadge';
-    badge.textContent='v5.3.134';
+    badge.textContent='v5.3.136';
     badge.title='현재 실행 중인 MY VOCA 빌드';
     document.body.appendChild(badge);
   }
