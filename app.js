@@ -1393,7 +1393,7 @@ function stopAutoLearning(){
   stopRepeatWakeSession();AUTO.active=false; forceReleaseWakeLock();AUTO.token++;clearReadingFocus();updateAutoBadge()}
 
 let __lastSpokenLang='';
-function stopSpeech(){
+function stopSpeech(){try{mvTtsClearHighlight()}catch(e){}
   TTS.seq++;
   __lastSpokenLang='';
   if(ttsSupported()){try{window.speechSynthesis.cancel()}catch(e){}}
@@ -1411,6 +1411,60 @@ function normalizeTextForTTS(text,lang='en-US'){
   }
   return content;
 }
+
+// ===== V5.3.134 STANDARD TTS HIGHLIGHT =====
+const MV_TTS_HL={sentence:null,word:null,restore:null};
+function mvTtsClearHighlight(){
+  try{
+    document.querySelectorAll('.mvTtsSentenceNow,.mvTtsWordNow').forEach(x=>x.classList.remove('mvTtsSentenceNow','mvTtsWordNow'));
+    if(MV_TTS_HL.restore){MV_TTS_HL.restore();MV_TTS_HL.restore=null}
+    MV_TTS_HL.sentence=null;MV_TTS_HL.word=null;
+  }catch(e){}
+}
+function mvTtsNorm(v){return String(v||'').replace(/\s+/g,' ').trim()}
+function mvTtsFindSentence(text){
+  const t=mvTtsNorm(text);if(!t)return null;
+  const primary=[...document.querySelectorAll('.mySpeakSentence,.myClassSentence,.sentence,.studySentence,.quizSentence,.chunkSentence,.nativeChunk,.exampleSentence,[data-tts-text]')];
+  let hit=primary.filter(el=>{
+    const v=mvTtsNorm(el.dataset?.ttsText||el.textContent);
+    return v===t||(t.length>15&&(v.includes(t)||t.includes(v)));
+  }).sort((a,b)=>Math.abs(mvTtsNorm(a.textContent).length-t.length)-Math.abs(mvTtsNorm(b.textContent).length-t.length))[0];
+  if(hit)return hit;
+  return [...document.querySelectorAll('p,li,button,div,span')].find(el=>{
+    if(el.children.length>6)return false;
+    const r=el.getBoundingClientRect();if(!r.width||!r.height)return false;
+    const v=mvTtsNorm(el.textContent);
+    return v===t||(t.length>20&&v.includes(t));
+  })||null;
+}
+function mvTtsStartHighlight(text){
+  mvTtsClearHighlight();
+  const el=mvTtsFindSentence(text);if(!el)return;
+  MV_TTS_HL.sentence=el;el.classList.add('mvTtsSentenceNow');
+  // Plain text only: safely split into word spans. Pattern-colored HTML is preserved.
+  if(el.childElementCount===0){
+    const original=el.textContent,frag=document.createDocumentFragment();let pos=0;
+    original.split(/(\s+)/).forEach(part=>{
+      if(!part)return;
+      if(/^\s+$/.test(part)){frag.appendChild(document.createTextNode(part));pos+=part.length;return}
+      const sp=document.createElement('span');sp.className='mvTtsWord';
+      sp.dataset.start=String(pos);sp.dataset.end=String(pos+part.length);sp.textContent=part;
+      frag.appendChild(sp);pos+=part.length;
+    });
+    el.textContent='';el.appendChild(frag);
+    MV_TTS_HL.restore=()=>{if(el.isConnected)el.textContent=original};
+  }
+  try{el.scrollIntoView({behavior:'smooth',block:'center',inline:'nearest'})}catch(e){}
+}
+function mvTtsBoundary(charIndex){
+  const el=MV_TTS_HL.sentence;if(!el)return;
+  const i=Number(charIndex)||0;
+  const words=[...el.querySelectorAll(':scope > .mvTtsWord')];
+  const hit=words.find(w=>i>=Number(w.dataset.start)&&i<Number(w.dataset.end));
+  if(MV_TTS_HL.word&&MV_TTS_HL.word!==hit)MV_TTS_HL.word.classList.remove('mvTtsWordNow');
+  if(hit){hit.classList.add('mvTtsWordNow');MV_TTS_HL.word=hit}
+}
+
 function speakOne(text,rate=getSpeechRate(),lang='en-US'){
   const sessionSeq=TTS.seq;
   return new Promise(resolve=>{
@@ -1429,8 +1483,9 @@ function speakOne(text,rate=getSpeechRate(),lang='en-US'){
     try{if(window.speechSynthesis.paused)window.speechSynthesis.resume()}catch(e){}
 
     setTimeout(()=>{
-      if(sessionSeq!==TTS.seq){resolve();return}
+      if(sessionSeq!==TTS.seq){try{mvTtsClearHighlight()}catch(e){}resolve();return}
       try{
+        mvTtsStartHighlight(content);
         const u=new SpeechSynthesisUtterance(content);
         u.lang=lang;
         u.rate=getSpeechRate();
@@ -1449,9 +1504,11 @@ function speakOne(text,rate=getSpeechRate(),lang='en-US'){
           finished=true;
           if(watchdog)clearTimeout(watchdog);
           __lastSpokenLang=lang;
+          try{mvTtsClearHighlight()}catch(e){}
           resolve();
         };
 
+        u.onboundary=(event)=>{try{if(typeof event.charIndex==='number')mvTtsBoundary(event.charIndex)}catch(e){}};
         u.onend=finish;
         u.onerror=(event)=>{
           // 일부 모바일 브라우저는 interrupted/canceled를 정상 전환에서도 보낸다.
@@ -4849,7 +4906,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
 
 
 
-// ===== V5.3.133 · 자유 음성 녹음 학습 =====
+// ===== V5.3.134 · 자유 음성 녹음 학습 =====
 const VOICE_PRACTICE_RECENT_KEY='mv_voice_practice_recent_v1';
 
 function voicePracticeRecentList(){
@@ -6992,7 +7049,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// ===== V5.3.133 MY 수업 HARD navigation stop =====
+// ===== V5.3.134 MY 수업 HARD navigation stop =====
 function myClassHardNavigationStop(){
   try{stopAllMyClassPlayback(true)}catch(e){}
   // Samsung Internet TTS cancel 안정성을 위해 짧게 한 번 더 취소한다.
@@ -7014,7 +7071,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// V5.3.133: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
+// V5.3.134: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
 function installInfinityVisualObserver(){
   const root=document.getElementById('myClassContent');
   if(!root || root.dataset.infinityVisualObserver==='1')return;
@@ -7028,7 +7085,7 @@ function installInfinityVisualObserver(){
 setTimeout(installInfinityVisualObserver,0);
 
 
-// V5.3.133: 무한 반복 상태 표시 heartbeat.
+// V5.3.134: 무한 반복 상태 표시 heartbeat.
 // 브라우저/DOM 재렌더 방식과 무관하게 반복 중에는 250ms마다 active UI를 복구한다.
 if(!window.__mvInfinityHeartbeat){
   window.__mvInfinityHeartbeat=setInterval(()=>{
@@ -7065,7 +7122,7 @@ function installVisibleBuildBadge(){
   if(!badge){
     badge=document.createElement('div');
     badge.id='mvBuildBadge';
-    badge.textContent='v5.3.133';
+    badge.textContent='v5.3.134';
     badge.title='현재 실행 중인 MY VOCA 빌드';
     document.body.appendChild(badge);
   }
