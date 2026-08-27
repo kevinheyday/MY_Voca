@@ -1600,7 +1600,7 @@ body.practiceReadingMode #morePanel{
   display:block!important;
 }
 
-/* ===== V5.3.139 · 중앙 고정 커서 + 스크롤 파형 ===== */
+/* ===== V5.3.140 · 중앙 고정 커서 + 스크롤 파형 ===== */
 .sentenceRecorderWave{
   height:112px;
   margin-top:8px;
@@ -1620,7 +1620,7 @@ body.practiceReadingMode #morePanel{
 }
 
 
-/* ===== V5.3.139 · 음성 녹음 학습 (공용 Recorder 재사용) ===== */
+/* ===== V5.3.140 · 음성 녹음 학습 (공용 Recorder 재사용) ===== */
 .voicePracticePage{min-height:100vh;background:#f3f4f8;color:#111827;padding:12px 12px 42px}
 .voicePracticeShell{max-width:720px;margin:0 auto}
 .voicePracticeHeader{display:flex;align-items:flex-start;gap:12px;padding:8px 2px 4px}
@@ -1652,7 +1652,7 @@ body.practiceReadingMode #morePanel{
 }
 
 
-/* ===== V5.3.139 · MY 수업 무한 반복 상태 표시 ===== */
+/* ===== V5.3.140 · MY 수업 무한 반복 상태 표시 ===== */
 .myTitleInfinityBtn.active,
 .myTitleInfinityBtn[aria-pressed="true"]{
   background:linear-gradient(135deg,#4f46e5,#7c3aed)!important;
@@ -1677,7 +1677,7 @@ body.practiceReadingMode #morePanel{
   to{transform:scale(1.08)}
 }
 
-/* V5.3.139: active infinity button hard visual */
+/* V5.3.140: active infinity button hard visual */
 .myTitleInfinityBtn[aria-pressed="true"]{
  background:linear-gradient(135deg,#4f46e5,#7c3aed)!important;
  color:#fff!important;border-color:#6d28d9!important;
@@ -1685,7 +1685,7 @@ body.practiceReadingMode #morePanel{
 .myTitleInfinityBtn[aria-pressed="true"] *{color:#fff!important}
 
 
-/* ===== V5.3.139 · 무한 반복 실제 ON 상태 시각화 ===== */
+/* ===== V5.3.140 · 무한 반복 실제 ON 상태 시각화 ===== */
 .myTitleInfinityBtn[data-repeat-state="on"],
 .myTitleInfinityBtn.active,
 .myTitleInfinityBtn[aria-pressed="true"]{
@@ -1711,7 +1711,7 @@ body.practiceReadingMode #morePanel{
 }
 
 
-/* ===== V5.3.139 · infinity ON hard paint ===== */
+/* ===== V5.3.140 · infinity ON hard paint ===== */
 button.myTitleInfinityBtn.active,
 button.myTitleInfinityBtn[data-repeat-state="on"],
 button.myTitleInfinityBtn[aria-pressed="true"]{
@@ -1728,7 +1728,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.139 · infinity button + build badge ===== */
+/* ===== V5.3.140 · infinity button + build badge ===== */
 button.myTitleInfinityBtn.active,
 button.myTitleInfinityBtn[data-repeat-state="on"],
 button.myTitleInfinityBtn[aria-pressed="true"]{
@@ -1759,7 +1759,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.139 · MY 수업 집중 반복 = Day Loop 동일 방식 ===== */
+/* ===== V5.3.140 · MY 수업 집중 반복 = Day Loop 동일 방식 ===== */
 .myTitleInfinityBtn.focused{
   border-color:#6366f1!important;
   background:linear-gradient(135deg,#4f46e5,#7c3aed)!important;
@@ -1773,7 +1773,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.139 · SPEAKING 현재 재생 문장 강조 ===== */
+/* ===== V5.3.140 · SPEAKING 현재 재생 문장 강조 ===== */
 .mySpeakSentence{
   display:inline;
   border-radius:7px;
@@ -1790,7 +1790,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.139 · SPEAKING 현재 문장 강제 강조 ===== */
+/* ===== V5.3.140 · SPEAKING 현재 문장 강제 강조 ===== */
 .mySpeakSentence.myClassSentenceNow{
   background:#e9e5ff!important;
   background-color:#e9e5ff!important;
@@ -1804,7 +1804,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.139 · 모든 TTS의 문장/단어 현재 위치 강조 ===== */
+/* ===== V5.3.140 · 모든 TTS의 문장/단어 현재 위치 강조 ===== */
 ::highlight(mv-playing-sentence){
   background-color:#e9e5ff;
   color:#241a72;
@@ -1824,7 +1824,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   box-decoration-break:clone!important;
 }
 
-/* ===== V5.3.139 · DOM 기반 현재 문장/단어 강조 ===== */
+/* ===== V5.3.140 · DOM 기반 현재 문장/단어 강조 ===== */
 .mvTtsSentenceNow{
   background:#e9e5ff!important;
   background-color:#e9e5ff!important;
@@ -1843,76 +1843,75 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   box-shadow:0 0 0 2px rgba(91,33,182,.18)!important;
 }
 
-/* ===== V5.3.139 · 실제 재생 문장 강제 강조 ===== */
-.myStudyEn.mvTtsSentenceNow,
-.myChunkExample.mvTtsSentenceNow,
-.mySpeakSentence.mvTtsSentenceNow,
-.mvTtsSentenceNow{
-  background:#ddd6fe!important;
-  background-color:#ddd6fe!important;
-  color:#241a72!important;
-  border-radius:9px!important;
-  box-shadow:0 0 0 3px rgba(124,58,237,.28), inset 4px 0 0 #7c3aed!important;
-  padding:3px 7px!important;
-  -webkit-box-decoration-break:clone!important;
-  box-decoration-break:clone!important;
-}
-.mvTtsSentenceNow .mvTtsWordNow{
-  background:#5b21b6!important;
-  background-color:#5b21b6!important;
-  color:#fff!important;
-  border-radius:5px!important;
-  font-weight:950!important;
-  box-shadow:0 0 0 2px rgba(91,33,182,.22)!important;
-  padding:1px 2px!important;
+
+/* ===== V5.3.140 · 재생 표시 표준화 ===== */
+/* 큰 카드: 재생 중인 항목 전체 배경이 바뀜 */
+.mvPlayingCard{
+  background:#f3f0ff!important;
+  border-color:#c4b5fd!important;
+  box-shadow:0 6px 18px rgba(109,40,217,.10)!important;
 }
 
-
-/* ===== V5.3.139 · 현재 재생 문장 = 배경색만 강조 ===== */
+/* 현재 문장: 네모 박스가 아니라 글자 뒤의 배경색만 */
 .mvTtsSentenceNow,
 .myStudyEn.mvTtsSentenceNow,
 .myChunkExample.mvTtsSentenceNow,
 .mySpeakSentence.mvTtsSentenceNow{
-  background:#e8e3ff!important;
-  background-color:#e8e3ff!important;
+  background:#ddd6fe!important;
+  background-color:#ddd6fe!important;
   color:inherit!important;
-  box-shadow:none!important;
-  outline:none!important;
   border:none!important;
-  border-radius:3px!important;
+  outline:none!important;
+  box-shadow:none!important;
+  border-radius:2px!important;
   padding:0!important;
   -webkit-box-decoration-break:clone!important;
   box-decoration-break:clone!important;
 }
+
+/* 현재 읽는 단어: 문장 안에서 더 진하게 */
 .mvTtsSentenceNow .mvTtsWordNow{
   background:#6d28d9!important;
   background-color:#6d28d9!important;
   color:#fff!important;
-  border-radius:3px!important;
+  border:none!important;
+  outline:none!important;
   box-shadow:none!important;
+  border-radius:3px!important;
   padding:0 2px!important;
   font-weight:900!important;
 }
 
-/* V5.3.139 · MY수업 체크박스 복원 */
-.myClassSelectRow{
-  display:flex!important;
+/* 수업 선택 체크박스는 카드 레이아웃을 깨지 않는 작은 형태 */
+.myLessonSelectMini{
+  display:inline-flex!important;
   align-items:center!important;
-  gap:9px!important;
-  margin:0 0 10px!important;
-  padding:8px 10px!important;
-  border:1px solid #ddd6fe!important;
-  border-radius:12px!important;
-  background:#faf9ff!important;
-}
-.myClassSelectCheck{
-  width:20px!important;
-  height:20px!important;
-  accent-color:#6d28d9!important;
-  flex:0 0 20px!important;
-}
-.myClassSelectCopy{
-  font-size:12px!important;
-  font-weight:850!important;
+  gap:5px!important;
+  margin:8px 0 0!important;
+  padding:4px 8px!important;
+  border-radius:999px!important;
+  background:#f8f7ff!important;
   color:#5b21b6!important;
+  font-size:11px!important;
+  font-weight:850!important;
+  border:1px solid #ddd6fe!important;
+}
+.myLessonSelectMini input{
+  width:17px!important;
+  height:17px!important;
+  accent-color:#6d28d9!important;
+}
+.myClassFullPlayBtn{
+  margin-left:8px!important;
+  min-height:38px!important;
+  padding:0 12px!important;
+  border:1px solid #c4b5fd!important;
+  border-radius:11px!important;
+  background:#ede9fe!important;
+  color:#5b21b6!important;
+  font-weight:900!important;
+}
+.myClassFullPlayBtn.playing{
+  background:#6d28d9!important;
+  color:#fff!important;
 }
