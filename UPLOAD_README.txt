@@ -1,8 +1,10 @@
-MY VOCA V5.3.138
-- 수업5 반복 재생이 수업1 음성을 읽던 실제 원인 수정: m536Data()에 lesson 5가 빠져 있었음.
-- 수업5 Speaking 패턴 decorator도 lesson5가 lesson1으로 fallback하던 문제 수정.
-- MY수업 현재 재생 문장은 text 검색이 아니라 실제 DOM element를 speakOne()에 직접 전달.
-- Correction / Native Chunk / Speaking / 직접 듣기 / 자동재생 / 전체반복 / 무한반복 모두 동일.
-- 현재 문장: 연보라 배경 + 보라 외곽선/왼쪽선.
-- TTS가 word boundary를 제공하면 현재 단어: 진보라 + 흰글자.
-- 수업5 Speaking 패턴 색상/설명용 PATS[5] 추가.
+MY VOCA V5.3.139
+1. 홈의 MY 수업 1~5 카드에 반복 선택 체크박스를 정적으로 복원.
+   - 앱 JS가 늦게 실행되더라도 체크박스는 즉시 보임.
+   - 기존 localStorage 선택값과 syncChecks() 로직 유지.
+   - 체크박스 클릭 시 수업 카드가 열리지 않도록 이벤트 분리.
+2. 선택 반복용 dataFor()에도 수업5 라우팅 추가.
+3. 현재 재생 문장 강조 UI 변경:
+   - 네모 박스/외곽선/왼쪽선 제거.
+   - 문장 텍스트 뒤에 부드러운 연보라 배경색만 표시.
+   - 현재 단어는 진보라 배경 + 흰 글자로 유지.

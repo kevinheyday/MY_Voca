@@ -1418,7 +1418,7 @@ function normalizeTextForTTS(text,lang='en-US'){
   return content;
 }
 
-// ===== V5.3.138 · COMMON DOM TTS HIGHLIGHT =====
+// ===== V5.3.139 · COMMON DOM TTS HIGHLIGHT =====
 const MV_DOM_HL={sentence:null,word:null,wrapped:[],spoken:''};
 function mvDomNorm(v){return String(v||'').replace(/\s+/g,' ').trim()}
 function mvDomVisible(el){
@@ -4975,7 +4975,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
 
 
 
-// ===== V5.3.138 · 자유 음성 녹음 학습 =====
+// ===== V5.3.139 · 자유 음성 녹음 학습 =====
 const VOICE_PRACTICE_RECENT_KEY='mv_voice_practice_recent_v1';
 
 function voicePracticeRecentList(){
@@ -5851,7 +5851,7 @@ function saveSelected(a){
 }
 V535.selected=getSelected();
 
-function dataFor(n){return Number(n)===4?MY_CLASS_LESSON_4:(Number(n)===3?MY_CLASS_LESSON_3:(Number(n)===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1))}
+function dataFor(n){const x=Number(n);return x===5?MY_CLASS_LESSON_5:(x===4?MY_CLASS_LESSON_4:(x===3?MY_CLASS_LESSON_3:(x===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1)))}
 
 PATS[5]=[
 {id:'difficult_without',en:"It's difficult to ~ without ~ing",ko:'~하지 않고는 ~하기 어렵다',re:/\bit(?:'s| is) really difficult for us to move forward without using AI\b/gi},
@@ -7135,7 +7135,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// ===== V5.3.138 MY 수업 HARD navigation stop =====
+// ===== V5.3.139 MY 수업 HARD navigation stop =====
 function myClassHardNavigationStop(){
   try{stopAllMyClassPlayback(true)}catch(e){}
   // Samsung Internet TTS cancel 안정성을 위해 짧게 한 번 더 취소한다.
@@ -7157,7 +7157,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// V5.3.138: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
+// V5.3.139: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
 function installInfinityVisualObserver(){
   const root=document.getElementById('myClassContent');
   if(!root || root.dataset.infinityVisualObserver==='1')return;
@@ -7171,7 +7171,7 @@ function installInfinityVisualObserver(){
 setTimeout(installInfinityVisualObserver,0);
 
 
-// V5.3.138: 무한 반복 상태 표시 heartbeat.
+// V5.3.139: 무한 반복 상태 표시 heartbeat.
 // 브라우저/DOM 재렌더 방식과 무관하게 반복 중에는 250ms마다 active UI를 복구한다.
 if(!window.__mvInfinityHeartbeat){
   window.__mvInfinityHeartbeat=setInterval(()=>{
@@ -7208,9 +7208,16 @@ function installVisibleBuildBadge(){
   if(!badge){
     badge=document.createElement('div');
     badge.id='mvBuildBadge';
-    badge.textContent='v5.3.138';
+    badge.textContent='v5.3.139';
     badge.title='현재 실행 중인 MY VOCA 빌드';
     document.body.appendChild(badge);
   }
 }
 setTimeout(installVisibleBuildBadge,0);
+
+
+// V5.3.139 · MY 수업 선택 체크박스 클릭은 카드 열기와 분리
+document.addEventListener('click',(e)=>{
+  const row=e.target.closest('.myClassSelectRow');
+  if(row)e.stopPropagation();
+},true);
