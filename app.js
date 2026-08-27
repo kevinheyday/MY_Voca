@@ -95,8 +95,8 @@ function myClassFocus(el){
   }
 }
 function myClassPlaybackItems(){
-  if(myClassTab==='corrections')return myClassData().corrections.map((x,i)=>({text:x.en,el:document.getElementById(`myCorrectionCard${i}`)}));
-  if(myClassTab==='chunks')return myClassData().chunks.map((x,i)=>({text:x.example,el:document.getElementById(`myChunkCard${i}`)}));
+  if(myClassTab==='corrections')return myClassData().corrections.map((x,i)=>({text:x.en,el:document.getElementById(`myen${i}`)}));
+  if(myClassTab==='chunks')return myClassData().chunks.map((x,i)=>({text:x.example,el:document.querySelector(`#myChunkCard${i} .myChunkExample`)}));
   if(myClassTab==='speaking'){const out=[];myClassData().speaking.forEach((x,i)=>myClassSplitSentences(x.text).forEach((text,j)=>out.push({text,el:document.getElementById(`mySpeakSentence${i}_${j}`)})));return out;}
   return [];
 }
@@ -142,7 +142,7 @@ async function myClassSpeakSequence(texts,{focusEl=null,statusPrefix='전체 듣
 
     myClassSetStatus(`${statusPrefix} · ${k+1}/${list.length}`,true);
 
-    await speakOne(list[k],getSpeechRate(),'en-US');
+    await speakOne(list[k],getSpeechRate(),'en-US',sentenceEl);
 
     if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)return;
 
@@ -166,7 +166,7 @@ async function myClassStartAuto(startIndex=null){
   const items=myClassPlaybackItems();if(!items.length){myClassStop(false);myClassSetStatus(myClassTab==='habits'?'습관 탭은 읽기 대신 행동 교정에 집중합니다.':'재생할 문장이 없습니다.',false);return;}
   if(startIndex!=null)MY_CLASS_PLAY.index=Math.max(0,Math.min(items.length-1,startIndex));else if(MY_CLASS_PLAY.index>=items.length)MY_CLASS_PLAY.index=0;
   myClassStop(false);const token=++MY_CLASS_PLAY.token;MY_CLASS_PLAY.active=true;MY_CLASS_PLAY.paused=false;myClassSyncButtons();const settings=loadAppSettings();const repeat=Math.max(1,parseInt(settings.myClassSentenceRepeat||2,10));const pause=Math.max(0,parseInt(settings.myClassPause||700,10));
-  while(token===MY_CLASS_PLAY.token&&!MY_CLASS_PLAY.paused){const fresh=myClassPlaybackItems();if(!fresh.length)break;if(MY_CLASS_PLAY.index>=fresh.length)MY_CLASS_PLAY.index=0;const item=fresh[MY_CLASS_PLAY.index];MY_CLASS_PLAY.currentText=item.text;myClassFocus(item.el);const repeatCount=MY_CLASS_PLAY.repeatCurrent?999999:repeat;for(let r=0;r<repeatCount;r++){if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)break;myClassSetStatus(`${myClassTab==='corrections'?'핵심 교정':myClassTab==='chunks'?'Native Chunk':'말하기'} · ${MY_CLASS_PLAY.index+1}/${fresh.length} · ${MY_CLASS_PLAY.repeatCurrent?'∞':`${r+1}/${repeat}`}`,true);await speakOne(item.text,getSpeechRate(),'en-US');if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)break;await new Promise(res=>setTimeout(res,pause));}if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)break;if(MY_CLASS_PLAY.repeatCurrent)continue;MY_CLASS_PLAY.index++;if(MY_CLASS_PLAY.index>=fresh.length){MY_CLASS_PLAY.active=false;MY_CLASS_PLAY.paused=true;MY_CLASS_PLAY.index=0;myClassClearFocus();myClassSyncButtons();myClassSetStatus('이 탭의 자동 재생이 완료되었습니다',false);break;}}
+  while(token===MY_CLASS_PLAY.token&&!MY_CLASS_PLAY.paused){const fresh=myClassPlaybackItems();if(!fresh.length)break;if(MY_CLASS_PLAY.index>=fresh.length)MY_CLASS_PLAY.index=0;const item=fresh[MY_CLASS_PLAY.index];MY_CLASS_PLAY.currentText=item.text;myClassFocus(item.el);const repeatCount=MY_CLASS_PLAY.repeatCurrent?999999:repeat;for(let r=0;r<repeatCount;r++){if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)break;myClassSetStatus(`${myClassTab==='corrections'?'핵심 교정':myClassTab==='chunks'?'Native Chunk':'말하기'} · ${MY_CLASS_PLAY.index+1}/${fresh.length} · ${MY_CLASS_PLAY.repeatCurrent?'∞':`${r+1}/${repeat}`}`,true);await speakOne(item.text,getSpeechRate(),'en-US',item.el);if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)break;await new Promise(res=>setTimeout(res,pause));}if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)break;if(MY_CLASS_PLAY.repeatCurrent)continue;MY_CLASS_PLAY.index++;if(MY_CLASS_PLAY.index>=fresh.length){MY_CLASS_PLAY.active=false;MY_CLASS_PLAY.paused=true;MY_CLASS_PLAY.index=0;myClassClearFocus();myClassSyncButtons();myClassSetStatus('이 탭의 자동 재생이 완료되었습니다',false);break;}}
 }
 function myClassTogglePlay(){
   if(typeof M536!=='undefined'){
@@ -1418,7 +1418,7 @@ function normalizeTextForTTS(text,lang='en-US'){
   return content;
 }
 
-// ===== V5.3.137 · COMMON DOM TTS HIGHLIGHT =====
+// ===== V5.3.138 · COMMON DOM TTS HIGHLIGHT =====
 const MV_DOM_HL={sentence:null,word:null,wrapped:[],spoken:''};
 function mvDomNorm(v){return String(v||'').replace(/\s+/g,' ').trim()}
 function mvDomVisible(el){
@@ -1527,7 +1527,7 @@ window.mvDomClearHighlight=mvDomClearHighlight;
 window.mvDomStartHighlight=mvDomStartHighlight;
 window.mvDomBoundary=mvDomBoundary;
 
-function speakOne(text,rate=getSpeechRate(),lang='en-US'){
+function speakOne(text,rate=getSpeechRate(),lang='en-US',preferredHighlightEl=null){
   const sessionSeq=TTS.seq;
   return new Promise(resolve=>{
     if(!text||!initTTS()){resolve();return}
@@ -1548,7 +1548,7 @@ function speakOne(text,rate=getSpeechRate(),lang='en-US'){
       if(sessionSeq!==TTS.seq){resolve();return}
       try{
         // Every utterance, including the first/only sentence, gets highlighted.
-        mvDomStartHighlight(content);
+        mvDomStartHighlight(content,preferredHighlightEl);
         const u=new SpeechSynthesisUtterance(content);
         u.lang=lang;
         u.rate=getSpeechRate();
@@ -4975,7 +4975,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
 
 
 
-// ===== V5.3.137 · 자유 음성 녹음 학습 =====
+// ===== V5.3.138 · 자유 음성 녹음 학습 =====
 const VOICE_PRACTICE_RECENT_KEY='mv_voice_practice_recent_v1';
 
 function voicePracticeRecentList(){
@@ -5852,6 +5852,29 @@ function saveSelected(a){
 V535.selected=getSelected();
 
 function dataFor(n){return Number(n)===4?MY_CLASS_LESSON_4:(Number(n)===3?MY_CLASS_LESSON_3:(Number(n)===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1))}
+
+PATS[5]=[
+{id:'difficult_without',en:"It's difficult to ~ without ~ing",ko:'~하지 않고는 ~하기 어렵다',re:/\bit(?:'s| is) really difficult for us to move forward without using AI\b/gi},
+{id:'compete_with',en:'compete with ~',ko:'~와 경쟁하다',re:/\bcompete with\b/gi},
+{id:'rely_heavily',en:'rely heavily on ~',ko:'~에 크게 의존하다',re:/\brely heavily on\b/gi},
+{id:'spend_ing',en:'spend money ~ing',ko:'~하는 데 돈을 쓰다',re:/\bspends? (?:a lot of|too much) money\b[^.!?]*\b(?:developing|implementing)\b/gi},
+{id:'fall_behind',en:'fall behind ~',ko:'~보다 뒤처지다',re:/\bfall behind\b/gi},
+{id:'stay_competitive',en:'stay competitive',ko:'경쟁력을 유지하다',re:/\bstay competitive\b/gi},
+{id:'one_biggest_concerns',en:'one of our biggest concerns',ko:'우리의 가장 큰 우려 중 하나',re:/\bone of our biggest concerns\b/gi},
+{id:'responsible_for',en:'be responsible for ~',ko:'~에 책임이 있다',re:/\bresponsible for\b/gi},
+{id:'think_deeply',en:'think deeply about ~',ko:'~에 대해 깊이 생각하다',re:/\bthink deeply about\b/gi},
+{id:'whatever_ai',en:'whatever AI tells us',ko:'AI가 말하는 것은 무엇이든',re:/\bwhatever AI tells us\b/gi},
+{id:'without_ing',en:'without ~ing',ko:'~하지 않고',re:/\bwithout questioning\b/gi},
+{id:'difference_between',en:'a difference between A and B',ko:'A와 B 사이의 차이',re:/\ba difference between\b/gi},
+{id:'where_are_we',en:'Where are we with ~?',ko:'~는 현재 어디까지 진행됐나요?',re:/\bWhere are we with\b/gi},
+{id:'what_support',en:'What kind of support do you need?',ko:'어떤 지원이 필요한가요?',re:/\bWhat kind of support do you need\b/gi},
+{id:'as_long_as',en:'As long as ~',ko:'~하기만 한다면',re:/\bAs long as\b/gi},
+{id:'avoid_ing',en:'avoid ~ing',ko:'~하는 것을 피하다',re:/\bavoid doing\b/gi},
+{id:'as_much_as_possible',en:'as much as possible',ko:'가능한 한 많이',re:/\bas much as possible\b/gi},
+{id:'straight_concise',en:'straightforward and concise',ko:'직접적이고 간결한',re:/\bstraightforward and concise\b/gi},
+{id:'be_pilot',en:'be the pilot, not the passenger',ko:'수동적으로 따라가지 말고 주도권을 가져라',re:/\bbe the pilot, not the passenger\b/gi}
+];
+
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function normPattern(p){
   return String(p||'').replace(/[.…]/g,' ').replace(/~ing/gi,'').replace(/~|someone|something|\.\.\./gi,' ')
@@ -6092,7 +6115,7 @@ function m536Lessons(){
   selected=(Array.isArray(selected)?selected:[]).map(Number).filter(n=>all.includes(n));
   return [...new Set(selected)].sort((a,b)=>a-b);
 }
-function m536Data(n){return Number(n)===4?MY_CLASS_LESSON_4:(Number(n)===3?MY_CLASS_LESSON_3:(Number(n)===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1))}
+function m536Data(n){const x=Number(n);return x===5?MY_CLASS_LESSON_5:(x===4?MY_CLASS_LESSON_4:(x===3?MY_CLASS_LESSON_3:(x===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1)))}
 function m536Label(tab){return tab==='corrections'?'핵심 교정':tab==='chunks'?'Native Chunk':'말하기'}
 function m536ItemKey(x){return `${x.lesson}|${x.tab}|${x.index}`}
 function m536BuildPlaylist(){
@@ -6130,44 +6153,30 @@ async function m536Speak(text,paragraph){
 }
 
 async function m536SpeakItem(item,focusEl){
-  // SPEAKING 문단은 실제 문장별로 재생하면서 현재 문장을 표시한다.
   if(item && item.tab==='speaking'){
     const parts=myClassSplitSentences(item.text);
     const block=focusEl || document.getElementById(`mySpeakBlock${item.index}`);
-
     for(let i=0;i<parts.length;i++){
       const sentenceEl=
         document.getElementById(`mySpeakSentence${item.index}_${i}`) ||
         block?.querySelectorAll('.mySpeakSentence')?.[i] ||
         null;
-
-      if(sentenceEl)mvDomStartHighlight(parts[i],sentenceEl);
-
-      myClassSetStatus?.(
-        `SPEAKING ${item.index+1} · 현재 문장 ${i+1}/${parts.length}`,
-        true
-      );
-
-      await speakOne(parts[i],getSpeechRate(),'en-US');
-
+      myClassSetStatus?.(`SPEAKING ${item.index+1} · 현재 문장 ${i+1}/${parts.length}`,true);
+      await speakOne(parts[i],getSpeechRate(),'en-US',sentenceEl);
       if(i<parts.length-1){
         await new Promise(r=>setTimeout(r,Math.min(350,Number(loadAppSettings().myClassPause||700))));
       }
     }
-
-    myClassClearSpeakingSentenceHighlight();
     return;
   }
 
-  const exactEl=item?.tab==='corrections'
-    ? focusEl?.querySelector('.myStudyEn')
-    : item?.tab==='chunks'
-      ? focusEl?.querySelector('.myChunkExample')
-      : null;
-  if(exactEl){
-    mvDomStartHighlight(item?.text||'',exactEl);
+  let exactEl=null;
+  if(item?.tab==='corrections'){
+    exactEl=document.getElementById(`myen${item.index}`) || focusEl?.querySelector?.('.myStudyEn') || null;
+  }else if(item?.tab==='chunks'){
+    exactEl=focusEl?.querySelector?.('.myChunkExample') || document.querySelector(`#myChunkCard${item.index} .myChunkExample`) || null;
   }
-  await m536Speak(item?.text||'',!!item?.paragraph);
+  await speakOne(item?.text||'',getSpeechRate(),'en-US',exactEl);
 }
 
 function m536Unlock(){
@@ -7070,7 +7079,7 @@ function legend(text,lesson){
 }
 function decorate(){
  if(typeof myClassTab==='undefined'||myClassTab!=='speaking')return;
- const lesson=Number(myClassLessonNo||1),data=(lesson===4?MY_CLASS_LESSON_4:(lesson===3?MY_CLASS_LESSON_3:(lesson===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1)));
+ const lesson=Number(myClassLessonNo||1),data=(lesson===5?MY_CLASS_LESSON_5:(lesson===4?MY_CLASS_LESSON_4:(lesson===3?MY_CLASS_LESSON_3:(lesson===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1))));
  (data.speaking||[]).forEach((x,i)=>{
   const block=document.getElementById(`mySpeakBlock${i}`),textEl=document.getElementById(`myspeak${i}`);if(!block||!textEl)return;
   const parts=myClassSplitSentences(x.text||'');
@@ -7126,7 +7135,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// ===== V5.3.137 MY 수업 HARD navigation stop =====
+// ===== V5.3.138 MY 수업 HARD navigation stop =====
 function myClassHardNavigationStop(){
   try{stopAllMyClassPlayback(true)}catch(e){}
   // Samsung Internet TTS cancel 안정성을 위해 짧게 한 번 더 취소한다.
@@ -7148,7 +7157,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// V5.3.137: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
+// V5.3.138: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
 function installInfinityVisualObserver(){
   const root=document.getElementById('myClassContent');
   if(!root || root.dataset.infinityVisualObserver==='1')return;
@@ -7162,7 +7171,7 @@ function installInfinityVisualObserver(){
 setTimeout(installInfinityVisualObserver,0);
 
 
-// V5.3.137: 무한 반복 상태 표시 heartbeat.
+// V5.3.138: 무한 반복 상태 표시 heartbeat.
 // 브라우저/DOM 재렌더 방식과 무관하게 반복 중에는 250ms마다 active UI를 복구한다.
 if(!window.__mvInfinityHeartbeat){
   window.__mvInfinityHeartbeat=setInterval(()=>{
@@ -7199,7 +7208,7 @@ function installVisibleBuildBadge(){
   if(!badge){
     badge=document.createElement('div');
     badge.id='mvBuildBadge';
-    badge.textContent='v5.3.137';
+    badge.textContent='v5.3.138';
     badge.title='현재 실행 중인 MY VOCA 빌드';
     document.body.appendChild(badge);
   }

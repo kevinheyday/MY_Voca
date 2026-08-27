@@ -1,8 +1,8 @@
-MY VOCA V5.3.137 · 8/27 MY 수업 5
-- 수업 5 홈 카드 추가
-- 실제 8/27 수업 발화 기반 핵심 교정 20개
-- 선생님이 수업에서 설명한 Native Chunk 12개
-- LONG → SHORT 말하기 4개: 핵심 → 이유 → 예시 중심의 3문장 압축
-- 나쁜 습관 6개
-- AI workslop / delegate / critical thinking / concise summary 집중
-- 기존 수업 1~4 UI, 반복재생, 녹음, 하이라이트 기능 유지
+MY VOCA V5.3.138
+- 수업5 반복 재생이 수업1 음성을 읽던 실제 원인 수정: m536Data()에 lesson 5가 빠져 있었음.
+- 수업5 Speaking 패턴 decorator도 lesson5가 lesson1으로 fallback하던 문제 수정.
+- MY수업 현재 재생 문장은 text 검색이 아니라 실제 DOM element를 speakOne()에 직접 전달.
+- Correction / Native Chunk / Speaking / 직접 듣기 / 자동재생 / 전체반복 / 무한반복 모두 동일.
+- 현재 문장: 연보라 배경 + 보라 외곽선/왼쪽선.
+- TTS가 word boundary를 제공하면 현재 단어: 진보라 + 흰글자.
+- 수업5 Speaking 패턴 색상/설명용 PATS[5] 추가.
