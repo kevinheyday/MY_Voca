@@ -36,6 +36,29 @@ let myClassTab='corrections';
 const MY_CLASS_PLAY={active:false,paused:true,token:0,index:0,repeatCurrent:false,currentText:'',currentEl:null};
 function myClassEsc(x){return String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
 function myClassSplitSentences(text){const t=String(text||'').replace(/\s+/g,' ').trim();if(!t)return[];return (t.match(/[^.!?]+(?:[.!?]+|$)/g)||[t]).map(x=>x.trim()).filter(Boolean);}
+
+function myClassSplitKoSentences(text){
+  const raw=String(text||'').trim();
+  if(!raw)return [];
+  const parts=raw.match(/[^.!?。！？]+[.!?。！？]?/g)||[raw];
+  return parts.map(x=>x.trim()).filter(Boolean);
+}
+function myClassSpeakingKoSentenceEl(block,index){
+  if(!block)return null;
+  return block.querySelector(`.mySpeakKoSentence[data-ko-index="${index}"]`);
+}
+function myClassClearSpeakingKoHighlight(){
+  document.querySelectorAll('.mySpeakKoSentence.mvTtsKoSentenceNow').forEach(x=>x.classList.remove('mvTtsKoSentenceNow'));
+}
+function myClassSetSpeakingKoHighlight(block,index){
+  myClassClearSpeakingKoHighlight();
+  const el=myClassSpeakingKoSentenceEl(block,index);
+  if(el){
+    el.classList.add('mvTtsKoSentenceNow');
+    mvPlaybackScrollTo(el,{behavior:'auto',block:'nearest'});
+  }
+}
+
 function myClassSetStatus(text,playing=false){const el=document.getElementById('myClassPlaybackStatus');if(!el)return;const copy=el.querySelector('.myClassMiniStatus');if(copy)copy.textContent=text||'';el.classList.toggle('paused',!playing);}
 function myClassClearFocus(){document.querySelectorAll('.myClassNow,.myClassSentenceNow').forEach(el=>el.classList.remove('myClassNow','myClassSentenceNow'));}
 
@@ -70,6 +93,7 @@ function myClassHighlightSpeakingSentence(el){
 }
 
 function myClassClearSpeakingSentenceHighlight(){
+  myClassClearSpeakingKoHighlight?.();
   document.querySelectorAll('.mySpeakSentence').forEach(x=>{
     x.classList.remove('myClassSentenceNow');
     x.style.removeProperty('background');
@@ -202,7 +226,7 @@ function renderMyClass(){
  }
  if(myClassTab==='corrections')root.innerHTML=`<div class="myClassList">${myClassData().corrections.map((x,i)=>`<div class="myStudyCard" id="myCorrectionCard${i}"><div class="myStudyNum"><span>CORRECTION ${i+1}</span>${infBtn('corrections',i,'현재 문장')}</div><div class="myStudyKo">${myClassEsc(x.ko)}</div><div class="myStudyBad">❌ ${myClassEsc(x.bad)}</div><div class="myStudyEn" id="myen${i}">${myClassEsc(x.en)}</div><div class="myStudyTip">💡 ${myClassEsc(x.tip)}</div><div class="myStudyActions"><button class="myStudyBtn" onclick="document.getElementById('myen${i}').classList.toggle('myHiddenEnglish')">🙈 가리기</button><button class="myStudyBtn primary" onclick="myClassSpeak(${JSON.stringify(x.en)},document.getElementById('myCorrectionCard${i}'))">🔊 듣기</button></div></div>`).join('')}</div>`;
  else if(myClassTab==='chunks')root.innerHTML=`<div class="myClassList">${myClassData().chunks.map((x,i)=>`<div class="myStudyCard" id="myChunkCard${i}"><div class="myStudyNum"><span>NATIVE CHUNK ${i+1}</span>${infBtn('chunks',i,'현재 문장')}</div><div class="myChunkPattern">${myClassEsc(x.pattern)}</div><div class="myStudyKo">${myClassEsc(x.ko)}</div><div class="myChunkExample">${myClassEsc(x.example)}</div>${x.exampleKo?`<div class="myStudyKo">${myClassEsc(x.exampleKo)}</div>`:''}<div class="myStudyActions"><button class="myStudyBtn primary" onclick="myClassSpeak(${JSON.stringify(x.example)},document.getElementById('myChunkCard${i}'))">🔊 예문 듣기</button></div></div>`).join('')}</div>`;
- else if(myClassTab==='speaking')root.innerHTML=myClassData().speaking.map((x,i)=>{const parts=myClassSplitSentences(x.text);return `<div class="mySpeakBlock" id="mySpeakBlock${i}"><div class="myStudyNum"><span>SPEAKING ${i+1}</span>${infBtn('speaking',i,'문단 전체')}</div><h3>${myClassEsc(x.prompt)}</h3>${x.promptKo?`<div class="myStudyKo">${myClassEsc(x.promptKo)}</div>`:''}<div class="mySpeakPrompt">${Number(myClassLessonNo)===5?'🎯 LONG → SHORT · 먼저 핵심 3문장으로 직접 답해 보세요.':'먼저 30~60초 직접 답한 뒤 모범답안을 확인하세요.'}</div><div class="mySpeakText" id="myspeak${i}">${parts.map((t,j)=>`<span class="mySpeakSentence" id="mySpeakSentence${i}_${j}">${myClassEsc(t)}</span>`).join(' ')}</div>${x.ko?`<div class="myStudyKo" style="margin-top:12px">🇰🇷 ${myClassEsc(x.ko)}</div>`:''}<div class="myStudyActions"><button class="myStudyBtn" onclick="document.getElementById('myspeak${i}').classList.toggle('myHiddenEnglish')">🙈 가리기</button><button class="myStudyBtn primary" onclick='myClassSpeakSequence(${JSON.stringify(parts)},{focusEl:document.getElementById("mySpeakBlock${i}"),statusPrefix:"SPEAKING ${i+1} 전체 듣기"})'>🔊 전체 듣기</button></div></div>`}).join('');
+ else if(myClassTab==='speaking')root.innerHTML=myClassData().speaking.map((x,i)=>{const parts=myClassSplitSentences(x.text);return `<div class="mySpeakBlock" id="mySpeakBlock${i}"><div class="myStudyNum"><span>SPEAKING ${i+1}</span>${infBtn('speaking',i,'문단 전체')}</div><h3>${myClassEsc(x.prompt)}</h3>${x.promptKo?`<div class="myStudyKo">${myClassEsc(x.promptKo)}</div>`:''}<div class="mySpeakPrompt">${Number(myClassLessonNo)===5?'🎯 LONG → SHORT · 먼저 핵심 3문장으로 직접 답해 보세요.':'먼저 30~60초 직접 답한 뒤 모범답안을 확인하세요.'}</div><div class="mySpeakText" id="myspeak${i}">${parts.map((t,j)=>`<span class="mySpeakSentence" id="mySpeakSentence${i}_${j}">${myClassEsc(t)}</span>`).join(' ')}</div>${x.ko?`<div class="myStudyKo mySpeakKoText" style="margin-top:12px">🇰🇷 ${myClassSplitKoSentences(x.ko).map((kt,kj)=>`<span class="mySpeakKoSentence" data-ko-index="${kj}">${myClassEsc(kt)}</span>`).join(" ")}</div>`:''}<div class="myStudyActions"><button class="myStudyBtn" onclick="document.getElementById('myspeak${i}').classList.toggle('myHiddenEnglish')">🙈 가리기</button><button class="myStudyBtn primary" onclick='myClassSpeakSequence(${JSON.stringify(parts)},{focusEl:document.getElementById("mySpeakBlock${i}"),statusPrefix:"SPEAKING ${i+1} 전체 듣기"})'>🔊 전체 듣기</button></div></div>`}).join('');
  else root.innerHTML=`<div class="myRuleGrid">${myClassData().habits.map((x,i)=>`<div class="myRule"><div class="myStudyNum">HABIT ${i+1}</div><b>${myClassEsc(x.title)}</b><p>${myClassEsc(x.text)}</p></div>`).join('')}</div>`;
  MY_CLASS_PLAY.index=0;MY_CLASS_PLAY.currentText='';myClassClearFocus();myClassSyncButtons();
  syncMyClassTitleInfinityButtons();
@@ -740,14 +764,64 @@ function clearExactReadingFocus(){
     el.classList.remove('speechReadingNow');
   });
 }
+
+/* ===== V5.3.145 · Standardized playback scroll =====
+   One shared scroll policy for DAY and MY 수업 playback.
+   Goal: prevent duplicate/competing smooth-scroll implementations.
+*/
+const MV_PLAYBACK_SCROLL = {
+  lastEl:null,
+  lastAt:0,
+  isVisibleEnough(el){
+    if(!el || !el.getBoundingClientRect) return false;
+    const r=el.getBoundingClientRect();
+    const vh=window.innerHeight||document.documentElement.clientHeight||700;
+    const topGuard=110;
+    const bottomGuard=Math.max(topGuard+120,vh-150);
+    return r.top>=topGuard && r.bottom<=bottomGuard;
+  },
+  to(el,opts={}){
+    if(!el)return;
+    const now=Date.now();
+    const force=!!opts.force;
+
+    // If the same target is already in a good viewport position, do nothing.
+    if(!force && this.lastEl===el && now-this.lastAt<900 && this.isVisibleEnough(el)) return;
+    if(!force && this.isVisibleEnough(el)){
+      this.lastEl=el;
+      this.lastAt=now;
+      return;
+    }
+
+    this.lastEl=el;
+    this.lastAt=now;
+
+    // Prefer the same minimal movement policy used by MY 수업.
+    try{
+      el.scrollIntoView({
+        behavior: opts.behavior || 'auto',
+        block: opts.block || 'nearest',
+        inline:'nearest'
+      });
+    }catch(e){
+      try{el.scrollIntoView()}catch(_){}
+    }
+  },
+  reset(){
+    this.lastEl=null;
+    this.lastAt=0;
+  }
+};
+
+function mvPlaybackScrollTo(el,opts={}){
+  return MV_PLAYBACK_SCROLL.to(el,opts);
+}
+
 function scrollReadingTarget(el){
   if(!el)return;
   clearExactReadingFocus();
   el.classList.add('speechReadingNow');
-  const fixedTop=96;
-  const rect=el.getBoundingClientRect();
-  const target=Math.max(0,window.scrollY+rect.top-fixedTop);
-  try{window.scrollTo({top:target,behavior:'smooth'})}catch(e){window.scrollTo(0,target)}
+  mvPlaybackScrollTo(el,{behavior:'auto',block:'nearest'});
 }
 
 function recordStudyView(w){
@@ -1384,7 +1458,7 @@ function focusReading(el){
         else if(rect.bottom>safeBottom)delta=rect.bottom-safeBottom;
         if(Math.abs(delta)>2)window.scrollBy({top:delta,left:0,behavior:'auto'});
       }else{
-        el.scrollIntoView({behavior:'smooth',block:'nearest',inline:'nearest'});
+        mvPlaybackScrollTo(el,{behavior:'auto',block:'nearest'});
       }
     }catch(e){}
   },IS_KAKAO_INAPP?180:90);
@@ -1399,7 +1473,8 @@ function stopAutoLearning(){
   stopRepeatWakeSession();AUTO.active=false; forceReleaseWakeLock();AUTO.token++;clearReadingFocus();updateAutoBadge()}
 
 let __lastSpokenLang='';
-function stopSpeech(){try{mvDomClearHighlight()}catch(e){}
+function stopSpeech(){
+  try{MV_PLAYBACK_SCROLL?.reset?.();}catch(e){}try{mvDomClearHighlight()}catch(e){}
   TTS.seq++;
   __lastSpokenLang='';
   if(ttsSupported()){try{window.speechSynthesis.cancel()}catch(e){}}
@@ -1418,7 +1493,7 @@ function normalizeTextForTTS(text,lang='en-US'){
   return content;
 }
 
-// ===== V5.3.141 · COMMON DOM TTS HIGHLIGHT =====
+// ===== V5.3.145 · COMMON DOM TTS HIGHLIGHT =====
 const MV_DOM_HL={sentence:null,word:null,wrapped:[],spoken:''};
 function mvDomNorm(v){return String(v||'').replace(/\s+/g,' ').trim()}
 function mvDomVisible(el){
@@ -1527,7 +1602,7 @@ window.mvDomClearHighlight=mvDomClearHighlight;
 window.mvDomStartHighlight=mvDomStartHighlight;
 window.mvDomBoundary=mvDomBoundary;
 
-function speakOne(text,rate=getSpeechRate(),lang='en-US'){
+function speakOne(text,rate=getSpeechRate(),lang='en-US',preferredEl=null){
   const sessionSeq=TTS.seq;
   return new Promise(resolve=>{
     if(!text||!initTTS()){resolve();return}
@@ -1548,7 +1623,7 @@ function speakOne(text,rate=getSpeechRate(),lang='en-US'){
       if(sessionSeq!==TTS.seq){resolve();return}
       try{
         // Every utterance, including the first/only sentence, gets highlighted.
-        mvDomStartHighlight(content);
+        mvDomStartHighlight(content,preferredEl);
         const u=new SpeechSynthesisUtterance(content);
         u.lang=lang;
         u.rate=getSpeechRate();
@@ -1781,7 +1856,7 @@ if(!w)return false;
         if(!await pause(80))return false;
         $('autoStatus').textContent=`단어 뜻 ${n}/${wordReadRepeat}회`;
         scrollReadingTarget($('meaning'));
-        await speakOne(w.meaning,.92,'ko-KR');
+        await speakOne(w.meaning,.92,'ko-KR',$('meaning'));
         if(!alive())return false;
       }
       if(n<wordReadRepeat&&!await pause(180))return false;
@@ -1803,7 +1878,7 @@ if(!w)return false;
     if(!await pause(0))return false;
     $('autoStatus').textContent='읽는 중: 단어 뜻';
     scrollReadingTarget($('meaning'));
-    await speakOne(w.meaning,.92,'ko-KR');
+    await speakOne(w.meaning,.92,'ko-KR',$('meaning'));
     if(!alive())return false;
   }
 
@@ -4975,7 +5050,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
 
 
 
-// ===== V5.3.141 · 자유 음성 녹음 학습 =====
+// ===== V5.3.145 · 자유 음성 녹음 학습 =====
 const VOICE_PRACTICE_RECENT_KEY='mv_voice_practice_recent_v1';
 
 function voicePracticeRecentList(){
@@ -6143,6 +6218,7 @@ async function m536SpeakItem(item,focusEl,guard=null){
         null;
 
       if(sentenceEl)mvDomStartHighlight(parts[i],sentenceEl);
+      myClassSetSpeakingKoHighlight(block,i);
 
       myClassSetStatus?.(
         `SPEAKING ${item.index+1} · 현재 문장 ${i+1}/${parts.length}`,
@@ -7131,7 +7207,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// ===== V5.3.141 MY 수업 HARD navigation stop =====
+// ===== V5.3.145 MY 수업 HARD navigation stop =====
 function myClassHardNavigationStop(){
   try{stopAllMyClassPlayback(true)}catch(e){}
   // Samsung Internet TTS cancel 안정성을 위해 짧게 한 번 더 취소한다.
@@ -7153,7 +7229,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// V5.3.141: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
+// V5.3.145: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
 function installInfinityVisualObserver(){
   const root=document.getElementById('myClassContent');
   if(!root || root.dataset.infinityVisualObserver==='1')return;
@@ -7167,7 +7243,7 @@ function installInfinityVisualObserver(){
 setTimeout(installInfinityVisualObserver,0);
 
 
-// V5.3.141: 무한 반복 상태 표시 heartbeat.
+// V5.3.145: 무한 반복 상태 표시 heartbeat.
 // 브라우저/DOM 재렌더 방식과 무관하게 반복 중에는 250ms마다 active UI를 복구한다.
 if(!window.__mvInfinityHeartbeat){
   window.__mvInfinityHeartbeat=setInterval(()=>{
@@ -7204,7 +7280,7 @@ function installVisibleBuildBadge(){
   if(!badge){
     badge=document.createElement('div');
     badge.id='mvBuildBadge';
-    badge.textContent='v5.3.141';
+    badge.textContent='v5.3.145';
     badge.title='현재 실행 중인 MY VOCA 빌드';
     document.body.appendChild(badge);
   }

@@ -1915,3 +1915,128 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   background:#6d28d9!important;
   color:#fff!important;
 }
+
+
+/* ===== V5.3.145 · 홈 MY수업 카드 컴팩트화 ONLY ===== */
+/* 기능/재생/반복/체크박스/수업 내부 UI는 건드리지 않고 홈 카드 크기만 축소 */
+#homePage .myClassCard{
+  position:relative;
+  padding:11px 13px!important;
+  margin-top:7px!important;
+  border-radius:15px!important;
+  min-height:0!important;
+  box-shadow:0 3px 10px rgba(15,23,42,.05)!important;
+}
+
+#homePage .myClassCard .myClassTop{
+  display:flex!important;
+  align-items:center!important;
+  justify-content:space-between!important;
+  gap:8px!important;
+  margin:0!important;
+}
+
+#homePage .myClassCard .myClassTop b{
+  font-size:14px!important;
+  line-height:1.2!important;
+  font-weight:950!important;
+}
+
+#homePage .myClassCard .myClassBadge{
+  font-size:10px!important;
+  padding:3px 7px!important;
+  border-radius:999px!important;
+  line-height:1.1!important;
+  white-space:nowrap!important;
+}
+
+#homePage .myClassCard .myClassTitle{
+  margin-top:4px!important;
+  font-size:13px!important;
+  line-height:1.25!important;
+  font-weight:850!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  padding-right:72px!important;
+}
+
+#homePage .myClassCard .myClassDesc{
+  display:none!important;
+}
+
+#homePage .myClassCard .myClassMeta{
+  margin-top:5px!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:5px 9px!important;
+  flex-wrap:wrap!important;
+  font-size:10.5px!important;
+  line-height:1.2!important;
+}
+
+#homePage .myClassCard .myClassMeta span{
+  white-space:nowrap!important;
+}
+
+/* 기존 반복 선택 체크박스는 유지하되 카드 우측 아래에 작게 배치 */
+#homePage .myClassCard .myLessonSelectMini,
+#homePage .myClassCard .myClassSelectRow{
+  position:absolute!important;
+  right:10px!important;
+  bottom:9px!important;
+  margin:0!important;
+  min-height:0!important;
+  padding:3px 7px!important;
+  border-radius:999px!important;
+  gap:4px!important;
+  z-index:2!important;
+}
+
+#homePage .myClassCard .myLessonSelectMini input,
+#homePage .myClassCard .myClassSelectRow input,
+#homePage .myClassCard .myClassSelectCheck{
+  width:15px!important;
+  height:15px!important;
+  flex:0 0 15px!important;
+}
+
+#homePage .myClassCard .myLessonSelectMini span,
+#homePage .myClassCard .myClassSelectCopy{
+  font-size:9.5px!important;
+  line-height:1!important;
+}
+
+/* 모바일에서는 DAY 카드처럼 더 촘촘하게 */
+@media(max-width:480px){
+  #homePage .myClassCard{
+    padding:9px 11px!important;
+    margin-top:6px!important;
+    border-radius:14px!important;
+  }
+  #homePage .myClassCard .myClassTop b{
+    font-size:13.5px!important;
+  }
+  #homePage .myClassCard .myClassTitle{
+    font-size:12.5px!important;
+    margin-top:3px!important;
+  }
+  #homePage .myClassCard .myClassMeta{
+    margin-top:4px!important;
+    font-size:9.8px!important;
+    gap:4px 7px!important;
+  }
+}
+
+/* ===== V5.3.145 · paired Korean playback highlight ===== */
+.mySpeakKoSentence{
+  display:inline;
+  border-radius:2px;
+  transition:background-color .12s ease;
+}
+.mySpeakKoSentence.mvTtsKoSentenceNow{
+  background:#ddd6fe!important;
+  box-shadow:none!important;
+  outline:none!important;
+  border:none!important;
+}
