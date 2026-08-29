@@ -1,26 +1,22 @@
-MY VOCA V5.3.159
-Base: V5.3.158
+MY VOCA V5.3.160
+Base: V5.3.159
 
-SORI 말하기 문장 교차오염 수정
-원인:
-- 공통 renderMyClass()는 SORI speaking 데이터를 정상 렌더링하고 있었음.
-- 그러나 과거 MY 수업 전용 Speaking 패턴 강조 decorator가 렌더 직후 실행되면서
-  MY_CLASS_LESSON_x.speaking 데이터를 myspeak 영역에 다시 덮어씀.
-- 그래서 화면 상단의 SORI Prompt/Chunk/Cue는 맞지만 본문 영어만 MY 수업 문장으로 바뀌었음.
+말하기 패턴 색상 공통 표준화
+- MY 수업 / 소리영어 / OPIC 모두 같은 규칙 적용.
+- 말하기 문장에 실제로 사용된 학습 패턴은 반드시 보라색 하이라이트.
+- speaking 항목의 pattern / patterns / chunkRef / chunkRefs를 공통 해석.
+- speaking에 별도 pattern 메타데이터가 없어도 같은 lesson의 Chunk와 문장을 대조해 자동 탐지.
+- have → having, be → is/are, take → taking 같은 활용형도 패턴으로 인식하도록 matcher 강화.
+- MY 전용 legacy Speaking decorator가 DOM을 다시 그린 뒤에도 공통 하이라이트를 재적용.
+- 문장 말하기 Quiz용 speaking sentence cards에도 동일한 pattern metadata 전달.
+- mvSpeakingPatternAudit(course, lesson) 점검 함수 추가.
 
-수정:
-- MY 전용 decorator는 ACTIVE_STUDY_COURSE === 'my'일 때만 실행.
-- render wrapper / 탭 click hook / 초기 delayed hook 모두 동일한 course guard 적용.
-- SORI와 향후 OPIC speaking 데이터는 각 course registry 데이터만 사용.
-- mvSpeakingCourseAudit(course) 추가.
-
-SORI Speaking 1 기대값:
-Prompt: Look beyond ~
-Cue: 개인의 건강을 넘어서 더 큰 그림을 봐야 한다.
-English: We need to look beyond personal health and see the bigger picture.
-Korean: 우리는 개인의 건강을 넘어서 더 큰 그림을 봐야 합니다.
+표준 색상:
+- Pattern: 진한 보라색 글자 + 연보라색 배경
+- TTS 현재 문장 강조 중에도 패턴 식별 유지
 
 Preserved:
-- V5.3.158 SORI 핵심문장 정리(24개)
+- V5.3.159 SORI/MY speaking data isolation
+- V5.3.158 SORI 핵심문장 정리 24개
 - V5.3.157 문장 말하기 이어하기
-- Single playback / infinite repeat / ChunkRefs / Pattern Speaking
+- Single playback / infinite repeat / ChunkRefs
