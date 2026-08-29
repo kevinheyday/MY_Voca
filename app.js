@@ -221,7 +221,7 @@ function myClassTogglePlay(){
 function myClassToggleCurrentRepeat(){const items=myClassPlaybackItems();if(!items.length)return;MY_CLASS_PLAY.repeatCurrent=!MY_CLASS_PLAY.repeatCurrent;myClassSyncButtons();if(MY_CLASS_PLAY.repeatCurrent){MY_CLASS_PLAY.index=Math.min(MY_CLASS_PLAY.index,items.length-1);myClassStartAuto(MY_CLASS_PLAY.index);}else if(MY_CLASS_PLAY.active&&!MY_CLASS_PLAY.paused){const next=Math.min(MY_CLASS_PLAY.index+1,items.length-1);MY_CLASS_PLAY.index=next;myClassStartAuto(next);}}
 
 
-/* ===== V5.3.157 · EXPLICIT CORE ↔ CHUNK LINK STANDARD ===== */
+/* ===== V5.3.158 · EXPLICIT CORE ↔ CHUNK LINK STANDARD ===== */
 function studyChunkMap(data){
   const map=new Map();
   (data?.chunks||[]).forEach((c,i)=>map.set(String(c?.id||`chunk_${i+1}`),c));
@@ -263,7 +263,7 @@ function studyHighlightExplicitChunkLinks(el,links){
   el.replaceChildren(frag); return true;
 }
 
-/* ===== V5.3.157 · STANDARD CORE-CHUNK PATTERN HIGHLIGHT ===== */
+/* ===== V5.3.158 · STANDARD CORE-CHUNK PATTERN HIGHLIGHT ===== */
 function studyEscRegex(s){
   return String(s||'').replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 }
@@ -583,7 +583,7 @@ function closeMyClassLesson(){myClassHardNavigationStop?.();document.getElementB
 setTimeout(()=>{const c=document.getElementById('myClassLesson1Card');if(c){c.onclick=openMyClassLesson1;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson1()}}}const c2=document.getElementById('myClassLesson2Card');if(c2){c2.onclick=openMyClassLesson2;c2.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson2()}}}const c3=document.getElementById('myClassLesson3Card');if(c3){c3.onclick=openMyClassLesson3;c3.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson3()}}}const c4=document.getElementById('myClassLesson4Card');if(c4){c4.onclick=openMyClassLesson4;c4.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson4()}}}const c5=document.getElementById('myClassLesson5Card');if(c5){c5.onclick=openMyClassLesson5;c5.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson5()}}}const b=document.getElementById('myClassBack');if(b)b.onclick=closeMyClassLesson;document.querySelectorAll('.myClassTab').forEach(x=>x.onclick=()=>{stopAllMyClassPlayback(true);myClassTab=x.dataset.myclassTab;renderMyClass();myClassSetStatus?.('화면 전환 · 재생 정지',false)});document.getElementById('myClassHomeBtn')?.addEventListener('click',closeMyClassLesson);document.getElementById('myClassPlayPause')?.addEventListener('click',myClassTogglePlay);document.getElementById('myClassCurrentRepeat')?.addEventListener('click',()=>window.m536ToggleCurrentVisibleItem?.());document.getElementById('myClassConfigBtn')?.addEventListener('click',()=>{myClassStop(false);if(typeof openConfiguration==='function')openConfiguration()});},0);
 
 
-/* ===== V5.3.157 · STANDARD STUDY COURSE REGISTRY =====
+/* ===== V5.3.158 · STANDARD STUDY COURSE REGISTRY =====
    MY / SORI / future OPIC share the same lesson renderer, TTS, repeat,
    highlighting and sentence-speaking pipeline. New courses add DATA,
    not duplicate playback/navigation code.
@@ -603,21 +603,12 @@ const SORI_GROUP_1 = {
 
     {"source":"② To Tip or Skip?","ko":"미국인들은 좋은 서비스에 보상하는 것을 좋아하지만, 많은 사람들이 이제 팁을 주는 것에 대해 다시 생각하고 있습니다.","chunkRefs":[{"id":"tip_second_thoughts","text":"having second thoughts about tipping"}],"en":"While Americans love to reward good service, many are having second thoughts about tipping.","tip":"have second thoughts about ~ = 다시 생각하다, 망설이다."},
     {"source":"② To Tip or Skip?","ko":"사실상 거의 모든 것에서 팁을 요구하는 요청이 쏟아지는 것 같습니다.","chunkRefs":[{"id":"tip_barrage","text":"a barrage of tipping requests"}],"en":"There seems to be a barrage of tipping requests on practically everything.","tip":"a barrage of ~ / practically everything."},
-    {"source":"② To Tip or Skip?","ko":"거의 모든 결제 때마다 팁을 요구하는 화면이 뜨는 것 같습니다.","chunkRefs":[{"id":"tip_it_seems","text":"It seems that"}],"en":"It seems that a tipping screen pops up on just about every sale.","tip":"It seems that ~ / pop up / just about every ~."},
-    {"source":"② To Tip or Skip?","ko":"우리는 커피숍에 갈 때마다 매번 팁을 줘야 하는 걸까요?","chunkRefs":[{"id":"tip_every_single","text":"every single time we go to a coffee shop"}],"en":"Are we tipping every single time we go to a coffee shop?","tip":"every single time + 주어 + 동사."},
-    {"source":"② To Tip or Skip?","ko":"저는 이제 'No Tip' 버튼을 누르는 데 꽤 능숙해졌습니다.","en":"I've gotten pretty good at pressing the 'No Tip' button.","tip":"get good at + -ing."},
     {"source":"② To Tip or Skip?","ko":"소비자들은 팁을 주도록 은근히 유도되고 있습니다.","chunkRefs":[{"id":"tip_nudged","text":"being nudged to tip"}],"en":"Shoppers are being nudged to tip.","tip":"be nudged to ~ = 강제가 아닌 심리적 유도/압박을 받다."},
-    {"source":"② To Tip or Skip?","ko":"심지어 타이어 같은 물건을 살 때조차 고객에게 팁을 요구하고 있습니다.","en":"Even for things like tires, customers are being asked to tip.","tip":"even for things like ~."},
-    {"source":"② To Tip or Skip?","ko":"그들은 말 그대로 화면을 돌려 제 쪽으로 보여 주었습니다.","en":"They literally had the screen turn around.","tip":"have + 목적어 + 동사원형의 사역 구조."},
     {"source":"② To Tip or Skip?","ko":"그들은 뻔뻔하게도 팁을 요구했습니다.","chunkRefs":[{"id":"tip_audacity","text":"had the audacity to ask for a tip"}],"en":"They had the audacity to ask for a tip.","tip":"have the audacity to ~ = 뻔뻔하게도 ~하다."},
     {"source":"② To Tip or Skip?","ko":"팁 문화가 조금 걷잡을 수 없을 정도로 과해졌습니다.","chunkRefs":[{"id":"tip_out_control","text":"out of control"}],"en":"Tipping has gotten a little out of control.","tip":"get out of control = 통제에서 벗어나다."},
     {"source":"② To Tip or Skip?","ko":"쉽사리 사라지지 않을 관습이기는 하지만, 사람들은 팁을 주는 데 점점 더 소극적이 되고 있습니다.","chunkRefs":[{"id":"tip_not_going","text":"isn't going anywhere"},{"id":"tip_pull_back","text":"pulling back"}],"en":"Although it's a custom that isn't going anywhere, people are pulling back.","tip":"isn't going anywhere = 당분간 사라지지 않다."},
     {"source":"② To Tip or Skip?","ko":"사람들은 어디에서, 언제, 얼마를 팁으로 줄지에 대해 점점 더 신중해지고 팁을 줄이고 있습니다.","chunkRefs":[{"id":"tip_pull_back","text":"pulling back on where, when, and how much to tip"}],"en":"People are pulling back on where, when, and how much to tip.","tip":"pull back on ~ = 줄이다, 자제하다, 소극적으로 하다."},
 
-    {"source":"③ Dumplin' Day 1","ko":"나는 대부분의 것을 루시 이모에게서 배웠습니다.","en":"I learned about most things from my Aunt Lucy.","tip":"learn A from B."},
-    {"source":"③ Dumplin' Day 1","ko":"그녀는 사람들의 눈을 똑바로 바라보는 법을 가르쳐 주었습니다.","chunkRefs":[{"id":"dum_teach_how","text":"taught me how to look people in the eye"}],"en":"She taught me how to look people in the eye.","tip":"teach someone how to ~ / look someone in the eye."},
-    {"source":"③ Dumplin' Day 1","ko":"루시 이모는 '네, 부인'과 '아니요, 선생님'이라고 예의 있게 말하는 법을 가르쳐 준 사람이었습니다.","chunkRefs":[{"id":"dum_one_who","text":"was the one who taught me"}],"en":"My Aunt Lucy was the one who taught me how to say 'yes, ma'am' and 'no, sir.'","tip":"be the one who ~."},
-    {"source":"③ Dumplin' Day 1","ko":"그녀는 잡동사니 더미 속에서도 간직할 만한 것을 찾아내는 법을 가르쳐 주었습니다.","en":"She taught me how to find a keeper in a heap of junk.","tip":"find a keeper in a heap of junk를 의미 덩어리로 듣는다."},
     {"source":"③ Dumplin' Day 1","ko":"다른 사람들이 하는 말에는 신경 쓰지 마세요.","chunkRefs":[{"id":"dum_pay_no_mind","text":"Pay no mind to what other people say"}],"en":"Pay no mind to what other people say.","tip":"pay no mind to ~ = ~에 신경 쓰지 않다."},
     {"source":"③ Dumplin' Day 1","ko":"세상에는 당신이 어떤 사람인지 멋대로 규정하려는 사람들이 가득합니다.","chunkRefs":[{"id":"dum_filled","text":"is filled with people"}],"en":"The world is filled with people who are going to try to tell you who you are.","tip":"be filled with ~ / people who ~."},
     {"source":"③ Dumplin' Day 1","ko":"하지만 당신이 어떤 사람인지는 당신이 결정할 일입니다.","chunkRefs":[{"id":"dum_you_decide","text":"that's for you to decide"}],"en":"But that's for you to decide.","tip":"That's for you to decide.를 통째로 자동화."},
@@ -929,7 +920,7 @@ window.openStudyCourse=openStudyCourse;
 // Shared sentence-speaking card converter.
 // Course data is normalized into the SAME practice-sentence schema used by MY 수업.
 
-/* ===== V5.3.157 · SORI FULL-SENTENCE TRANSLATION AUDIT ===== */
+/* ===== V5.3.158 · SORI FULL-SENTENCE TRANSLATION AUDIT ===== */
 function studyAuditCoreTranslations(course='sori',lesson=1){
   const d=studyCourseData(course,lesson);
   return (d?.corrections||[]).map((x,i)=>({
@@ -1323,7 +1314,7 @@ function clearExactReadingFocus(){
   });
 }
 
-/* ===== V5.3.157 · Standardized playback scroll =====
+/* ===== V5.3.158 · Standardized playback scroll =====
    One shared scroll policy for DAY and MY 수업 playback.
    Goal: prevent duplicate/competing smooth-scroll implementations.
 */
@@ -1376,7 +1367,7 @@ function mvPlaybackScrollTo(el,opts={}){
 }
 
 
-/* ===== V5.3.157 · word/meaning shared visual anchor ===== */
+/* ===== V5.3.158 · word/meaning shared visual anchor ===== */
 function mvPlaybackScrollWordMeaningGroup(wordEl,meaningEl){
   if(!meaningEl)return;
 
@@ -2083,7 +2074,7 @@ function normalizeTextForTTS(text,lang='en-US'){
   return content;
 }
 
-// ===== V5.3.157 · COMMON DOM TTS HIGHLIGHT =====
+// ===== V5.3.158 · COMMON DOM TTS HIGHLIGHT =====
 const MV_DOM_HL={sentence:null,word:null,wrapped:[],spoken:''};
 function mvDomNorm(v){return String(v||'').replace(/\s+/g,' ').trim()}
 function mvDomVisible(el){
@@ -2916,7 +2907,7 @@ let sentenceRecallVisible=false;
 let sentenceRecallVariant='original'; // original | paraphrase
 let sentenceStage2Repeat=false;
 
-/* ===== V5.3.157 · SENTENCE QUIZ RESUME STANDARD ===== */
+/* ===== V5.3.158 · SENTENCE QUIZ RESUME STANDARD ===== */
 function sentenceResumeContextKey(){
   const day=Number(quizSelectedDay||currentDay||1);
   const source=String(sentenceSourceMode||'example');
@@ -5733,7 +5724,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
 
 
 
-// ===== V5.3.157 · 자유 음성 녹음 학습 =====
+// ===== V5.3.158 · 자유 음성 녹음 학습 =====
 const VOICE_PRACTICE_RECENT_KEY='mv_voice_practice_recent_v1';
 
 function voicePracticeRecentList(){
@@ -6633,7 +6624,7 @@ function patternsForText(lesson,text){
 }
 
 
-/* ===== V5.3.157 · MY 수업 홈 체크박스 중복 제거 ===== */
+/* ===== V5.3.158 · MY 수업 홈 체크박스 중복 제거 ===== */
 function myClassDedupeHomeSelection(){
   document.querySelectorAll('#homePage .myClassCard').forEach(card=>{
     if(card.querySelector('.myLessonSelectMini')){
@@ -8030,7 +8021,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// ===== V5.3.157 MY 수업 HARD navigation stop =====
+// ===== V5.3.158 MY 수업 HARD navigation stop =====
 function myClassHardNavigationStop(){
   try{stopAllMyClassPlayback(true)}catch(e){}
   // Samsung Internet TTS cancel 안정성을 위해 짧게 한 번 더 취소한다.
@@ -8052,7 +8043,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// V5.3.157: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
+// V5.3.158: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
 function installInfinityVisualObserver(){
   const root=document.getElementById('myClassContent');
   if(!root || root.dataset.infinityVisualObserver==='1')return;
@@ -8066,7 +8057,7 @@ function installInfinityVisualObserver(){
 setTimeout(installInfinityVisualObserver,0);
 
 
-// V5.3.157: 무한 반복 상태 표시 heartbeat.
+// V5.3.158: 무한 반복 상태 표시 heartbeat.
 // 브라우저/DOM 재렌더 방식과 무관하게 반복 중에는 250ms마다 active UI를 복구한다.
 if(!window.__mvInfinityHeartbeat){
   window.__mvInfinityHeartbeat=setInterval(()=>{
@@ -8099,13 +8090,13 @@ if(!window.__mvInfinityHeartbeat){
 
 
 
-/* ===== V5.3.157 · PLAYBACK STANDARDIZATION SELF-AUDIT ===== */
+/* ===== V5.3.158 · PLAYBACK STANDARDIZATION SELF-AUDIT ===== */
 function mvPlaybackStandardAudit(){
   const course=M536?.course||ACTIVE_STUDY_COURSE||'my';
   const sample={course,lesson:myClassLessonNo||1,tab:myClassTab||'corrections',index:0};
   const key=m536ItemKey(sample);
   return {
-    version:'5.3.157',
+    version:'5.3.158',
     engine:'M536',
     course,
     canonicalKey:key,
@@ -8123,7 +8114,7 @@ function installVisibleBuildBadge(){
   if(!badge){
     badge=document.createElement('div');
     badge.id='mvBuildBadge';
-    badge.textContent='v5.3.157';
+    badge.textContent='v5.3.158';
     badge.title='현재 실행 중인 MY VOCA 빌드';
     document.body.appendChild(badge);
   }
@@ -8190,7 +8181,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
 
 
 
-/* ===== V5.3.157 · HOME + SENTENCE SPEAKING STANDARD COURSE PATCH ===== */
+/* ===== V5.3.158 · HOME + SENTENCE SPEAKING STANDARD COURSE PATCH ===== */
 (function(){
   'use strict';
 
@@ -8409,7 +8400,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
 
 
 
-/* ===== V5.3.157 · SHARED STUDY SELECTION / REPEAT BAR =====
+/* ===== V5.3.158 · SHARED STUDY SELECTION / REPEAT BAR =====
    One common controller for DAY VOCA / MY / SORI / OPIC.
    New study modes must implement only the adapter (items/select/start);
    they must NOT duplicate select-all / clear / selected-repeat UI.
