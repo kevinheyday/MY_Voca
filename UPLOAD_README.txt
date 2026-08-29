@@ -1,24 +1,17 @@
-MY VOCA V5.3.145
-Base: V5.3.144
+MY VOCA V5.3.147
+Base: V5.3.146
 
-Main change:
-- Standardized playback scrolling into one shared helper: mvPlaybackScrollTo()
-- DAY learning and MY 수업 now use the same minimal-movement scroll policy.
-- Removed DAY's repeated window.scrollTo({behavior:'smooth'}) behavior.
-- If the current reading element is already sufficiently visible, no scroll occurs.
-- Playback scrolling now uses block:'nearest' and behavior:'auto' to avoid competing smooth animations in Kakao in-app browser.
-- Shared scroll state resets when speech stops.
+Changes:
+1. MY 수업 홈 카드의 체크박스 중복 제거
+   - static .myLessonSelectMini만 단일 선택 체크박스로 유지
+   - old/dynamic .myClassSelectRow는 생성하지 않고, 이미 있으면 제거
+2. 선택 체크박스를 카드 우측 상단으로 이동
+3. 홈 카드의 'Native Chunk'를 'Chunk'로 변경
+4. 핵심 교정 / Chunk / 말하기 / 습관을 한 줄로 배치하여 카드 높이 축소
 
-Preserved:
-- lesson data/routing
-- speaking Korean paired highlighting
-- meaning playback anchored to current lower #meaning
-- repeat/infinite-repeat logic
-- recording
-- quiz/chunk/speaking functionality
-- home compact lesson cards
-- lesson selection checkboxes
-- all existing playback highlighting logic
-
-Architecture rule going forward:
-- New playback/navigation features should reuse shared helpers instead of creating separate scroll implementations.
+Not changed:
+- DAY 학습 재생/스크롤 표준화
+- 단어/뜻 공동 화면 앵커
+- MY 수업 재생/반복/문장 하이라이트
+- 녹음/퀴즈/Chunk/Speaking 기능
+- 수업 1~5 데이터/라우팅

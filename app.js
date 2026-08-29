@@ -27,7 +27,7 @@ const MY_CLASS_META={
   4:{title:"Aug 25 · Work, Speaking & Active Vocabulary",sub:"Real Class · Work-life, Intonation & Vocabulary",goal:"<strong>실제 대화에서 바로 꺼낼 수 있는 Chunk를 자동화합니다.</strong> 업무 설명은 짧고 정확하게, 말하기는 차분한 억양과 자연스러운 속도에 집중합니다."},
   3:{title:"Hiring, FDC & Corporate Card",sub:"Real Class · Interview, FDC & Daily Trouble",goal:"과거 경험을 짧고 정확하게 말하고, 면접·FDC 업무 표현을 Chunk로 자동화합니다."},
   1:{title:'First English Class · Native Speaking Reset',goal:'<strong>쉬운 영어를 짧고 정확하게.</strong> 문장을 만들기 전에 So / you know로 시작하지 말고, 0.5~1초 쉬었다가 주어 + 동사부터 말합니다.'},
-  2:{title:'Native Patterns · Meeting & Sleep',goal:'<strong>이번 수업은 억양·Native Chunk·회의 진행 영어에 집중합니다.</strong> 단어마다 억양을 올렸다 내리지 말고 thought group을 Staircase처럼 말하며, 배운 표현을 한글 상황에서 2초 안에 꺼내는 연습을 합니다.'}
+  2:{title:'Native Patterns · Meeting & Sleep',goal:'<strong>이번 수업은 억양·Chunk·회의 진행 영어에 집중합니다.</strong> 단어마다 억양을 올렸다 내리지 말고 thought group을 Staircase처럼 말하며, 배운 표현을 한글 상황에서 2초 안에 꺼내는 연습을 합니다.'}
 };
 let myClassLessonNo=1;
 function myClassData(){const n=Number(myClassLessonNo);return n===5?MY_CLASS_LESSON_5:(n===4?MY_CLASS_LESSON_4:(n===3?MY_CLASS_LESSON_3:(n===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1)));}
@@ -190,7 +190,7 @@ async function myClassStartAuto(startIndex=null){
   const items=myClassPlaybackItems();if(!items.length){myClassStop(false);myClassSetStatus(myClassTab==='habits'?'습관 탭은 읽기 대신 행동 교정에 집중합니다.':'재생할 문장이 없습니다.',false);return;}
   if(startIndex!=null)MY_CLASS_PLAY.index=Math.max(0,Math.min(items.length-1,startIndex));else if(MY_CLASS_PLAY.index>=items.length)MY_CLASS_PLAY.index=0;
   myClassStop(false);const token=++MY_CLASS_PLAY.token;MY_CLASS_PLAY.active=true;MY_CLASS_PLAY.paused=false;myClassSyncButtons();const settings=loadAppSettings();const repeat=Math.max(1,parseInt(settings.myClassSentenceRepeat||2,10));const pause=Math.max(0,parseInt(settings.myClassPause||700,10));
-  while(token===MY_CLASS_PLAY.token&&!MY_CLASS_PLAY.paused){const fresh=myClassPlaybackItems();if(!fresh.length)break;if(MY_CLASS_PLAY.index>=fresh.length)MY_CLASS_PLAY.index=0;const item=fresh[MY_CLASS_PLAY.index];MY_CLASS_PLAY.currentText=item.text;myClassFocus(item.el);const repeatCount=MY_CLASS_PLAY.repeatCurrent?999999:repeat;for(let r=0;r<repeatCount;r++){if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)break;myClassSetStatus(`${myClassTab==='corrections'?'핵심 교정':myClassTab==='chunks'?'Native Chunk':'말하기'} · ${MY_CLASS_PLAY.index+1}/${fresh.length} · ${MY_CLASS_PLAY.repeatCurrent?'∞':`${r+1}/${repeat}`}`,true);await speakOne(item.text,getSpeechRate(),'en-US');if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)break;await new Promise(res=>setTimeout(res,pause));}if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)break;if(MY_CLASS_PLAY.repeatCurrent)continue;MY_CLASS_PLAY.index++;if(MY_CLASS_PLAY.index>=fresh.length){MY_CLASS_PLAY.active=false;MY_CLASS_PLAY.paused=true;MY_CLASS_PLAY.index=0;myClassClearFocus();myClassSyncButtons();myClassSetStatus('이 탭의 자동 재생이 완료되었습니다',false);break;}}
+  while(token===MY_CLASS_PLAY.token&&!MY_CLASS_PLAY.paused){const fresh=myClassPlaybackItems();if(!fresh.length)break;if(MY_CLASS_PLAY.index>=fresh.length)MY_CLASS_PLAY.index=0;const item=fresh[MY_CLASS_PLAY.index];MY_CLASS_PLAY.currentText=item.text;myClassFocus(item.el);const repeatCount=MY_CLASS_PLAY.repeatCurrent?999999:repeat;for(let r=0;r<repeatCount;r++){if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)break;myClassSetStatus(`${myClassTab==='corrections'?'핵심 교정':myClassTab==='chunks'?'Chunk':'말하기'} · ${MY_CLASS_PLAY.index+1}/${fresh.length} · ${MY_CLASS_PLAY.repeatCurrent?'∞':`${r+1}/${repeat}`}`,true);await speakOne(item.text,getSpeechRate(),'en-US');if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)break;await new Promise(res=>setTimeout(res,pause));}if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)break;if(MY_CLASS_PLAY.repeatCurrent)continue;MY_CLASS_PLAY.index++;if(MY_CLASS_PLAY.index>=fresh.length){MY_CLASS_PLAY.active=false;MY_CLASS_PLAY.paused=true;MY_CLASS_PLAY.index=0;myClassClearFocus();myClassSyncButtons();myClassSetStatus('이 탭의 자동 재생이 완료되었습니다',false);break;}}
 }
 function myClassTogglePlay(){
   if(typeof M536!=='undefined'){
@@ -765,7 +765,7 @@ function clearExactReadingFocus(){
   });
 }
 
-/* ===== V5.3.145 · Standardized playback scroll =====
+/* ===== V5.3.147 · Standardized playback scroll =====
    One shared scroll policy for DAY and MY 수업 playback.
    Goal: prevent duplicate/competing smooth-scroll implementations.
 */
@@ -817,10 +817,42 @@ function mvPlaybackScrollTo(el,opts={}){
   return MV_PLAYBACK_SCROLL.to(el,opts);
 }
 
-function scrollReadingTarget(el){
+
+/* ===== V5.3.147 · word/meaning shared visual anchor ===== */
+function mvPlaybackScrollWordMeaningGroup(wordEl,meaningEl){
+  if(!meaningEl)return;
+
+  const vh=window.innerHeight||document.documentElement.clientHeight||700;
+  const wr=wordEl&&wordEl.getBoundingClientRect?wordEl.getBoundingClientRect():null;
+  const mr=meaningEl.getBoundingClientRect?meaningEl.getBoundingClientRect():null;
+
+  if(wr && mr){
+    const sameZone =
+      wr.top >= 95 &&
+      mr.bottom <= vh-120 &&
+      Math.abs(mr.top-wr.top) <= Math.max(260,vh*.42);
+
+    if(sameZone){
+      MV_PLAYBACK_SCROLL.lastEl=meaningEl;
+      MV_PLAYBACK_SCROLL.lastAt=Date.now();
+      return;
+    }
+  }
+
+  mvPlaybackScrollTo(meaningEl,{behavior:'auto',block:'nearest'});
+}
+
+function scrollReadingTarget(el,opts={}){
   if(!el)return;
   clearExactReadingFocus();
   el.classList.add('speechReadingNow');
+
+  if(opts.wordMeaningGroup){
+    const wordEl=opts.wordEl||$('word');
+    mvPlaybackScrollWordMeaningGroup(wordEl,el);
+    return;
+  }
+
   mvPlaybackScrollTo(el,{behavior:'auto',block:'nearest'});
 }
 
@@ -1493,7 +1525,7 @@ function normalizeTextForTTS(text,lang='en-US'){
   return content;
 }
 
-// ===== V5.3.145 · COMMON DOM TTS HIGHLIGHT =====
+// ===== V5.3.147 · COMMON DOM TTS HIGHLIGHT =====
 const MV_DOM_HL={sentence:null,word:null,wrapped:[],spoken:''};
 function mvDomNorm(v){return String(v||'').replace(/\s+/g,' ').trim()}
 function mvDomVisible(el){
@@ -1855,7 +1887,7 @@ if(!w)return false;
       if(w.meaning){
         if(!await pause(80))return false;
         $('autoStatus').textContent=`단어 뜻 ${n}/${wordReadRepeat}회`;
-        scrollReadingTarget($('meaning'));
+        scrollReadingTarget($('meaning'),{wordMeaningGroup:true,wordEl:$('word')});
         await speakOne(w.meaning,.92,'ko-KR',$('meaning'));
         if(!alive())return false;
       }
@@ -1877,7 +1909,7 @@ if(!w)return false;
   if(w.meaning){
     if(!await pause(0))return false;
     $('autoStatus').textContent='읽는 중: 단어 뜻';
-    scrollReadingTarget($('meaning'));
+    scrollReadingTarget($('meaning'),{wordMeaningGroup:true,wordEl:$('word')});
     await speakOne(w.meaning,.92,'ko-KR',$('meaning'));
     if(!alive())return false;
   }
@@ -5050,7 +5082,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
 
 
 
-// ===== V5.3.145 · 자유 음성 녹음 학습 =====
+// ===== V5.3.147 · 자유 음성 녹음 학습 =====
 const VOICE_PRACTICE_RECENT_KEY='mv_voice_practice_recent_v1';
 
 function voicePracticeRecentList(){
@@ -5586,7 +5618,7 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
   };
 
   // ---- MY CLASS: 3 tabs continuous full loop ----
-  function tabLabel(tab){return tab==='corrections'?'핵심 교정':tab==='chunks'?'Native Chunk':'말하기';}
+  function tabLabel(tab){return tab==='corrections'?'핵심 교정':tab==='chunks'?'Chunk':'말하기';}
   function updateFullRepeatChip(){
     const chip=document.querySelector('#myClassPlaybackStatus .myClassAutoChip');
     if(chip){chip.textContent=V534.myFullRepeat?'전체 반복 ∞':'현재 탭 반복';chip.classList.toggle('fullLoop',V534.myFullRepeat);}
@@ -5949,6 +5981,16 @@ function patternsForText(lesson,text){
   return rows.filter((x,i,a)=>a.findIndex(y=>y[0]===x[0])===i);
 }
 
+
+/* ===== V5.3.147 · MY 수업 홈 체크박스 중복 제거 ===== */
+function myClassDedupeHomeSelection(){
+  document.querySelectorAll('#homePage .myClassCard').forEach(card=>{
+    if(card.querySelector('.myLessonSelectMini')){
+      card.querySelectorAll('.myClassSelectRow').forEach(row=>row.remove());
+    }
+  });
+}
+
 function decorateMyClassHome(){
   const sec=document.querySelector('#homePage .myClassSection');
   if(!sec)return;
@@ -5961,7 +6003,7 @@ function decorateMyClassHome(){
   }
   allLessons().forEach(n=>{
     const card=document.getElementById(`myClassLesson${n}Card`);if(!card)return;
-    if(!card.querySelector('.myClassSelectRow')){
+    if(!card.querySelector('.myClassSelectRow') && !card.querySelector('.myLessonSelectMini')){
       const row=document.createElement('div');row.className='myClassSelectRow';
       row.innerHTML=`<input class="myClassSelectCheck" type="checkbox" data-my-lesson="${n}" aria-label="MY 수업 ${n} 반복 선택"><span class="myClassSelectCopy">수업 ${n} 반복 선택</span>`;
       card.insertBefore(row,card.firstChild);
@@ -5986,6 +6028,8 @@ function decorateMyClassHome(){
     saveSelected(s);
     syncChecks();
   });
+
+  myClassDedupeHomeSelection();
 }
 function syncChecks(){
   const selected=V535.selected.length?V535.selected:[];
@@ -6047,7 +6091,7 @@ async function runLessonTabs(lesson,token){
       for(let r=0;r<rc;r++){
         if(token!==V535.runToken||MY_CLASS_PLAY.paused)return false;
         const unit=item.paragraph?'문단':'문장';
-        myClassSetStatus(`수업 ${lesson} · ${tab==='corrections'?'핵심 교정':tab==='chunks'?'Native Chunk':'말하기'} · ${idx+1}/${items.length} · ${unit} ${MY_CLASS_PLAY.repeatCurrent?'∞':`${r+1}/${repeat}`}`,true);
+        myClassSetStatus(`수업 ${lesson} · ${tab==='corrections'?'핵심 교정':tab==='chunks'?'Chunk':'말하기'} · ${idx+1}/${items.length} · ${unit} ${MY_CLASS_PLAY.repeatCurrent?'∞':`${r+1}/${repeat}`}`,true);
         await speakBlock(item.text,item.paragraph);
         if(token!==V535.runToken||MY_CLASS_PLAY.paused)return false;
         await new Promise(res=>setTimeout(res,pause));
@@ -6168,7 +6212,7 @@ function m536Lessons(){
   return [...new Set(selected)].sort((a,b)=>a-b);
 }
 function m536Data(n){const x=Number(n);return x===5?MY_CLASS_LESSON_5:(x===4?MY_CLASS_LESSON_4:(x===3?MY_CLASS_LESSON_3:(x===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1)))}
-function m536Label(tab){return tab==='corrections'?'핵심 교정':tab==='chunks'?'Native Chunk':'말하기'}
+function m536Label(tab){return tab==='corrections'?'핵심 교정':tab==='chunks'?'Chunk':'말하기'}
 function m536ItemKey(x){return `${x.lesson}|${x.tab}|${x.index}`}
 function m536BuildPlaylist(){
   const out=[];
@@ -7207,7 +7251,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// ===== V5.3.145 MY 수업 HARD navigation stop =====
+// ===== V5.3.147 MY 수업 HARD navigation stop =====
 function myClassHardNavigationStop(){
   try{stopAllMyClassPlayback(true)}catch(e){}
   // Samsung Internet TTS cancel 안정성을 위해 짧게 한 번 더 취소한다.
@@ -7229,7 +7273,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// V5.3.145: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
+// V5.3.147: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
 function installInfinityVisualObserver(){
   const root=document.getElementById('myClassContent');
   if(!root || root.dataset.infinityVisualObserver==='1')return;
@@ -7243,7 +7287,7 @@ function installInfinityVisualObserver(){
 setTimeout(installInfinityVisualObserver,0);
 
 
-// V5.3.145: 무한 반복 상태 표시 heartbeat.
+// V5.3.147: 무한 반복 상태 표시 heartbeat.
 // 브라우저/DOM 재렌더 방식과 무관하게 반복 중에는 250ms마다 active UI를 복구한다.
 if(!window.__mvInfinityHeartbeat){
   window.__mvInfinityHeartbeat=setInterval(()=>{
@@ -7280,7 +7324,7 @@ function installVisibleBuildBadge(){
   if(!badge){
     badge=document.createElement('div');
     badge.id='mvBuildBadge';
-    badge.textContent='v5.3.145';
+    badge.textContent='v5.3.147';
     badge.title='현재 실행 중인 MY VOCA 빌드';
     document.body.appendChild(badge);
   }

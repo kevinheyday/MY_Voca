@@ -1917,7 +1917,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.145 · 홈 MY수업 카드 컴팩트화 ONLY ===== */
+/* ===== V5.3.147 · 홈 MY수업 카드 컴팩트화 ONLY ===== */
 /* 기능/재생/반복/체크박스/수업 내부 UI는 건드리지 않고 홈 카드 크기만 축소 */
 #homePage .myClassCard{
   position:relative;
@@ -2028,7 +2028,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   }
 }
 
-/* ===== V5.3.145 · paired Korean playback highlight ===== */
+/* ===== V5.3.147 · paired Korean playback highlight ===== */
 .mySpeakKoSentence{
   display:inline;
   border-radius:2px;
@@ -2039,4 +2039,109 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   box-shadow:none!important;
   outline:none!important;
   border:none!important;
+}
+
+/* ===== V5.3.147 · MY 수업 홈 카드 1줄 컴팩트화 ===== */
+#homePage .myClassCard{
+  padding:9px 12px!important;
+  margin-top:6px!important;
+  min-height:0!important;
+}
+
+#homePage .myClassCard .myClassTop{
+  padding-right:104px!important;
+  min-height:26px!important;
+}
+
+#homePage .myClassCard .myClassTitle{
+  margin-top:2px!important;
+  padding-right:0!important;
+  font-size:12.5px!important;
+  line-height:1.15!important;
+}
+
+/* 선택 체크박스: 카드 우측 상단으로 이동 */
+#homePage .myClassCard .myLessonSelectMini{
+  position:absolute!important;
+  right:12px!important;
+  top:10px!important;
+  bottom:auto!important;
+  margin:0!important;
+  padding:3px 8px!important;
+  min-height:0!important;
+  border-radius:999px!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:4px!important;
+  z-index:3!important;
+  background:rgba(255,255,255,.86)!important;
+}
+
+#homePage .myClassCard .myLessonSelectMini input.myClassSelectCheck{
+  width:15px!important;
+  height:15px!important;
+  flex:0 0 15px!important;
+  margin:0!important;
+}
+
+#homePage .myClassCard .myLessonSelectMini span{
+  font-size:10px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+}
+
+/* 구형 동적 체크박스 행은 보이지 않게 하고 JS에서도 제거 */
+#homePage .myClassCard .myClassSelectRow{
+  display:none!important;
+}
+
+/* 핵심교정 / Chunk / 말하기 / 습관을 한 줄에 배치 */
+#homePage .myClassCard .myClassMeta{
+  margin-top:6px!important;
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:5px!important;
+  flex-wrap:nowrap!important;
+  align-items:center!important;
+}
+
+#homePage .myClassCard .myClassMeta > span,
+#homePage .myClassCard .myClassMeta > div{
+  min-width:0!important;
+  padding:4px 6px!important;
+  font-size:10px!important;
+  line-height:1.05!important;
+  border-radius:999px!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  justify-content:center!important;
+}
+
+/* 홈 카드에서는 긴 'Native' 접두어 없이 Chunk만 표기 */
+#homePage .myClassCard .myClassMeta{
+  letter-spacing:-.15px!important;
+}
+
+@media(max-width:480px){
+  #homePage .myClassCard{
+    padding:8px 10px!important;
+  }
+  #homePage .myClassCard .myClassTop{
+    padding-right:96px!important;
+  }
+  #homePage .myClassCard .myLessonSelectMini{
+    right:9px!important;
+    top:8px!important;
+    padding:3px 6px!important;
+  }
+  #homePage .myClassCard .myClassMeta{
+    gap:4px!important;
+    margin-top:5px!important;
+  }
+  #homePage .myClassCard .myClassMeta > span,
+  #homePage .myClassCard .myClassMeta > div{
+    padding:4px 4px!important;
+    font-size:9.4px!important;
+  }
 }
