@@ -1917,7 +1917,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.147 · 홈 MY수업 카드 컴팩트화 ONLY ===== */
+/* ===== V5.3.155 · 홈 MY수업 카드 컴팩트화 ONLY ===== */
 /* 기능/재생/반복/체크박스/수업 내부 UI는 건드리지 않고 홈 카드 크기만 축소 */
 #homePage .myClassCard{
   position:relative;
@@ -2028,7 +2028,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   }
 }
 
-/* ===== V5.3.147 · paired Korean playback highlight ===== */
+/* ===== V5.3.155 · paired Korean playback highlight ===== */
 .mySpeakKoSentence{
   display:inline;
   border-radius:2px;
@@ -2041,7 +2041,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   border:none!important;
 }
 
-/* ===== V5.3.147 · MY 수업 홈 카드 1줄 컴팩트화 ===== */
+/* ===== V5.3.155 · MY 수업 홈 카드 1줄 컴팩트화 ===== */
 #homePage .myClassCard{
   padding:9px 12px!important;
   margin-top:6px!important;
@@ -2143,5 +2143,284 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   #homePage .myClassCard .myClassMeta > div{
     padding:4px 4px!important;
     font-size:9.4px!important;
+  }
+}
+
+
+/* ===== V5.3.155 · STANDARD COURSE UI ===== */
+.homeStudyModeSwitch.standardFourModes{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+  gap:5px!important;
+}
+.homeStudyModeSwitch.standardFourModes .homeStudyModeBtn{
+  padding:11px 5px!important;
+  font-size:12px!important;
+  white-space:nowrap!important;
+}
+.soriClassSection,.opicClassSection{margin-top:18px;margin-bottom:16px}
+.studyCourseInfo{
+  margin:9px 0 10px;
+  padding:8px 10px;
+  border:1px solid #bae6fd;
+  border-radius:12px;
+  background:#f0f9ff;
+  color:#075985;
+  font-size:11px;
+  line-height:1.45;
+  font-weight:850;
+}
+.soriCourseCard{
+  position:relative;
+  border-color:#99f6e4!important;
+  background:linear-gradient(135deg,#ecfeff,#f0fdf4)!important;
+}
+.soriCourseCard .myClassTop b{color:#115e59!important}
+.soriCourseCard .myClassBadge{background:#ccfbf1!important;color:#0f766e!important}
+.soriLessonStrip{
+  display:flex;
+  gap:5px;
+  flex-wrap:wrap;
+  margin-top:7px;
+}
+.soriLessonStrip span{
+  padding:4px 7px;
+  border-radius:999px;
+  background:rgba(255,255,255,.88);
+  border:1px solid #d1fae5;
+  color:#475569;
+  font-size:9.5px;
+  font-weight:850;
+}
+.opicReadyCard{
+  border:1px dashed #c4b5fd;
+  border-radius:18px;
+  padding:16px;
+  background:#faf5ff;
+}
+.opicReadyCard b{color:#6d28d9;font-size:15px}
+.opicReadyCard p{margin:7px 0 0;color:#667085;font-size:12px;line-height:1.55}
+.studySourceTag{
+  display:inline-flex;
+  align-items:center;
+  margin:0 0 6px;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#ecfeff;
+  color:#0f766e;
+  border:1px solid #99f6e4;
+  font-size:10px;
+  font-weight:950;
+}
+.soriClassSection .myClassMeta{
+  display:grid!important;
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+}
+.soriClassSection .myClassMeta span{
+  text-align:center;
+  white-space:nowrap;
+  padding:5px 4px!important;
+  font-size:9.5px!important;
+}
+.sentenceSourceSwitch.standardFourSentenceSources{
+  grid-template-columns:repeat(4,minmax(0,1fr))!important;
+}
+@media(max-width:520px){
+  .homeStudyModeSwitch.standardFourModes .homeStudyModeBtn{
+    font-size:10.5px!important;
+    padding:10px 2px!important;
+  }
+  .soriCourseCard{padding:10px 11px!important}
+  .soriCourseCard .myClassTitle{font-size:12px!important;line-height:1.25!important}
+  .soriLessonStrip{gap:4px;margin-top:5px}
+  .soriLessonStrip span{font-size:8.7px;padding:3px 5px}
+  .sentenceSourceSwitch.standardFourSentenceSources .sentenceSourceBtn{
+    font-size:10.5px!important;
+    padding:9px 2px!important;
+  }
+}
+
+/* v5.3.155 SORI home DOM visibility fix */
+#homePage .soriClassSection{margin-top:14px!important}
+#homePage .soriCourseCard{display:block!important;width:100%!important;box-sizing:border-box!important;min-height:145px!important}
+#homePage .opicClassSection{margin-top:14px!important}
+
+
+/* ===== V5.3.155 · SHARED STUDY SELECTION BAR ===== */
+.sharedStudySelectBar{
+  margin:10px 0 14px;
+  padding:11px 13px;
+  border:1px solid #e4e7ec;
+  border-radius:17px;
+  background:#fff;
+  box-shadow:0 6px 18px rgba(15,23,42,.045);
+}
+.sharedStudySelectHead{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:10px;
+  margin-bottom:9px;
+}
+.sharedStudySelectHead>div{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  min-width:0;
+}
+.sharedStudySelectHead b{
+  color:#344054;
+  font-size:12px;
+  font-weight:950;
+}
+.sharedStudySelectHead span:not(.sharedStudySelectCount){
+  color:#667085;
+  font-size:10px;
+  line-height:1.35;
+}
+.sharedStudySelectCount{
+  flex:0 0 auto;
+  padding:4px 8px;
+  border-radius:999px;
+  background:#f4f3ff;
+  color:#6941c6;
+  font-size:10px;
+  font-weight:950;
+  white-space:nowrap;
+}
+.sharedStudySelectActions{
+  display:grid;
+  grid-template-columns:auto auto minmax(0,1fr);
+  gap:7px;
+}
+.sharedStudySelectBtn{
+  border:1px solid #d0d5dd;
+  border-radius:12px;
+  background:#fff;
+  color:#344054;
+  padding:9px 12px;
+  font-size:11px;
+  font-weight:950;
+  cursor:pointer;
+}
+.sharedStudySelectBtn.primary{
+  border-color:#7c3aed;
+  background:#7c3aed;
+  color:#fff;
+}
+.studySelectMini{
+  position:absolute!important;
+  right:12px!important;
+  top:10px!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:4px!important;
+  margin:0!important;
+  padding:3px 8px!important;
+  border:1px solid rgba(124,58,237,.16)!important;
+  border-radius:999px!important;
+  background:rgba(255,255,255,.9)!important;
+  z-index:5!important;
+  cursor:pointer!important;
+}
+.studySelectMini .studySelectCheck{
+  width:15px!important;
+  height:15px!important;
+  margin:0!important;
+  accent-color:#7c3aed;
+}
+.studySelectMini span{
+  font-size:10px!important;
+  line-height:1!important;
+  font-weight:850!important;
+  white-space:nowrap!important;
+}
+.opicCourseCard{
+  position:relative;
+  border-color:#ddd6fe!important;
+  background:linear-gradient(135deg,#faf5ff,#f5f3ff)!important;
+}
+#homePage .myClassSection .myClassSelectActions,
+#homePage .myClassSection .v534MyControls{
+  display:none!important;
+}
+#selectedStartBtn{
+  display:none!important;
+}
+#homePage .daySelectControls{
+  justify-content:flex-end;
+}
+@media(max-width:520px){
+  .sharedStudySelectBar{padding:9px 10px;border-radius:15px}
+  .sharedStudySelectActions{grid-template-columns:1fr 1fr}
+  .sharedStudySelectBtn.primary{grid-column:1/-1}
+  .sharedStudySelectBtn{padding:9px 7px;font-size:10px}
+  .studySelectMini{right:9px!important;top:8px!important;padding:3px 6px!important}
+}
+
+/* ===== V5.3.155 · STANDARD CORE/CHUNK VISUAL ===== */
+.studyCoreChunkMark{
+  color:#6d28d9!important;
+  background:#f3e8ff!important;
+  border-radius:5px!important;
+  padding:0 2px!important;
+  font-weight:900!important;
+  box-decoration-break:clone;
+  -webkit-box-decoration-break:clone;
+}
+.mvTtsSentenceNow .studyCoreChunkMark,
+.studyCoreChunkMark.mvTtsSentenceNow{
+  background:#c4b5fd!important;
+  color:#4c1d95!important;
+}
+.mvTtsWordNow.studyCoreChunkMark,
+.studyCoreChunkMark .mvTtsWordNow{
+  background:#6d28d9!important;
+  color:#fff!important;
+}
+
+/* ===== V5.3.155 · SHARED CHUNK TYPOGRAPHY + PATTERN SPEAKING ===== */
+#myClassPage .myChunkPattern{
+  font-size:20px!important;
+  line-height:1.28!important;
+  font-weight:950!important;
+}
+#myClassPage .myChunkExample{
+  font-size:18px!important;
+  line-height:1.48!important;
+  font-weight:850!important;
+}
+.studySpeakingPattern{
+  display:inline-flex;
+  margin:6px 0 8px;
+  padding:5px 9px;
+  border-radius:999px;
+  background:#f3e8ff;
+  color:#6d28d9;
+  border:1px solid #ddd6fe;
+  font-size:12px;
+  font-weight:950;
+}
+@media(max-width:520px){
+  #myClassPage .myChunkPattern{font-size:19px!important}
+  #myClassPage .myChunkExample{font-size:17px!important}
+}
+
+/* ===== V5.3.155 · SINGLE PLAYBACK ENGINE STATE ===== */
+#myClassPage .myTitleInfinityBtn[aria-pressed="true"],
+#myClassPage .myInfinityBtn[aria-pressed="true"]{
+  font-weight:950!important;
+}
+
+/* ===== V5.3.155 · SHARED SPEAKING ENGLISH TYPOGRAPHY ===== */
+#myClassPage .mySpeakAnswer,
+#myClassPage .mySpeakSentence{
+  font-size:18px!important;
+  line-height:1.52!important;
+  font-weight:850!important;
+}
+@media(max-width:520px){
+  #myClassPage .mySpeakAnswer,
+  #myClassPage .mySpeakSentence{
+    font-size:17px!important;
   }
 }

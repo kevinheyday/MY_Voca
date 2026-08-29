@@ -29,9 +29,21 @@ const MY_CLASS_META={
   1:{title:'First English Class · Native Speaking Reset',goal:'<strong>쉬운 영어를 짧고 정확하게.</strong> 문장을 만들기 전에 So / you know로 시작하지 말고, 0.5~1초 쉬었다가 주어 + 동사부터 말합니다.'},
   2:{title:'Native Patterns · Meeting & Sleep',goal:'<strong>이번 수업은 억양·Chunk·회의 진행 영어에 집중합니다.</strong> 단어마다 억양을 올렸다 내리지 말고 thought group을 Staircase처럼 말하며, 배운 표현을 한글 상황에서 2초 안에 꺼내는 연습을 합니다.'}
 };
+let ACTIVE_STUDY_COURSE='my';
 let myClassLessonNo=1;
-function myClassData(){const n=Number(myClassLessonNo);return n===5?MY_CLASS_LESSON_5:(n===4?MY_CLASS_LESSON_4:(n===3?MY_CLASS_LESSON_3:(n===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1)));}
-function myClassUpdateHeader(){const m=MY_CLASS_META[myClassLessonNo]||MY_CLASS_META[1];const a=document.getElementById('myClassHeaderMain'),b=document.getElementById('myClassHeaderSub'),g=document.getElementById('myClassGoal');if(a)a.textContent=`MY 수업 · 수업 ${myClassLessonNo}`;if(b)b.textContent=m.title;if(g)g.innerHTML=m.goal;}
+function myClassData(){
+  if(typeof studyCourseData==='function')return studyCourseData(ACTIVE_STUDY_COURSE,myClassLessonNo);
+  const n=Number(myClassLessonNo);
+  return n===5?MY_CLASS_LESSON_5:(n===4?MY_CLASS_LESSON_4:(n===3?MY_CLASS_LESSON_3:(n===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1)));
+}
+function myClassUpdateHeader(){
+  if(typeof studySyncCourseUI==='function'){studySyncCourseUI();return;}
+  const m=MY_CLASS_META[myClassLessonNo]||MY_CLASS_META[1];
+  const a=document.getElementById('myClassHeaderMain'),b=document.getElementById('myClassHeaderSub'),g=document.getElementById('myClassGoal');
+  if(a)a.textContent=`MY 수업 · 수업 ${myClassLessonNo}`;
+  if(b)b.textContent=m.title;
+  if(g)g.innerHTML=m.goal;
+}
 let myClassTab='corrections';
 const MY_CLASS_PLAY={active:false,paused:true,token:0,index:0,repeatCurrent:false,currentText:'',currentEl:null};
 function myClassEsc(x){return String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
@@ -207,28 +219,170 @@ function myClassTogglePlay(){
   myClassStartAuto(MY_CLASS_PLAY.index);
 }
 function myClassToggleCurrentRepeat(){const items=myClassPlaybackItems();if(!items.length)return;MY_CLASS_PLAY.repeatCurrent=!MY_CLASS_PLAY.repeatCurrent;myClassSyncButtons();if(MY_CLASS_PLAY.repeatCurrent){MY_CLASS_PLAY.index=Math.min(MY_CLASS_PLAY.index,items.length-1);myClassStartAuto(MY_CLASS_PLAY.index);}else if(MY_CLASS_PLAY.active&&!MY_CLASS_PLAY.paused){const next=Math.min(MY_CLASS_PLAY.index+1,items.length-1);MY_CLASS_PLAY.index=next;myClassStartAuto(next);}}
+
+
+/* ===== V5.3.155 · EXPLICIT CORE ↔ CHUNK LINK STANDARD ===== */
+function studyChunkMap(data){
+  const map=new Map();
+  (data?.chunks||[]).forEach((c,i)=>map.set(String(c?.id||`chunk_${i+1}`),c));
+  return map;
+}
+function studyCoreChunkLinks(item,data){
+  const refs=Array.isArray(item?.chunkRefs)?item.chunkRefs:[];
+  const map=studyChunkMap(data);
+  return refs.map(ref=>{
+    const r=typeof ref==='string'?{id:ref}:ref;
+    const chunk=map.get(String(r?.id||''));
+    return chunk?{id:String(r.id),pattern:String(chunk.pattern||''),meaning:String(chunk.ko||''),text:String(r.text||'').trim()}:null;
+  }).filter(Boolean);
+}
+function studyHighlightExplicitChunkLinks(el,links){
+  if(!el||!links?.length)return false;
+  const text=el.textContent||'', lower=text.toLowerCase(), hits=[];
+  links.forEach(link=>{
+    if(!link.text)return;
+    const start=lower.indexOf(link.text.toLowerCase());
+    if(start>=0)hits.push({start,end:start+link.text.length,pattern:link.pattern,id:link.id});
+  });
+  if(!hits.length)return false;
+  hits.sort((a,b)=>a.start-b.start||(b.end-b.start)-(a.end-a.start));
+  const chosen=[];
+  hits.forEach(hit=>{if(!chosen.some(x=>hit.start<x.end&&hit.end>x.start))chosen.push(hit)});
+  const frag=document.createDocumentFragment(); let pos=0;
+  chosen.forEach(hit=>{
+    if(hit.start>pos)frag.appendChild(document.createTextNode(text.slice(pos,hit.start)));
+    const mark=document.createElement('span');
+    mark.className='studyCoreChunkMark';
+    mark.dataset.chunkId=hit.id;
+    mark.dataset.chunkPattern=hit.pattern;
+    mark.title=hit.pattern;
+    mark.textContent=text.slice(hit.start,hit.end);
+    frag.appendChild(mark); pos=hit.end;
+  });
+  if(pos<text.length)frag.appendChild(document.createTextNode(text.slice(pos)));
+  el.replaceChildren(frag); return true;
+}
+
+/* ===== V5.3.155 · STANDARD CORE-CHUNK PATTERN HIGHLIGHT ===== */
+function studyEscRegex(s){
+  return String(s||'').replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+}
+function studyPatternFixedParts(pattern){
+  let p=String(pattern||'').trim();
+  if(!p)return [];
+  p=p
+    .replace(/~ing\b/gi,' ')
+    .replace(/~/g,' ')
+    .replace(/\b(?:someone|somebody|something|A|B)\b/g,' ')
+    .replace(/\([^)]*\)/g,' ');
+  return p.split(/\s+/).map(x=>x.trim()).filter(Boolean);
+}
+function studyChunkCandidatesForCore(item,data){
+  const chunks=Array.isArray(data?.chunks)?data.chunks:[];
+  const sourceMatched=item?.source
+    ? chunks.filter(c=>!c.source || c.source===item.source)
+    : chunks;
+  return sourceMatched.map(c=>String(c?.pattern||'').trim()).filter(Boolean).sort((a,b)=>b.length-a.length);
+}
+function studyFindPatternHits(text,pattern){
+  const parts=studyPatternFixedParts(pattern);
+  if(!parts.length)return [];
+  const hits=[];
+
+  const fixed=parts.join(' ');
+  if(fixed.length>=4){
+    try{
+      const rx=new RegExp(studyEscRegex(fixed).replace(/\s+/g,'\\s+'),'ig');
+      let m;
+      while((m=rx.exec(text))){
+        hits.push({start:m.index,end:m.index+m[0].length,pattern});
+        if(rx.lastIndex===m.index)rx.lastIndex++;
+      }
+    }catch(e){}
+    if(hits.length)return hits;
+  }
+
+  if(parts.length>=2){
+    try{
+      const rx=new RegExp(parts.map(studyEscRegex).join('[^,.!?;:\\n]{0,70}?'),'ig');
+      let m;
+      while((m=rx.exec(text))){
+        hits.push({start:m.index,end:m.index+m[0].length,pattern});
+        if(rx.lastIndex===m.index)rx.lastIndex++;
+      }
+    }catch(e){}
+  }
+  return hits;
+}
+function studyHighlightTextByPatterns(el,patterns){
+  if(!el || !patterns?.length)return;
+  const text=el.textContent||'';
+  if(!text)return;
+
+  const hits=[];
+  patterns.forEach(p=>hits.push(...studyFindPatternHits(text,p)));
+  if(!hits.length)return;
+
+  hits.sort((a,b)=>a.start-b.start || (b.end-b.start)-(a.end-a.start));
+  const chosen=[];
+  for(const hit of hits){
+    if(chosen.some(x=>hit.start<x.end && hit.end>x.start))continue;
+    chosen.push(hit);
+  }
+  chosen.sort((a,b)=>a.start-b.start);
+
+  const frag=document.createDocumentFragment();
+  let pos=0;
+  chosen.forEach(hit=>{
+    if(hit.start>pos)frag.appendChild(document.createTextNode(text.slice(pos,hit.start)));
+    const mark=document.createElement('span');
+    mark.className='studyCoreChunkMark';
+    mark.dataset.chunkPattern=hit.pattern;
+    mark.textContent=text.slice(hit.start,hit.end);
+    frag.appendChild(mark);
+    pos=hit.end;
+  });
+  if(pos<text.length)frag.appendChild(document.createTextNode(text.slice(pos)));
+  el.replaceChildren(frag);
+}
+function studyApplyCoreChunkHighlights(){
+  if(myClassTab!=='corrections')return;
+  const data=myClassData();
+  (data?.corrections||[]).forEach((item,i)=>{
+    const el=document.getElementById(`myen${i}`);
+    if(!el)return;
+    const linked=studyCoreChunkLinks(item,data);
+    if(!studyHighlightExplicitChunkLinks(el,linked)){
+      studyHighlightTextByPatterns(el,studyChunkCandidatesForCore(item,data));
+    }
+  });
+}
+window.studyApplyCoreChunkHighlights=studyApplyCoreChunkHighlights;
+
+
 function renderMyClass(){
  const root=document.getElementById('myClassContent');if(!root)return;
  document.querySelectorAll('.myClassTab').forEach(b=>b.classList.toggle('active',b.dataset.myclassTab===myClassTab));
  const infBtn=(tab,i,label)=>{
-   const key=`${myClassLessonNo}|${tab}|${i}`;
+   const key=m536ItemKey({course:ACTIVE_STUDY_COURSE,lesson:myClassLessonNo,tab,index:i});
    const on=String(MY_CLASS_INFINITY_VISUAL_KEY||'')===key;
    return `<button
       class="myTitleInfinityBtn${on?' focused':''}"
       type="button"
       data-inf-key="${key}"
       aria-pressed="${on?'true':'false'}"
-      onclick="event.stopPropagation();myClassTitleInfinityToggle(this,${myClassLessonNo},'${tab}',${i})">
+      onclick="event.stopPropagation();myClassTitleInfinityToggle(this,${myClassLessonNo},'${tab}',${i},'${ACTIVE_STUDY_COURSE}')">
       <span class="myInfLabel">${myClassInfinityLabel(tab,i)}</span>
       <span class="myInfSymbol">∞</span>
       <span class="myInfFocus">${on?'반복 중':'집중'}</span>
    </button>`;
  }
- if(myClassTab==='corrections')root.innerHTML=`<div class="myClassList">${myClassData().corrections.map((x,i)=>`<div class="myStudyCard" id="myCorrectionCard${i}"><div class="myStudyNum"><span>CORRECTION ${i+1}</span>${infBtn('corrections',i,'현재 문장')}</div><div class="myStudyKo">${myClassEsc(x.ko)}</div><div class="myStudyBad">❌ ${myClassEsc(x.bad)}</div><div class="myStudyEn" id="myen${i}">${myClassEsc(x.en)}</div><div class="myStudyTip">💡 ${myClassEsc(x.tip)}</div><div class="myStudyActions"><button class="myStudyBtn" onclick="document.getElementById('myen${i}').classList.toggle('myHiddenEnglish')">🙈 가리기</button><button class="myStudyBtn primary" onclick="myClassSpeak(${JSON.stringify(x.en)},document.getElementById('myCorrectionCard${i}'))">🔊 듣기</button></div></div>`).join('')}</div>`;
- else if(myClassTab==='chunks')root.innerHTML=`<div class="myClassList">${myClassData().chunks.map((x,i)=>`<div class="myStudyCard" id="myChunkCard${i}"><div class="myStudyNum"><span>NATIVE CHUNK ${i+1}</span>${infBtn('chunks',i,'현재 문장')}</div><div class="myChunkPattern">${myClassEsc(x.pattern)}</div><div class="myStudyKo">${myClassEsc(x.ko)}</div><div class="myChunkExample">${myClassEsc(x.example)}</div>${x.exampleKo?`<div class="myStudyKo">${myClassEsc(x.exampleKo)}</div>`:''}<div class="myStudyActions"><button class="myStudyBtn primary" onclick="myClassSpeak(${JSON.stringify(x.example)},document.getElementById('myChunkCard${i}'))">🔊 예문 듣기</button></div></div>`).join('')}</div>`;
- else if(myClassTab==='speaking')root.innerHTML=myClassData().speaking.map((x,i)=>{const parts=myClassSplitSentences(x.text);return `<div class="mySpeakBlock" id="mySpeakBlock${i}"><div class="myStudyNum"><span>SPEAKING ${i+1}</span>${infBtn('speaking',i,'문단 전체')}</div><h3>${myClassEsc(x.prompt)}</h3>${x.promptKo?`<div class="myStudyKo">${myClassEsc(x.promptKo)}</div>`:''}<div class="mySpeakPrompt">${Number(myClassLessonNo)===5?'🎯 LONG → SHORT · 먼저 핵심 3문장으로 직접 답해 보세요.':'먼저 30~60초 직접 답한 뒤 모범답안을 확인하세요.'}</div><div class="mySpeakText" id="myspeak${i}">${parts.map((t,j)=>`<span class="mySpeakSentence" id="mySpeakSentence${i}_${j}">${myClassEsc(t)}</span>`).join(' ')}</div>${x.ko?`<div class="myStudyKo mySpeakKoText" style="margin-top:12px">🇰🇷 ${myClassSplitKoSentences(x.ko).map((kt,kj)=>`<span class="mySpeakKoSentence" data-ko-index="${kj}">${myClassEsc(kt)}</span>`).join(" ")}</div>`:''}<div class="myStudyActions"><button class="myStudyBtn" onclick="document.getElementById('myspeak${i}').classList.toggle('myHiddenEnglish')">🙈 가리기</button><button class="myStudyBtn primary" onclick='myClassSpeakSequence(${JSON.stringify(parts)},{focusEl:document.getElementById("mySpeakBlock${i}"),statusPrefix:"SPEAKING ${i+1} 전체 듣기"})'>🔊 전체 듣기</button></div></div>`}).join('');
+ if(myClassTab==='corrections')root.innerHTML=`<div class="myClassList">${myClassData().corrections.map((x,i)=>`<div class="myStudyCard" id="myCorrectionCard${i}"><div class="myStudyNum"><span>CORRECTION ${i+1}</span>${infBtn('corrections',i,'현재 문장')}</div>${x.source?`<div class="studySourceTag">${myClassEsc(x.source)}</div>`:''}<div class="myStudyKo">${myClassEsc(x.ko)}</div>${x.bad?`<div class="myStudyBad">❌ ${myClassEsc(x.bad)}</div>`:''}<div class="myStudyEn" id="myen${i}">${myClassEsc(x.en)}</div><div class="myStudyTip">💡 ${myClassEsc(x.tip||'')}</div><div class="myStudyActions"><button class="myStudyBtn" onclick="document.getElementById('myen${i}').classList.toggle('myHiddenEnglish')">🙈 가리기</button><button class="myStudyBtn primary" onclick="myClassSpeak(${JSON.stringify(x.en)},document.getElementById('myCorrectionCard${i}'))">🔊 듣기</button></div></div>`).join('')}</div>`;
+ else if(myClassTab==='chunks')root.innerHTML=`<div class="myClassList">${myClassData().chunks.map((x,i)=>`<div class="myStudyCard" id="myChunkCard${i}"><div class="myStudyNum"><span>NATIVE CHUNK ${i+1}</span>${infBtn('chunks',i,'현재 문장')}</div>${x.source?`<div class="studySourceTag">${myClassEsc(x.source)}</div>`:''}<div class="myChunkPattern">${myClassEsc(x.pattern)}</div><div class="myStudyKo">${myClassEsc(x.ko)}</div><div class="myChunkExample">${myClassEsc(x.example)}</div>${x.exampleKo?`<div class="myStudyKo">${myClassEsc(x.exampleKo)}</div>`:''}<div class="myStudyActions"><button class="myStudyBtn primary" onclick="myClassSpeak(${JSON.stringify(x.example)},document.getElementById('myChunkCard${i}'))">🔊 예문 듣기</button></div></div>`).join('')}</div>`;
+ else if(myClassTab==='speaking')root.innerHTML=myClassData().speaking.map((x,i)=>{const parts=myClassSplitSentences(x.text);return `<div class="mySpeakBlock" id="mySpeakBlock${i}"><div class="myStudyNum"><span>SPEAKING ${i+1}</span>${infBtn('speaking',i,'문단 전체')}</div><h3>${myClassEsc(x.prompt)}</h3>${x.pattern?`<div class="studySpeakingPattern">${myClassEsc(x.pattern)}</div>`:''}${x.promptKo?`<div class="myStudyKo">${myClassEsc(x.promptKo)}</div>`:''}<div class="mySpeakPrompt">${myClassEsc(studyCourseSpeakingGuide(ACTIVE_STUDY_COURSE))}</div><div class="mySpeakText" id="myspeak${i}">${parts.map((t,j)=>`<span class="mySpeakSentence" id="mySpeakSentence${i}_${j}">${myClassEsc(t)}</span>`).join(' ')}</div>${x.ko?`<div class="myStudyKo mySpeakKoText" style="margin-top:12px">🇰🇷 ${myClassSplitKoSentences(x.ko).map((kt,kj)=>`<span class="mySpeakKoSentence" data-ko-index="${kj}">${myClassEsc(kt)}</span>`).join(" ")}</div>`:''}<div class="myStudyActions"><button class="myStudyBtn" onclick="document.getElementById('myspeak${i}').classList.toggle('myHiddenEnglish')">🙈 가리기</button><button class="myStudyBtn primary" onclick='myClassSpeakSequence(${JSON.stringify(parts)},{focusEl:document.getElementById("mySpeakBlock${i}"),statusPrefix:"SPEAKING ${i+1} 전체 듣기"})'>🔊 전체 듣기</button></div></div>`}).join('');
  else root.innerHTML=`<div class="myRuleGrid">${myClassData().habits.map((x,i)=>`<div class="myRule"><div class="myStudyNum">HABIT ${i+1}</div><b>${myClassEsc(x.title)}</b><p>${myClassEsc(x.text)}</p></div>`).join('')}</div>`;
  MY_CLASS_PLAY.index=0;MY_CLASS_PLAY.currentText='';myClassClearFocus();myClassSyncButtons();
+ studyApplyCoreChunkHighlights();
  syncMyClassTitleInfinityButtons();
 }
 
@@ -326,20 +480,16 @@ function syncMyClassTitleInfinityButtons(){
 }
 
 
-function myClassTitleInfinityToggle(btn,lesson,tab,index){
-  const key=`${lesson}|${tab}|${index}`;
-  const turningOff=String(MY_CLASS_INFINITY_VISUAL_KEY||'')===key;
+function myClassTitleInfinityToggle(btn,lesson,tab,index,course=ACTIVE_STUDY_COURSE){
+  const c=String(course||M536?.course||'my');
+  const key=m536ItemKey({course:c,lesson,tab,index});
+  const turningOff=M536.mode==='infinite' && M536.infiniteKey===key;
 
-  // Day Loop Training과 같은 방식:
-  // 버튼 UI 상태를 먼저 즉시 확정하고, 그 다음 재생 컨트롤러를 실행한다.
   MY_CLASS_INFINITY_VISUAL_KEY=turningOff?'':key;
   MY_TITLE_INFINITY_KEY=MY_CLASS_INFINITY_VISUAL_KEY;
-
   syncMyClassTitleInfinityButtons();
 
-  if(typeof window.m536ToggleInfinite==='function'){
-    window.m536ToggleInfinite(Number(lesson),tab,Number(index));
-  }
+  window.m536ToggleInfinite?.(Number(lesson),tab,Number(index),c);
 }
 function stopAllMyClassPlayback(clearCurrent=true){
   try{myClassClearSpeakingSentenceHighlight()}catch(e){}
@@ -423,14 +573,411 @@ setTimeout(installMyClassPlaybackExitGuard,0);
 
 
 function myClassMaybeAutoStart(){const cfg=loadAppSettings();if(cfg.myClassAutoPlay!==false&&myClassTab!=='habits')myClassStartAuto(0);else myClassSetStatus(myClassTab==='habits'?'습관 탭 · 행동 교정':'자동 재생 OFF · 하단 ▶ 재생 시작을 누르세요',false);}
-function openMyClassLesson(no=1){stopAllMyClassPlayback(true);const maxLesson=Math.max(5,Object.keys(MY_CLASS_META||{}).map(Number).filter(Number.isFinite).length||5);myClassLessonNo=Math.max(1,Math.min(maxLesson,Number(no)||1));try{initTTS();unlockTTSFromGesture()}catch(e){}document.getElementById('homePage')?.classList.add('hidden');document.getElementById('dayAppPage')?.classList.add('hidden');if(typeof hideStandalonePages==='function')hideStandalonePages();document.getElementById('myClassPage')?.classList.remove('hidden');document.getElementById('myClassBottom')?.classList.remove('hidden');myClassTab='corrections';myClassUpdateHeader();renderMyClass();window.scrollTo(0,0);myClassSetStatus?.('재생 대기 · 버튼을 눌러 시작하세요',false);}
+function openMyClassLesson(no=1){stopAllMyClassPlayback(true);const maxLesson=typeof studyCourseLessonCount==='function'?studyCourseLessonCount(ACTIVE_STUDY_COURSE):Math.max(5,Object.keys(MY_CLASS_META||{}).map(Number).filter(Number.isFinite).length||5);myClassLessonNo=Math.max(1,Math.min(maxLesson,Number(no)||1));try{initTTS();unlockTTSFromGesture()}catch(e){}document.getElementById('homePage')?.classList.add('hidden');document.getElementById('dayAppPage')?.classList.add('hidden');if(typeof hideStandalonePages==='function')hideStandalonePages();document.getElementById('myClassPage')?.classList.remove('hidden');document.getElementById('myClassBottom')?.classList.remove('hidden');myClassTab=(typeof studyCourseOrder==='function'?studyCourseOrder(ACTIVE_STUDY_COURSE)[0]:'corrections')||'corrections';myClassUpdateHeader();renderMyClass();window.scrollTo(0,0);myClassSetStatus?.('재생 대기 · 버튼을 눌러 시작하세요',false);}
 function openMyClassLesson1(){openMyClassLesson(1)}
 function openMyClassLesson2(){openMyClassLesson(2)}
 function openMyClassLesson3(){openMyClassLesson(3)}
 function openMyClassLesson4(){openMyClassLesson(4)}
 function openMyClassLesson5(){openMyClassLesson(5)}
 function closeMyClassLesson(){myClassHardNavigationStop?.();document.getElementById('myClassBottom')?.classList.add('hidden');document.getElementById('myClassPage')?.classList.add('hidden');document.getElementById('homePage')?.classList.remove('hidden');window.scrollTo(0,0);}
-setTimeout(()=>{const c=document.getElementById('myClassLesson1Card');if(c){c.onclick=openMyClassLesson1;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson1()}}}const c2=document.getElementById('myClassLesson2Card');if(c2){c2.onclick=openMyClassLesson2;c2.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson2()}}}const c3=document.getElementById('myClassLesson3Card');if(c3){c3.onclick=openMyClassLesson3;c3.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson3()}}}const c4=document.getElementById('myClassLesson4Card');if(c4){c4.onclick=openMyClassLesson4;c4.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson4()}}}const c5=document.getElementById('myClassLesson5Card');if(c5){c5.onclick=openMyClassLesson5;c5.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson5()}}}const b=document.getElementById('myClassBack');if(b)b.onclick=closeMyClassLesson;document.querySelectorAll('.myClassTab').forEach(x=>x.onclick=()=>{stopAllMyClassPlayback(true);myClassTab=x.dataset.myclassTab;renderMyClass();myClassSetStatus?.('화면 전환 · 재생 정지',false)});document.getElementById('myClassHomeBtn')?.addEventListener('click',closeMyClassLesson);document.getElementById('myClassPlayPause')?.addEventListener('click',myClassTogglePlay);document.getElementById('myClassCurrentRepeat')?.addEventListener('click',myClassToggleCurrentRepeat);document.getElementById('myClassConfigBtn')?.addEventListener('click',()=>{myClassStop(false);if(typeof openConfiguration==='function')openConfiguration()});},0);
+setTimeout(()=>{const c=document.getElementById('myClassLesson1Card');if(c){c.onclick=openMyClassLesson1;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson1()}}}const c2=document.getElementById('myClassLesson2Card');if(c2){c2.onclick=openMyClassLesson2;c2.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson2()}}}const c3=document.getElementById('myClassLesson3Card');if(c3){c3.onclick=openMyClassLesson3;c3.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson3()}}}const c4=document.getElementById('myClassLesson4Card');if(c4){c4.onclick=openMyClassLesson4;c4.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson4()}}}const c5=document.getElementById('myClassLesson5Card');if(c5){c5.onclick=openMyClassLesson5;c5.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson5()}}}const b=document.getElementById('myClassBack');if(b)b.onclick=closeMyClassLesson;document.querySelectorAll('.myClassTab').forEach(x=>x.onclick=()=>{stopAllMyClassPlayback(true);myClassTab=x.dataset.myclassTab;renderMyClass();myClassSetStatus?.('화면 전환 · 재생 정지',false)});document.getElementById('myClassHomeBtn')?.addEventListener('click',closeMyClassLesson);document.getElementById('myClassPlayPause')?.addEventListener('click',myClassTogglePlay);document.getElementById('myClassCurrentRepeat')?.addEventListener('click',()=>window.m536ToggleCurrentVisibleItem?.());document.getElementById('myClassConfigBtn')?.addEventListener('click',()=>{myClassStop(false);if(typeof openConfiguration==='function')openConfiguration()});},0);
+
+
+/* ===== V5.3.155 · STANDARD STUDY COURSE REGISTRY =====
+   MY / SORI / future OPIC share the same lesson renderer, TTS, repeat,
+   highlighting and sentence-speaking pipeline. New courses add DATA,
+   not duplicate playback/navigation code.
+*/
+const SORI_GROUP_1 = {
+  "corrections":[
+    {"source":"① Drinking Culture","ko":"요즘 많은 사람들이 술이나 담배를 끊고 있다.","chunkRefs":[{"id":"dc_give_up","text":"giving up drinking or smoking"}],"en":"These days, many people are giving up drinking or smoking.","tip":"give up + -ing를 한 덩어리로 익힌다."},
+    {"source":"① Drinking Culture","ko":"개인의 건강을 넘어서 더 큰 영향을 봐야 한다.","chunkRefs":[{"id":"dc_look_beyond","text":"look beyond personal health"},{"id":"dc_harm_cause","text":"the harm they can cause to society"}],"en":"But if we look beyond personal health and think about the harm they can cause to society, the picture changes.","tip":"look beyond A / the harm A can cause to B 구조를 의미 덩어리로 듣는다."},
+    {"source":"① Drinking Culture","ko":"내 생각에는 술이 담배보다 훨씬 더 해로울 수 있다.","chunkRefs":[{"id":"dc_far_more","text":"far more harmful than cigarettes"}],"en":"I believe alcohol can be far more harmful than cigarettes.","tip":"I believe + 문장 / far more + 형용사."},
+    {"source":"① Drinking Culture","ko":"얼마나 많은 범죄가 술과 관련되어 있는지 생각해 보라.","en":"Just think about how many crimes are related to alcohol.","tip":"Just think about how many + 복수명사 + are related to ~."},
+    {"source":"① Drinking Culture","ko":"특히 얼마나 많은 가정폭력 사건이 음주 때문에 발생하는지 생각해 보라.","en":"Especially, think about how many cases of domestic violence occur because of drinking.","tip":"cases of ~ / occur because of ~를 덩어리로."},
+    {"source":"① Drinking Culture","ko":"이 점을 고려하면 우리의 음주문화를 진지하게 돌아볼 필요가 있다.","chunkRefs":[{"id":"dc_serious_look","text":"take a serious look at our drinking culture"}],"en":"When we consider this, I think we need to take a serious look at our drinking culture.","tip":"take a serious look at ~ = ~을 진지하게 살펴보다."},
+    {"source":"① Drinking Culture","ko":"한국은 세계적으로 알코올 소비 수준이 높은 나라 중 하나다.","chunkRefs":[{"id":"dc_one_highest","text":"one of the highest levels of alcohol consumption in the world"}],"en":"Statistics alone show that South Korea has one of the highest levels of alcohol consumption in the world.","tip":"one of the highest levels of ~ in the world."},
+    {"source":"① Drinking Culture","ko":"술을 못 마시는 사람을 사회성이 부족한 사람으로 보는 경향이 있다.","chunkRefs":[{"id":"dc_view_as","text":"view people who cannot drink as less sociable"}],"en":"There is a tendency to view people who cannot drink as less sociable.","tip":"a tendency to view A as B."},
+    {"source":"① Drinking Culture","ko":"이 모든 것들이 불건전한 음주문화의 원인이 되는 듯하다.","chunkRefs":[{"id":"dc_contribute","text":"contribute to an unhealthy drinking culture"}],"en":"All of these seem to contribute to an unhealthy drinking culture.","tip":"contribute to ~는 좋은 결과뿐 아니라 문제의 원인에도 쓴다."},
+    {"source":"① Drinking Culture","ko":"우리는 많은 폭력 범죄와 성범죄가 술과 연관되어 있다는 사실을 인정해야 한다.","chunkRefs":[{"id":"dc_associated","text":"are associated with alcohol"}],"en":"We need to recognize that many violent crimes and sexual offenses are associated with alcohol.","tip":"recognize that ~ / be associated with ~."},
+
+    {"source":"② To Tip or Skip?","ko":"미국인들은 좋은 서비스에 보상하는 것을 좋아하지만, 많은 사람들은 팁 문화에 다시 의문을 갖고 있다.","chunkRefs":[{"id":"tip_second_thoughts","text":"having second thoughts about tipping"}],"en":"While Americans love to reward good service, many are having second thoughts about tipping.","tip":"have second thoughts about ~ = 다시 생각하다, 망설이다."},
+    {"source":"② To Tip or Skip?","ko":"사실상 거의 모든 것에 팁 요구가 쏟아진다.","chunkRefs":[{"id":"tip_barrage","text":"a barrage of tipping requests"}],"en":"There seems to be a barrage of tipping requests on practically everything.","tip":"a barrage of ~ / practically everything."},
+    {"source":"② To Tip or Skip?","ko":"거의 모든 결제에서 팁 화면이 뜨는 것 같다.","chunkRefs":[{"id":"tip_it_seems","text":"It seems that"}],"en":"It seems that a tipping screen pops up on just about every sale.","tip":"It seems that ~ / pop up / just about every ~."},
+    {"source":"② To Tip or Skip?","ko":"우리가 커피숍에 갈 때마다 정말 팁을 줘야 하나?","chunkRefs":[{"id":"tip_every_single","text":"every single time we go to a coffee shop"}],"en":"Are we tipping every single time we go to a coffee shop?","tip":"every single time + 주어 + 동사."},
+    {"source":"② To Tip or Skip?","ko":"나는 이제 'No Tip' 버튼을 누르는 데 꽤 익숙해졌다.","en":"I've gotten pretty good at pressing the 'No Tip' button.","tip":"get good at + -ing."},
+    {"source":"② To Tip or Skip?","ko":"구매자들은 팁을 주도록 은근한 압박을 받고 있다.","chunkRefs":[{"id":"tip_nudged","text":"being nudged to tip"}],"en":"Shoppers are being nudged to tip.","tip":"be nudged to ~ = 강제가 아닌 심리적 유도/압박을 받다."},
+    {"source":"② To Tip or Skip?","ko":"심지어 타이어 같은 것을 살 때도 그렇다.","en":"Even for things like tires, customers are being asked to tip.","tip":"even for things like ~."},
+    {"source":"② To Tip or Skip?","ko":"그들은 말 그대로 화면을 돌려서 내 쪽으로 보여 주었다.","en":"They literally had the screen turn around.","tip":"have + 목적어 + 동사원형의 사역 구조."},
+    {"source":"② To Tip or Skip?","ko":"뻔뻔하게도 팁을 달라고 물었다.","chunkRefs":[{"id":"tip_audacity","text":"had the audacity to ask for a tip"}],"en":"They had the audacity to ask for a tip.","tip":"have the audacity to ~ = 뻔뻔하게도 ~하다."},
+    {"source":"② To Tip or Skip?","ko":"팁 문화가 좀 걷잡을 수 없게 된 것 같다.","chunkRefs":[{"id":"tip_out_control","text":"out of control"}],"en":"Tipping has gotten a little out of control.","tip":"get out of control = 통제에서 벗어나다."},
+    {"source":"② To Tip or Skip?","ko":"팁은 당분간 사라지지 않을 관습이다.","chunkRefs":[{"id":"tip_not_going","text":"isn't going anywhere"},{"id":"tip_pull_back","text":"pulling back"}],"en":"Although it's a custom that isn't going anywhere, people are pulling back.","tip":"isn't going anywhere = 당분간 사라지지 않다."},
+    {"source":"② To Tip or Skip?","ko":"사람들은 언제, 어디서, 얼마를 팁으로 줄지 점점 자제하고 있다.","chunkRefs":[{"id":"tip_pull_back","text":"pulling back on where, when, and how much to tip"}],"en":"People are pulling back on where, when, and how much to tip.","tip":"pull back on ~ = 줄이다, 자제하다, 소극적으로 하다."},
+
+    {"source":"③ Dumplin' Day 1","ko":"나는 대부분의 것을 Lucy 이모에게서 배웠다.","en":"I learned about most things from my Aunt Lucy.","tip":"learn A from B."},
+    {"source":"③ Dumplin' Day 1","ko":"그녀는 나에게 사람들의 눈을 바라보는 법을 가르쳐 주었다.","chunkRefs":[{"id":"dum_teach_how","text":"taught me how to look people in the eye"}],"en":"She taught me how to look people in the eye.","tip":"teach someone how to ~ / look someone in the eye."},
+    {"source":"③ Dumplin' Day 1","ko":"Lucy 이모는 바로 나에게 예의범절을 가르쳐 준 사람이었다.","chunkRefs":[{"id":"dum_one_who","text":"was the one who taught me"}],"en":"My Aunt Lucy was the one who taught me how to say 'yes, ma'am' and 'no, sir.'","tip":"be the one who ~."},
+    {"source":"③ Dumplin' Day 1","ko":"그녀는 쓰레기 더미에서 쓸 만한 것을 골라내는 법도 가르쳐 주었다.","en":"She taught me how to find a keeper in a heap of junk.","tip":"find a keeper in a heap of junk를 의미 덩어리로 듣는다."},
+    {"source":"③ Dumplin' Day 1","ko":"다른 사람들이 뭐라고 하든 너무 신경 쓰지 마.","chunkRefs":[{"id":"dum_pay_no_mind","text":"Pay no mind to what other people say"}],"en":"Pay no mind to what other people say.","tip":"pay no mind to ~ = ~에 신경 쓰지 않다."},
+    {"source":"③ Dumplin' Day 1","ko":"세상에는 네가 누구인지 규정하려는 사람들이 가득하다.","chunkRefs":[{"id":"dum_filled","text":"is filled with people"}],"en":"The world is filled with people who are going to try to tell you who you are.","tip":"be filled with ~ / people who ~."},
+    {"source":"③ Dumplin' Day 1","ko":"하지만 네가 누구인지는 네가 결정할 일이다.","chunkRefs":[{"id":"dum_you_decide","text":"that's for you to decide"}],"en":"But that's for you to decide.","tip":"That's for you to decide.를 통째로 자동화."},
+    {"source":"③ Dumplin' Day 1","ko":"Lucy 이모는 말재주가 있었다.","chunkRefs":[{"id":"dum_way_with","text":"had a way with words"}],"en":"My Aunt Lucy had a way with words.","tip":"have a way with ~ = ~을 잘 다루는 특별한 재주가 있다."},
+    {"source":"③ Dumplin' Day 1","ko":"그녀는 항상 나에게 무슨 말을 해야 할지 정확히 아는 것 같았다.","chunkRefs":[{"id":"dum_seem_know","text":"seemed to know exactly what to say"}],"en":"She always seemed to know exactly what to say to me.","tip":"seem to know exactly what to ~."},
+    {"source":"③ Dumplin' Day 1","ko":"힘든 시기를 이겨내는 법을 배워야 했다.","chunkRefs":[{"id":"dum_get_through","text":"get through the one thing she couldn't teach me herself"}],"en":"I had to learn how to get through the one thing she couldn't teach me herself.","tip":"get through ~ = 힘든 상황을 견디고 이겨내다."},
+    {"source":"③ Dumplin' Day 1","ko":"무지개를 원한다면 비를 견뎌야 한다.","chunkRefs":[{"id":"dum_put_up","text":"put up with the rain"}],"en":"If you want the rainbow, you've got to put up with the rain.","tip":"If you want A, you've got to B / put up with ~."}
+  ],
+  "chunks":[
+    {"source":"① Drinking Culture","id":"dc_give_up","pattern":"give up ~ing","ko":"~하는 것을 그만두다","example":"Many people are giving up drinking or smoking.","exampleKo":"많은 사람들이 술이나 담배를 끊고 있다."},
+    {"source":"① Drinking Culture","id":"dc_look_beyond","pattern":"look beyond ~","ko":"~의 표면을 넘어서 더 깊이 보다","example":"We need to look beyond personal health.","exampleKo":"개인의 건강 차원을 넘어서 봐야 한다."},
+    {"source":"① Drinking Culture","id":"dc_harm_cause","pattern":"the harm A can cause to B","ko":"A가 B에 끼칠 수 있는 해악","example":"Think about the harm alcohol can cause to society.","exampleKo":"술이 사회에 끼칠 수 있는 해악을 생각해 보라."},
+    {"source":"① Drinking Culture","id":"dc_far_more","pattern":"far more + adjective than ~","ko":"~보다 훨씬 더 ...한","example":"Alcohol can be far more harmful than cigarettes.","exampleKo":"술은 담배보다 훨씬 더 해로울 수 있다."},
+    {"source":"① Drinking Culture","id":"dc_serious_look","pattern":"take a serious look at ~","ko":"~을 진지하게 살펴보다","example":"We need to take a serious look at our drinking culture.","exampleKo":"우리의 음주문화를 진지하게 살펴볼 필요가 있다."},
+    {"source":"① Drinking Culture","id":"dc_one_highest","pattern":"one of the highest ~ in the world","ko":"세계에서 가장 높은 ~ 중 하나","example":"South Korea has one of the highest levels of alcohol consumption in the world.","exampleKo":"한국은 세계에서 알코올 소비 수준이 높은 나라 중 하나다."},
+    {"source":"① Drinking Culture","id":"dc_view_as","pattern":"view A as B","ko":"A를 B로 여기다/바라보다","example":"Some people view non-drinkers as less sociable.","exampleKo":"어떤 사람들은 술을 못 마시는 사람을 사회성이 부족하다고 본다."},
+    {"source":"① Drinking Culture","id":"dc_contribute","pattern":"contribute to ~","ko":"~에 기여하다 / ~의 원인이 되다","example":"Several factors contribute to an unhealthy drinking culture.","exampleKo":"여러 요인이 불건전한 음주문화의 원인이 된다."},
+    {"source":"① Drinking Culture","id":"dc_associated","pattern":"be associated with ~","ko":"~와 관련되어 있다","example":"Many violent crimes are associated with alcohol.","exampleKo":"많은 폭력 범죄가 술과 연관되어 있다."},
+
+    {"source":"② To Tip or Skip?","id":"tip_second_thoughts","pattern":"have second thoughts about ~","ko":"~을 다시 생각하다 / 망설이다","example":"Many people are having second thoughts about tipping.","exampleKo":"많은 사람들이 팁 문화에 대해 다시 생각하고 있다."},
+    {"source":"② To Tip or Skip?","id":"tip_barrage","pattern":"a barrage of ~","ko":"쏟아지는 ~, ~ 공세","example":"Customers face a barrage of tipping requests.","exampleKo":"손님들은 쏟아지는 팁 요구를 마주한다."},
+    {"source":"② To Tip or Skip?","id":"tip_it_seems","pattern":"It seems that ~","ko":"~인 것 같다","example":"It seems that a tipping screen pops up everywhere.","exampleKo":"팁 화면이 어디서나 뜨는 것 같다."},
+    {"source":"② To Tip or Skip?","id":"tip_every_single","pattern":"every single time ~","ko":"~할 때마다 빠짐없이","example":"Do we have to tip every single time we buy coffee?","exampleKo":"커피를 살 때마다 매번 팁을 줘야 하나?"},
+    {"source":"② To Tip or Skip?","id":"tip_nudged","pattern":"be nudged to ~","ko":"~하도록 은근히 유도/압박받다","example":"Shoppers are being nudged to tip.","exampleKo":"구매자들은 팁을 주도록 은근한 압박을 받는다."},
+    {"source":"② To Tip or Skip?","id":"tip_audacity","pattern":"have the audacity to ~","ko":"뻔뻔하게도 ~하다","example":"He had the audacity to ask for more money.","exampleKo":"그는 뻔뻔하게도 돈을 더 달라고 했다."},
+    {"source":"② To Tip or Skip?","id":"tip_out_control","pattern":"get out of control","ko":"걷잡을 수 없게 되다","example":"Tipping has gotten out of control.","exampleKo":"팁 문화가 걷잡을 수 없게 되었다."},
+    {"source":"② To Tip or Skip?","id":"tip_not_going","pattern":"isn't going anywhere","ko":"당분간 없어지지 않다","example":"Tipping is a custom that isn't going anywhere.","exampleKo":"팁은 당분간 사라지지 않을 관습이다."},
+    {"source":"② To Tip or Skip?","id":"tip_pull_back","pattern":"pull back on ~","ko":"~을 줄이다 / 자제하다","example":"People are pulling back on how much they tip.","exampleKo":"사람들은 팁 액수를 줄이고 있다."},
+
+    {"source":"③ Dumplin' Day 1","id":"dum_teach_how","pattern":"teach someone how to ~","ko":"누구에게 ~하는 법을 가르치다","example":"She taught me how to look people in the eye.","exampleKo":"그녀는 나에게 사람들의 눈을 바라보는 법을 가르쳐 주었다."},
+    {"source":"③ Dumplin' Day 1","id":"dum_one_who","pattern":"be the one who ~","ko":"바로 ~한 사람이다","example":"She was the one who taught me how to be confident.","exampleKo":"그녀가 바로 나에게 자신감을 가르쳐 준 사람이었다."},
+    {"source":"③ Dumplin' Day 1","id":"dum_pay_no_mind","pattern":"pay no mind to ~","ko":"~에 신경 쓰지 않다","example":"Pay no mind to what other people say.","exampleKo":"다른 사람들이 하는 말에 신경 쓰지 마."},
+    {"source":"③ Dumplin' Day 1","id":"dum_filled","pattern":"be filled with ~","ko":"~로 가득 차 있다","example":"The world is filled with people who will judge you.","exampleKo":"세상에는 너를 판단하려는 사람들이 가득하다."},
+    {"source":"③ Dumplin' Day 1","id":"dum_you_decide","pattern":"That's for you to decide.","ko":"그건 네가 결정할 일이다","example":"Who you want to be is for you to decide.","exampleKo":"어떤 사람이 되고 싶은지는 네가 결정할 일이다."},
+    {"source":"③ Dumplin' Day 1","id":"dum_way_with","pattern":"have a way with ~","ko":"~을 잘 다루는 특별한 재주가 있다","example":"My Aunt Lucy had a way with words.","exampleKo":"Lucy 이모는 말재주가 있었다."},
+    {"source":"③ Dumplin' Day 1","id":"dum_seem_know","pattern":"seem to know exactly what to ~","ko":"정확히 무엇을 ~해야 할지 아는 것 같다","example":"She always seemed to know exactly what to say.","exampleKo":"그녀는 항상 무슨 말을 해야 할지 정확히 아는 것 같았다."},
+    {"source":"③ Dumplin' Day 1","id":"dum_get_through","pattern":"get through ~","ko":"힘든 상황을 견디고 이겨내다","example":"My family helped me get through a difficult time.","exampleKo":"가족이 힘든 시기를 이겨내도록 도와주었다."},
+    {"source":"③ Dumplin' Day 1","id":"dum_put_up","pattern":"put up with ~","ko":"~을 참고 견디다","example":"If you want the rainbow, you've got to put up with the rain.","exampleKo":"무지개를 원한다면 비를 견뎌야 한다."}
+  ],
+  "speaking":[
+    {
+        "source": "① Drinking Culture",
+        "chunkRef": "dc_look_beyond",
+        "pattern": "look beyond ~",
+        "prompt": "Look beyond ~",
+        "promptKo": "개인의 건강을 넘어서 더 큰 그림을 봐야 한다.",
+        "text": "We need to look beyond personal health and see the bigger picture.",
+        "ko": "우리는 개인의 건강을 넘어서 더 큰 그림을 봐야 합니다."
+    },
+    {
+        "source": "① Drinking Culture",
+        "chunkRef": "dc_serious_look",
+        "pattern": "take a serious look at ~",
+        "prompt": "Take a serious look at ~",
+        "promptKo": "우리는 이 문제를 진지하게 살펴볼 필요가 있다.",
+        "text": "We need to take a serious look at this issue.",
+        "ko": "우리는 이 문제를 진지하게 살펴볼 필요가 있습니다."
+    },
+    {
+        "source": "① Drinking Culture",
+        "chunkRef": "dc_contribute",
+        "pattern": "contribute to ~",
+        "prompt": "Contribute to ~",
+        "promptKo": "여러 요인이 이 문제의 원인이 된다.",
+        "text": "Several factors contribute to this problem.",
+        "ko": "여러 요인이 이 문제의 원인이 됩니다."
+    },
+    {
+        "source": "① Drinking Culture",
+        "chunkRef": "dc_associated",
+        "pattern": "be associated with ~",
+        "prompt": "Be associated with ~",
+        "promptKo": "이 문제는 음주와 관련되어 있다.",
+        "text": "This problem is associated with drinking.",
+        "ko": "이 문제는 음주와 관련되어 있습니다."
+    },
+    {
+        "source": "② To Tip or Skip?",
+        "chunkRef": "tip_second_thoughts",
+        "pattern": "have second thoughts about ~",
+        "prompt": "Have second thoughts about ~",
+        "promptKo": "나는 그 계획을 다시 생각하고 있다.",
+        "text": "I'm having second thoughts about the plan.",
+        "ko": "나는 그 계획을 다시 생각하고 있습니다."
+    },
+    {
+        "source": "② To Tip or Skip?",
+        "chunkRef": "tip_nudged",
+        "pattern": "be nudged to ~",
+        "prompt": "Be nudged to ~",
+        "promptKo": "나는 팁을 주도록 은근히 압박받는 느낌이었다.",
+        "text": "I felt like I was being nudged to tip.",
+        "ko": "나는 팁을 주도록 은근히 압박받는 느낌이었습니다."
+    },
+    {
+        "source": "② To Tip or Skip?",
+        "chunkRef": "tip_audacity",
+        "pattern": "have the audacity to ~",
+        "prompt": "Have the audacity to ~",
+        "promptKo": "그는 뻔뻔하게도 돈을 더 달라고 했다.",
+        "text": "He had the audacity to ask for more money.",
+        "ko": "그는 뻔뻔하게도 돈을 더 달라고 했습니다."
+    },
+    {
+        "source": "② To Tip or Skip?",
+        "chunkRef": "tip_pull_back",
+        "pattern": "pull back on ~",
+        "prompt": "Pull back on ~",
+        "promptKo": "요즘 나는 지출을 줄이고 있다.",
+        "text": "I'm pulling back on my spending these days.",
+        "ko": "요즘 나는 지출을 줄이고 있습니다."
+    },
+    {
+        "source": "③ Dumplin' Day 1",
+        "chunkRef": "dum_pay_no_mind",
+        "pattern": "pay no mind to ~",
+        "prompt": "Pay no mind to ~",
+        "promptKo": "다른 사람들이 하는 말에 너무 신경 쓰지 마.",
+        "text": "Pay no mind to what other people say.",
+        "ko": "다른 사람들이 하는 말에 너무 신경 쓰지 마세요."
+    },
+    {
+        "source": "③ Dumplin' Day 1",
+        "chunkRef": "dum_way_with",
+        "pattern": "have a way with ~",
+        "prompt": "Have a way with ~",
+        "promptKo": "그녀는 아이들을 정말 잘 다룬다.",
+        "text": "She has a way with kids.",
+        "ko": "그녀는 아이들을 정말 잘 다룹니다."
+    },
+    {
+        "source": "③ Dumplin' Day 1",
+        "chunkRef": "dum_get_through",
+        "pattern": "get through ~",
+        "prompt": "Get through ~",
+        "promptKo": "가족이 힘든 시기를 이겨내도록 도와주었다.",
+        "text": "My family helped me get through a difficult time.",
+        "ko": "가족이 힘든 시기를 이겨내도록 도와주었습니다."
+    },
+    {
+        "source": "③ Dumplin' Day 1",
+        "chunkRef": "dum_put_up",
+        "pattern": "put up with ~",
+        "prompt": "Put up with ~",
+        "promptKo": "나는 이런 소음을 더 이상 참을 수 없다.",
+        "text": "I can't put up with this noise anymore.",
+        "ko": "나는 이런 소음을 더 이상 참을 수 없습니다."
+    }
+],
+  "habits":[
+    {"title":"① 의미 덩어리 먼저 듣기","text":"단어 하나씩 해석하지 말고 give up drinking / look beyond personal health / take a serious look at 같은 덩어리 단위로 소리를 잡는다."},
+    {"title":"② 한국말로 즉시 번역하지 않기","text":"소리를 듣는 순간 한국말 문장을 만들기보다 장면과 의미를 먼저 떠올린다. 수업에서 강조한 '그림을 그린다'는 방식으로 복습한다."},
+    {"title":"③ 기능어는 약하게, 내용어는 또렷하게","text":"to, of, that, are 같은 기능어를 모두 같은 세기로 읽지 않는다. 핵심 단어에 리듬과 강세를 싣는다."},
+    {"title":"④ 긴 문장은 의미 단위로 자르기","text":"Statistics alone show / that South Korea has / one of the highest levels / of alcohol consumption / in the world 처럼 의미가 끊기는 지점을 몸으로 익힌다."},
+    {"title":"⑤ '두 번째 뜻'까지 그림으로 익히기","text":"second thoughts, nudge, pull back, isn't going anywhere처럼 표면 뜻만 외우지 말고 실제 문맥에서의 추상적 의미를 함께 기억한다."},
+    {"title":"⑥ 들리지 않는 이유를 단어 탓만 하지 않기","text":"keeper, heap, junk를 각각 알아도 a keeper in a heap of junk라는 덩어리를 모르면 안 들릴 수 있다. Chunk 전체를 소리로 저장한다."},
+    {"title":"⑦ Chunk → 핵심문장 → 내 문장 순서","text":"먼저 Chunk의 소리와 뜻을 익히고 핵심문장에서 같은 덩어리를 확인한 뒤, 마지막에 내 상황으로 한 문장을 만들어 말한다."},
+    {"title":"⑧ 감정을 실어 말하기","text":"문장이 익숙해진 뒤에는 단순 암송이 아니라 발표하거나 누군가에게 이야기한다는 느낌으로 억양과 감정을 넣는다."},
+    {"title":"⑨ 복습은 짧아도 반복","text":"한 번에 전부 외우려 하지 말고 핵심 문장과 Chunk를 여러 날 반복한다. 소리영어 앱의 전체 반복과 집중 반복을 활용한다."}
+  ]
+};
+
+const STUDY_COURSES = {
+  my:{
+    key:'my',
+    title:'MY 수업',
+    icon:'🎯',
+    homeMode:'my',
+    studyOrder:['corrections','chunks','speaking','habits'],
+    speakingMode:'free',
+    meta:()=>MY_CLASS_META,
+    data:(n)=>Number(n)===5?MY_CLASS_LESSON_5:(Number(n)===4?MY_CLASS_LESSON_4:(Number(n)===3?MY_CLASS_LESSON_3:(Number(n)===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1))),
+    tabs:{corrections:'✅ 핵심 교정',chunks:'🧩 Chunk',speaking:'🗣 말하기',habits:'⚠ 습관'},
+    singular:{corrections:'핵심 교정',chunks:'Chunk',speaking:'말하기',habits:'습관'}
+  },
+  sori:{
+    key:'sori',
+    title:'소리영어',
+    icon:'🎧',
+    homeMode:'sori',
+    studyOrder:['chunks','corrections','speaking','habits'],
+    speakingMode:'pattern',
+    meta:()=>({1:{
+      title:'8/28–8/29 통합 복습 · 3 Scripts',
+      goal:'<b>복습 목표</b> · Drinking Culture / To Tip or Skip? / Dumplin\' Day 1의 핵심 문장과 의미 Chunk를 소리로 자동화합니다.'
+    }}),
+    data:(n)=>SORI_GROUP_1,
+    tabs:{corrections:'⭐ 핵심 문장',chunks:'🧩 Chunk',speaking:'🗣 말하기',habits:'🎧 소리 Point'},
+    singular:{corrections:'핵심 문장',chunks:'Chunk',speaking:'말하기',habits:'소리 Point'}
+  },
+  opic:{
+    key:'opic',
+    title:'OPIC',
+    icon:'🎤',
+    homeMode:'opic',
+    studyOrder:['chunks','corrections','speaking','habits'],
+    speakingMode:'answer',
+    meta:()=>({}),
+    data:()=>({corrections:[],chunks:[],speaking:[],habits:[]}),
+    tabs:{corrections:'⭐ 핵심 답변',chunks:'🧩 Chunk',speaking:'🗣 말하기',habits:'🏆 AL Point'},
+    singular:{corrections:'핵심 답변',chunks:'Chunk',speaking:'말하기',habits:'AL Point'}
+  }
+};
+
+function studyCourseConfig(course=ACTIVE_STUDY_COURSE){
+  return STUDY_COURSES[course]||STUDY_COURSES.my;
+}
+function studyCourseOrder(course=ACTIVE_STUDY_COURSE){
+  const c=studyCourseConfig(course);
+  return Array.isArray(c.studyOrder)&&c.studyOrder.length
+    ? c.studyOrder.slice()
+    : ['corrections','chunks','speaking','habits'];
+}
+window.studyCourseOrder=studyCourseOrder;
+function studyCourseData(course=ACTIVE_STUDY_COURSE,lesson=1){
+  return studyCourseConfig(course).data(Number(lesson)||1);
+}
+function studyCourseMeta(course=ACTIVE_STUDY_COURSE){
+  return studyCourseConfig(course).meta();
+}
+function studyCourseLessonCount(course=ACTIVE_STUDY_COURSE){
+  const keys=Object.keys(studyCourseMeta(course)||{}).map(Number).filter(Number.isFinite);
+  return Math.max(1,keys.length||1);
+}
+function studyCourseTabLabel(course,tab){
+  const c=studyCourseConfig(course);
+  return c.singular?.[tab] || (tab==='corrections'?'핵심 교정':tab==='chunks'?'Chunk':tab==='speaking'?'말하기':'Point');
+}
+function studyCourseSpeakingMode(course=ACTIVE_STUDY_COURSE){
+  return studyCourseConfig(course)?.speakingMode||'free';
+}
+function studyCourseSpeakingGuide(course=ACTIVE_STUDY_COURSE){
+  const mode=studyCourseSpeakingMode(course);
+  if(mode==='pattern')return '🎯 Chunk를 보고 한국어 Cue를 먼저 영어로 말한 뒤 정답을 확인하세요.';
+  if(mode==='answer')return '🎯 Chunk를 활용해 먼저 직접 답한 뒤 핵심 답변을 확인하세요.';
+  return Number(myClassLessonNo)===5
+    ? '🎯 LONG → SHORT · 먼저 핵심 3문장으로 직접 답해 보세요.'
+    : '먼저 30~60초 직접 답한 뒤 모범답안을 확인하세요.';
+}
+window.studyCourseSpeakingGuide=studyCourseSpeakingGuide;
+function studyCourseSelectedLessons(course=ACTIVE_STUDY_COURSE){
+  if(course==='sori')return [1];
+  if(course==='opic')return [];
+  const all=Object.keys(MY_CLASS_META||{}).map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
+  const raw=localStorage.getItem('mv_myClassSelectedLessons');
+  if(raw===null){
+    localStorage.setItem('mv_myClassSelectedLessons',JSON.stringify(all));
+    return all;
+  }
+  let selected=[];
+  try{selected=JSON.parse(raw)}catch(e){selected=[]}
+  return [...new Set((Array.isArray(selected)?selected:[]).map(Number).filter(n=>all.includes(n)))].sort((a,b)=>a-b);
+}
+function studySyncCourseUI(){
+  const c=studyCourseConfig();
+  const meta=studyCourseMeta()[myClassLessonNo]||studyCourseMeta()[1]||{title:'',goal:''};
+  const a=document.getElementById('myClassHeaderMain');
+  const b=document.getElementById('myClassHeaderSub');
+  const g=document.getElementById('myClassGoal');
+  if(a)a.textContent=ACTIVE_STUDY_COURSE==='my'?`MY 수업 · 수업 ${myClassLessonNo}`:`${c.icon} ${c.title}`;
+  if(b)b.textContent=meta.title||'';
+  if(g)g.innerHTML=meta.goal||'';
+
+  const tabBar=document.querySelector('#myClassPage .myClassTabs');
+  const orderedTabs=studyCourseOrder(ACTIVE_STUDY_COURSE);
+  if(tabBar){
+    orderedTabs.forEach(tab=>{
+      const btn=tabBar.querySelector(`.myClassTab[data-myclass-tab="${tab}"]`);
+      if(btn)tabBar.appendChild(btn);
+    });
+  }
+  studySyncOrderedTabs();
+  document.querySelectorAll('.myClassTab').forEach(btn=>{
+    const tab=btn.dataset.myclassTab;
+    if(c.tabs?.[tab])btn.textContent=c.tabs[tab];
+  });
+
+  const habit=document.querySelector('#myClassPage .myClassHabit b');
+  if(habit)habit.textContent=ACTIVE_STUDY_COURSE==='sori'?'🎧 소리영어 복습 원칙':'이번 수업의 핵심 목표';
+}
+
+function studySyncOrderedTabs(){
+  const buttons=[...document.querySelectorAll('#myClassPage .myClassTab')];
+  if(!buttons.length)return;
+  const parent=buttons[0].parentElement;
+  if(!parent)return;
+  studyCourseOrder(ACTIVE_STUDY_COURSE).forEach(tab=>{
+    const btn=buttons.find(b=>b.dataset.myclassTab===tab);
+    if(btn)parent.appendChild(btn);
+  });
+}
+window.studySyncOrderedTabs=studySyncOrderedTabs;
+
+window.studyCourseData=studyCourseData;
+window.studyCourseSelectedLessons=studyCourseSelectedLessons;
+
+function openStudyCourse(course,lesson=1){
+  if(course==='opic' && !studyCourseSentenceCards('opic',1).length){
+    setHomeStudyMode('opic');
+    return;
+  }
+  ACTIVE_STUDY_COURSE=STUDY_COURSES[course]?course:'my';
+  myClassTab=studyCourseOrder(ACTIVE_STUDY_COURSE)[0]||'corrections';
+  openMyClassLesson(lesson);
+  studySyncCourseUI();
+}
+window.openStudyCourse=openStudyCourse;
+
+// Shared sentence-speaking card converter.
+// Course data is normalized into the SAME practice-sentence schema used by MY 수업.
+function studyCourseSentenceCards(course='sori',lesson=1){
+  const d=studyCourseData(course,lesson);
+  const out=[];
+  let order=1;
+  const splitEn=(t)=>typeof myClassSplitSentences==='function'?myClassSplitSentences(t||''):[t||''];
+  const splitKo=(t)=>typeof myClassSplitKoSentences==='function'?myClassSplitKoSentences(t||''):[t||''];
+
+  (d.corrections||[]).forEach((x,i)=>{
+    out.push({
+      isPracticeSentence:true,isStudyCourseSentence:true,studyCourse:course,
+      practiceId:`${course.toUpperCase()}_${lesson}_C_${i+1}`,
+      sentenceStatsKey:`__${course}__${lesson}_C_${i+1}`,
+      example:x.en,translation:x.ko||'',
+      practicePatterns:studyCoreChunkLinks(x,d).map(v=>v.pattern),
+      practicePatternMeanings:studyCoreChunkLinks(x,d).map(v=>v.meaning),
+      targetWords:[],newDay:Number(lesson),newNo:order++,
+      word:`${studyCourseConfig(course).title} 핵심 ${i+1}`
+    });
+  });
+  (d.chunks||[]).forEach((x,i)=>{
+    if(!x.example)return;
+    out.push({
+      isPracticeSentence:true,isStudyCourseSentence:true,studyCourse:course,
+      practiceId:`${course.toUpperCase()}_${lesson}_K_${i+1}`,
+      sentenceStatsKey:`__${course}__${lesson}_K_${i+1}`,
+      example:x.example,translation:x.exampleKo||x.ko||'',
+      practicePatterns:[x.pattern].filter(Boolean),
+      practicePatternMeanings:[x.ko].filter(Boolean),
+      targetWords:[],newDay:Number(lesson),newNo:order++,
+      word:`${studyCourseConfig(course).title} Chunk ${i+1}`
+    });
+  });
+  (d.speaking||[]).forEach((x,i)=>{
+    const ens=splitEn(x.text),kos=splitKo(x.ko||'');
+    ens.forEach((en,j)=>{
+      out.push({
+        isPracticeSentence:true,isStudyCourseSentence:true,studyCourse:course,
+        practiceId:`${course.toUpperCase()}_${lesson}_S_${i+1}_${j+1}`,
+        sentenceStatsKey:`__${course}__${lesson}_S_${i+1}_${j+1}`,
+        example:en,translation:kos[j]||x.ko||'',
+        practicePatterns:[],practicePatternMeanings:[],
+        targetWords:[],newDay:Number(lesson),newNo:order++,
+        word:`${studyCourseConfig(course).title} 말하기 ${i+1}-${j+1}`
+      });
+    });
+  });
+  return out.filter(q=>q.example&&q.translation);
+}
+window.studyCourseSentenceCards=studyCourseSentenceCards;
+
 
 const PACKS={
   unified:{key:'unified',name:'MY VOCA',short:'MY VOCA',desc:'TOEFL 1,680 Words + OPIC AL 268 Words & Expressions',days:TOEFL_DAY_COUNT+OPIC_DAY_COUNT,words:UNIFIED_WORDS.length,eyebrow:'MY VOCA UNIFIED COURSE · 69 DAYS'}
@@ -765,7 +1312,7 @@ function clearExactReadingFocus(){
   });
 }
 
-/* ===== V5.3.147 · Standardized playback scroll =====
+/* ===== V5.3.155 · Standardized playback scroll =====
    One shared scroll policy for DAY and MY 수업 playback.
    Goal: prevent duplicate/competing smooth-scroll implementations.
 */
@@ -818,7 +1365,7 @@ function mvPlaybackScrollTo(el,opts={}){
 }
 
 
-/* ===== V5.3.147 · word/meaning shared visual anchor ===== */
+/* ===== V5.3.155 · word/meaning shared visual anchor ===== */
 function mvPlaybackScrollWordMeaningGroup(wordEl,meaningEl){
   if(!meaningEl)return;
 
@@ -1525,7 +2072,7 @@ function normalizeTextForTTS(text,lang='en-US'){
   return content;
 }
 
-// ===== V5.3.147 · COMMON DOM TTS HIGHLIGHT =====
+// ===== V5.3.155 · COMMON DOM TTS HIGHLIGHT =====
 const MV_DOM_HL={sentence:null,word:null,wrapped:[],spoken:''};
 function mvDomNorm(v){return String(v||'').replace(/\s+/g,' ').trim()}
 function mvDomVisible(el){
@@ -5082,7 +5629,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
 
 
 
-// ===== V5.3.147 · 자유 음성 녹음 학습 =====
+// ===== V5.3.155 · 자유 음성 녹음 학습 =====
 const VOICE_PRACTICE_RECENT_KEY='mv_voice_practice_recent_v1';
 
 function voicePracticeRecentList(){
@@ -5982,7 +6529,7 @@ function patternsForText(lesson,text){
 }
 
 
-/* ===== V5.3.147 · MY 수업 홈 체크박스 중복 제거 ===== */
+/* ===== V5.3.155 · MY 수업 홈 체크박스 중복 제거 ===== */
 function myClassDedupeHomeSelection(){
   document.querySelectorAll('#homePage .myClassCard').forEach(card=>{
     if(card.querySelector('.myLessonSelectMini')){
@@ -6195,11 +6742,13 @@ const M536={
   returnToFull:false,       // v5.3.109: focus 해제 후 전체 반복 복귀 여부를 독립 보존
   infiniteKey:'',
   infiniteItem:null,
-  busy:false
+  busy:false,
+  course:'my'
 };
 
 function m536Sleep(ms){return new Promise(r=>setTimeout(r,ms))}
-function m536Lessons(){
+function m536Lessons(course=(M536?.course||ACTIVE_STUDY_COURSE)){
+  if(typeof studyCourseSelectedLessons==='function')return studyCourseSelectedLessons(course);
   const all=Object.keys(MY_CLASS_META||{}).map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
   const raw=localStorage.getItem('mv_myClassSelectedLessons');
   if(raw===null){
@@ -6211,17 +6760,61 @@ function m536Lessons(){
   selected=(Array.isArray(selected)?selected:[]).map(Number).filter(n=>all.includes(n));
   return [...new Set(selected)].sort((a,b)=>a-b);
 }
-function m536Data(n){const x=Number(n);return x===5?MY_CLASS_LESSON_5:(x===4?MY_CLASS_LESSON_4:(x===3?MY_CLASS_LESSON_3:(x===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1)))}
-function m536Label(tab){return tab==='corrections'?'핵심 교정':tab==='chunks'?'Chunk':'말하기'}
-function m536ItemKey(x){return `${x.lesson}|${x.tab}|${x.index}`}
-function m536BuildPlaylist(){
+function m536Data(n,course=(M536?.course||ACTIVE_STUDY_COURSE)){
+  if(typeof studyCourseData==='function')return studyCourseData(course,n);
+  const x=Number(n);
+  return x===5?MY_CLASS_LESSON_5:(x===4?MY_CLASS_LESSON_4:(x===3?MY_CLASS_LESSON_3:(x===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1)));
+}
+function m536Label(tab){const course=M536?.course||ACTIVE_STUDY_COURSE;return typeof studyCourseTabLabel==='function'?studyCourseTabLabel(course,tab):(tab==='corrections'?'핵심 교정':tab==='chunks'?'Chunk':'말하기')}
+function m536ItemCourse(x){
+  return String(x?.course||M536?.course||ACTIVE_STUDY_COURSE||'my');
+}
+function m536ItemKey(x){
+  return `${m536ItemCourse(x)}|${Number(x?.lesson)||1}|${String(x?.tab||'corrections')}|${Number(x?.index)||0}`;
+}
+function m536MakeItem(course,lesson,tab,index,src=null){
+  const c=String(course||M536?.course||ACTIVE_STUDY_COURSE||'my');
+  const d=src||m536Data(lesson,c);
+  const row=tab==='corrections'?(d?.corrections||[])[index]
+    :tab==='chunks'?(d?.chunks||[])[index]
+    :(d?.speaking||[])[index];
+  if(!row)return null;
+  return {
+    course:c,
+    lesson:Number(lesson)||1,
+    tab:String(tab),
+    index:Number(index)||0,
+    text:tab==='corrections'?(row.en||'')
+      :tab==='chunks'?(row.example||row.pattern||'')
+      :(row.text||''),
+    ko:tab==='corrections'?(row.ko||'')
+      :tab==='chunks'?(row.exampleKo||row.ko||'')
+      :(row.ko||''),
+    source:row.source||'',
+    paragraph:tab==='speaking'
+  };
+}
+window.m536ItemKey=m536ItemKey;
+window.m536MakeItem=m536MakeItem;
+function m536BuildPlaylist(course=(M536?.course||ACTIVE_STUDY_COURSE)){
+  const c=String(course||'my');
   const out=[];
-  for(const lesson of m536Lessons()){
-    const d=m536Data(lesson);
-    (d.corrections||[]).forEach((x,i)=>out.push({lesson,tab:'corrections',index:i,text:x.en,paragraph:false}));
-    (d.chunks||[]).forEach((x,i)=>out.push({lesson,tab:'chunks',index:i,text:x.example||x.pattern,paragraph:false}));
-    // 말하기는 질문별 모범답안 전체 문단을 1개 학습 단위로 사용한다.
-    (d.speaking||[]).forEach((x,i)=>out.push({lesson,tab:'speaking',index:i,text:x.text,paragraph:true}));
+  const order=(typeof studyCourseOrder==='function')
+    ? studyCourseOrder(c)
+    : ['corrections','chunks','speaking','habits'];
+
+  for(const lesson of m536Lessons(c)){
+    const d=m536Data(lesson,c);
+    for(const tab of order){
+      const rows=tab==='corrections'?(d?.corrections||[])
+        :tab==='chunks'?(d?.chunks||[])
+        :tab==='speaking'?(d?.speaking||[])
+        :[];
+      rows.forEach((_,index)=>{
+        const item=m536MakeItem(c,lesson,tab,index,d);
+        if(item?.text)out.push(item);
+      });
+    }
   }
   return out;
 }
@@ -6231,6 +6824,9 @@ function m536ResolveEl(item){
   return document.getElementById(`mySpeakBlock${item.index}`);
 }
 function m536RenderItem(item){
+  const course=m536ItemCourse(item);
+  M536.course=course;
+  if(ACTIVE_STUDY_COURSE!==course)ACTIVE_STUDY_COURSE=course;
   const changed=myClassLessonNo!==item.lesson || myClassTab!==item.tab || !m536ResolveEl(item);
   myClassLessonNo=item.lesson;myClassTab=item.tab;
   if(changed){
@@ -6298,6 +6894,24 @@ function m536Unlock(){
   try{startRepeatWakeSession?.()}catch(e){}
   try{if(window.speechSynthesis?.paused)window.speechSynthesis.resume()}catch(e){}
 }
+
+function m536StopLegacyPlaybackOnly(){
+  // Kill every pre-M536 loop/token without touching M536 resume state.
+  try{if(typeof V534!=='undefined')V534.myLoopToken=(V534.myLoopToken||0)+1}catch(e){}
+  try{if(typeof V535!=='undefined')V535.myLoopToken=(V535.myLoopToken||0)+1}catch(e){}
+  try{window.stopV534MyClassLoop?.()}catch(e){}
+  try{window.stopV535MyClassLoop?.()}catch(e){}
+  try{
+    if(typeof MY_CLASS_PLAY!=='undefined'){
+      MY_CLASS_PLAY.token=(MY_CLASS_PLAY.token||0)+1;
+      MY_CLASS_PLAY.active=false;
+      MY_CLASS_PLAY.paused=true;
+      MY_CLASS_PLAY.repeatCurrent=false;
+    }
+  }catch(e){}
+}
+window.m536StopLegacyPlaybackOnly=m536StopLegacyPlaybackOnly;
+
 function m536StopController(keepResume=false){
   M536.token++;
   M536.busy=false;
@@ -6309,8 +6923,14 @@ function m536StopController(keepResume=false){
   m536SyncInfinityButtons();
 }
 async function m536RunFull(startAt=0){
-  const list=m536BuildPlaylist();
-  if(!list.length){alert('반복할 MY 수업이 없습니다.');return}
+  const course=M536?.course||ACTIVE_STUDY_COURSE;
+  m536StopLegacyPlaybackOnly();
+  const list=m536BuildPlaylist(course);
+  if(!list.length){
+    const courseName=(typeof studyCourseConfig==='function'?studyCourseConfig(ACTIVE_STUDY_COURSE)?.title:null)||'학습';
+    alert(`반복할 ${courseName} 콘텐츠가 없습니다.`);
+    return;
+  }
   M536.playlist=list;M536.cursor=Math.max(0,Math.min(list.length-1,startAt||0));
   M536.mode='full';M536.infiniteKey='';M536.infiniteItem=null;M536.busy=true;
   const token=++M536.token;
@@ -6337,57 +6957,97 @@ async function m536RunFull(startAt=0){
   }
 }
 async function m536RunInfinite(item){
-  M536.mode='infinite';M536.infiniteItem=item;M536.infiniteKey=m536ItemKey(item);M536.busy=true;
+  const lockedItem={...item,course:m536ItemCourse(item)};
+  const lockedKey=m536ItemKey(lockedItem);
+  const lockedCourse=lockedItem.course;
+
+  // Infinite means infinite. Kill every legacy/full loop first.
+  m536StopLegacyPlaybackOnly();
+  M536.course=lockedCourse;
+  ACTIVE_STUDY_COURSE=lockedCourse;
+  M536.mode='infinite';
+  M536.infiniteItem=lockedItem;
+  M536.infiniteKey=lockedKey;
+  M536.busy=true;
+
   const token=++M536.token;
   const hardEpoch=MY_CLASS_HARD_STOP_EPOCH;
-  MY_CLASS_PLAY.active=true;MY_CLASS_PLAY.paused=false;
+  MY_CLASS_PLAY.active=true;
+  MY_CLASS_PLAY.paused=false;
   m536Unlock();
-  const el=m536RenderItem(item);
+
+  const el=m536RenderItem(lockedItem);
   m536SyncInfinityButtons();
+  try{syncMyClassInfinityVisuals?.()}catch(e){}
+
   const pause=Math.max(0,parseInt(loadAppSettings().myClassPause||700,10));
   let n=1;
-  while(token===M536.token && hardEpoch===MY_CLASS_HARD_STOP_EPOCH && M536.mode==='infinite' && M536.infiniteKey===m536ItemKey(item)){
-    myClassSetStatus?.(`∞ 무한 반복 · 수업 ${item.lesson} · ${m536Label(item.tab)} ${item.index+1} · ${item.paragraph?'문단 전체':'현재 문장'} · ${n++}회`,true);
-    try{syncMyClassInfinityVisuals?.()}catch(e){}
-    await m536SpeakItem(item,el,()=>token===M536.token && hardEpoch===MY_CLASS_HARD_STOP_EPOCH && M536.mode==='infinite' && M536.infiniteKey===m536ItemKey(item));
-    if(token!==M536.token || hardEpoch!==MY_CLASS_HARD_STOP_EPOCH || M536.mode!=='infinite')return;
-    if(pause)await m536Sleep(pause);
+  const alive=()=>(
+    token===M536.token &&
+    hardEpoch===MY_CLASS_HARD_STOP_EPOCH &&
+    M536.mode==='infinite' &&
+    M536.course===lockedCourse &&
+    M536.infiniteKey===lockedKey
+  );
+
+  while(alive()){
+    myClassSetStatus?.(
+      `∞ 무한 반복 · ${studyCourseConfig(lockedCourse)?.title||lockedCourse} · ${m536Label(lockedItem.tab)} ${lockedItem.index+1} · ${lockedItem.paragraph?'문단 전체':'현재 문장'} · ${n++}회`,
+      true
+    );
+    await m536SpeakItem(lockedItem,el,alive);
+    if(!alive())return;
+    if(pause){
+      await m536Sleep(pause);
+      if(!alive())return;
+    }
   }
 }
-function m536StartFull(){
-  const chosen=m536Lessons();
+function m536StartCourse(course=ACTIVE_STUDY_COURSE){
+  const selectedCourse=(typeof STUDY_COURSES!=='undefined' && STUDY_COURSES[course])?course:'my';
+
+  stopAllMyClassPlayback(true);
+
+  // Lock playback to the selected course AFTER the old session is fully stopped.
+  ACTIVE_STUDY_COURSE=selectedCourse;
+  M536.course=selectedCourse;
+
+  const chosen=m536Lessons(selectedCourse);
   if(!chosen.length){
-    alert('반복할 MY 수업을 하나 이상 체크해 주세요.');
+    const courseName=(typeof studyCourseConfig==='function'?studyCourseConfig(selectedCourse)?.title:null)||'학습';
+    alert(`반복할 ${courseName} 항목을 하나 이상 체크해 주세요.`);
     return;
   }
-  stopAllMyClassPlayback(true);
+
   m536Unlock();
   M536.resumeWasFull=false;M536.resumeCursor=0;
-  // 현재 페이지를 바로 MY 수업 재생 화면으로 전환한다.
   document.getElementById('homePage')?.classList.add('hidden');
   document.getElementById('dayAppPage')?.classList.add('hidden');
   try{hideStandalonePages?.()}catch(e){}
   document.getElementById('myClassPage')?.classList.remove('hidden');
   document.getElementById('myClassBottom')?.classList.remove('hidden');
+
+  myClassLessonNo=chosen[0]||1;
+  myClassTab=studyCourseOrder(selectedCourse)[0]||'corrections';
+  myClassUpdateHeader?.();
+  renderMyClass();
+
   m536RunFull(0);
 }
-function m536ToggleInfinite(lesson,tab,index){
+function m536StartFull(){
+  return m536StartCourse(ACTIVE_STUDY_COURSE);
+}
+
+function m536ToggleInfinite(lesson,tab,index,course=(M536?.course||ACTIVE_STUDY_COURSE)){
   try{myClassClearSpeakingSentenceHighlight()}catch(e){}
   try{mvDomClearHighlight?.()}catch(e){}
-  const d=m536Data(lesson);
-  const src=tab==='corrections'?(d.corrections||[])[index]:tab==='chunks'?(d.chunks||[])[index]:(d.speaking||[])[index];
-  if(!src)return;
 
-  const item={
-    lesson:Number(lesson),
-    tab,
-    index:Number(index),
-    text:tab==='corrections'?src.en:tab==='chunks'?(src.example||src.pattern):src.text,
-    paragraph:tab==='speaking'
-  };
+  const c=String(course||'my');
+  const item=m536MakeItem(c,lesson,tab,index);
+  if(!item)return;
   const key=m536ItemKey(item);
 
-  // 같은 집중 버튼을 다시 누르면: 집중만 종료하고, 전체 반복에서 들어왔다면 즉시 Resume.
+  // Same button = stop infinite; resume full only if it was entered from full.
   if(M536.mode==='infinite' && M536.infiniteKey===key){
     const shouldResume=!!M536.returnToFull;
     const resumeAt=Number.isFinite(M536.resumeCursor)?M536.resumeCursor:0;
@@ -6395,7 +7055,6 @@ function m536ToggleInfinite(lesson,tab,index){
     M536.token++;
     try{stopSpeech()}catch(e){}
     try{window.speechSynthesis?.cancel()}catch(e){}
-
     M536.mode='idle';
     M536.infiniteKey='';
     M536.infiniteItem=null;
@@ -6404,91 +7063,107 @@ function m536ToggleInfinite(lesson,tab,index){
     MY_CLASS_PLAY.paused=true;
     MY_CLASS_PLAY.repeatCurrent=false;
     MY_TITLE_INFINITY_KEY='';
+    MY_CLASS_INFINITY_VISUAL_KEY='';
 
-    try{m536SyncInfinityButtons()}catch(e){}
-    try{syncMyClassTitleInfinityButtons?.()}catch(e){}
+    m536SyncInfinityButtons();
+    syncMyClassTitleInfinityButtons?.();
 
     if(shouldResume){
-      // 복귀 정보는 새 full loop가 실제 시작될 때까지 보존.
-      const savedCursor=resumeAt;
       M536.resumeWasFull=false;
       M536.returnToFull=false;
+      M536.course=c;
+      ACTIVE_STUDY_COURSE=c;
       myClassSetStatus?.('∞ 집중 해제 · 전체 반복 이어서 재생',true);
-      setTimeout(()=>m536RunFull(savedCursor),40);
-      return;
+      setTimeout(()=>m536RunFull(resumeAt),40);
+    }else{
+      myClassSetStatus?.('∞ 무한 반복 해제',false);
+      try{stopRepeatWakeSession?.()}catch(e){}
     }
-
-    MY_CLASS_INFINITY_VISUAL_KEY='';
-    MY_TITLE_INFINITY_KEY='';
-    syncMyClassTitleInfinityButtons();
-    myClassSetStatus?.('∞ 집중 반복 해제',false);
-    try{stopRepeatWakeSession?.()}catch(e){}
     return;
   }
 
-  // 전체 반복에서 집중으로 처음 진입할 때, 복귀 위치를 독립 상태로 저장.
-  if(M536.mode==='full'){
+  // Capture full-repeat return position before stopping full.
+  const cameFromFull=M536.mode==='full';
+  if(cameFromFull){
     M536.resumeCursor=Number.isFinite(M536.cursor)?M536.cursor:0;
     M536.resumeWasFull=true;
     M536.returnToFull=true;
+  }else if(M536.mode!=='infinite'){
+    M536.resumeWasFull=false;
+    M536.returnToFull=false;
   }
 
-  // 이미 다른 집중 문장을 재생 중이라면 기존 집중만 끊는다.
-  // returnToFull / resumeCursor는 절대 건드리지 않는다.
-  if(M536.mode==='infinite' && M536.infiniteKey!==key){
-    M536.token++;
-    try{stopSpeech()}catch(e){}
-    try{window.speechSynthesis?.cancel()}catch(e){}
-    M536.mode='idle';
-    M536.infiniteKey='';
-    M536.infiniteItem=null;
-    M536.busy=false;
-    MY_CLASS_PLAY.active=false;
-    MY_CLASS_PLAY.paused=true;
-    MY_CLASS_PLAY.repeatCurrent=false;
-    MY_TITLE_INFINITY_KEY='';
-  }
+  // Stop current modern loop and every legacy loop.
+  M536.token++;
+  try{stopSpeech()}catch(e){}
+  try{window.speechSynthesis?.cancel()}catch(e){}
+  m536StopLegacyPlaybackOnly();
 
-  // 구형 controller token만 끊고 M536 복귀 정보는 보존.
-  try{window.stopV534MyClassLoop?.()}catch(e){}
-  try{window.stopV535MyClassLoop?.()}catch(e){}
-
-  MY_CLASS_INFINITY_VISUAL_KEY=key;
-  MY_TITLE_INFINITY_KEY=key;
-  // 비동기 재생을 시작하기 전에 버튼 상태부터 즉시 ON으로 만든다.
+  M536.course=c;
+  ACTIVE_STUDY_COURSE=c;
   M536.mode='infinite';
   M536.infiniteKey=key;
   M536.infiniteItem=item;
+  M536.busy=true;
   MY_CLASS_INFINITY_VISUAL_KEY=key;
   MY_TITLE_INFINITY_KEY=key;
-  try{syncMyClassTitleInfinityButtons?.()}catch(e){}
-  try{syncMyClassInfinityVisuals?.()}catch(e){}
+
+  syncMyClassTitleInfinityButtons?.();
+  syncMyClassInfinityVisuals?.();
   m536RunInfinite(item);
-  try{syncMyClassInfinityVisuals?.()}catch(e){}
 }
+
+
 window.m536ToggleInfinite=m536ToggleInfinite;
-window.m536StartFull=m536StartFull;
+
+function m536ToggleCurrentVisibleItem(){
+  const course=M536?.course||ACTIVE_STUDY_COURSE||'my';
+  const lesson=myClassLessonNo||1;
+  const tab=myClassTab||studyCourseOrder(course)[0]||'corrections';
+  let index=0;
+
+  if(M536.mode==='full' && M536.playlist?.[M536.cursor]){
+    const cur=M536.playlist[M536.cursor];
+    return m536ToggleInfinite(cur.lesson,cur.tab,cur.index,cur.course||course);
+  }
+  if(M536.mode==='infinite' && M536.infiniteItem){
+    const cur=M536.infiniteItem;
+    return m536ToggleInfinite(cur.lesson,cur.tab,cur.index,cur.course||course);
+  }
+
+  const focused=document.querySelector('#myClassContent .mvPlayingCard,.myStudyCard.mvPlayingCard,.mySpeakBlock.mvPlayingCard');
+  if(focused?.id){
+    const m=focused.id.match(/(?:myCorrectionCard|myChunkCard|mySpeakBlock)(\d+)/);
+    if(m)index=Number(m[1])||0;
+  }
+  return m536ToggleInfinite(lesson,tab,index,course);
+}
+window.m536ToggleCurrentVisibleItem=m536ToggleCurrentVisibleItem;
+
+window.m536StartCourse=m536StartCourse;
 window.m536StartFull=m536StartFull;
 window.startSelectedMyClassLessons=m536StartFull;
 
-function m536AddInfinityButton(card,lesson,tab,index,label){
+function m536AddInfinityButton(card,lesson,tab,index,label,course=(M536?.course||ACTIVE_STUDY_COURSE)){
   if(!card || card.querySelector('.myInfinityBtn'))return;
   const actions=card.querySelector('.myStudyActions');
   if(!actions)return;
   const b=document.createElement('button');
-  b.type='button';b.className='myInfinityBtn';b.dataset.infKey=`${lesson}|${tab}|${index}`;
+  b.type='button';b.className='myInfinityBtn';b.dataset.infKey=m536ItemKey({course,lesson,tab,index});
   b.innerHTML=`∞ ${label||'무한 반복'}`;
-  b.onclick=(e)=>{e.preventDefault();e.stopPropagation();m536ToggleInfinite(lesson,tab,index)};
+  b.onclick=(e)=>{e.preventDefault();e.stopPropagation();m536ToggleInfinite(lesson,tab,index,course)};
   actions.appendChild(b);
 }
 function m536DecorateCards(){
   const lesson=myClassLessonNo;
+  const course=M536?.course||ACTIVE_STUDY_COURSE;
+  const data=m536Data(lesson,course);
   if(myClassTab==='corrections'){
-    (m536Data(lesson).corrections||[]).forEach((_,i)=>m536AddInfinityButton(document.getElementById(`myCorrectionCard${i}`),lesson,'corrections',i,'문장 반복'));
+    (data?.corrections||[]).forEach((_,i)=>m536AddInfinityButton(document.getElementById(`myCorrectionCard${i}`),lesson,'corrections',i,'문장 반복',course));
   }else if(myClassTab==='chunks'){
-    (m536Data(lesson).chunks||[]).forEach((_,i)=>m536AddInfinityButton(document.getElementById(`myChunkCard${i}`),lesson,'chunks',i,'문장 반복'));
+    (data?.chunks||[]).forEach((_,i)=>m536AddInfinityButton(document.getElementById(`myChunkCard${i}`),lesson,'chunks',i,'문장 반복',course));
   }else if(myClassTab==='speaking'){
-    (m536Data(lesson).speaking||[]).forEach((_,i)=>m536AddInfinityButton(document.getElementById(`mySpeakBlock${i}`),lesson,'speaking',i,'문단 반복'));
+    (data?.speaking||[]).forEach((_,i)=>m536AddInfinityButton(document.getElementById(`mySpeakBlock${i}`),lesson,'speaking',i,'문단 반복',course));
   }
   m536SyncInfinityButtons();
 }
@@ -7251,7 +7926,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// ===== V5.3.147 MY 수업 HARD navigation stop =====
+// ===== V5.3.155 MY 수업 HARD navigation stop =====
 function myClassHardNavigationStop(){
   try{stopAllMyClassPlayback(true)}catch(e){}
   // Samsung Internet TTS cancel 안정성을 위해 짧게 한 번 더 취소한다.
@@ -7273,7 +7948,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// V5.3.147: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
+// V5.3.155: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
 function installInfinityVisualObserver(){
   const root=document.getElementById('myClassContent');
   if(!root || root.dataset.infinityVisualObserver==='1')return;
@@ -7287,7 +7962,7 @@ function installInfinityVisualObserver(){
 setTimeout(installInfinityVisualObserver,0);
 
 
-// V5.3.147: 무한 반복 상태 표시 heartbeat.
+// V5.3.155: 무한 반복 상태 표시 heartbeat.
 // 브라우저/DOM 재렌더 방식과 무관하게 반복 중에는 250ms마다 active UI를 복구한다.
 if(!window.__mvInfinityHeartbeat){
   window.__mvInfinityHeartbeat=setInterval(()=>{
@@ -7295,7 +7970,7 @@ if(!window.__mvInfinityHeartbeat){
     if(!page || page.classList.contains('hidden'))return;
     try{
       if(typeof M536!=='undefined' && M536.mode==='infinite'){
-        const key=String(M536.infiniteKey||MY_TITLE_INFINITY_KEY||'');
+        const key=String(M536.infiniteKey||'');
         if(key){
           MY_TITLE_INFINITY_KEY=key;
           const b=document.querySelector(`.myTitleInfinityBtn[data-inf-key="${CSS.escape(key)}"]`);
@@ -7319,12 +7994,32 @@ if(!window.__mvInfinityHeartbeat){
 
 
 
+
+/* ===== V5.3.155 · PLAYBACK STANDARDIZATION SELF-AUDIT ===== */
+function mvPlaybackStandardAudit(){
+  const course=M536?.course||ACTIVE_STUDY_COURSE||'my';
+  const sample={course,lesson:myClassLessonNo||1,tab:myClassTab||'corrections',index:0};
+  const key=m536ItemKey(sample);
+  return {
+    version:'5.3.155',
+    engine:'M536',
+    course,
+    canonicalKey:key,
+    keyHasCourse:key.split('|').length===4,
+    fullUsesM536:window.startSelectedMyClassLessons===m536StartFull,
+    infiniteUsesM536:window.m536ToggleInfinite===m536ToggleInfinite,
+    currentRepeatUsesM536:typeof window.m536ToggleCurrentVisibleItem==='function',
+    legacyLoopsStoppedByBridge:typeof window.m536StopLegacyPlaybackOnly==='function'
+  };
+}
+window.mvPlaybackStandardAudit=mvPlaybackStandardAudit;
+
 function installVisibleBuildBadge(){
   let badge=document.getElementById('mvBuildBadge');
   if(!badge){
     badge=document.createElement('div');
     badge.id='mvBuildBadge';
-    badge.textContent='v5.3.147';
+    badge.textContent='v5.3.155';
     badge.title='현재 실행 중인 MY VOCA 빌드';
     document.body.appendChild(badge);
   }
@@ -7333,58 +8028,11 @@ setTimeout(installVisibleBuildBadge,0);
 
 
 function myClassPlayAllSelectedLessons(){
-  try{stopAllMyClassPlayback(true)}catch(e){}
-  const selected = (typeof myClassSelectedLessons==='function')
-    ? myClassSelectedLessons()
-    : [1,2,3,4,5];
-  if(!selected.length){
-    sentenceRecordingToast?.('재생할 수업을 하나 이상 선택해 주세요.');
-    return;
+  const course=M536?.course||ACTIVE_STUDY_COURSE||'my';
+  if(typeof window.m536StartCourse==='function'){
+    window.m536StartCourse(course);
   }
-
-  // Prefer the app's existing full-repeat engine if present.
-  if(typeof window.v535StartSelectedLessonRepeat==='function'){
-    window.v535StartSelectedLessonRepeat(selected);
-    return;
-  }
-  if(typeof window.startMyClassFullRepeat==='function'){
-    window.startMyClassFullRepeat(selected);
-    return;
-  }
-
-  // Stable fallback: build one queue from selected lessons and play once.
-  const queue=[];
-  const tabs=['corrections','chunks','speaking'];
-  selected.forEach(lesson=>{
-    const data=(typeof m536Data==='function')?m536Data(lesson):null;
-    if(!data)return;
-    (data.corrections||[]).forEach((x,i)=>queue.push({lesson,tab:'corrections',index:i,text:x.en}));
-    (data.chunks||[]).forEach((x,i)=>queue.push({lesson,tab:'chunks',index:i,text:x.example}));
-    (data.speaking||[]).forEach((x,i)=>queue.push({lesson,tab:'speaking',index:i,text:x.text,paragraph:true}));
-  });
-  if(!queue.length)return;
-
-  (async()=>{
-    const token=(window.__myClassFullPlayToken=(window.__myClassFullPlayToken||0)+1);
-    const btn=document.getElementById('myClassFullPlayBtn');
-    if(btn){btn.classList.add('playing');btn.textContent='■ 전체 재생 정지'}
-    for(const item of queue){
-      if(token!==window.__myClassFullPlayToken)break;
-      myClassLessonNo=item.lesson;
-      myClassTab=item.tab;
-      renderMyClass();
-      await new Promise(r=>setTimeout(r,50));
-      const focusEl=item.tab==='corrections'
-        ? document.getElementById(`myCorrectionCard${item.index}`)
-        : item.tab==='chunks'
-          ? document.getElementById(`myChunkCard${item.index}`)
-          : document.getElementById(`mySpeakBlock${item.index}`);
-      if(typeof m536SpeakItem==='function') await m536SpeakItem(item,focusEl);
-    }
-    if(btn){btn.classList.remove('playing');btn.textContent='▶ 수업 전체 재생'}
-  })();
 }
-
 function myClassStopFullPlay(){
   window.__myClassFullPlayToken=(window.__myClassFullPlayToken||0)+1;
   try{stopAllMyClassPlayback(true)}catch(e){}
@@ -7435,3 +8083,579 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   };
   mvDomClearHighlight.__normalized140=true;
 }
+
+
+
+/* ===== V5.3.155 · HOME + SENTENCE SPEAKING STANDARD COURSE PATCH ===== */
+(function(){
+  'use strict';
+
+  function rebuildStandardHomeModeSwitch(){
+    const panel=document.getElementById('homeStudyModePanel');
+    const mySection=document.querySelector('#homePage .myClassSection');
+    if(!panel||!mySection)return;
+
+    panel.innerHTML=`
+      <div class="homeStudyModeTitle">학습 모드</div>
+      <div class="homeStudyModeSwitch standardFourModes">
+        <button id="homeModeDay" class="homeStudyModeBtn active" type="button">📚 DAY VOCA</button>
+        <button id="homeModeMy" class="homeStudyModeBtn" type="button">🎯 MY 수업</button>
+        <button id="homeModeSori" class="homeStudyModeBtn" type="button">🎧 소리영어</button>
+        <button id="homeModeOpic" class="homeStudyModeBtn" type="button">🎤 OPIC</button>
+      </div>
+      <div id="homeStudyModeHelp" class="homeStudyModeHelp">DAY VOCA / MY 수업 / 소리영어 / OPIC은 공통 학습 구조를 사용합니다.</div>`;
+
+    document.getElementById('homeModeDay').onclick=()=>setHomeStudyMode('day');
+    document.getElementById('homeModeMy').onclick=()=>setHomeStudyMode('my');
+    document.getElementById('homeModeSori').onclick=()=>setHomeStudyMode('sori');
+    document.getElementById('homeModeOpic').onclick=()=>setHomeStudyMode('opic');
+  }
+
+  window.setHomeStudyMode=function(mode){
+    const homeRoot=document.getElementById('homePage');
+    const modePanel=document.getElementById('homeStudyModePanel');
+    const misplacedSori=document.querySelector('.soriClassSection');
+    const misplacedOpic=document.querySelector('.opicClassSection');
+    if(homeRoot && modePanel){
+      const sharedBar=document.getElementById('sharedStudySelectBar');
+      const anchor=sharedBar||modePanel;
+      if(misplacedSori && misplacedSori.parentElement!==homeRoot) anchor.insertAdjacentElement('afterend',misplacedSori);
+      if(misplacedOpic && misplacedOpic.parentElement!==homeRoot) (misplacedSori||anchor).insertAdjacentElement('afterend',misplacedOpic);
+    }
+    const valid=['day','my','sori','opic'];
+    const m=valid.includes(mode)?mode:'day';
+    const daySection=document.querySelector('#homePage .daySection');
+    const mySection=document.querySelector('#homePage .myClassSection');
+    const soriSection=document.querySelector('#homePage .soriClassSection');
+    const opicSection=document.querySelector('#homePage .opicClassSection');
+
+    if(daySection)daySection.style.display=m==='day'?'':'none';
+    if(mySection)mySection.style.display=m==='my'?'':'none';
+    if(soriSection)soriSection.style.display=m==='sori'?'':'none';
+    if(opicSection)opicSection.style.display=m==='opic'?'':'none';
+
+    [['homeModeDay','day'],['homeModeMy','my'],['homeModeSori','sori'],['homeModeOpic','opic']]
+      .forEach(([id,key])=>document.getElementById(id)?.classList.toggle('active',m===key));
+
+    const help=document.getElementById('homeStudyModeHelp');
+    if(help){
+      help.textContent=m==='day'
+        ?'기존 DAY VOCA 학습입니다.'
+        :m==='my'
+          ?'실제 수업에서 나온 내 교정 문장과 Chunk를 반복합니다.'
+          :m==='sori'
+            ?'토요일 소리영어 3개 스크립트를 한 박스에서 Chunk → 핵심 문장 → 말하기 → 소리 Point로 복습합니다.'
+            :'OPIC 콘텐츠는 다음 단계에서 추가합니다. 학습 엔진은 이미 MY 수업·소리영어와 같은 표준 구조를 사용하도록 준비했습니다.';
+    }
+  };
+
+  function bindSoriCard(){
+    const card=document.getElementById('soriGroup1Card');
+    if(!card)return;
+    const open=()=>{ACTIVE_STUDY_COURSE='sori';if(typeof M536!=='undefined')M536.course='sori';openStudyCourse('sori',1)};
+    card.onclick=open;
+    card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}};
+  }
+
+  // Back button returns to the mode the learner came from.
+  function closeStandardCourse(){
+    myClassHardNavigationStop?.();
+    document.getElementById('myClassBottom')?.classList.add('hidden');
+    document.getElementById('myClassPage')?.classList.add('hidden');
+    document.getElementById('homePage')?.classList.remove('hidden');
+    setHomeStudyMode(ACTIVE_STUDY_COURSE==='sori'?'sori':'my');
+    window.scrollTo(0,0);
+  }
+
+  function addSoriSentenceSourceButton(){
+    const sw=document.querySelector('#sentenceSourceBar .sentenceSourceSwitch');
+    if(!sw)return;
+    sw.classList.add('standardFourSentenceSources');
+    if(!document.getElementById('sentenceSourceSori')){
+      const b=document.createElement('button');
+      b.id='sentenceSourceSori';
+      b.className='sentenceSourceBtn';
+      b.type='button';
+      b.textContent='소리영어';
+      sw.appendChild(b);
+    }
+  }
+
+  const baseBuildQuizDeck=buildQuizDeck;
+  buildQuizDeck=function(){
+    if(quizMode==='sentence'&&sentenceSourceMode==='sori'){
+      quizAllWrongMode=false;
+      let pool=studyCourseSentenceCards('sori',1);
+      pool.forEach(q=>ensureSentenceStats(q));
+      if(quizFilterMode==='wrong'){
+        pool=pool.filter(isWeakSentence).sort((a,b)=>(ensureSentenceStats(b).sentenceWrong||0)-(ensureSentenceStats(a).sentenceWrong||0));
+      }
+      quizDeck=pool;
+      quizIndex=0;quizSessionDone=false;quizSessionWrong=[];
+      updateQuizFilterCount();
+      return;
+    }
+    return baseBuildQuizDeck();
+  };
+
+  const baseCount=updateQuizFilterCount;
+  updateQuizFilterCount=function(){
+    if(quizMode==='sentence'&&sentenceSourceMode==='sori'){
+      const all=studyCourseSentenceCards('sori',1);
+      const el=document.getElementById('quizFilterCount');
+      if(el)el.textContent=(quizFilterMode==='wrong'?all.filter(isWeakSentence).length:all.length)+'문장';
+      return;
+    }
+    return baseCount();
+  };
+
+  const baseLabel=sentenceSourceLabel;
+  sentenceSourceLabel=function(){
+    if(sentenceSourceMode==='sori')return '소리영어';
+    return baseLabel();
+  };
+
+  const baseSync=syncSentenceSourceUI;
+  syncSentenceSourceUI=function(){
+    baseSync();
+    addSoriSentenceSourceButton();
+    document.getElementById('sentenceSourceSori')?.classList.toggle('active',sentenceSourceMode==='sori');
+  };
+
+  const baseSetSource=setSentenceSource;
+  setSentenceSource=function(mode){
+    if(mode!=='sori')return baseSetSource(mode);
+    stopDayLoop(true);
+    sentenceSourceMode='sori';
+    quizFilterMode=(quizFilterMode==='wrong')?'wrong':'all';
+    localStorage.setItem(packKey('sentenceSourceMode'),sentenceSourceMode);
+    localStorage.setItem(packKey('quizFilterMode'),quizFilterMode);
+    clearQuizAutoNext();clearSentenceRecallTimer();stopSentenceRepeat(true);stopSpeech();
+    quizAllWrongMode=false;
+    syncSentenceSourceUI();updateQuizDayNav();buildQuizDeck();quizAnswered=false;newq();
+  };
+
+  const baseDayNav=updateQuizDayNav;
+  updateQuizDayNav=function(){
+    if(quizMode==='sentence'&&sentenceSourceMode==='sori'){
+      const btn=$('quizAllWrongBtn'),label=$('quizDayLabel');
+      if(btn){btn.disabled=true;btn.classList.remove('active');btn.textContent='소리영어 문장 학습';}
+      if(label)label.innerHTML=`<b>소리영어 · 통합 복습 1</b><span>${studyCourseSentenceCards('sori',1).length}문장 · 3 Scripts</span>`;
+      $('quizPrevDay').disabled=true;
+      $('quizNextDay').disabled=true;
+      updateQuizFilterCount();
+      return;
+    }
+    return baseDayNav();
+  };
+
+  const baseSetDay=setQuizDay;
+  setQuizDay=function(day){
+    if(quizMode==='sentence'&&sentenceSourceMode==='sori'){
+      updateQuizDayNav();buildQuizDeck();quizAnswered=false;newq();return;
+    }
+    return baseSetDay(day);
+  };
+
+  const baseNewSentence=newSentenceRecallQuestion;
+  newSentenceRecallQuestion=function(){
+    baseNewSentence();
+    if(sentenceSourceMode==='sori'&&quizCurrent){
+      $('qw').innerHTML=`소리영어 문장 <span class="myClassQuizBadge">${quizIndex+1}/${quizDeck.length}</span>`;
+      $('quizMeta').textContent=`소리영어 · 문장 말하기 · ${sentenceFilterLabel()} · ${quizIndex+1}/${quizDeck.length}`;
+    }
+  };
+
+  function bindStandardCourseUI(){
+    rebuildStandardHomeModeSwitch();
+    const homeRoot=document.getElementById('homePage');
+    const modePanel=document.getElementById('homeStudyModePanel');
+    const soriSection=document.querySelector('.soriClassSection');
+    const opicSection=document.querySelector('.opicClassSection');
+    if(homeRoot && modePanel){
+      const sharedBar=document.getElementById('sharedStudySelectBar');
+      const anchor=sharedBar||modePanel;
+      if(soriSection && soriSection.parentElement!==homeRoot) anchor.insertAdjacentElement('afterend',soriSection);
+      if(opicSection && opicSection.parentElement!==homeRoot) (soriSection||anchor).insertAdjacentElement('afterend',opicSection);
+    }
+    bindSoriCard();
+    addSoriSentenceSourceButton();
+    const sb=document.getElementById('sentenceSourceSori');
+    if(sb)sb.onclick=()=>setSentenceSource('sori');
+
+    const back=document.getElementById('myClassBack');
+    const home=document.getElementById('myClassHomeBtn');
+    if(back)back.onclick=closeStandardCourse;
+    if(home)home.onclick=closeStandardCourse;
+
+    // Make MY cards explicitly return to the MY course adapter.
+    [1,2,3,4,5].forEach(n=>{
+      const c=document.getElementById(`myClassLesson${n}Card`);
+      if(!c)return;
+      const open=()=>{ACTIVE_STUDY_COURSE='my';if(typeof M536!=='undefined')M536.course='my';openStudyCourse('my',n)};
+      c.onclick=open;
+      c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}};
+    });
+
+    setHomeStudyMode('day');
+  }
+
+  setTimeout(bindStandardCourseUI,160);
+})();
+
+
+
+/* ===== V5.3.155 · SHARED STUDY SELECTION / REPEAT BAR =====
+   One common controller for DAY VOCA / MY / SORI / OPIC.
+   New study modes must implement only the adapter (items/select/start);
+   they must NOT duplicate select-all / clear / selected-repeat UI.
+*/
+(function(){
+  'use strict';
+
+  const STUDY_SELECT_KEYS = {
+    sori:'mv_studySelected_sori',
+    opic:'mv_studySelected_opic'
+  };
+
+  function readJson(key,fallback=[]){
+    try{
+      const v=JSON.parse(localStorage.getItem(key)||JSON.stringify(fallback));
+      return Array.isArray(v)?v:fallback;
+    }catch(e){return fallback}
+  }
+  function writeJson(key,value){
+    try{localStorage.setItem(key,JSON.stringify(value))}catch(e){}
+  }
+
+  function currentHomeStudyMode(){
+    const active=document.querySelector('#homeStudyModePanel .homeStudyModeBtn.active');
+    if(active?.id==='homeModeMy')return 'my';
+    if(active?.id==='homeModeSori')return 'sori';
+    if(active?.id==='homeModeOpic')return 'opic';
+    return 'day';
+  }
+
+  function ensureSharedToolbar(){
+    const panel=document.getElementById('homeStudyModePanel');
+    if(!panel)return null;
+    let bar=document.getElementById('sharedStudySelectBar');
+    if(bar)return bar;
+
+    bar=document.createElement('div');
+    bar.id='sharedStudySelectBar';
+    bar.className='sharedStudySelectBar';
+    bar.innerHTML=`
+      <div class="sharedStudySelectHead">
+        <div>
+          <b id="sharedStudySelectTitle">📚 DAY VOCA 선택 학습</b>
+          <span id="sharedStudySelectHint">학습할 항목을 체크한 뒤 동일한 공통 버튼으로 반복 학습합니다.</span>
+        </div>
+        <span id="sharedStudySelectCount" class="sharedStudySelectCount">0 선택</span>
+      </div>
+      <div class="sharedStudySelectActions">
+        <button id="sharedStudySelectAll" class="sharedStudySelectBtn" type="button">전체 선택</button>
+        <button id="sharedStudyClearAll" class="sharedStudySelectBtn" type="button">전체 해제</button>
+        <button id="sharedStudyStart" class="sharedStudySelectBtn primary" type="button">▶ 선택한 DAY 전체 반복</button>
+      </div>`;
+    panel.insertAdjacentElement('afterend',bar);
+
+    // Standard order: mode selector -> common controls -> mode cards/content.
+    const soriSection=document.querySelector('#homePage .soriClassSection');
+    const opicSection=document.querySelector('#homePage .opicClassSection');
+    if(soriSection)bar.insertAdjacentElement('afterend',soriSection);
+    if(opicSection)(soriSection||bar).insertAdjacentElement('afterend',opicSection);
+
+    document.getElementById('sharedStudySelectAll').onclick=()=>studySelectionSelectAll(currentHomeStudyMode());
+    document.getElementById('sharedStudyClearAll').onclick=()=>studySelectionClearAll(currentHomeStudyMode());
+    document.getElementById('sharedStudyStart').onclick=()=>studySelectionStart(currentHomeStudyMode());
+    return bar;
+  }
+
+  function ensureStandardCourseCheckbox(card,mode,id,label){
+    if(!card)return null;
+    let wrap=card.querySelector('.studySelectMini');
+    if(!wrap){
+      wrap=document.createElement('label');
+      wrap.className='studySelectMini';
+      wrap.innerHTML=`<input class="studySelectCheck" type="checkbox"><span>선택</span>`;
+      card.insertBefore(wrap,card.firstChild);
+    }
+    const check=wrap.querySelector('.studySelectCheck');
+    check.dataset.studyMode=mode;
+    check.dataset.studyId=String(id);
+    check.setAttribute('aria-label',`${label} 전체 반복 선택`);
+    wrap.onclick=e=>e.stopPropagation();
+    check.onclick=e=>e.stopPropagation();
+    return check;
+  }
+
+  function normalizeMyCheckboxes(){
+    document.querySelectorAll('#homePage .myClassCard .myLessonSelectMini').forEach(w=>{
+      w.classList.add('studySelectMini');
+      const c=w.querySelector('.myClassSelectCheck');
+      if(!c)return;
+      c.classList.add('studySelectCheck');
+      c.dataset.studyMode='my';
+      c.dataset.studyId=String(c.dataset.myLesson||'');
+    });
+  }
+
+  function ensureSoriCheckbox(){
+    const card=document.getElementById('soriGroup1Card');
+    const c=ensureStandardCourseCheckbox(card,'sori',1,'소리영어 통합 복습 1');
+    if(!c)return;
+    const selected=readJson(STUDY_SELECT_KEYS.sori,[1]).map(Number);
+    c.checked=selected.includes(1);
+    card.classList.toggle('myClassChecked',c.checked);
+    c.onchange=()=>{
+      writeJson(STUDY_SELECT_KEYS.sori,c.checked?[1]:[]);
+      card.classList.toggle('myClassChecked',c.checked);
+      syncSharedStudySelectionUI('sori');
+    };
+  }
+
+  function convertOpicPlaceholderToStandardCard(){
+    const sec=document.querySelector('#homePage .opicClassSection');
+    if(!sec)return;
+    let card=document.getElementById('opicGroup1Card');
+    if(!card){
+      const old=sec.querySelector('.opicReadyCard');
+      if(old)old.remove();
+      card=document.createElement('div');
+      card.id='opicGroup1Card';
+      card.className='myClassCard opicCourseCard';
+      card.setAttribute('role','button');
+      card.setAttribute('tabindex','0');
+      card.innerHTML=`
+        <div class="myClassTop"><b>OPIC · 표준 학습 세트</b><span class="myClassBadge">READY</span></div>
+        <div class="myClassTitle">OPIC 콘텐츠 추가 준비</div>
+        <div class="myClassDesc">MY 수업·소리영어와 동일한 핵심 답변 → Chunk → 말하기 → AL Point 표준 포맷을 사용합니다.</div>
+        <div class="myClassMeta"><span>⭐ 핵심 답변 0</span><span>🧩 Chunk 0</span><span>🗣 말하기 0</span><span>🏆 AL Point 0</span></div>`;
+      sec.appendChild(card);
+    }
+    const c=ensureStandardCourseCheckbox(card,'opic',1,'OPIC 표준 학습 세트');
+    const selected=readJson(STUDY_SELECT_KEYS.opic,[]).map(Number);
+    c.checked=selected.includes(1);
+    card.classList.toggle('myClassChecked',c.checked);
+    c.onchange=()=>{
+      writeJson(STUDY_SELECT_KEYS.opic,c.checked?[1]:[]);
+      card.classList.toggle('myClassChecked',c.checked);
+      syncSharedStudySelectionUI('opic');
+    };
+    const open=()=>{
+      if(!studyCourseSentenceCards('opic',1).length){
+        alert('OPIC 학습 콘텐츠는 아직 추가되지 않았습니다. 다음 OPIC 자료부터 같은 표준 포맷으로 연결됩니다.');
+        return;
+      }
+      ACTIVE_STUDY_COURSE='opic';
+      openStudyCourse('opic',1);
+    };
+    card.onclick=open;
+    card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}};
+  }
+
+  function dayChecks(){
+    return [...document.querySelectorAll('#dayGrid .daySelectCheck:not(:disabled)')];
+  }
+  function myChecks(){
+    return [...document.querySelectorAll('#homePage .myClassSection .myClassSelectCheck')];
+  }
+  function soriChecks(){
+    return [...document.querySelectorAll('#homePage .soriClassSection .studySelectCheck[data-study-mode="sori"]')];
+  }
+  function opicChecks(){
+    return [...document.querySelectorAll('#homePage .opicClassSection .studySelectCheck[data-study-mode="opic"]')];
+  }
+
+  function modeChecks(mode){
+    if(mode==='day')return dayChecks();
+    if(mode==='my')return myChecks();
+    if(mode==='sori')return soriChecks();
+    if(mode==='opic')return opicChecks();
+    return [];
+  }
+
+  function persistModeSelection(mode){
+    const checks=modeChecks(mode);
+    if(mode==='day'){
+      const days=checks.filter(c=>c.checked).map(c=>Number(c.dataset.checkDay)).filter(Number.isFinite).sort((a,b)=>a-b);
+      try{localStorage.setItem(selectedDaysKey(),JSON.stringify(days))}catch(e){}
+      checks.forEach(c=>c.closest('.dayCard')?.classList.toggle('selectedDay',c.checked));
+      return;
+    }
+    if(mode==='my'){
+      const ids=checks.filter(c=>c.checked).map(c=>Number(c.dataset.myLesson||c.dataset.studyId)).filter(Number.isFinite).sort((a,b)=>a-b);
+      localStorage.setItem('mv_myClassSelectedLessons',JSON.stringify(ids));
+      checks.forEach(c=>c.closest('.myClassCard')?.classList.toggle('myClassChecked',c.checked));
+      return;
+    }
+    const key=STUDY_SELECT_KEYS[mode];
+    if(key){
+      const ids=checks.filter(c=>c.checked).map(c=>Number(c.dataset.studyId)).filter(Number.isFinite).sort((a,b)=>a-b);
+      writeJson(key,ids);
+      checks.forEach(c=>c.closest('.myClassCard')?.classList.toggle('myClassChecked',c.checked));
+    }
+  }
+
+  function setChecks(mode,on){
+    const checks=modeChecks(mode);
+    checks.forEach(c=>{
+      c.checked=!!on;
+      c.closest('.dayCard')?.classList.toggle('selectedDay',!!on);
+      c.closest('.myClassCard')?.classList.toggle('myClassChecked',!!on);
+    });
+    persistModeSelection(mode);
+    syncSharedStudySelectionUI(mode);
+  }
+
+  function studySelectionSelectAll(mode){ setChecks(mode,true); }
+  function studySelectionClearAll(mode){ setChecks(mode,false); }
+
+  function selectedCount(mode){
+    return modeChecks(mode).filter(c=>c.checked).length;
+  }
+
+  function modeCopy(mode){
+    if(mode==='my')return {
+      title:'🎯 MY 수업 선택 학습',
+      hint:'체크한 수업을 오래된 수업 → 최신 수업 순서로 공통 엔진에서 계속 반복합니다.',
+      start:'▶ 선택한 MY 수업 전체 반복'
+    };
+    if(mode==='sori')return {
+      title:'🎧 소리영어 선택 학습',
+      hint:'체크한 소리영어 학습 세트의 Chunk → 핵심 문장 → 말하기를 공통 엔진에서 반복합니다.',
+      start:'▶ 선택한 소리영어 전체 반복'
+    };
+    if(mode==='opic')return {
+      title:'🎤 OPIC 선택 학습',
+      hint:'OPIC 학습 세트는 Chunk → 핵심 답변 → 말하기 순서로, MY 수업과 동일한 공통 엔진을 사용합니다.',
+      start:'▶ 선택한 OPIC 전체 반복'
+    };
+    return {
+      title:'📚 DAY VOCA 선택 학습',
+      hint:'체크한 Day를 현재 DAY 학습 범위·반복 설정으로 연속 학습합니다.',
+      start:'▶ 선택한 DAY 전체 반복'
+    };
+  }
+
+  function syncSharedStudySelectionUI(mode=currentHomeStudyMode()){
+    ensureSharedToolbar();
+    normalizeMyCheckboxes();
+    ensureSoriCheckbox();
+    convertOpicPlaceholderToStandardCard();
+
+    const copy=modeCopy(mode);
+    const title=document.getElementById('sharedStudySelectTitle');
+    const hint=document.getElementById('sharedStudySelectHint');
+    const start=document.getElementById('sharedStudyStart');
+    const count=document.getElementById('sharedStudySelectCount');
+    if(title)title.textContent=copy.title;
+    if(hint)hint.textContent=copy.hint;
+    if(start)start.textContent=copy.start;
+    if(count)count.textContent=`${selectedCount(mode)} 선택`;
+
+    // DAY-specific range/repeat selectors stay in DAY itself,
+    // but its old start button is removed from the interaction layer.
+    const oldDayStart=document.getElementById('selectedStartBtn');
+    if(oldDayStart)oldDayStart.style.display='none';
+
+    // MY-specific duplicated controls are retired; the shared bar owns these actions.
+    document.querySelectorAll('#homePage .myClassSection .myClassSelectActions').forEach(x=>x.style.display='none');
+    document.querySelectorAll('#homePage .myClassSection .v534MyControls').forEach(x=>x.style.display='none');
+
+    // Keep MY checkbox changes synchronized with the common bar/storage.
+    myChecks().forEach(c=>{
+      if(c.dataset.sharedBound==='1')return;
+      c.dataset.sharedBound='1';
+      c.addEventListener('change',()=>{
+        persistModeSelection('my');
+        syncSharedStudySelectionUI('my');
+      });
+    });
+  }
+
+  function studySelectionStart(mode){
+    persistModeSelection(mode);
+    const count=selectedCount(mode);
+    if(!count){
+      alert(mode==='day'?'학습할 Day를 하나 이상 선택해 주세요.':`${modeCopy(mode).title.replace(/^.\s*/,'')} 항목을 하나 이상 선택해 주세요.`);
+      return;
+    }
+
+    if(mode==='day'){
+      startSelectedAutoLearning();
+      return;
+    }
+
+    if(mode==='opic'){
+      if(!studyCourseSentenceCards('opic',1).length){
+        alert('OPIC 학습 콘텐츠는 아직 추가되지 않았습니다. 체크박스/선택/반복 구조는 표준화되어 있으며, 콘텐츠가 추가되면 같은 버튼으로 실행됩니다.');
+        return;
+      }
+    }
+
+    ACTIVE_STUDY_COURSE=mode;
+    myClassLessonNo=1;
+    if(typeof window.m536StartCourse==='function'){
+      window.m536StartCourse(mode);
+    }else if(typeof window.m536StartFull==='function'){
+      window.m536StartFull();
+    }
+  }
+
+  // Replace the course-selection adapter used by the shared MY/SORI/OPIC playback engine.
+  studyCourseSelectedLessons=function(course=ACTIVE_STUDY_COURSE){
+    if(course==='sori'){
+      return readJson(STUDY_SELECT_KEYS.sori,[1]).map(Number).filter(n=>n===1);
+    }
+    if(course==='opic'){
+      return readJson(STUDY_SELECT_KEYS.opic,[]).map(Number).filter(n=>n===1);
+    }
+    const all=Object.keys(MY_CLASS_META||{}).map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
+    let selected=[];
+    try{selected=JSON.parse(localStorage.getItem('mv_myClassSelectedLessons')||'[]')}catch(e){selected=[]}
+    return [...new Set((Array.isArray(selected)?selected:[]).map(Number).filter(n=>all.includes(n)))].sort((a,b)=>a-b);
+  };
+  window.studyCourseSelectedLessons=studyCourseSelectedLessons;
+
+  // Make the common bar track mode switches without duplicating mode-specific UI.
+  const previousSetHomeStudyMode=window.setHomeStudyMode;
+  window.setHomeStudyMode=function(mode){
+    previousSetHomeStudyMode(mode);
+    setTimeout(()=>syncSharedStudySelectionUI(mode),0);
+  };
+
+  // DAY grid is rebuilt often; after each rebuild, synchronize common selection UI.
+  const previousRenderDayGrid=window.renderDayGrid||renderDayGrid;
+  renderDayGrid=function(){
+    previousRenderDayGrid();
+    dayChecks().forEach(c=>{
+      if(c.dataset.sharedBound==='1')return;
+      c.dataset.sharedBound='1';
+      c.addEventListener('change',()=>setTimeout(()=>syncSharedStudySelectionUI('day'),0));
+    });
+    setTimeout(()=>syncSharedStudySelectionUI(currentHomeStudyMode()),0);
+  };
+  window.renderDayGrid=renderDayGrid;
+
+  function initializeSharedSelection(){
+    ensureSharedToolbar();
+    normalizeMyCheckboxes();
+    ensureSoriCheckbox();
+    convertOpicPlaceholderToStandardCard();
+
+    // If SORI has never been configured, default its single current box ON.
+    if(localStorage.getItem(STUDY_SELECT_KEYS.sori)===null)writeJson(STUDY_SELECT_KEYS.sori,[1]);
+    if(localStorage.getItem(STUDY_SELECT_KEYS.opic)===null)writeJson(STUDY_SELECT_KEYS.opic,[]);
+
+    syncSharedStudySelectionUI(currentHomeStudyMode());
+  }
+
+  window.studySelectionSelectAll=studySelectionSelectAll;
+  window.studySelectionClearAll=studySelectionClearAll;
+  window.studySelectionStart=studySelectionStart;
+  window.syncSharedStudySelectionUI=syncSharedStudySelectionUI;
+
+  setTimeout(initializeSharedSelection,220);
+})();
