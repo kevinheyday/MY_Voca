@@ -1,33 +1,31 @@
-MY ENGLISH V5.3.181
-Base: V5.3.180
+MY VOCA V5.3.175
+Base: V5.3.174
 
-Navigation Reset — 3줄 메뉴 / 소리영어 / OPIC 정상화
+사용 방법 전체 리뉴얼
 
-이번에는 누적 패치를 더하지 않고 네비게이션을 초기화했습니다.
+기존 문제
+- 과거 Drawer/집중학습/퀴즈+문장말하기 통합 구조를 기준으로 작성된 설명이 남아 있었음.
+- 현재 메뉴 구조와 실제 기능 분리가 사용 방법에 반영되지 않았음.
 
-핵심 수정
-1. V177~V180의 EARLY NAVIGATION SAFETY LAYER 완전 제거
-   - document capture 단계에서 클릭을 먼저 가로채던 구조 제거.
-   - Drawer와 홈 모드의 여러 세대 이벤트 충돌 제거.
+새 사용 방법 구조
+1. 학습
+   - DAY VOCA
+   - MY 수업
+   - 소리영어
+   - OPIC
+2. 단어 학습
+   - 단어 퀴즈
+   - 단어 비교
+3. 문장 말하기
+   - 문장 말하기 연습
+   - 음성 녹음 학습
+4. 재생/반복 공통 규칙
+5. 패턴 색상 규칙
+6. 학습 통계 / 망각곡선 / Config / 업데이트 내역
+7. 추천 일일 학습 흐름
 
-2. 독립 Navigation Script 추가
-   - 메인 앱 script와 별도 <script id="mvNavigation181">로 실행.
-   - Drawer menu button/panel/backdrop을 clean clone 후 하나의 이벤트만 연결.
-   - 홈 DAY/MY/SORI/OPIC 버튼도 clean clone 후 하나의 공통 showHomeMode()만 사용.
-   - legacy 코드가 홈 버튼을 다시 만드는 경우 80/260/520/900ms 재바인딩 + MutationObserver 보정.
-
-3. 소리영어
-   - .soriClassSection과 soriGroup1Card를 homePage 내부에서 직접 표시.
-   - 소리영어 버튼 → 수업 박스 표시.
-   - 수업 박스 클릭 → 기존 studyDirectOpenCourse/openStudyCourse 공통 학습 엔진 사용.
-
-4. OPIC
-   - OPIC 카드(opicGroup1Card)를 정적 HTML로 생성.
-   - setTimeout 동적 생성에 의존하지 않음.
-   - OPIC 버튼 → OPIC 수업 박스 표시.
-   - 카드 클릭 → 같은 공통 course entry 사용.
-
-5. 기존 기능 보존
-   - 학습 데이터 / 퀴즈 / 문장 말하기 / 녹음
-   - 전체 시작/정지 / 무한 반복 / 패턴 표시
-   - localStorage 학습 기록
+표준화
+- 사용 방법은 현재 앱 구조를 직접 설명하도록 독립 렌더링.
+- Config 안의 예전 사용방법 DOM을 이동해 재사용하지 않음.
+- 문장 말하기/녹음/재생/무한반복/패턴 엔진은 변경하지 않음.
+- 오늘 추천 문구도 현재 '학습 → 단어 학습 → 문장 말하기' 구조로 수정.
