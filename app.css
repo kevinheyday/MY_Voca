@@ -1917,7 +1917,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.174 · 홈 MY수업 카드 컴팩트화 ONLY ===== */
+/* ===== V5.3.175 · 홈 MY수업 카드 컴팩트화 ONLY ===== */
 /* 기능/재생/반복/체크박스/수업 내부 UI는 건드리지 않고 홈 카드 크기만 축소 */
 #homePage .myClassCard{
   position:relative;
@@ -2028,7 +2028,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   }
 }
 
-/* ===== V5.3.174 · paired Korean playback highlight ===== */
+/* ===== V5.3.175 · paired Korean playback highlight ===== */
 .mySpeakKoSentence{
   display:inline;
   border-radius:2px;
@@ -2041,7 +2041,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   border:none!important;
 }
 
-/* ===== V5.3.174 · MY 수업 홈 카드 1줄 컴팩트화 ===== */
+/* ===== V5.3.175 · MY 수업 홈 카드 1줄 컴팩트화 ===== */
 #homePage .myClassCard{
   padding:9px 12px!important;
   margin-top:6px!important;
@@ -2147,7 +2147,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.174 · STANDARD COURSE UI ===== */
+/* ===== V5.3.175 · STANDARD COURSE UI ===== */
 .homeStudyModeSwitch.standardFourModes{
   grid-template-columns:repeat(4,minmax(0,1fr))!important;
   gap:5px!important;
@@ -2239,13 +2239,13 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   }
 }
 
-/* v5.3.174 SORI home DOM visibility fix */
+/* v5.3.175 SORI home DOM visibility fix */
 #homePage .soriClassSection{margin-top:14px!important}
 #homePage .soriCourseCard{display:block!important;width:100%!important;box-sizing:border-box!important;min-height:145px!important}
 #homePage .opicClassSection{margin-top:14px!important}
 
 
-/* ===== V5.3.174 · SHARED STUDY SELECTION BAR ===== */
+/* ===== V5.3.175 · SHARED STUDY SELECTION BAR ===== */
 .sharedStudySelectBar{
   margin:10px 0 14px;
   padding:11px 13px;
@@ -2357,7 +2357,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   .studySelectMini{right:9px!important;top:8px!important;padding:3px 6px!important}
 }
 
-/* ===== V5.3.174 · STANDARD CORE/CHUNK VISUAL ===== */
+/* ===== V5.3.175 · STANDARD CORE/CHUNK VISUAL ===== */
 .studyCoreChunkMark{
   color:#6d28d9!important;
   background:#f3e8ff!important;
@@ -2378,7 +2378,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   color:#fff!important;
 }
 
-/* ===== V5.3.174 · SHARED CHUNK TYPOGRAPHY + PATTERN SPEAKING ===== */
+/* ===== V5.3.175 · SHARED CHUNK TYPOGRAPHY + PATTERN SPEAKING ===== */
 #myClassPage .myChunkPattern{
   font-size:20px!important;
   line-height:1.28!important;
@@ -2405,13 +2405,13 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   #myClassPage .myChunkExample{font-size:17px!important}
 }
 
-/* ===== V5.3.174 · SINGLE PLAYBACK ENGINE STATE ===== */
+/* ===== V5.3.175 · SINGLE PLAYBACK ENGINE STATE ===== */
 #myClassPage .myTitleInfinityBtn[aria-pressed="true"],
 #myClassPage .myInfinityBtn[aria-pressed="true"]{
   font-weight:950!important;
 }
 
-/* ===== V5.3.174 · SHARED SPEAKING ENGLISH TYPOGRAPHY ===== */
+/* ===== V5.3.175 · SHARED SPEAKING ENGLISH TYPOGRAPHY ===== */
 #myClassPage .mySpeakAnswer,
 #myClassPage .mySpeakSentence{
   font-size:18px!important;
@@ -2426,7 +2426,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.174 · UNIVERSAL SPEAKING PATTERN COLOR ===== */
+/* ===== V5.3.175 · UNIVERSAL SPEAKING PATTERN COLOR ===== */
 #myClassPage .mySpeakSentence .studySpeakingPatternMark{
   color:#6d28d9!important;
   background:#f3e8ff!important;
@@ -2443,7 +2443,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.174 · ALL SENTENCE PATTERN COLOR STANDARD ===== */
+/* ===== V5.3.175 · ALL SENTENCE PATTERN COLOR STANDARD ===== */
 /* Correction / Chunk example / Speaking all use the same semantic pattern palette. */
 #myClassPage .myChunkExample .studyChunkExamplePatternMark,
 #myClassPage .myStudyEn .studyCoreChunkMark,
@@ -2463,7 +2463,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.174 · GLOBAL PATTERN COLOR STANDARD ===== */
+/* ===== V5.3.175 · GLOBAL PATTERN COLOR STANDARD ===== */
 /*
  Pattern = TEAL / MINT
  Playback = PURPLE
@@ -2515,7 +2515,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.174 · SPEAKING PATTERN KOREAN LABEL STANDARD ===== */
+/* ===== V5.3.175 · SPEAKING PATTERN KOREAN LABEL STANDARD ===== */
 #myClassPage .studySpeakingPattern{
   display:inline-flex!important;
   align-items:center!important;
@@ -2534,7 +2534,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.174 · COURSE CARD ENTRY AFFORDANCE ===== */
+/* ===== V5.3.175 · COURSE CARD ENTRY AFFORDANCE ===== */
 #homePage .myClassSection .myClassCard,
 #homePage .soriClassSection .myClassCard,
 #homePage .opicClassSection .myClassCard{
@@ -2548,7 +2548,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.174 · DAY-ONLY PLAYBACK SETTINGS ===== */
+/* ===== V5.3.175 · DAY-ONLY PLAYBACK SETTINGS ===== */
 #homePage .daySection > .homePlaybackCard{
   margin:14px 0 14px!important;
 }
@@ -2556,14 +2556,14 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   margin-bottom:0!important;
 }
 
-/* ===== V5.3.174 · DRAWER / ACTIVITY STANDARD ===== */
+/* ===== V5.3.175 · DRAWER / ACTIVITY STANDARD ===== */
 .quizModeSwitch.mvSentenceActivityMode{grid-template-columns:1fr!important}
 .quizModeSwitch.mvSentenceActivityMode #quizModeSentence{width:100%!important}
 html[data-mv-activity="quiz"] #sentenceSourceBar{display:none!important}
 html[data-mv-activity="sentence"] #sentenceSourceBar{display:block}
 
 
-/* ===== V5.3.174 · QUIZ MODE CLEANUP ===== */
+/* ===== V5.3.175 · QUIZ MODE CLEANUP ===== */
 html[data-mv-activity="quiz"] .quizModeSwitch{
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
 }
@@ -2572,7 +2572,7 @@ html[data-mv-activity="sentence"] .quizModeSwitch{
 }
 
 
-/* ===== V5.3.174 · APP INFO / UPDATE MODAL ===== */
+/* ===== V5.3.175 · APP INFO / UPDATE MODAL ===== */
 .mvInfoOverlay{
   position:fixed;inset:0;z-index:10050;
 }
@@ -2619,3 +2619,111 @@ html[data-mv-activity="sentence"] .quizModeSwitch{
   font-size:14px;line-height:1.45;
 }
 .mvInfoMeta b{color:#64748b}
+
+
+/* ===== V5.3.175 · USAGE PAGE FULL RENEWAL ===== */
+#usagePage .configShell{max-width:760px!important}
+#usagePage .configHeader{
+  position:sticky;top:0;z-index:5;background:rgba(248,250,252,.96);
+  backdrop-filter:blur(12px);padding-top:10px;padding-bottom:12px;
+}
+#usagePageContent{display:flex;flex-direction:column;gap:16px;padding-bottom:36px}
+.usageNewHero{
+  padding:24px 20px;border-radius:24px;
+  background:linear-gradient(135deg,#111827,#312e81);
+  color:#fff;box-shadow:0 14px 34px rgba(49,46,129,.18)
+}
+.usageNewEyebrow{font-size:12px;font-weight:900;opacity:.75;letter-spacing:.08em}
+.usageNewHero h2{margin:8px 0 10px;font-size:25px;line-height:1.25}
+.usageNewHero p{margin:0;color:#e0e7ff;font-size:14px;line-height:1.6}
+.usageNewFlow{margin-top:18px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.usageNewFlow span{
+  padding:8px 11px;border-radius:999px;background:rgba(255,255,255,.14);
+  font-size:13px;font-weight:900
+}
+.usageNewFlow b{color:#c4b5fd}
+
+.usageRecommendCard{
+  display:flex;gap:14px;padding:18px;border-radius:20px;background:#fffbeb;
+  border:1px solid #fde68a
+}
+.usageRecommendIcon{font-size:26px}
+.usageRecommendLabel{font-size:12px;font-weight:900;color:#b45309}
+.usageRecommendCard h3{margin:3px 0 8px;font-size:18px;color:#78350f}
+.usageRecommendCard ul{margin:0;padding-left:18px;color:#92400e}
+.usageRecommendCard li{margin:5px 0;line-height:1.5}
+
+.usageNewSection{
+  background:#fff;border:1px solid #e5e7eb;border-radius:22px;padding:19px;
+  box-shadow:0 8px 24px rgba(15,23,42,.04)
+}
+.usageNewSectionHead{display:flex;align-items:flex-start;gap:12px;margin-bottom:15px}
+.usageNewNo{
+  min-width:34px;height:34px;border-radius:11px;background:#eef2ff;color:#4338ca;
+  display:flex;align-items:center;justify-content:center;font-weight:950
+}
+.usageNewSectionHead h3{margin:0;font-size:20px;color:#111827}
+.usageNewSectionHead p{margin:4px 0 0;color:#64748b;font-size:13px;font-weight:700}
+
+.usageNewCards{display:flex;flex-direction:column;gap:10px}
+.usageNewCard{
+  display:flex;gap:12px;padding:14px;border-radius:17px;background:#f8fafc;
+  border:1px solid #e2e8f0
+}
+.usageNewIcon{font-size:25px;line-height:1}
+.usageNewCard h4{margin:0 0 5px;font-size:16px;color:#111827}
+.usageNewCard p{margin:0;color:#475569;font-size:13px;line-height:1.55}
+.usageNewSub{margin-top:8px!important;color:#64748b!important;font-size:12px!important}
+.usageNewList{margin:8px 0 0;padding-left:19px;color:#475569;font-size:13px}
+.usageNewList li{margin:6px 0;line-height:1.5}
+
+.usageNewTip{
+  margin-top:12px;padding:12px 14px;border-radius:15px;background:#ecfeff;
+  color:#155e75;font-size:12px;line-height:1.55
+}
+.usageNewTip b{margin-right:6px}
+
+.usageNewSteps{
+  margin-top:10px;display:flex;align-items:center;gap:6px;flex-wrap:wrap
+}
+.usageNewSteps span{
+  padding:7px 9px;border-radius:10px;background:#ede9fe;color:#5b21b6;
+  font-size:11px;font-weight:900
+}
+.usageNewSteps b{color:#8b5cf6}
+
+.usageNewGrid{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px
+}
+.usageNewGrid>div{
+  padding:13px;border-radius:15px;background:#f8fafc;border:1px solid #e2e8f0
+}
+.usageNewGrid b{display:block;margin-bottom:5px;color:#0f172a;font-size:14px}
+.usageNewGrid span{display:block;color:#64748b;font-size:12px;line-height:1.45}
+
+.usagePatternDemo{
+  display:grid;grid-template-columns:auto 1fr;align-items:center;gap:10px 12px
+}
+.usagePatternSample{
+  padding:5px 8px;border-radius:7px;background:#ccfbf1;color:#0f766e;font-weight:950
+}
+.usagePlaybackSample{
+  padding:5px 8px;border-radius:7px;background:#ddd6fe;color:#5b21b6;font-weight:950
+}
+.usageNewDailyFlow{
+  display:flex;flex-direction:column;align-items:stretch;gap:7px;text-align:center
+}
+.usageNewDailyFlow b{
+  padding:12px;border-radius:14px;background:#f8fafc;border:1px solid #e2e8f0;
+  color:#1e293b
+}
+.usageNewDailyFlow span{color:#8b5cf6;font-weight:950}
+.usageNewLast{margin-bottom:20px}
+
+@media(max-width:520px){
+  .usageNewHero{padding:20px 17px}
+  .usageNewHero h2{font-size:22px}
+  .usageNewSection{padding:16px}
+  .usageNewGrid{grid-template-columns:1fr}
+  .usagePatternDemo{grid-template-columns:1fr}
+}
