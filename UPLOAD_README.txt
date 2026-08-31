@@ -1,27 +1,21 @@
-MY VOCA V5.3.172
-Base: V5.3.171
+MY VOCA V5.3.173
+Base: V5.3.172
 
-요청 반영
-1. Drawer '2. 퀴즈' 아래에 과거 코드가 다시 추가하던 MY 수업 바로가기 삭제.
-   - MY 수업은 오직 '1. 학습 > MY 수업'에서만 진입.
-   - addDrawerMyClass()는 이제 legacy 항목 제거 역할만 수행.
+Drawer 메뉴 재분류
+- '2. 퀴즈' → '2. 단어 학습'
+- '단어 비교'를 기타에서 이동하여 '단어 퀴즈' 바로 아래 배치
+- 단어 퀴즈 설명:
+  단어 맞추기 · 유의어/반의어 · 단어 말하기 · 모르는 단어 선택
 
-2. Drawer '학습 기록 내보내기' 삭제.
-   - 메뉴에서만 제거. 기존 export 데이터 함수 자체는 건드리지 않아 회귀 위험 최소화.
+최종 구조
+- 홈
+- 1. 학습: DAY VOCA / MY 수업 / 소리영어 / OPIC
+- 2. 단어 학습: 단어 퀴즈 / 단어 비교
+- 3. 문장 말하기: 문장 말하기 연습 / 음성 녹음 학습
+- 기타: 학습 통계 / 망각곡선 / Config / 사용 방법 / 업데이트 내역 / 앱 정보
 
-3. 문장 말하기 독립 화면의 '문장 말하기' 방식 선택 박스 삭제.
-   - sentence activity에서는 quizModeSwitch 전체를 숨김.
-   - 기존 sentence engine/진행상태/녹음 기능은 그대로 사용.
-
-4. 단어 퀴즈 방식 이름/순서 변경.
-   - 단어 맞추기
-   - 유의어·반의어
-   - 단어 말하기
-   - 모르는 단어 선택
-   - 문장 말하기는 Quiz UI에서 계속 숨김.
-   - 내부 quizMode 값(choice/lexical/recall/favorite)은 변경하지 않아 기존 통계/오답/망각곡선 로직 보존.
-
-표준화
-- mvNormalizeQuizModeUI(): 퀴즈 탭 이름/순서 단일 관리.
-- mvNormalizeDrawerMenu172(): legacy Drawer 항목 자동 제거.
-- 기존 mvOpenQuizActivity / mvOpenSentenceSpeakingActivity 공통 Activity 라우팅 유지.
+회귀 방지
+- 메뉴 위치와 분류만 변경.
+- 단어 퀴즈 엔진(mvOpenQuizActivity) 유지.
+- 단어 비교 엔진(window.openCompareCenter) 유지.
+- 기존 문장 말하기/녹음/재생/무한반복/패턴 기능 유지.
