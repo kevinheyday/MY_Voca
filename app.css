@@ -583,7 +583,7 @@
 @media(max-width:480px){.quizModeSwitch{grid-template-columns:repeat(3,1fr)}.lexQuizPrompt{font-size:22px}.lexQuizSentence{font-size:17px}}
 
 
-/* MY VOCA v4.0 Drawer Menu */
+/* MY ENGLISH v4.0 Drawer Menu */
 .drawerMenuButton{position:fixed;top:max(12px,env(safe-area-inset-top));left:14px;right:auto;z-index:1202;width:44px;height:44px;border:1px solid rgba(15,23,42,.12);border-radius:14px;background:rgba(255,255,255,.96);box-shadow:0 8px 24px rgba(15,23,42,.16);display:flex;align-items:center;justify-content:center;font-size:25px;font-weight:900;line-height:1;color:#111827;cursor:pointer;-webkit-tap-highlight-color:transparent}
 .drawerMenuButton:active{transform:scale(.96)}
 .drawerMenuButton{transition:opacity .16s ease,visibility .16s ease,transform .16s ease}
@@ -1917,7 +1917,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.175 · 홈 MY수업 카드 컴팩트화 ONLY ===== */
+/* ===== V5.3.176 · 홈 MY수업 카드 컴팩트화 ONLY ===== */
 /* 기능/재생/반복/체크박스/수업 내부 UI는 건드리지 않고 홈 카드 크기만 축소 */
 #homePage .myClassCard{
   position:relative;
@@ -2028,7 +2028,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   }
 }
 
-/* ===== V5.3.175 · paired Korean playback highlight ===== */
+/* ===== V5.3.176 · paired Korean playback highlight ===== */
 .mySpeakKoSentence{
   display:inline;
   border-radius:2px;
@@ -2041,7 +2041,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   border:none!important;
 }
 
-/* ===== V5.3.175 · MY 수업 홈 카드 1줄 컴팩트화 ===== */
+/* ===== V5.3.176 · MY 수업 홈 카드 1줄 컴팩트화 ===== */
 #homePage .myClassCard{
   padding:9px 12px!important;
   margin-top:6px!important;
@@ -2147,7 +2147,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.175 · STANDARD COURSE UI ===== */
+/* ===== V5.3.176 · STANDARD COURSE UI ===== */
 .homeStudyModeSwitch.standardFourModes{
   grid-template-columns:repeat(4,minmax(0,1fr))!important;
   gap:5px!important;
@@ -2239,13 +2239,13 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   }
 }
 
-/* v5.3.175 SORI home DOM visibility fix */
+/* v5.3.176 SORI home DOM visibility fix */
 #homePage .soriClassSection{margin-top:14px!important}
 #homePage .soriCourseCard{display:block!important;width:100%!important;box-sizing:border-box!important;min-height:145px!important}
 #homePage .opicClassSection{margin-top:14px!important}
 
 
-/* ===== V5.3.175 · SHARED STUDY SELECTION BAR ===== */
+/* ===== V5.3.176 · SHARED STUDY SELECTION BAR ===== */
 .sharedStudySelectBar{
   margin:10px 0 14px;
   padding:11px 13px;
@@ -2357,7 +2357,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   .studySelectMini{right:9px!important;top:8px!important;padding:3px 6px!important}
 }
 
-/* ===== V5.3.175 · STANDARD CORE/CHUNK VISUAL ===== */
+/* ===== V5.3.176 · STANDARD CORE/CHUNK VISUAL ===== */
 .studyCoreChunkMark{
   color:#6d28d9!important;
   background:#f3e8ff!important;
@@ -2378,7 +2378,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   color:#fff!important;
 }
 
-/* ===== V5.3.175 · SHARED CHUNK TYPOGRAPHY + PATTERN SPEAKING ===== */
+/* ===== V5.3.176 · SHARED CHUNK TYPOGRAPHY + PATTERN SPEAKING ===== */
 #myClassPage .myChunkPattern{
   font-size:20px!important;
   line-height:1.28!important;
@@ -2405,13 +2405,13 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   #myClassPage .myChunkExample{font-size:17px!important}
 }
 
-/* ===== V5.3.175 · SINGLE PLAYBACK ENGINE STATE ===== */
+/* ===== V5.3.176 · SINGLE PLAYBACK ENGINE STATE ===== */
 #myClassPage .myTitleInfinityBtn[aria-pressed="true"],
 #myClassPage .myInfinityBtn[aria-pressed="true"]{
   font-weight:950!important;
 }
 
-/* ===== V5.3.175 · SHARED SPEAKING ENGLISH TYPOGRAPHY ===== */
+/* ===== V5.3.176 · SHARED SPEAKING ENGLISH TYPOGRAPHY ===== */
 #myClassPage .mySpeakAnswer,
 #myClassPage .mySpeakSentence{
   font-size:18px!important;
@@ -2426,7 +2426,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.175 · UNIVERSAL SPEAKING PATTERN COLOR ===== */
+/* ===== V5.3.176 · UNIVERSAL SPEAKING PATTERN COLOR ===== */
 #myClassPage .mySpeakSentence .studySpeakingPatternMark{
   color:#6d28d9!important;
   background:#f3e8ff!important;
@@ -2443,7 +2443,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.175 · ALL SENTENCE PATTERN COLOR STANDARD ===== */
+/* ===== V5.3.176 · ALL SENTENCE PATTERN COLOR STANDARD ===== */
 /* Correction / Chunk example / Speaking all use the same semantic pattern palette. */
 #myClassPage .myChunkExample .studyChunkExamplePatternMark,
 #myClassPage .myStudyEn .studyCoreChunkMark,
@@ -2463,7 +2463,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.175 · GLOBAL PATTERN COLOR STANDARD ===== */
+/* ===== V5.3.176 · GLOBAL PATTERN COLOR STANDARD ===== */
 /*
  Pattern = TEAL / MINT
  Playback = PURPLE
@@ -2515,7 +2515,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.175 · SPEAKING PATTERN KOREAN LABEL STANDARD ===== */
+/* ===== V5.3.176 · SPEAKING PATTERN KOREAN LABEL STANDARD ===== */
 #myClassPage .studySpeakingPattern{
   display:inline-flex!important;
   align-items:center!important;
@@ -2534,7 +2534,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.175 · COURSE CARD ENTRY AFFORDANCE ===== */
+/* ===== V5.3.176 · COURSE CARD ENTRY AFFORDANCE ===== */
 #homePage .myClassSection .myClassCard,
 #homePage .soriClassSection .myClassCard,
 #homePage .opicClassSection .myClassCard{
@@ -2548,7 +2548,7 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
 }
 
 
-/* ===== V5.3.175 · DAY-ONLY PLAYBACK SETTINGS ===== */
+/* ===== V5.3.176 · DAY-ONLY PLAYBACK SETTINGS ===== */
 #homePage .daySection > .homePlaybackCard{
   margin:14px 0 14px!important;
 }
@@ -2556,14 +2556,14 @@ button.myTitleInfinityBtn[aria-pressed="true"] *{
   margin-bottom:0!important;
 }
 
-/* ===== V5.3.175 · DRAWER / ACTIVITY STANDARD ===== */
+/* ===== V5.3.176 · DRAWER / ACTIVITY STANDARD ===== */
 .quizModeSwitch.mvSentenceActivityMode{grid-template-columns:1fr!important}
 .quizModeSwitch.mvSentenceActivityMode #quizModeSentence{width:100%!important}
 html[data-mv-activity="quiz"] #sentenceSourceBar{display:none!important}
 html[data-mv-activity="sentence"] #sentenceSourceBar{display:block}
 
 
-/* ===== V5.3.175 · QUIZ MODE CLEANUP ===== */
+/* ===== V5.3.176 · QUIZ MODE CLEANUP ===== */
 html[data-mv-activity="quiz"] .quizModeSwitch{
   grid-template-columns:repeat(2,minmax(0,1fr))!important;
 }
@@ -2572,7 +2572,7 @@ html[data-mv-activity="sentence"] .quizModeSwitch{
 }
 
 
-/* ===== V5.3.175 · APP INFO / UPDATE MODAL ===== */
+/* ===== V5.3.176 · APP INFO / UPDATE MODAL ===== */
 .mvInfoOverlay{
   position:fixed;inset:0;z-index:10050;
 }
@@ -2621,7 +2621,7 @@ html[data-mv-activity="sentence"] .quizModeSwitch{
 .mvInfoMeta b{color:#64748b}
 
 
-/* ===== V5.3.175 · USAGE PAGE FULL RENEWAL ===== */
+/* ===== V5.3.176 · USAGE PAGE FULL RENEWAL ===== */
 #usagePage .configShell{max-width:760px!important}
 #usagePage .configHeader{
   position:sticky;top:0;z-index:5;background:rgba(248,250,252,.96);
