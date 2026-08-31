@@ -140,7 +140,10 @@ function myClassSyncButtons(){
   const play=document.getElementById('myClassPlayPause'),rep=document.getElementById('myClassCurrentRepeat');
   let playing=MY_CLASS_PLAY.active&&!MY_CLASS_PLAY.paused;
   try{if(typeof M536!=='undefined')playing=(M536.mode==='full'||M536.mode==='infinite');}catch(e){}
-  if(play)play.innerHTML=playing?'⏸<br>전체 정지':'▶<br>재생 시작';
+  if(play){
+    play.innerHTML=playing?'⏸<br>전체 정지':'▶<br>전체 시작';
+    play.setAttribute('aria-pressed',playing?'true':'false');
+  }
   if(rep){
     let repeatOn=false;
     try{repeatOn=(M536.mode==='infinite')}catch(e){repeatOn=!!MY_CLASS_PLAY.repeatCurrent}
@@ -208,23 +211,12 @@ async function myClassStartAuto(startIndex=null){
   while(token===MY_CLASS_PLAY.token&&!MY_CLASS_PLAY.paused){const fresh=myClassPlaybackItems();if(!fresh.length)break;if(MY_CLASS_PLAY.index>=fresh.length)MY_CLASS_PLAY.index=0;const item=fresh[MY_CLASS_PLAY.index];MY_CLASS_PLAY.currentText=item.text;myClassFocus(item.el);const repeatCount=MY_CLASS_PLAY.repeatCurrent?999999:repeat;for(let r=0;r<repeatCount;r++){if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)break;myClassSetStatus(`${myClassTab==='corrections'?'핵심 교정':myClassTab==='chunks'?'Chunk':'말하기'} · ${MY_CLASS_PLAY.index+1}/${fresh.length} · ${MY_CLASS_PLAY.repeatCurrent?'∞':`${r+1}/${repeat}`}`,true);await speakOne(item.text,getSpeechRate(),'en-US');if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)break;await new Promise(res=>setTimeout(res,pause));}if(token!==MY_CLASS_PLAY.token||MY_CLASS_PLAY.paused)break;if(MY_CLASS_PLAY.repeatCurrent)continue;MY_CLASS_PLAY.index++;if(MY_CLASS_PLAY.index>=fresh.length){MY_CLASS_PLAY.active=false;MY_CLASS_PLAY.paused=true;MY_CLASS_PLAY.index=0;myClassClearFocus();myClassSyncButtons();myClassSetStatus('이 탭의 자동 재생이 완료되었습니다',false);break;}}
 }
 function myClassTogglePlay(){
-  if(typeof M536!=='undefined'){
-    if(M536.mode==='full'||M536.mode==='infinite'){
-      stopAllMyClassPlayback(false);
-      myClassSetStatus?.('재생 정지',false);
-      return;
-    }
-    if(typeof window.m536StartFull==='function'){
-      window.m536StartFull();
-      return;
-    }
-  }
-  myClassStartAuto(MY_CLASS_PLAY.index);
+  return m536ToggleGlobalPlayback();
 }
 function myClassToggleCurrentRepeat(){const items=myClassPlaybackItems();if(!items.length)return;MY_CLASS_PLAY.repeatCurrent=!MY_CLASS_PLAY.repeatCurrent;myClassSyncButtons();if(MY_CLASS_PLAY.repeatCurrent){MY_CLASS_PLAY.index=Math.min(MY_CLASS_PLAY.index,items.length-1);myClassStartAuto(MY_CLASS_PLAY.index);}else if(MY_CLASS_PLAY.active&&!MY_CLASS_PLAY.paused){const next=Math.min(MY_CLASS_PLAY.index+1,items.length-1);MY_CLASS_PLAY.index=next;myClassStartAuto(next);}}
 
 
-/* ===== V5.3.166 · EXPLICIT CORE ↔ CHUNK LINK STANDARD ===== */
+/* ===== V5.3.169 · EXPLICIT CORE ↔ CHUNK LINK STANDARD ===== */
 function studyChunkMap(data){
   const map=new Map();
   (data?.chunks||[]).forEach((c,i)=>map.set(String(c?.id||`chunk_${i+1}`),c));
@@ -266,7 +258,7 @@ function studyHighlightExplicitChunkLinks(el,links){
   el.replaceChildren(frag); return true;
 }
 
-/* ===== V5.3.166 · STANDARD CORE-CHUNK PATTERN HIGHLIGHT ===== */
+/* ===== V5.3.169 · STANDARD CORE-CHUNK PATTERN HIGHLIGHT ===== */
 function studyEscRegex(s){
   return String(s||'').replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
 }
@@ -425,7 +417,7 @@ window.studyApplyCoreChunkHighlights=studyApplyCoreChunkHighlights;
 
 
 
-/* ===== V5.3.166 · PATTERN VISIBILITY / COLOR STANDARD ===== */
+/* ===== V5.3.169 · PATTERN VISIBILITY / COLOR STANDARD ===== */
 /*
   Global rule for MY / SORI / OPIC:
   - learned pattern inside ANY English study sentence must be visually distinct.
@@ -441,7 +433,7 @@ const MV_PATTERN_COLOR_STANDARD={
 };
 window.MV_PATTERN_COLOR_STANDARD=MV_PATTERN_COLOR_STANDARD;
 
-/* ===== V5.3.166 · UNIVERSAL SPEAKING PATTERN COLOR STANDARD ===== */
+/* ===== V5.3.169 · UNIVERSAL SPEAKING PATTERN COLOR STANDARD ===== */
 function studySpeakingPatterns(item,data){
   const out=[];
   const add=p=>{p=String(p||'').trim();if(p&&!out.includes(p))out.push(p)};
@@ -484,7 +476,7 @@ function studyApplySpeakingPatternHighlights(){
 window.studySpeakingPatterns=studySpeakingPatterns;
 window.studyApplySpeakingPatternHighlights=studyApplySpeakingPatternHighlights;
 
-/* ===== V5.3.166 · UNIVERSAL CHUNK / ALL-SENTENCE PATTERN COLOR STANDARD ===== */
+/* ===== V5.3.169 · UNIVERSAL CHUNK / ALL-SENTENCE PATTERN COLOR STANDARD ===== */
 function studyAllChunkPatterns(data){
   return (Array.isArray(data?.chunks)?data.chunks:[])
     .map(x=>String(x?.pattern||'').trim())
@@ -526,7 +518,7 @@ window.studyApplyChunkExamplePatternHighlights=studyApplyChunkExamplePatternHigh
 window.studyApplyAllSentencePatternHighlights=studyApplyAllSentencePatternHighlights;
 
 
-/* ===== V5.3.166 · UNIVERSAL SPEAKING HEADER STANDARD ===== */
+/* ===== V5.3.169 · UNIVERSAL SPEAKING HEADER STANDARD ===== */
 function studyNormalizeSpeakingLabel(text){
   return String(text||'')
     .toLowerCase()
@@ -709,7 +701,21 @@ function myClassTitleInfinityToggle(btn,lesson,tab,index,course=ACTIVE_STUDY_COU
   window.m536ToggleInfinite?.(Number(lesson),tab,Number(index),c);
 }
 
-/* ===== V5.3.166 · UNIVERSAL INFINITY BUTTON ROUTING ===== */
+
+/* ===== V5.3.169 · UNIVERSAL WHOLE PLAYBACK BUTTON ROUTING ===== */
+document.addEventListener('click',(e)=>{
+  const btn=e.target?.closest?.('#myClassPlayPause,#myClassFullPlayBtn');
+  if(!btn)return;
+  const page=document.getElementById('myClassPage');
+  if(!page || page.classList.contains('hidden'))return;
+
+  e.preventDefault();
+  e.stopPropagation();
+  e.stopImmediatePropagation();
+  m536ToggleGlobalPlayback();
+},true);
+
+/* ===== V5.3.169 · UNIVERSAL INFINITY BUTTON ROUTING ===== */
 document.addEventListener('click',(e)=>{
   const btn=e.target?.closest?.('.myTitleInfinityBtn,.myInfinityBtn,#myClassCurrentRepeat');
   if(!btn)return;
@@ -818,17 +824,17 @@ function openMyClassLesson3(){openMyClassLesson(3)}
 function openMyClassLesson4(){openMyClassLesson(4)}
 function openMyClassLesson5(){openMyClassLesson(5)}
 function closeMyClassLesson(){myClassHardNavigationStop?.();document.getElementById('myClassBottom')?.classList.add('hidden');document.getElementById('myClassPage')?.classList.add('hidden');document.getElementById('homePage')?.classList.remove('hidden');window.scrollTo(0,0);}
-setTimeout(()=>{const c=document.getElementById('myClassLesson1Card');if(c){c.onclick=openMyClassLesson1;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson1()}}}const c2=document.getElementById('myClassLesson2Card');if(c2){c2.onclick=openMyClassLesson2;c2.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson2()}}}const c3=document.getElementById('myClassLesson3Card');if(c3){c3.onclick=openMyClassLesson3;c3.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson3()}}}const c4=document.getElementById('myClassLesson4Card');if(c4){c4.onclick=openMyClassLesson4;c4.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson4()}}}const c5=document.getElementById('myClassLesson5Card');if(c5){c5.onclick=openMyClassLesson5;c5.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson5()}}}const b=document.getElementById('myClassBack');if(b)b.onclick=closeMyClassLesson;document.querySelectorAll('.myClassTab').forEach(x=>x.onclick=()=>{stopAllMyClassPlayback(true);myClassTab=x.dataset.myclassTab;renderMyClass();myClassSetStatus?.('화면 전환 · 재생 정지',false)});document.getElementById('myClassHomeBtn')?.addEventListener('click',closeMyClassLesson);document.getElementById('myClassPlayPause')?.addEventListener('click',myClassTogglePlay);/* v5.3.166: #myClassCurrentRepeat is handled by the universal delegated infinity router. */document.getElementById('myClassConfigBtn')?.addEventListener('click',()=>{myClassStop(false);if(typeof openConfiguration==='function')openConfiguration()});},0);
+setTimeout(()=>{const c=document.getElementById('myClassLesson1Card');if(c){c.onclick=openMyClassLesson1;c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson1()}}}const c2=document.getElementById('myClassLesson2Card');if(c2){c2.onclick=openMyClassLesson2;c2.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson2()}}}const c3=document.getElementById('myClassLesson3Card');if(c3){c3.onclick=openMyClassLesson3;c3.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson3()}}}const c4=document.getElementById('myClassLesson4Card');if(c4){c4.onclick=openMyClassLesson4;c4.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson4()}}}const c5=document.getElementById('myClassLesson5Card');if(c5){c5.onclick=openMyClassLesson5;c5.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();openMyClassLesson5()}}}const b=document.getElementById('myClassBack');if(b)b.onclick=closeMyClassLesson;document.querySelectorAll('.myClassTab').forEach(x=>x.onclick=()=>{stopAllMyClassPlayback(true);myClassTab=x.dataset.myclassTab;renderMyClass();myClassSetStatus?.('화면 전환 · 재생 정지',false)});document.getElementById('myClassHomeBtn')?.addEventListener('click',closeMyClassLesson);/* v5.3.169: #myClassPlayPause uses universal whole-playback router. *//* v5.3.169: #myClassCurrentRepeat is handled by the universal delegated infinity router. */document.getElementById('myClassConfigBtn')?.addEventListener('click',()=>{myClassStop(false);if(typeof openConfiguration==='function')openConfiguration()});},0);
 
 
 
-/* ===== V5.3.166 · COURSE SPEAKING DATA ISOLATION AUDIT ===== */
+/* ===== V5.3.169 · COURSE SPEAKING DATA ISOLATION AUDIT ===== */
 function mvSpeakingCourseAudit(course=ACTIVE_STUDY_COURSE){
   const c=String(course||'my');
   const data=studyCourseData(c, c==='my'?myClassLessonNo:1);
   const first=(data?.speaking||[])[0]||{};
   return {
-    version:'5.3.166',
+    version:'5.3.169',
     course:c,
     speakingCount:(data?.speaking||[]).length,
     firstPrompt:first.prompt||'',
@@ -839,7 +845,7 @@ function mvSpeakingCourseAudit(course=ACTIVE_STUDY_COURSE){
 }
 window.mvSpeakingCourseAudit=mvSpeakingCourseAudit;
 
-/* ===== V5.3.166 · STANDARD STUDY COURSE REGISTRY =====
+/* ===== V5.3.169 · STANDARD STUDY COURSE REGISTRY =====
    MY / SORI / future OPIC share the same lesson renderer, TTS, repeat,
    highlighting and sentence-speaking pipeline. New courses add DATA,
    not duplicate playback/navigation code.
@@ -1161,11 +1167,142 @@ window.studySyncOrderedTabs=studySyncOrderedTabs;
 window.studyCourseData=studyCourseData;
 window.studyCourseSelectedLessons=studyCourseSelectedLessons;
 
-function openStudyCourse(course,lesson=1){
-  if(course==='opic' && !studyCourseSentenceCards('opic',1).length){
-    setHomeStudyMode('opic');
-    return;
+
+
+/* ===== V5.3.169 · DIRECT COURSE CARD NAVIGATION ===== */
+function studyDirectOpenCourse(course,lesson=1){
+  const c=(typeof STUDY_COURSES!=='undefined'&&STUDY_COURSES[course])?course:'my';
+  const n=Math.max(1,Number(lesson)||1);
+
+  try{stopAllMyClassPlayback(true)}catch(e){}
+  ACTIVE_STUDY_COURSE=c;
+  try{M536.course=c}catch(e){}
+
+  // Directly perform the page transition first. This guarantees the card tap
+  // opens the course even if an older home-card click handler throws later.
+  document.getElementById('homePage')?.classList.add('hidden');
+  document.getElementById('dayAppPage')?.classList.add('hidden');
+  try{hideStandalonePages?.()}catch(e){}
+  document.getElementById('myClassPage')?.classList.remove('hidden');
+  document.getElementById('myClassBottom')?.classList.remove('hidden');
+
+  myClassLessonNo=n;
+  myClassTab=(typeof studyCourseOrder==='function'?studyCourseOrder(c)[0]:'corrections')||'corrections';
+
+  try{initTTS?.();unlockTTSFromGesture?.()}catch(e){}
+  try{myClassUpdateHeader?.()}catch(e){}
+  try{renderMyClass?.()}catch(e){}
+  try{studySyncCourseUI?.()}catch(e){}
+  try{myClassSetStatus?.('재생 대기 · 버튼을 눌러 시작하세요',false)}catch(e){}
+  try{window.scrollTo(0,0)}catch(e){}
+
+  return true;
+}
+window.studyDirectOpenCourse=studyDirectOpenCourse;
+
+/* ===== V5.3.169 · HARD-STANDARD COURSE CARD ENTRY ===== */
+function studyCardCourseLesson(card){
+  if(!card)return null;
+  const id=String(card.id||'');
+
+  if(id==='soriGroup1Card')return {course:'sori',lesson:1};
+  if(id==='opicGroup1Card')return {course:'opic',lesson:1};
+
+  const my=id.match(/^myClassLesson(\d+)Card$/);
+  if(my)return {course:'my',lesson:Number(my[1])||1};
+
+  const course=String(card.dataset?.studyCourse||'');
+  const lesson=Number(card.dataset?.studyLesson||1)||1;
+  if(STUDY_COURSES?.[course])return {course,lesson};
+
+  return null;
+}
+function studyStampCourseCards(){
+  document.querySelectorAll('#homePage .myClassSection .myClassCard').forEach((card,i)=>{
+    const m=String(card.id||'').match(/^myClassLesson(\d+)Card$/);
+    card.dataset.studyCourse='my';
+    card.dataset.studyLesson=String(Number(m?.[1])||i+1);
+    card.setAttribute('role','button');
+    card.setAttribute('tabindex','0');
+  });
+
+  const sori=document.getElementById('soriGroup1Card');
+  if(sori){
+    sori.dataset.studyCourse='sori';
+    sori.dataset.studyLesson='1';
+    sori.setAttribute('role','button');
+    sori.setAttribute('tabindex','0');
   }
+
+  const opic=document.getElementById('opicGroup1Card');
+  if(opic){
+    opic.dataset.studyCourse='opic';
+    opic.dataset.studyLesson='1';
+    opic.setAttribute('role','button');
+    opic.setAttribute('tabindex','0');
+  }
+}
+window.studyStampCourseCards=studyStampCourseCards;
+
+function studyOpenCard(card){
+  const target=studyCardCourseLesson(card);
+  if(!target)return false;
+  return studyDirectOpenCourse(target.course,target.lesson);
+}
+window.studyCardCourseLesson=studyCardCourseLesson;
+window.studyOpenCard=studyOpenCard;
+
+function studyCourseCardFromEventTarget(target){
+  if(!target?.closest)return null;
+  if(target.closest('input,label,button,a,select,textarea,[data-no-card-open]'))return null;
+  return target.closest(
+    '#myClassLesson1Card,#myClassLesson2Card,#myClassLesson3Card,#myClassLesson4Card,#myClassLesson5Card,'+
+    '#soriGroup1Card,#opicGroup1Card,[data-study-course][data-study-lesson]'
+  );
+}
+window.studyCourseCardFromEventTarget=studyCourseCardFromEventTarget;
+
+// Mobile browsers can have legacy click handlers competing on these cards.
+// pointerup capture becomes the canonical navigation event and suppresses the
+// subsequent synthetic click for a short window.
+let MV_LAST_COURSE_CARD_OPEN_AT=0;
+document.addEventListener('pointerup',(e)=>{
+  const card=studyCourseCardFromEventTarget(e.target);
+  if(!card)return;
+  // Touch fallback for browsers that do not dispatch a normal click from local content:// pages.
+  MV_LAST_COURSE_CARD_OPEN_AT=Date.now();
+  setTimeout(()=>{
+    const page=document.getElementById('myClassPage');
+    if(page?.classList.contains('hidden')){
+      studyOpenCard(card);
+    }
+  },0);
+},true);
+
+document.addEventListener('click',(e)=>{
+  const card=studyCourseCardFromEventTarget(e.target);
+  if(!card)return;
+  // Do not block the card's direct inline onclick. This listener is only a fallback.
+  setTimeout(()=>{
+    const page=document.getElementById('myClassPage');
+    if(page?.classList.contains('hidden')){
+      studyOpenCard(card);
+    }
+  },0);
+},true);
+
+document.addEventListener('keydown',(e)=>{
+  if(e.key!=='Enter'&&e.key!==' ')return;
+  const card=studyCourseCardFromEventTarget(e.target);
+  if(!card)return;
+  e.preventDefault();
+  studyOpenCard(card);
+},true);
+
+setTimeout(studyStampCourseCards,0);
+setTimeout(studyStampCourseCards,220);
+
+function openStudyCourse(course,lesson=1){
   ACTIVE_STUDY_COURSE=STUDY_COURSES[course]?course:'my';
   M536.course=ACTIVE_STUDY_COURSE;
   myClassTab=studyCourseOrder(ACTIVE_STUDY_COURSE)[0]||'corrections';
@@ -1180,7 +1317,7 @@ window.openStudyCourse=openStudyCourse;
 // Shared sentence-speaking card converter.
 // Course data is normalized into the SAME practice-sentence schema used by MY 수업.
 
-/* ===== V5.3.166 · SORI FULL-SENTENCE TRANSLATION AUDIT ===== */
+/* ===== V5.3.169 · SORI FULL-SENTENCE TRANSLATION AUDIT ===== */
 function studyAuditCoreTranslations(course='sori',lesson=1){
   const d=studyCourseData(course,lesson);
   return (d?.corrections||[]).map((x,i)=>({
@@ -1575,7 +1712,7 @@ function clearExactReadingFocus(){
   });
 }
 
-/* ===== V5.3.166 · Standardized playback scroll =====
+/* ===== V5.3.169 · Standardized playback scroll =====
    One shared scroll policy for DAY and MY 수업 playback.
    Goal: prevent duplicate/competing smooth-scroll implementations.
 */
@@ -1628,7 +1765,7 @@ function mvPlaybackScrollTo(el,opts={}){
 }
 
 
-/* ===== V5.3.166 · word/meaning shared visual anchor ===== */
+/* ===== V5.3.169 · word/meaning shared visual anchor ===== */
 function mvPlaybackScrollWordMeaningGroup(wordEl,meaningEl){
   if(!meaningEl)return;
 
@@ -2335,7 +2472,7 @@ function normalizeTextForTTS(text,lang='en-US'){
   return content;
 }
 
-// ===== V5.3.166 · COMMON DOM TTS HIGHLIGHT =====
+// ===== V5.3.169 · COMMON DOM TTS HIGHLIGHT =====
 const MV_DOM_HL={sentence:null,word:null,wrapped:[],spoken:''};
 function mvDomNorm(v){return String(v||'').replace(/\s+/g,' ').trim()}
 function mvDomVisible(el){
@@ -3168,7 +3305,7 @@ let sentenceRecallVisible=false;
 let sentenceRecallVariant='original'; // original | paraphrase
 let sentenceStage2Repeat=false;
 
-/* ===== V5.3.166 · SENTENCE QUIZ RESUME STANDARD ===== */
+/* ===== V5.3.169 · SENTENCE QUIZ RESUME STANDARD ===== */
 function sentenceResumeContextKey(){
   const day=Number(quizSelectedDay||currentDay||1);
   const source=String(sentenceSourceMode||'example');
@@ -5985,7 +6122,7 @@ $('speakQuiz').onclick=()=>{stopSpeech();speakCurrentQuizPrompt();};
 
 
 
-// ===== V5.3.166 · 자유 음성 녹음 학습 =====
+// ===== V5.3.169 · 자유 음성 녹음 학습 =====
 const VOICE_PRACTICE_RECENT_KEY='mv_voice_practice_recent_v1';
 
 function voicePracticeRecentList(){
@@ -6885,7 +7022,7 @@ function patternsForText(lesson,text){
 }
 
 
-/* ===== V5.3.166 · MY 수업 홈 체크박스 중복 제거 ===== */
+/* ===== V5.3.169 · MY 수업 홈 체크박스 중복 제거 ===== */
 function myClassDedupeHomeSelection(){
   document.querySelectorAll('#homePage .myClassCard').forEach(card=>{
     if(card.querySelector('.myLessonSelectMini')){
@@ -7102,13 +7239,88 @@ const M536={
   course:'my'
 };
 
-/* ===== V5.3.166 · PLAYBACK COURSE SOURCE-OF-TRUTH ===== */
+/* ===== V5.3.169 · PLAYBACK COURSE SOURCE-OF-TRUTH ===== */
 function m536ActiveCourse(){
   const running=M536 && (M536.mode==='full'||M536.mode==='infinite');
   return String((running?M536.course:ACTIVE_STUDY_COURSE)||M536?.course||'my');
 }
 window.m536ActiveCourse=m536ActiveCourse;
 
+
+
+/* ===== V5.3.169 · GLOBAL PLAY/STOP TOGGLE STANDARD ===== */
+const M536_TOGGLE_STATE={
+  pausedMode:'idle',
+  pausedCourse:'my',
+  pausedCursor:0,
+  pausedInfiniteItem:null
+};
+
+function m536IsPlaying(){
+  return M536.mode==='full'||M536.mode==='infinite';
+}
+function m536PauseGlobal(){
+  if(!m536IsPlaying())return false;
+
+  M536_TOGGLE_STATE.pausedMode=M536.mode;
+  M536_TOGGLE_STATE.pausedCourse=String(M536.course||ACTIVE_STUDY_COURSE||'my');
+  M536_TOGGLE_STATE.pausedCursor=Number.isFinite(M536.cursor)?M536.cursor:0;
+  M536_TOGGLE_STATE.pausedInfiniteItem=M536.infiniteItem?{...M536.infiniteItem}:null;
+
+  M536.token++;
+  try{stopSpeech()}catch(e){}
+  try{window.speechSynthesis?.cancel()}catch(e){}
+  try{m536StopLegacyPlaybackOnly()}catch(e){}
+
+  M536.mode='idle';
+  M536.busy=false;
+  MY_CLASS_PLAY.active=false;
+  MY_CLASS_PLAY.paused=true;
+
+  try{myClassClearSpeakingSentenceHighlight()}catch(e){}
+  try{mvDomClearHighlight?.()}catch(e){}
+  try{m536SyncInfinityButtons?.()}catch(e){}
+  try{syncMyClassInfinityVisuals?.()}catch(e){}
+  myClassSetStatus?.('전체 재생 정지',false);
+  myClassSyncButtons?.();
+  return true;
+}
+function m536ResumeGlobal(){
+  const course=String(M536_TOGGLE_STATE.pausedCourse||ACTIVE_STUDY_COURSE||'my');
+  ACTIVE_STUDY_COURSE=course;
+  M536.course=course;
+
+  if(M536_TOGGLE_STATE.pausedMode==='infinite' && M536_TOGGLE_STATE.pausedInfiniteItem){
+    const item={...M536_TOGGLE_STATE.pausedInfiniteItem,course};
+    M536_TOGGLE_STATE.pausedMode='idle';
+    m536RunInfinite(item);
+    return true;
+  }
+
+  const cursor=M536_TOGGLE_STATE.pausedMode==='full'
+    ? Math.max(0,Number(M536_TOGGLE_STATE.pausedCursor)||0)
+    : 0;
+  M536_TOGGLE_STATE.pausedMode='idle';
+
+  const chosen=m536Lessons(course);
+  if(!chosen.length){
+    myClassSetStatus?.('재생할 선택 항목이 없습니다',false);
+    myClassSyncButtons?.();
+    return false;
+  }
+
+  M536.course=course;
+  m536RunFull(cursor);
+  return true;
+}
+function m536ToggleGlobalPlayback(){
+  if(m536IsPlaying())return m536PauseGlobal();
+  return m536ResumeGlobal();
+}
+window.m536IsPlaying=m536IsPlaying;
+window.m536PauseGlobal=m536PauseGlobal;
+window.m536ResumeGlobal=m536ResumeGlobal;
+window.m536ToggleGlobalPlayback=m536ToggleGlobalPlayback;
 
 function m536Sleep(ms){return new Promise(r=>setTimeout(r,ms))}
 function m536Lessons(course=m536ActiveCourse()){
@@ -7368,6 +7580,8 @@ async function m536RunInfinite(item){
   }
 }
 function m536StartCourse(course=ACTIVE_STUDY_COURSE){
+  M536_TOGGLE_STATE.pausedMode='idle';
+  M536_TOGGLE_STATE.pausedInfiniteItem=null;
   const selectedCourse=(typeof STUDY_COURSES!=='undefined' && STUDY_COURSES[course])?course:'my';
 
   stopAllMyClassPlayback(true);
@@ -7403,7 +7617,7 @@ function m536StartFull(){
 }
 
 
-/* ===== V5.3.166 · CANONICAL INFINITY ENTRY ===== */
+/* ===== V5.3.169 · CANONICAL INFINITY ENTRY ===== */
 function m536ToggleInfiniteByKey(key){
   const parts=String(key||'').split('|');
   if(parts.length!==4)return false;
@@ -7576,7 +7790,7 @@ function m536WireBottomPlayButton(){
   if(!b)return;
   const clone=b.cloneNode(true);
   b.parentNode.replaceChild(clone,b);
-  clone.onclick=(e)=>{e.preventDefault();e.stopPropagation();myClassTogglePlay();};
+  clone.onclick=(e)=>{e.preventDefault();e.stopPropagation();m536ToggleGlobalPlayback();};
   myClassSyncButtons?.();
 }
 function m536WireFullRepeatButton(){
@@ -7584,7 +7798,7 @@ function m536WireFullRepeatButton(){
   if(!b)return;
   const clone=b.cloneNode(true);
   b.parentNode.replaceChild(clone,b);
-  clone.onclick=(e)=>{e.preventDefault();e.stopPropagation();window.m536StartFull?.()};
+  clone.onclick=(e)=>{e.preventDefault();e.stopPropagation();m536ToggleGlobalPlayback();};
 }
 
 // a.m. / p.m. 때문에 문장 자체가 '2 a.' + 'm.'으로 갈라지는 문제 수정.
@@ -8253,7 +8467,7 @@ function legend(text,lesson){
  return `<div class="mySpeakPatternBox"><div class="mySpeakPatternTitle">문단에서 사용된 핵심 회화 패턴</div>${used.map(m=>`<div class="mySpeakPatternRow" data-pattern-id="${m.id}"><span class="mySpeakPatternEn mySpeakPat ${cls(m.patternIndex)}">${esc(m.en)}</span><span class="mySpeakPatternKo">${esc(m.ko)}</span></div>`).join('')}</div>`;
 }
 function decorate(){
- if(String(ACTIVE_STUDY_COURSE||'my')!=='my')return; // V5.3.166: MY-only decorator must never overwrite SORI/OPIC speaking data
+ if(String(ACTIVE_STUDY_COURSE||'my')!=='my')return; // V5.3.169: MY-only decorator must never overwrite SORI/OPIC speaking data
  if(typeof myClassTab==='undefined'||myClassTab!=='speaking')return;
  const lesson=Number(myClassLessonNo||1),data=(lesson===5?MY_CLASS_LESSON_5:(lesson===4?MY_CLASS_LESSON_4:(lesson===3?MY_CLASS_LESSON_3:(lesson===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1))));
  (data.speaking||[]).forEach((x,i)=>{
@@ -8317,7 +8531,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// ===== V5.3.166 MY 수업 HARD navigation stop =====
+// ===== V5.3.169 MY 수업 HARD navigation stop =====
 function myClassHardNavigationStop(){
   try{stopAllMyClassPlayback(true)}catch(e){}
   // Samsung Internet TTS cancel 안정성을 위해 짧게 한 번 더 취소한다.
@@ -8339,7 +8553,7 @@ document.addEventListener('click',(e)=>{
 },true);
 
 
-// V5.3.166: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
+// V5.3.169: renderMyClass가 버튼 DOM을 새로 만들어도 active 색상을 즉시 복원한다.
 function installInfinityVisualObserver(){
   const root=document.getElementById('myClassContent');
   if(!root || root.dataset.infinityVisualObserver==='1')return;
@@ -8353,7 +8567,7 @@ function installInfinityVisualObserver(){
 setTimeout(installInfinityVisualObserver,0);
 
 
-// V5.3.166: 무한 반복 상태 표시 heartbeat.
+// V5.3.169: 무한 반복 상태 표시 heartbeat.
 // 브라우저/DOM 재렌더 방식과 무관하게 반복 중에는 250ms마다 active UI를 복구한다.
 if(!window.__mvInfinityHeartbeat){
   window.__mvInfinityHeartbeat=setInterval(()=>{
@@ -8393,7 +8607,81 @@ if(!window.__mvInfinityHeartbeat){
 
 
 
-/* ===== V5.3.166 · INFINITY STANDARD AUDIT ===== */
+
+
+
+/* ===== V5.3.169 · DIRECT CARD NAV AUDIT ===== */
+function mvDirectCardNavAudit(){
+  studyStampCourseCards();
+  const ids=['myClassLesson1Card','myClassLesson2Card','myClassLesson3Card','myClassLesson4Card','myClassLesson5Card','soriGroup1Card','opicGroup1Card'];
+  return {
+    version:'5.3.169',
+    directNavigator:window.studyDirectOpenCourse===studyDirectOpenCourse,
+    cards:ids.map(id=>{
+      const card=document.getElementById(id);
+      const t=studyCardCourseLesson(card);
+      return {
+        id, exists:!!card, course:t?.course||'', lesson:t?.lesson||0,
+        inline:card?.getAttribute('onclick')||''
+      };
+    })
+  };
+}
+window.mvDirectCardNavAudit=mvDirectCardNavAudit;
+
+
+/* ===== V5.3.169 · COURSE CARD ENTRY AUDIT ===== */
+function mvCourseCardEntryAudit(){
+  studyStampCourseCards();
+  const ids=[
+    'myClassLesson1Card','myClassLesson2Card','myClassLesson3Card',
+    'myClassLesson4Card','myClassLesson5Card','soriGroup1Card','opicGroup1Card'
+  ];
+  return {
+    version:'5.3.169',
+    cards:ids.map(id=>{
+      const card=document.getElementById(id);
+      const target=studyCardCourseLesson(card);
+      return {
+        id,
+        exists:!!card,
+        course:target?.course||'',
+        lesson:target?.lesson||0,
+        stamped:!!card?.dataset?.studyCourse
+      };
+    }),
+    pointerupCanonical:true,
+    clickFallback:true
+  };
+}
+window.mvCourseCardEntryAudit=mvCourseCardEntryAudit;
+
+
+/* ===== V5.3.169 · CARD + GLOBAL PLAYBACK STANDARD AUDIT ===== */
+function mvCardPlaybackStandardAudit(){
+  const myCards=[...document.querySelectorAll('#homePage .myClassSection .myClassCard')];
+  const sori=document.getElementById('soriGroup1Card');
+  const opic=document.getElementById('opicGroup1Card');
+  return {
+    version:'5.3.169',
+    cardEntry:{
+      myCards:myCards.length,
+      sori:!!sori,
+      opic:!!opic,
+      commonResolver:window.studyOpenCard===studyOpenCard
+    },
+    playback:{
+      mode:M536.mode,
+      playing:m536IsPlaying(),
+      commonToggle:window.m536ToggleGlobalPlayback===m536ToggleGlobalPlayback,
+      pauseResumeState:{...M536_TOGGLE_STATE}
+    }
+  };
+}
+window.mvCardPlaybackStandardAudit=mvCardPlaybackStandardAudit;
+
+
+/* ===== V5.3.169 · INFINITY STANDARD AUDIT ===== */
 function mvInfinityStandardAudit(course=ACTIVE_STUDY_COURSE){
   const c=String(course||'my');
   const lesson=Number(myClassLessonNo)||1;
@@ -8409,7 +8697,7 @@ function mvInfinityStandardAudit(course=ACTIVE_STUDY_COURSE){
     if(counts[tab]>0)sampleKeys[tab]=m536ItemKey({course:c,lesson,tab,index:0});
   });
   return {
-    version:'5.3.166',
+    version:'5.3.169',
     course:c,
     activeCourse:m536ActiveCourse(),
     controllerCourse:M536.course,
@@ -8424,7 +8712,7 @@ function mvInfinityStandardAudit(course=ACTIVE_STUDY_COURSE){
 window.mvInfinityStandardAudit=mvInfinityStandardAudit;
 
 
-/* ===== V5.3.166 · SPEAKING PATTERN KO AUDIT ===== */
+/* ===== V5.3.169 · SPEAKING PATTERN KO AUDIT ===== */
 function mvSpeakingPatternKoAudit(course=ACTIVE_STUDY_COURSE,lesson=myClassLessonNo||1){
   const c=String(course||'my'), n=Number(lesson)||1;
   const d=studyCourseData(c,n);
@@ -8434,12 +8722,12 @@ function mvSpeakingPatternKoAudit(course=ACTIVE_STUDY_COURSE,lesson=myClassLesso
     ko:studySpeakingPatternKo(x,d),
     hasKo:!!studySpeakingPatternKo(x,d)
   }));
-  return {version:'5.3.166',course:c,lesson:n,rows,withKo:rows.filter(x=>x.hasKo).length};
+  return {version:'5.3.169',course:c,lesson:n,rows,withKo:rows.filter(x=>x.hasKo).length};
 }
 window.mvSpeakingPatternKoAudit=mvSpeakingPatternKoAudit;
 
 
-/* ===== V5.3.166 · PATTERN MATCH COVERAGE AUDIT ===== */
+/* ===== V5.3.169 · PATTERN MATCH COVERAGE AUDIT ===== */
 function mvPatternCoverageAudit(course=ACTIVE_STUDY_COURSE,lesson=myClassLessonNo||1){
   const c=String(course||'my');
   const n=Number(lesson)||1;
@@ -8458,7 +8746,7 @@ function mvPatternCoverageAudit(course=ACTIVE_STUDY_COURSE,lesson=myClassLessonN
     };
   });
   return {
-    version:'5.3.166',
+    version:'5.3.169',
     course:c,
     lesson:n,
     rule:'pattern=teal, playback=purple, all sentence types use same matcher',
@@ -8471,7 +8759,7 @@ function mvPatternCoverageAudit(course=ACTIVE_STUDY_COURSE,lesson=myClassLessonN
 window.mvPatternCoverageAudit=mvPatternCoverageAudit;
 
 
-/* ===== V5.3.166 · SPEAKING HEADER DEDUP AUDIT ===== */
+/* ===== V5.3.169 · SPEAKING HEADER DEDUP AUDIT ===== */
 function mvSpeakingHeaderAudit(course=ACTIVE_STUDY_COURSE,lesson=myClassLessonNo||1){
   const c=String(course||'my');
   const n=Number(lesson)||1;
@@ -8490,7 +8778,7 @@ function mvSpeakingHeaderAudit(course=ACTIVE_STUDY_COURSE,lesson=myClassLessonNo
     };
   });
   return {
-    version:'5.3.166',
+    version:'5.3.169',
     course:c,
     lesson:n,
     rule:'duplicate prompt/pattern is rendered once',
@@ -8501,7 +8789,7 @@ function mvSpeakingHeaderAudit(course=ACTIVE_STUDY_COURSE,lesson=myClassLessonNo
 window.mvSpeakingHeaderAudit=mvSpeakingHeaderAudit;
 
 
-/* ===== V5.3.166 · ALL SENTENCE PATTERN STANDARD AUDIT ===== */
+/* ===== V5.3.169 · ALL SENTENCE PATTERN STANDARD AUDIT ===== */
 function mvAllSentencePatternAudit(course=ACTIVE_STUDY_COURSE,lesson=myClassLessonNo||1){
   const c=String(course||'my');
   const n=Number(lesson)||1;
@@ -8522,7 +8810,7 @@ function mvAllSentencePatternAudit(course=ACTIVE_STUDY_COURSE,lesson=myClassLess
   }));
 
   return {
-    version:'5.3.166',
+    version:'5.3.169',
     course:c,
     lesson:n,
     rule:'correction + chunk example + speaking use one pattern-color standard',
@@ -8534,13 +8822,13 @@ function mvAllSentencePatternAudit(course=ACTIVE_STUDY_COURSE,lesson=myClassLess
 }
 window.mvAllSentencePatternAudit=mvAllSentencePatternAudit;
 
-/* ===== V5.3.166 · INFINITY COURSE ROUTING AUDIT ===== */
+/* ===== V5.3.169 · INFINITY COURSE ROUTING AUDIT ===== */
 function mvInfinityCourseAudit(){
   const visible=String(ACTIVE_STUDY_COURSE||'my');
   const resolved=m536ActiveCourse();
   const sampleKey=m536ItemKey({course:visible,lesson:myClassLessonNo||1,tab:myClassTab||'corrections',index:0});
   return {
-    version:'5.3.166',
+    version:'5.3.169',
     visibleCourse:visible,
     controllerCourse:String(M536?.course||''),
     controllerMode:String(M536?.mode||'idle'),
@@ -8552,7 +8840,7 @@ function mvInfinityCourseAudit(){
 }
 window.mvInfinityCourseAudit=mvInfinityCourseAudit;
 
-/* ===== V5.3.166 · SPEAKING PATTERN STANDARD AUDIT ===== */
+/* ===== V5.3.169 · SPEAKING PATTERN STANDARD AUDIT ===== */
 function mvSpeakingPatternAudit(course=ACTIVE_STUDY_COURSE,lesson=myClassLessonNo||1){
   const c=String(course||'my');
   const d=studyCourseData(c,Number(lesson)||1);
@@ -8562,7 +8850,7 @@ function mvSpeakingPatternAudit(course=ACTIVE_STUDY_COURSE,lesson=myClassLessonN
     return {index:i+1,patterns,matched,hasPatternColorTarget:matched.length>0};
   });
   return {
-    version:'5.3.166',
+    version:'5.3.169',
     course:c,
     lesson:Number(lesson)||1,
     speakingCount:rows.length,
@@ -8572,13 +8860,13 @@ function mvSpeakingPatternAudit(course=ACTIVE_STUDY_COURSE,lesson=myClassLessonN
 }
 window.mvSpeakingPatternAudit=mvSpeakingPatternAudit;
 
-/* ===== V5.3.166 · PLAYBACK STANDARDIZATION SELF-AUDIT ===== */
+/* ===== V5.3.169 · PLAYBACK STANDARDIZATION SELF-AUDIT ===== */
 function mvPlaybackStandardAudit(){
   const course=M536?.course||ACTIVE_STUDY_COURSE||'my';
   const sample={course,lesson:myClassLessonNo||1,tab:myClassTab||'corrections',index:0};
   const key=m536ItemKey(sample);
   return {
-    version:'5.3.166',
+    version:'5.3.169',
     engine:'M536',
     course,
     canonicalKey:key,
@@ -8596,7 +8884,7 @@ function installVisibleBuildBadge(){
   if(!badge){
     badge=document.createElement('div');
     badge.id='mvBuildBadge';
-    badge.textContent='v5.3.166';
+    badge.textContent='v5.3.169';
     badge.title='현재 실행 중인 MY VOCA 빌드';
     document.body.appendChild(badge);
   }
@@ -8618,14 +8906,7 @@ function myClassStopFullPlay(){
 }
 
 
-document.addEventListener('click',(e)=>{
-  const b=e.target.closest('#myClassFullPlayBtn');
-  if(!b)return;
-  e.preventDefault();
-  e.stopPropagation();
-  if(b.classList.contains('playing')) myClassStopFullPlay();
-  else myClassPlayAllSelectedLessons();
-},true);
+/* v5.3.169: #myClassFullPlayBtn uses universal whole-playback router. */
 
 
 function mvNormalizePlaybackCard(sentenceEl){
@@ -8663,7 +8944,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
 
 
 
-/* ===== V5.3.166 · HOME + SENTENCE SPEAKING STANDARD COURSE PATCH ===== */
+/* ===== V5.3.169 · HOME + SENTENCE SPEAKING STANDARD COURSE PATCH ===== */
 (function(){
   'use strict';
 
@@ -8727,11 +9008,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   };
 
   function bindSoriCard(){
-    const card=document.getElementById('soriGroup1Card');
-    if(!card)return;
-    const open=()=>{ACTIVE_STUDY_COURSE='sori';if(typeof M536!=='undefined')M536.course='sori';openStudyCourse('sori',1)};
-    card.onclick=open;
-    card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}};
+    studyStampCourseCards();
   }
 
   // Back button returns to the mode the learner came from.
@@ -8740,7 +9017,10 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     document.getElementById('myClassBottom')?.classList.add('hidden');
     document.getElementById('myClassPage')?.classList.add('hidden');
     document.getElementById('homePage')?.classList.remove('hidden');
-    setHomeStudyMode(ACTIVE_STUDY_COURSE==='sori'?'sori':'my');
+    setHomeStudyMode(
+      ACTIVE_STUDY_COURSE==='sori'?'sori':
+      ACTIVE_STUDY_COURSE==='opic'?'opic':'my'
+    );
     window.scrollTo(0,0);
   }
 
@@ -8865,14 +9145,8 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     if(back)back.onclick=closeStandardCourse;
     if(home)home.onclick=closeStandardCourse;
 
-    // Make MY cards explicitly return to the MY course adapter.
-    [1,2,3,4,5].forEach(n=>{
-      const c=document.getElementById(`myClassLesson${n}Card`);
-      if(!c)return;
-      const open=()=>{ACTIVE_STUDY_COURSE='my';if(typeof M536!=='undefined')M536.course='my';openStudyCourse('my',n)};
-      c.onclick=open;
-      c.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}};
-    });
+    // MY / SORI / OPIC cards use the same stamped canonical navigation route.
+    studyStampCourseCards();
 
     setHomeStudyMode('day');
   }
@@ -8882,7 +9156,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
 
 
 
-/* ===== V5.3.166 · SHARED STUDY SELECTION / REPEAT BAR =====
+/* ===== V5.3.169 · SHARED STUDY SELECTION / REPEAT BAR =====
    One common controller for DAY VOCA / MY / SORI / OPIC.
    New study modes must implement only the adapter (items/select/start);
    they must NOT duplicate select-all / clear / selected-repeat UI.
@@ -9004,6 +9278,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
       card.className='myClassCard opicCourseCard';
       card.setAttribute('role','button');
       card.setAttribute('tabindex','0');
+      card.setAttribute('onclick',"studyDirectOpenCourse('opic',1)");
       card.innerHTML=`
         <div class="myClassTop"><b>OPIC · 표준 학습 세트</b><span class="myClassBadge">READY</span></div>
         <div class="myClassTitle">OPIC 콘텐츠 추가 준비</div>
@@ -9011,6 +9286,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
         <div class="myClassMeta"><span>⭐ 핵심 답변 0</span><span>🧩 Chunk 0</span><span>🗣 말하기 0</span><span>🏆 AL Point 0</span></div>`;
       sec.appendChild(card);
     }
+    studyStampCourseCards();
     const c=ensureStandardCourseCheckbox(card,'opic',1,'OPIC 표준 학습 세트');
     const selected=readJson(STUDY_SELECT_KEYS.opic,[]).map(Number);
     c.checked=selected.includes(1);
@@ -9020,16 +9296,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
       card.classList.toggle('myClassChecked',c.checked);
       syncSharedStudySelectionUI('opic');
     };
-    const open=()=>{
-      if(!studyCourseSentenceCards('opic',1).length){
-        alert('OPIC 학습 콘텐츠는 아직 추가되지 않았습니다. 다음 OPIC 자료부터 같은 표준 포맷으로 연결됩니다.');
-        return;
-      }
-      ACTIVE_STUDY_COURSE='opic';
-      openStudyCourse('opic',1);
-    };
-    card.onclick=open;
-    card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}};
+    studyStampCourseCards();
   }
 
   function dayChecks(){
