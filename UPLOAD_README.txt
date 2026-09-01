@@ -1,17 +1,15 @@
-MY VOCA V5.3.185
-Base: V5.3.184
+MY VOCA V5.3.190
+Base: V5.3.189
 
-문장 말하기 하단 버튼 표준화
+Pattern inflection / grammar-slot standardization build
 
-변경
-- 문장 말하기 화면에서 기존 '자동 ON/OFF' 자리를 '↩ 학습으로 복귀'로 사용.
-- 학습 화면의 Speaking Bridge로 들어온 경우: 버튼 활성화.
-- 3줄 메뉴/홈에서 문장 말하기로 직접 들어온 경우: 같은 버튼은 회색 비활성화.
-- 별도의 상단 '학습으로 돌아가기' 버튼은 제거.
+수정:
+- strike a deal → struck a deal 같은 불규칙 동사 형태까지 동일 패턴으로 인식
+- give up ~ing → give up retaking처럼 문법 슬롯(~ing) 실제 단어까지 함께 색상 표시
+- end up ~ing / have a hard time ~ing / get used to -ing 등 같은 슬롯 패턴도 동일 처리
+- settle in well → settling in well 등 silent-e 동사 변화 유지
+- MY / 소리영어 / OPIC 공통 studyFindPatternHits 엔진에만 적용
+- lowercase article a를 grammar placeholder A로 잘못 제거하던 문제 수정 (strike a deal 누락 원인)
+- mvPatternInflectionAudit190() 추가
 
-중요한 회귀 방지
-- '자동 ON/OFF' 기능 자체를 전체 앱에서 삭제하지 않음.
-- 단어 맞추기/유의어·반의어/단어 말하기 등 일반 단어 퀴즈에서는 기존 Auto ON/OFF가 그대로 동작.
-- 오직 quizMode='sentence' + sentence activity일 때만 해당 버튼을 복귀 컨트롤로 재사용.
-- Speaking Bridge의 기존 return context와 복귀 로직을 그대로 사용.
-- 녹음/TTS/다음/이전/전체재생/무한반복/DAY/MY/SORI/OPIC 학습 엔진 변경 없음.
+기존 학습/재생/녹음/선택/브리지 기능 유지
