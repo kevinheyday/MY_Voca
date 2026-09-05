@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.191</title>
+<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.204</title>
 
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
@@ -2816,7 +2816,7 @@ html[data-mv-activity="sentence"] .quizModeSwitch{
       <div>
         <div class="homeEyebrow" id="homeCourseEyebrow">MY VOCA UNIFIED COURSE · 69 DAYS</div>
         <h1 id="homeCourseTitle">MY VOCA</h1>
-        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.191</div>
+        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.204</div>
       </div>
       <div class="homeDayBadge"><b id="homeRegisteredDays">30</b><span>등록 Day</span></div>
     </section>
@@ -2958,6 +2958,15 @@ html[data-mv-activity="sentence"] .quizModeSwitch{
         </div>
         <div class="myClassDesc">세 수업을 한 번에 복습하되 각 핵심 문장과 Chunk에는 원래 수업 출처를 표시합니다. 전체 반복에서는 세 스크립트의 핵심 표현이 한 학습 세트로 이어집니다.</div>
         <div class="myClassMeta"><span>⭐ 핵심 문장 24</span><span>🧩 Chunk 27</span><span>🗣 말하기 12</span><span>🎧 소리 Point 9</span></div>
+      </div>
+      <div class="myClassCard soriCourseCard" id="soriGroup2Card" data-study-course="sori" data-study-lesson="2" role="button" tabindex="0" onclick="studyDirectOpenCourse('sori',2)">
+        <div class="myClassTop"><b>소리영어 · 통합 복습 2</b><span class="myClassBadge">3 SCRIPTS</span></div>
+        <div class="myClassTitle">Dumplin' Day #2 · To Fill or Not to Fill · The Ring Rescue</div>
+        <div class="soriLessonStrip">
+          <span>① Dumplin' Day #2</span><span>② To Fill or Not to Fill</span><span>③ The Ring Rescue</span>
+        </div>
+        <div class="myClassDesc">선택한 핵심 문장과 Chunk를 기존 소리영어와 동일한 Chunk → 핵심 문장 → 말하기 → 소리 Point 포맷으로 학습합니다.</div>
+        <div class="myClassMeta"><span>⭐ 핵심 문장 28</span><span>🧩 Chunk 35</span><span>🗣 말하기 12</span><span>🎧 소리 Point 7</span></div>
       </div>
     </section>
 
@@ -3773,7 +3782,10 @@ function studyPatternFixedParts(pattern){
     .replace(/~\s*ing\b/gi,' ')
     .replace(/~/g,' ')
     .replace(/\b(?:someone|somebody|something|somewhere|adjective|noun|verb|adverb)\b/gi,' ')
-    .replace(/\b(?:A|B)\b/g,' ')
+    // Explicit grammar placeholders in pattern labels must never be matched literally.
+    // Examples: S would, S can V, S might, A/B, O/C. Keep lowercase real words intact.
+    .replace(/\b(?:S|V|O|C|A|B)\b/g,' ')
+    .replace(/\b(?:clause|subject|object|complement|p\.?p\.?|past participle)\b/gi,' ')
     .replace(/\+/g,' ')
     .replace(/\([^)]*\)/g,' ')
     .replace(/\s*\/\s*/g,' ');
@@ -4051,7 +4063,7 @@ function mvPatternInflectionAudit190(){
     const surfaces=hits.map(h=>text.slice(h.start,h.end));
     return {pattern,expected,surfaces,pass:surfaces.includes(expected)};
   });
-  return {version:'v5.3.191',pass:results.every(x=>x.pass),results};
+  return {version:'v5.3.192',pass:results.every(x=>x.pass),results};
 }
 window.mvPatternInflectionAudit190=mvPatternInflectionAudit190;
 
@@ -4936,6 +4948,408 @@ const SORI_GROUP_1 = {
   ]
 };
 
+const SORI_GROUP_2 = {
+  "corrections":[
+    {"source":"① Dumplin' Day #2","ko":"Lucy의 추가 수입이 없으니, 생계를 유지하기 위해 수선 일을 시작해야 할 것 같아.","chunkRefs":[{"id":"d2_without","text":"Without Lucy's extra income"},{"id":"d2_have_to","text":"am gonna have to start doing alterations"},{"id":"d2_ends_meet","text":"so that we can make ends meet"}],"en":"Without Lucy's extra income, I am gonna have to start doing alterations so that we can make ends meet.","tip":"without + 명사 / be going to have to + V / do alterations = 옷 수선을 하다 / make ends meet = 생계를 꾸리다."},
+    {"source":"① Dumplin' Day #2","ko":"혹시 옷 수선도 하시나요?","chunkRefs":[{"id":"d2_by_chance","text":"By any chance"},{"id":"d2_alterations","text":"do alterations"}],"en":"By any chance, do you do alterations?","tip":"by any chance = 혹시 / do alterations = 옷을 수선하다."},
+
+    {"source":"② To Fill or Not to Fill","ko":"의사는 내가 피부 필러를 맞는 것을 고려해 보라고 권했다.","chunkRefs":[{"id":"fill_suggest","text":"suggested that I consider getting dermal fillers"}],"en":"The doctor suggested that I consider getting dermal fillers.","tip":"suggest that S + V / consider + -ing."},
+    {"source":"② To Fill or Not to Fill","ko":"그 권유는 예상 밖이라 당황스러웠다.","chunkRefs":[{"id":"fill_off_guard","text":"caught me off guard"}],"en":"The recommendation caught me off guard.","tip":"catch someone off guard = 예상하지 못한 순간에 허를 찌르다, 당황하게 하다."},
+    {"source":"② To Fill or Not to Fill","ko":"미용 시술이 나에게도 해당될 나이가 된 건가 싶었다.","chunkRefs":[{"id":"fill_wonder","text":"wondered whether"}],"en":"I wondered whether I had reached the age when cosmetic procedures start to feel relevant.","tip":"wonder whether ~ = ~인지 궁금하다/생각해 보다."},
+    {"source":"② To Fill or Not to Fill","ko":"동시에 몇 살 더 젊어 보일 수도 있다는 생각은 솔깃했다.","chunkRefs":[{"id":"fill_thought","text":"the thought that I might look a few years younger"}],"en":"At the same time, the thought that I might look a few years younger was tempting.","tip":"the thought that S might ~ / tempting = 솔깃한."},
+    {"source":"② To Fill or Not to Fill","ko":"비용이 결코 만만한 수준은 아니었다.","chunkRefs":[{"id":"fill_sneeze","text":"nothing to sneeze at"}],"en":"The cost was nothing to sneeze at.","tip":"nothing to sneeze at = 무시할 만하지 않은, 만만치 않은."},
+    {"source":"② To Fill or Not to Fill","ko":"할인을 받더라도 시술 비용은 수십만 원이 들 것이다.","chunkRefs":[{"id":"fill_even_with","text":"Even with a discount"}],"en":"Even with a discount, the treatment would cost several hundred thousand won.","tip":"even with + 명사 = ~이 있어도/~을 받아도."},
+    {"source":"② To Fill or Not to Fill","ko":"그래도 내가 만족할지는 모르겠다.","chunkRefs":[{"id":"fill_wonder_would","text":"wonder whether I would be satisfied"}],"en":"Still, I wonder whether I would be satisfied.","tip":"wonder whether S would ~ = 과연 ~할지 생각하다."},
+    {"source":"② To Fill or Not to Fill","ko":"그들을 보면 자연스럽게 나이 드는 것이 젊은 얼굴을 좇는 것보다 나을 수도 있다는 생각이 든다.","chunkRefs":[{"id":"fill_make_think","text":"makes me think that"},{"id":"fill_grow_old","text":"growing old gracefully"},{"id":"fill_better_than","text":"better than chasing a younger face"}],"en":"Seeing them makes me think that growing old gracefully, with a few honest wrinkles, may be better than chasing a younger face.","tip":"make someone think that ~ / grow old gracefully / be better than + -ing."},
+    {"source":"② To Fill or Not to Fill","ko":"그렇다 해도 아직 결정을 내리지 못하고 있다.","chunkRefs":[{"id":"fill_fence","text":"I am on the fence"}],"en":"Even so, I am on the fence.","tip":"be on the fence = 두 선택지 사이에서 결정을 못 내리다."},
+    {"source":"② To Fill or Not to Fill","ko":"좀 더 생각해 보고 결정할 것 같다.","chunkRefs":[{"id":"fill_sleep","text":"sleep on it"}],"en":"I think I will sleep on it.","tip":"sleep on it = 당장 결정하지 않고 시간을 두고 생각해 보다."},
+
+    {"source":"③ The Ring Rescue","ko":"두 사람은 내년쯤 결혼할 계획이에요.","chunkRefs":[{"id":"ring_knot","text":"planning on tying the knot"}],"en":"The couple is planning on tying the knot sometime next year.","tip":"tie the knot = 결혼하다 / plan on + -ing = ~할 계획이다."}
+  ],
+  "chunks":[
+    {"source":"① Dumplin' Day #2","id":"d2_without","pattern":"without + noun","ko":"~이 없이 / ~이 없다면","example":"Without Lucy's extra income, we need another source of income.","exampleKo":"Lucy의 추가 수입이 없으면 다른 수입원이 필요하다."},
+    {"source":"① Dumplin' Day #2","id":"d2_have_to","pattern":"be going to have to + V","ko":"~해야 할 것 같다","example":"I'm going to have to start doing alterations.","exampleKo":"수선 일을 시작해야 할 것 같다."},
+    {"source":"① Dumplin' Day #2","id":"d2_alterations","pattern":"do alterations","ko":"옷 수선을 하다","example":"By any chance, do you do alterations?","exampleKo":"혹시 옷 수선도 하시나요?"},
+    {"source":"① Dumplin' Day #2","id":"d2_ends_meet","pattern":"make ends meet","ko":"생계를 꾸리다 / 수입에 맞춰 생활하다","example":"She took an extra job to make ends meet.","exampleKo":"그녀는 생계를 꾸리기 위해 부업을 했다."},
+    {"source":"① Dumplin' Day #2","id":"d2_by_chance","pattern":"by any chance","ko":"혹시, 만에 하나","example":"By any chance, do you do alterations?","exampleKo":"혹시 옷 수선도 하시나요?"},
+
+    {"source":"② To Fill or Not to Fill","id":"fill_suggest","pattern":"suggest that S consider ~ing","ko":"S가 ~하는 것을 고려해 보라고 제안하다","example":"The doctor suggested that I consider getting dermal fillers.","exampleKo":"의사는 피부 필러를 고려해 보라고 권했다."},
+    {"source":"② To Fill or Not to Fill","id":"fill_off_guard","pattern":"catch someone off guard","ko":"예상 밖의 일로 허를 찌르다 / 당황하게 하다","example":"The recommendation caught me off guard.","exampleKo":"그 권유는 예상 밖이라 당황스러웠다."},
+    {"source":"② To Fill or Not to Fill","id":"fill_wonder","pattern":"wonder whether ~","ko":"~인지 궁금해하다 / 생각해 보다","example":"I wondered whether it was the right time.","exampleKo":"지금이 적절한 때인지 생각해 봤다."},
+    {"source":"② To Fill or Not to Fill","id":"fill_thought","pattern":"the thought that S might ~","ko":"S가 ~할지도 모른다는 생각","example":"The thought that I might look younger was tempting.","exampleKo":"더 젊어 보일 수도 있다는 생각은 솔깃했다."},
+    {"source":"② To Fill or Not to Fill","id":"fill_sneeze","pattern":"nothing to sneeze at","ko":"무시할 만하지 않은 / 만만치 않은","example":"The cost was nothing to sneeze at.","exampleKo":"비용이 만만치 않았다."},
+    {"source":"② To Fill or Not to Fill","id":"fill_even_with","pattern":"even with ~","ko":"~이 있어도 / ~을 받아도","example":"Even with a discount, it was expensive.","exampleKo":"할인을 받아도 비쌌다."},
+    {"source":"② To Fill or Not to Fill","id":"fill_wonder_would","pattern":"wonder whether S would ~","ko":"과연 S가 ~할지 생각하다","example":"I wonder whether I would be satisfied.","exampleKo":"내가 과연 만족할지 모르겠다."},
+    {"source":"② To Fill or Not to Fill","id":"fill_make_think","pattern":"make someone think that ~","ko":"누구에게 ~라는 생각이 들게 하다","example":"Seeing them makes me think that natural aging may be better.","exampleKo":"그들을 보면 자연스럽게 나이 드는 게 나을 수도 있다는 생각이 든다."},
+    {"source":"② To Fill or Not to Fill","id":"fill_grow_old","pattern":"grow old gracefully","ko":"자연스럽고 품위 있게 나이 들다","example":"I want to grow old gracefully.","exampleKo":"나는 자연스럽고 품위 있게 나이 들고 싶다."},
+    {"source":"② To Fill or Not to Fill","id":"fill_better_than","pattern":"be better than ~ing","ko":"~하는 것보다 낫다","example":"Growing old gracefully may be better than chasing a younger face.","exampleKo":"자연스럽게 나이 드는 것이 젊은 얼굴을 좇는 것보다 나을 수 있다."},
+    {"source":"② To Fill or Not to Fill","id":"fill_fence","pattern":"be on the fence","ko":"결정을 못 내리고 망설이다","example":"I'm still on the fence about the treatment.","exampleKo":"나는 아직 그 시술을 받을지 망설이고 있다."},
+    {"source":"② To Fill or Not to Fill","id":"fill_sleep","pattern":"sleep on it","ko":"시간을 두고 더 생각해 보다","example":"I don't need to decide today. I'll sleep on it.","exampleKo":"오늘 결정할 필요는 없어. 좀 더 생각해 볼게."},
+
+    {"source":"③ The Ring Rescue","id":"ring_knot","pattern":"tie the knot","ko":"결혼하다","example":"The couple is planning on tying the knot next year.","exampleKo":"그 커플은 내년에 결혼할 계획이다."}
+  ],
+  "speaking":[
+    {"source":"① Dumplin' Day #2","chunkRef":"d2_by_chance","pattern":"by any chance","prompt":"By any chance ~?","promptKo":"혹시 옷 수선도 하시나요?","text":"By any chance, do you do alterations?","ko":"혹시 옷 수선도 하시나요?"},
+    {"source":"① Dumplin' Day #2","chunkRef":"d2_ends_meet","pattern":"make ends meet","prompt":"Make ends meet","promptKo":"생계를 위해 부업을 시작해야 했다.","text":"I had to take an extra job to make ends meet.","ko":"생계를 꾸리기 위해 부업을 해야 했습니다."},
+    {"source":"② To Fill or Not to Fill","chunkRef":"fill_off_guard","pattern":"catch someone off guard","prompt":"Catch someone off guard","promptKo":"그 질문은 예상 밖이라 당황했다.","text":"The question caught me off guard.","ko":"그 질문은 예상 밖이라 당황했습니다."},
+    {"source":"② To Fill or Not to Fill","chunkRef":"fill_sneeze","pattern":"nothing to sneeze at","prompt":"Nothing to sneeze at","promptKo":"그 비용은 결코 만만하지 않다.","text":"The cost is nothing to sneeze at.","ko":"그 비용은 결코 만만하지 않습니다."},
+    {"source":"② To Fill or Not to Fill","chunkRef":"fill_fence","pattern":"be on the fence","prompt":"Be on the fence","promptKo":"나는 아직 그 결정을 두고 망설이고 있다.","text":"I'm still on the fence about the decision.","ko":"나는 아직 그 결정을 두고 망설이고 있습니다."},
+    {"source":"② To Fill or Not to Fill","chunkRef":"fill_sleep","pattern":"sleep on it","prompt":"Sleep on it","promptKo":"오늘 결정하지 않고 좀 더 생각해 보겠다.","text":"I don't need to decide today. I'll sleep on it.","ko":"오늘 결정할 필요는 없습니다. 좀 더 생각해 보겠습니다."},
+    {"source":"③ The Ring Rescue","chunkRef":"ring_knot","pattern":"tie the knot","prompt":"Tie the knot","promptKo":"그들은 내년에 결혼할 계획이다.","text":"They're planning on tying the knot next year.","ko":"그들은 내년에 결혼할 계획입니다."}
+  ],
+  "habits":[
+    {"title":"① Chunk를 원문 장면과 함께 저장","text":"catch me off guard, on the fence, sleep on it처럼 직역만으로는 감이 약한 표현은 원문의 상황과 함께 기억한다."},
+    {"title":"② 전치사·부사의 방향 이미지를 듣기","text":"fall off, bounce off, slip off, reach in, pull up처럼 off/in/up이 만드는 움직임을 장면으로 듣는다."},
+    {"title":"③ 문법보다 덩어리 우선","text":"By any chance / do alterations / make ends meet처럼 실제 대화에서 함께 나오는 덩어리를 통째로 자동화한다."},
+    {"title":"④ 사건 묘사는 동작 순서로 연결","text":"fell off → bounced off → into the water it went처럼 사건의 움직임을 순서대로 소리와 함께 연결한다."},
+    {"title":"⑤ 관용표현은 뉘앙스까지 익히기","text":"nothing to sneeze at은 '만만치 않다', be on the fence는 '결정을 못 내리다', sleep on it은 '시간을 두고 생각하다'의 실제 뉘앙스로 익힌다."},
+    {"title":"⑥ 형태가 바뀌어도 같은 Chunk로 인식","text":"mess with → messing with, happen to be → happened to be dining, plan on → planning on처럼 활용형이 바뀌어도 같은 패턴으로 듣고 말한다."},
+    {"title":"⑦ Chunk → 핵심문장 → 말하기 순서 유지","text":"기존 소리영어와 동일하게 Chunk를 먼저 익히고 원문 핵심문장에서 확인한 뒤 내 문장으로 말한다."}
+  ]
+};
+
+
+const OPIC_LESSON_1 = {
+  corrections:[
+    {ko:"최근에 제가 맡았던 프로젝트 중 하나는 2026년 KPI 목표를 수립하는 일이었습니다.",en:"One of the most recent projects I worked on was setting our KPI goals for 2026.",bad:"So recent project that I've done, recently I also, I was, I am in charge of KPI, setting the KPI goals of 2026.",tip:"one of the most recent projects + I worked on = 최근 수행한 프로젝트 중 하나. 완료된 프로젝트를 자연스럽게 소개하는 시작 문장."},
+    {ko:"요즘 우리 회사의 가장 큰 우선순위 중 하나는 AX, 즉 AI 전환입니다.",en:"These days, one of the biggest priorities for my company is AX, or AI transformation.",bad:"These days the most big issue is the AS transformation.",tip:"one of the biggest priorities = 가장 큰 우선순위 중 하나. AX를 처음 말할 때 AI transformation으로 풀어 준다."},
+    {ko:"우리 회사는 AI를 제조 운영에 통합하기 위해 적극적으로 노력하고 있습니다.",en:"My company has been working hard to integrate AI into our manufacturing operations.",bad:"My company are struggling to adopting AI, artificial intelligence, more and more in our company's factory.",tip:"integrate A into B = A를 B에 통합하다. company는 단수로 취급한다."},
+    {ko:"목표는 비용을 절감하고 수익성을 개선하는 것이기 때문에 이것은 중요한 우선순위입니다.",en:"It's a major priority because the goal is to reduce costs and improve profitability.",bad:"This is a very big issue these days because it is for cost down and profitability.",tip:"reduce costs = 비용을 절감하다. improve profitability = 수익성을 개선하다."},
+    {ko:"그래서 고위 경영진도 AX에 큰 관심을 기울이고 있습니다.",en:"So, our senior executives are paying close attention to AX.",bad:"Most of executive levels are very interested in AS.",tip:"pay close attention to ~ = ~에 큰 관심을 기울이다. senior executives = 고위 경영진."},
+    {ko:"팀장은 저에게 AX 도입의 재무적 영향을 평가하기 위한 프레임워크를 개발해 달라고 요청했습니다.",en:"My team leader asked me to develop a framework for evaluating the financial impact of AX adoption.",bad:"My team leader directed me to make the financial evaluation of the impact of the adoption of AX.",tip:"develop a framework for ~ing = ~하기 위한 평가체계를 개발하다. 이 답변의 핵심 문장."},
+    {ko:"따라야 할 정립된 방법론이 없었기 때문에 매우 어려운 일이었습니다.",en:"It was extremely challenging because there was no established methodology to follow.",bad:"This is really, really hard for me because nobody made this.",tip:"There was no established methodology = 기존에 정립된 방법론이 없었다."},
+    {ko:"우리는 아직 AI 도입 초기 단계에 있었습니다.",en:"We were still in the early stages of adopting AI.",bad:"This is the beginning of adopting AI.",tip:"be in the early stages of ~ing = ~의 초기 단계에 있다."},
+    {ko:"그래서 저는 평가 프레임워크를 거의 처음부터 만들어야 했습니다.",en:"So, I had to build the evaluation framework almost from scratch.",bad:"So it's really hard to make the structure of financial impact.",tip:"build something from scratch = 기존 기반 없이 처음부터 만들어 내다."},
+    {ko:"저는 약 한 달 동안 이 프로젝트에 거의 모든 시간과 에너지를 쏟았습니다.",en:"I devoted almost all of my time and energy to the project for about a month.",bad:"So I put my whole energy about for a month, this month.",tip:"devote one's time and energy to ~ = ~에 시간과 에너지를 쏟다."},
+    {ko:"약 한 달간 집중적으로 일한 끝에 마침내 프레임워크를 완성했습니다.",en:"After about a month of intensive work, I finally completed the framework.",bad:"So finally I made it.",tip:"complete the framework처럼 무엇을 완성했는지 구체적으로 말한다."},
+    {ko:"프로젝트 자체는 성공적이었다고 생각하지만, AX가 기대한 재무적 효과를 낼지는 아직 판단하기 이릅니다.",en:"I would say the project itself was successful, but it's still too early to tell whether AX will deliver the expected financial benefits.",bad:"But I think it's really hard to evaluate if it is successful or not.",tip:"It's still too early to tell whether ~ = ~인지 판단하기에는 아직 이르다. 프로젝트 성공과 AX 실제 성과를 분리한다."},
+    {ko:"제 역할은 최종 결과를 만드는 것이 아니라 재무적 영향을 측정하기 위한 프레임워크를 구축하는 것이었습니다.",en:"My role was to establish the framework for measuring its financial impact, rather than to produce the final results.",bad:"Because I just made the structure of how to evaluate the financial impact of AX.",tip:"rather than ~ = ~라기보다 / ~하는 대신. establish a framework = 평가체계를 구축하다."},
+    {ko:"충분한 데이터가 확보되면 실제 결과는 내년에 훨씬 더 명확해질 것이라고 생각합니다.",en:"I think the actual results will become much clearer next year once we have enough data.",bad:"Maybe output will be more clear next year.",tip:"once S + V = 일단 ~하면. actual results = 실제 결과."},
+    {ko:"도전적인 프로젝트였지만 처음부터 의미 있는 것을 만들어 냈다는 점이 자랑스러웠습니다.",en:"Overall, it was a challenging project, but I was proud that I was able to build something meaningful from scratch.",bad:"It was hard, but finally I made it.",tip:"be proud that ~ = ~한 것이 자랑스럽다. 답변을 자연스럽게 마무리하는 문장."}
+  ],
+  chunks:[
+    {pattern:"be in charge of ~ing",ko:"~하는 일을 담당하다",example:"I was in charge of setting our team's KPI goals for 2026.",exampleKo:"저는 우리 팀의 2026년 KPI 목표 수립을 담당했습니다."},
+    {pattern:"one of the biggest priorities",ko:"가장 큰 우선순위 중 하나",example:"AX is one of the biggest priorities for my company.",exampleKo:"AX는 우리 회사의 가장 큰 우선순위 중 하나입니다."},
+    {pattern:"integrate A into B",ko:"A를 B에 통합하다",example:"We're working to integrate AI into our manufacturing operations.",exampleKo:"우리는 AI를 제조 운영에 통합하기 위해 노력하고 있습니다."},
+    {pattern:"reduce costs and improve profitability",ko:"비용을 절감하고 수익성을 개선하다",example:"The goal is to reduce costs and improve profitability.",exampleKo:"목표는 비용을 절감하고 수익성을 개선하는 것입니다."},
+    {pattern:"pay close attention to ~",ko:"~에 큰 관심을 기울이다",example:"Our senior executives are paying close attention to AX.",exampleKo:"고위 경영진은 AX에 큰 관심을 기울이고 있습니다."},
+    {pattern:"develop a framework for ~ing",ko:"~하기 위한 체계를 개발하다",example:"I developed a framework for evaluating the financial impact of AX.",exampleKo:"저는 AX의 재무적 영향을 평가하기 위한 체계를 개발했습니다."},
+    {pattern:"evaluate the financial impact of ~",ko:"~의 재무적 영향을 평가하다",example:"We needed a way to evaluate the financial impact of AX adoption.",exampleKo:"우리는 AX 도입의 재무적 영향을 평가할 방법이 필요했습니다."},
+    {pattern:"There was no established methodology",ko:"정립된 방법론이 없었다",example:"There was no established methodology to follow.",exampleKo:"따라야 할 정립된 방법론이 없었습니다."},
+    {pattern:"be in the early stages of ~ing",ko:"~의 초기 단계에 있다",example:"We were still in the early stages of adopting AI.",exampleKo:"우리는 아직 AI 도입 초기 단계에 있었습니다."},
+    {pattern:"build something from scratch",ko:"무언가를 처음부터 만들어 내다",example:"I had to build the framework almost from scratch.",exampleKo:"저는 그 프레임워크를 거의 처음부터 만들어야 했습니다."},
+    {pattern:"devote one's time and energy to ~",ko:"~에 시간과 에너지를 쏟다",example:"I devoted almost all of my time and energy to the project.",exampleKo:"저는 프로젝트에 거의 모든 시간과 에너지를 쏟았습니다."},
+    {pattern:"It's too early to tell whether ~",ko:"~인지 판단하기에는 아직 이르다",example:"It's still too early to tell whether AX will deliver the expected financial benefits.",exampleKo:"AX가 기대한 재무적 효과를 낼지는 아직 판단하기 이릅니다."},
+    {pattern:"rather than ~",ko:"~라기보다 / ~하는 대신",example:"My job was to establish the framework rather than produce the final results.",exampleKo:"제 일은 최종 결과를 내는 것이 아니라 평가체계를 구축하는 것이었습니다."},
+    {pattern:"once S + V",ko:"일단 S가 ~하면 / ~하고 나면",example:"The results will become clearer once we have enough data.",exampleKo:"충분한 데이터가 확보되면 결과가 더 명확해질 것입니다."},
+    {pattern:"be proud that S + V",ko:"S가 ~한 것이 자랑스럽다",example:"I was proud that I was able to build something meaningful from scratch.",exampleKo:"처음부터 의미 있는 것을 만들어 낼 수 있었다는 점이 자랑스러웠습니다."}
+  ],
+  speaking:[
+    {prompt:"Tell me about a recent project you completed. What kind of project was it? Was it successful?",promptKo:"최근에 완료한 프로젝트에 대해 말해 주세요. 어떤 프로젝트였고, 성공적이었나요?",text:"One of the most recent projects I worked on was setting our KPI goals for 2026. These days, one of the biggest priorities for my company is AX, or AI transformation. We've been working hard to integrate AI into our manufacturing operations because the ultimate goal is to reduce costs and improve profitability. So, our senior executives are paying close attention to this area. As part of that effort, my team leader asked me to develop a framework for evaluating the financial impact of AX adoption. To be honest, it was extremely challenging because there was no established methodology to follow. We were still in the early stages of adopting AI, so I had to build the evaluation framework almost from scratch. First, I identified the major areas where AI could create financial value, such as cost reduction, productivity improvement, and operational efficiency. Then, I tried to determine how we could measure those benefits and translate them into financial results. After that, I organized everything into a structured evaluation framework that we could use for our KPIs. I devoted almost all of my time and energy to the project for about a month, and eventually, I completed the framework. So, was it successful? I would say the project itself was successful because I accomplished what I was asked to do. However, it's still too early to tell whether AX will deliver the expected financial benefits because my job was to establish the evaluation framework rather than produce the final results. I think the actual results will become much clearer next year once we have enough data. Overall, it was a challenging project, but I was proud that I was able to build something meaningful from scratch.",ko:"최근 제가 수행한 프로젝트 중 하나는 2026년 KPI 목표를 수립하는 일이었습니다. 요즘 우리 회사의 가장 큰 우선순위 중 하나는 AX, 즉 AI 전환입니다. 비용 절감과 수익성 개선을 위해 AI를 제조 운영에 통합하고 있으며, 고위 경영진도 큰 관심을 기울이고 있습니다. 그 과정에서 팀장은 저에게 AX 도입의 재무적 영향을 평가할 프레임워크를 개발해 달라고 요청했습니다. 정립된 방법론이 없어 매우 어려웠고, AI 도입 초기 단계였기 때문에 평가체계를 거의 처음부터 만들어야 했습니다. AI가 재무적 가치를 만들 수 있는 주요 영역을 정의하고, 그 효과를 어떻게 측정해 재무 성과로 전환할지 정리해 KPI에 사용할 수 있는 평가 프레임워크를 구축했습니다. 약 한 달 동안 거의 모든 시간과 에너지를 쏟아 결국 완성했습니다. 프로젝트 자체는 요청받은 일을 완수했기 때문에 성공적이었다고 생각합니다. 다만 AX가 기대한 재무적 효과를 낼지는 아직 판단하기 이릅니다. 제 역할은 최종 성과를 만드는 것이 아니라 평가 프레임워크를 구축하는 것이었기 때문입니다. 충분한 데이터가 확보되면 실제 결과는 내년에 더 명확해질 것입니다. 어려운 프로젝트였지만 처음부터 의미 있는 것을 만들었다는 점이 자랑스러웠습니다."}
+  ],
+  habits:[
+    {title:"① Project와 Result를 분리해서 답하기",text:"The project itself was successful, but it's still too early to tell whether AX will deliver the expected financial benefits. 프로젝트 완료 성공과 실제 AX 재무성과를 분리하면 논리가 선명해진다."},
+    {title:"② 핵심 역할은 framework로 정확히 표현",text:"I developed a framework for evaluating the financial impact of AX. 단순히 financial evaluation을 했다고 하기보다 평가체계를 구축했다는 역할을 명확히 한다."},
+    {title:"③ 문제 → 행동 → 결과 흐름 유지",text:"No established methodology → built it from scratch → completed the framework → actual results will be clearer next year의 순서로 이야기한다."},
+    {title:"④ AL 답변은 이유를 한 단계 더 설명",text:"It's too early to tell에서 끝내지 않고 because my job was to establish the framework rather than produce the final results라고 이유를 덧붙인다."}
+  ]
+};
+
+
+const OPIC_LESSON_2 = {
+  corrections:[
+    {ko:"최근에 완료한 프로젝트 중 하나는 AI 기반 FDC 시스템의 초기 개발 프로젝트였습니다.",en:"One of the most recent projects I completed was the initial development of an AI-based FDC system.",bad:"Recently I took a project, which I developed some FDA AI system.",tip:"work on / lead a project가 자연스럽다. 여기서는 질문의 completed project와 맞추기 위해 initial development를 완료된 범위로 명확히 한다."},
+    {ko:"저는 반도체 회사에서 일합니다.",en:"I work for a semiconductor company.",bad:"I am working in the semiconductor company.",tip:"회사에 다니다 = work for a company."},
+    {ko:"일정한 제품 품질과 안정적인 생산을 유지하기 위해 우리는 장비 및 공정 데이터를 지속적으로 모니터링합니다.",en:"To maintain consistent product quality and stable production, we constantly monitor equipment and process data.",bad:"So to achieve consistent quality and production, to secure those kind of things, we definitely monitor some data for any other process.",tip:"maintain consistent quality / stable production이 자연스럽다."},
+    {ko:"우리는 Fault Detection and Classification의 약자인 FDC 시스템을 사용합니다.",en:"We use an FDC system, which stands for Fault Detection and Classification.",bad:"We set up the FDA system, which means fault and defect and classification.",tip:"stand for = ~의 약자이다. FDC = Fault Detection and Classification."},
+    {ko:"센서 데이터가 미리 정해진 기준을 초과하면 인터록이 발생하고 장비가 자동으로 Hold될 수 있습니다.",en:"If sensor data exceeds a predefined limit, an interlock is triggered and the equipment can be automatically held.",bad:"Some sensor data exceeds the spec, the system holds the equipment.",tip:"If + 조건을 사용하고, exceed a predefined limit / trigger an interlock로 표현한다."},
+    {ko:"문제는 일부 인터록이 가성 알람으로 판명되어 엔지니어들이 이를 검토하고 처리하는 데 많은 시간을 쓴다는 것입니다.",en:"The problem is that some of these interlocks turn out to be false alarms, so engineers spend a lot of time reviewing and handling them.",bad:"But there are so many fault interlocks because of that many engineers are suffering from dealing with those interlocks.",tip:"turn out to be a false alarm = 가성으로 판명되다. spend time ~ing = ~하는 데 시간을 쓰다."},
+    {ko:"그래서 프로젝트의 목표는 가성 인터록을 식별하고 걸러낼 수 있는 AI 시스템을 개발하는 것이었습니다.",en:"So, the goal of our project was to develop an AI system that could identify and filter out false-positive interlocks.",bad:"The goal of our project of AI system screen some faulty interlocks out of so many interlocks.",tip:"identify and filter out ~ = ~을 식별해서 걸러내다."},
+    {ko:"가장 큰 어려움은 가성 알람과 실제 문제를 정확하게 구분하는 것이었습니다.",en:"The biggest challenge was distinguishing false alarms from real problems.",bad:"In the beginning, it's really hard to develop some AI algorithm.",tip:"distinguish A from B = A와 B를 구별하다."},
+    {ko:"초기 알고리즘을 개발하는 데 약 3개월이 걸렸습니다.",en:"It took us about three months to develop the initial algorithm.",bad:"We took at least three months to develop that early algorithm.",tip:"It took us + 기간 + to V = ~하는 데 기간이 걸렸다."},
+    {ko:"초기 알고리즘을 개발한 후 실제 테스트를 위해 Fab에 적용했습니다.",en:"After developing the initial algorithm, we deployed it in our fab for real-world testing.",bad:"And now we are setting up the algorithm to our fabrication.",tip:"deploy A in B = A를 B에 실제 적용하다. 반도체 공장은 fab으로 표현한다."},
+    {ko:"초기 개발 단계는 완료됐고 이제 적용 및 검증 단계로 넘어갔습니다.",en:"The initial development phase has been completed, and we've now moved on to the deployment and validation phase.",bad:"My project is not ended until processing.",tip:"완료된 1단계와 현재 진행 중인 후속 단계를 분리하면 completed project 질문과 충돌하지 않는다."},
+    {ko:"시스템의 전체 효과를 평가하기에는 아직 이릅니다.",en:"It's still too early to evaluate its full impact.",bad:"It is too early to tell it is complete system.",tip:"It's still too early to evaluate ~ = ~을 평가하기에는 아직 이르다."},
+    {ko:"장기적으로 이 시스템은 엔지니어의 업무 부담을 줄이고 운영 효율성과 생산 성능을 향상시킬 것이라고 생각합니다.",en:"In the long run, I believe this system will reduce engineers' workload, improve operational efficiency, and eventually contribute to more stable production.",bad:"AI system will deliver so many benefits, kind of performance and production rates.",tip:"reduce workload / improve operational efficiency / contribute to stable production으로 효과를 구체화한다."},
+    {ko:"아이디어를 실제 제조 환경에서 사용할 수 있는 시스템으로 구현했다는 점이 자랑스러웠습니다.",en:"I was proud that we were able to turn an idea into a system that could actually be used in a real manufacturing environment.",bad:"It was hard, but finally we made it.",tip:"turn A into B = A를 B로 구현하다. 프로젝트 성취를 보여 주는 AL 마무리 표현."}
+  ],
+  chunks:[
+    {pattern:"work on a project to ~",ko:"~하기 위한 프로젝트를 수행하다",example:"I worked on a project to develop an AI-based FDC system.",exampleKo:"저는 AI 기반 FDC 시스템을 개발하는 프로젝트를 수행했습니다."},
+    {pattern:"maintain consistent quality and stable production",ko:"일정한 품질과 안정적인 생산을 유지하다",example:"We need to maintain consistent product quality and stable production.",exampleKo:"우리는 일정한 제품 품질과 안정적인 생산을 유지해야 합니다."},
+    {pattern:"stand for ~",ko:"~을 의미하다 / ~의 약자이다",example:"FDC stands for Fault Detection and Classification.",exampleKo:"FDC는 Fault Detection and Classification의 약자입니다."},
+    {pattern:"exceed a predefined limit",ko:"미리 정해진 기준을 초과하다",example:"If sensor data exceeds a predefined limit, an interlock is triggered.",exampleKo:"센서 데이터가 미리 정해진 기준을 초과하면 인터록이 발생합니다."},
+    {pattern:"trigger an interlock",ko:"인터록을 발생시키다",example:"Abnormal sensor data can trigger an interlock.",exampleKo:"비정상 센서 데이터는 인터록을 발생시킬 수 있습니다."},
+    {pattern:"turn out to be a false alarm",ko:"가성 알람으로 판명되다",example:"Some interlocks turn out to be false alarms.",exampleKo:"일부 인터록은 가성 알람으로 판명됩니다."},
+    {pattern:"spend time ~ing",ko:"~하는 데 시간을 쓰다",example:"Engineers spend a lot of time reviewing those interlocks.",exampleKo:"엔지니어들은 그 인터록을 검토하는 데 많은 시간을 씁니다."},
+    {pattern:"identify and filter out ~",ko:"~을 식별해서 걸러내다",example:"The AI system can identify and filter out false-positive interlocks.",exampleKo:"AI 시스템은 가성 인터록을 식별해서 걸러낼 수 있습니다."},
+    {pattern:"distinguish A from B",ko:"A와 B를 구별하다",example:"The system had to distinguish false alarms from real problems.",exampleKo:"시스템은 가성 알람과 실제 문제를 구별해야 했습니다."},
+    {pattern:"It took us + 기간 + to V",ko:"~하는 데 기간이 걸렸다",example:"It took us about three months to develop the initial algorithm.",exampleKo:"초기 알고리즘을 개발하는 데 약 3개월이 걸렸습니다."},
+    {pattern:"deploy A in B",ko:"A를 B에 적용하다 / 배포하다",example:"We deployed the system in our fab for real-world testing.",exampleKo:"우리는 실제 테스트를 위해 시스템을 Fab에 적용했습니다."},
+    {pattern:"move on to ~",ko:"~ 단계로 넘어가다",example:"We've now moved on to the deployment and validation phase.",exampleKo:"이제 적용 및 검증 단계로 넘어갔습니다."},
+    {pattern:"It's still too early to evaluate ~",ko:"~을 평가하기에는 아직 이르다",example:"It's still too early to evaluate its full impact.",exampleKo:"전체 효과를 평가하기에는 아직 이릅니다."},
+    {pattern:"reduce someone's workload",ko:"누군가의 업무 부담을 줄이다",example:"The system will reduce engineers' workload.",exampleKo:"이 시스템은 엔지니어의 업무 부담을 줄일 것입니다."},
+    {pattern:"turn A into B",ko:"A를 B로 바꾸다 / 구현하다",example:"We turned an idea into a system that could be used in a real manufacturing environment.",exampleKo:"우리는 아이디어를 실제 제조 환경에서 사용할 수 있는 시스템으로 구현했습니다."}
+  ],
+  speaking:[
+    {prompt:"Tell me about a recent project you completed. What kind of project was it? Was it successful?",promptKo:"최근에 완료한 프로젝트에 대해 말해 주세요. 어떤 프로젝트였고, 성공적이었나요?",text:"One of the most recent projects I completed was the initial development of an AI-based FDC system. I work for a semiconductor company, and maintaining consistent product quality and stable production is extremely important in our industry. We use an FDC system, which stands for Fault Detection and Classification, to constantly monitor equipment and process data. Basically, if sensor data exceeds a predefined limit, an interlock is triggered and the equipment can be automatically held. The problem is that some of these interlocks turn out to be false alarms. As a result, our engineers have to spend a lot of time reviewing and handling them. So, the goal of our project was to develop an AI system that could identify and filter out those false-positive interlocks. The first step was developing the AI algorithm. This was actually the most challenging part because the system had to distinguish false alarms from real problems accurately. We spent about three months developing and improving the initial algorithm. Once we had a workable algorithm, the next step was to deploy it in our fab and test it with real manufacturing data. We wanted to make sure that it could actually identify false alarms without missing real problems. The initial development phase has now been completed, and we've moved on to the deployment and validation phase. So, I would say the project itself was successful because we successfully developed the initial AI system and deployed it in our fab. However, it's still too early to evaluate its full impact. In the long run, I believe this system will reduce engineers' workload, improve operational efficiency, and eventually contribute to more stable production. Overall, it was a very challenging project, but I was proud that we were able to turn an idea into a system that could actually be used in a real manufacturing environment.",ko:"최근 완료한 프로젝트 중 하나는 AI 기반 FDC 시스템의 초기 개발이었습니다. 저는 반도체 회사에서 일하고 있고, 일정한 제품 품질과 안정적인 생산을 유지하는 것은 매우 중요합니다. FDC는 Fault Detection and Classification의 약자로 장비와 공정 데이터를 지속적으로 모니터링합니다. 센서 데이터가 미리 정해진 기준을 초과하면 인터록이 발생하고 장비가 자동으로 Hold될 수 있습니다. 문제는 일부 인터록이 가성 알람으로 판명되어 엔지니어들이 이를 검토하고 처리하는 데 많은 시간을 쓴다는 것입니다. 그래서 프로젝트의 목표는 가성 인터록을 식별하고 걸러낼 수 있는 AI 시스템을 개발하는 것이었습니다. 가장 어려운 부분은 가성 알람과 실제 문제를 정확히 구분하는 것이었고, 초기 알고리즘을 개발하고 개선하는 데 약 3개월이 걸렸습니다. 사용 가능한 알고리즘을 확보한 뒤 Fab에 적용해 실제 제조 데이터로 테스트했습니다. 초기 개발 단계는 완료됐고 현재는 적용 및 검증 단계로 넘어갔습니다. 프로젝트 자체는 초기 AI 시스템을 개발하고 Fab에 적용했다는 점에서 성공적이었다고 생각합니다. 다만 전체 효과를 평가하기에는 아직 이릅니다. 장기적으로는 엔지니어의 업무 부담을 줄이고 운영 효율성과 생산 안정성을 높일 것으로 기대합니다. 실제 제조 환경에서 사용할 수 있는 시스템으로 아이디어를 구현했다는 점이 자랑스러웠습니다."}
+  ],
+  habits:[
+    {title:"① 완료 범위를 먼저 명확히 하기",text:"recent project you completed에 맞춰 initial development phase를 완료된 프로젝트 범위로 잡고, deployment and validation은 후속 단계로 분리한다."},
+    {title:"② Background → Problem → Goal",text:"FDC가 필요한 배경을 짧게 설명한 뒤 false alarms로 인한 엔지니어 workload를 Problem으로 제시하고 AI filtering을 Goal로 연결한다."},
+    {title:"③ Development → Deployment → Result",text:"initial algorithm 개발 → Fab 배포 및 실제 데이터 테스트 → 초기 개발 완료 순서로 start-to-finish 흐름을 만든다."},
+    {title:"④ 기술용어는 바로 풀어 설명",text:"FDC를 처음 말할 때 Fault Detection and Classification이라고 풀고, interlock도 sensor data가 limit을 넘으면 장비를 hold하는 방식으로 설명한다."},
+    {title:"⑤ 성공과 최종 효과를 분리하기",text:"The project itself was successful라고 답하되, 전체 효과는 It's still too early to evaluate its full impact라고 분리한다."}
+  ]
+};
+
+
+
+const OPIC_LESSON_3 = {
+  corrections:[
+    {ko:"이전 회사 재무팀에서 회사의 현금 보유액을 운용하는 업무를 담당했습니다.",en:"When I was on the finance team at my previous company, I was responsible for managing the company's cash reserves.",bad:"When I was in finance team in my previous company...",tip:"be responsible for ~ing = ~을 담당하다. 회사의 여유자금은 manage the company's cash reserves가 자연스럽다."},
+    {ko:"당시 약 1,400억 원의 회사 자금을 운용하고 있었습니다.",en:"At the time, we were managing about 140 billion won in corporate funds.",bad:"At that time we have almost 1.4 billion, 140 billion won.",tip:"과거 상황이므로 were managing. 140 billion won = 1,400억 원."},
+    {ko:"우리의 주된 목표는 자금을 안전하게 운용하면서 추가 수익을 창출하는 것이었습니다.",en:"Our main goal was to manage those funds safely while generating additional returns.",bad:"Our almost goal is to operate the corporate cash properly and make additional interest.",tip:"generate additional returns = 추가 수익을 창출하다."},
+    {ko:"그래서 회사 현금의 상당 부분을 채권형 증권에 투자했습니다.",en:"So, we invested a significant portion of the company's cash in fixed-income securities.",bad:"We very invested our corporate cash to invest on securities.",tip:"invest A in B. 채권 중심이면 fixed-income securities가 정확하다."},
+    {ko:"예상치 못한 정치 상황이 금융시장에 상당한 불확실성을 일으켰습니다.",en:"However, an unexpected political situation caused significant uncertainty in the financial markets.",bad:"But at that time, there was political issues.",tip:"cause significant uncertainty = 상당한 불확실성을 야기하다."},
+    {ko:"그 결과 채권 금리가 갑자기 급등했습니다.",en:"As a result, bond yields suddenly rose sharply.",bad:"Suddenly bond interest rates rapidly increased.",tip:"bond yields rose sharply = 채권 금리가 급등했다."},
+    {ko:"채권 금리가 오르면서 채권 투자자산의 시장가치가 크게 하락했습니다.",en:"As bond yields rose, the market value of our bond investments dropped significantly.",bad:"Our invested securities value had been decreased a lot.",tip:"market value dropped significantly가 자연스럽다."},
+    {ko:"그 결과 상당한 투자손실을 입었습니다.",en:"As a result, we suffered a significant investment loss.",bad:"We have a deficit.",tip:"투자 손실은 deficit보다 investment loss가 정확하다."},
+    {ko:"설상가상으로 당시 회사의 영업 실적도 이미 좋지 않았습니다.",en:"To make matters worse, the company's operating performance was already weak at the time.",bad:"Our corporate operational profit was not good.",tip:"To make matters worse = 설상가상으로."},
+    {ko:"경영진은 우리 팀에 손실을 만회하라는 엄청난 압박을 가했습니다.",en:"Senior management put tremendous pressure on us to recover the losses.",bad:"They made a lot of direct corrections to make up for investment failure.",tip:"put pressure on someone to V / recover the losses."},
+    {ko:"결국 압박 때문에 팀원 두 명이 회사를 떠났습니다.",en:"Eventually, two members of our team left the company because of the pressure.",bad:"Finally, our team two members quit.",tip:"two members of our team / left the company."},
+    {ko:"그 결과 남은 인원은 더 적은 사람으로 상황을 처리하느라 힘들었습니다.",en:"That left the rest of us struggling to deal with the situation with fewer people.",bad:"The rest of our team members had struggled to cover it...",tip:"That left us struggling to ~ = 그 결과 ~하느라 힘들게 되었다."},
+    {ko:"우리는 시장이 회복되기만을 기다릴 수 없었고 투자전략을 전면 재검토해야 했습니다.",en:"We couldn't simply wait for the market to recover. We needed to completely reassess our investment strategy.",bad:"",tip:"reassess our investment strategy = 투자전략을 재검토하다."},
+    {ko:"이미 발생한 손실을 되돌릴 수 없었기 때문에 최우선 과제는 상황이 더 악화되는 것을 막는 것이었습니다.",en:"We couldn't undo the loss, so our priority was to prevent the situation from getting any worse.",bad:"",tip:"prevent A from ~ing = A가 ~하지 못하게 하다. get any worse = 더 악화되다."}
+  ],
+  chunks:[
+    {pattern:"be responsible for ~ing",ko:"~을 담당하다",example:"I was responsible for managing the company's cash reserves.",exampleKo:"저는 회사의 현금 보유액 운용을 담당했습니다."},
+    {pattern:"manage cash reserves",ko:"현금 보유액을 운용하다",example:"We were managing about 140 billion won in corporate funds.",exampleKo:"우리는 약 1,400억 원의 회사 자금을 운용하고 있었습니다."},
+    {pattern:"generate additional returns",ko:"추가 수익을 창출하다",example:"Our goal was to generate additional returns safely.",exampleKo:"우리의 목표는 안전하게 추가 수익을 창출하는 것이었습니다."},
+    {pattern:"a significant portion of ~",ko:"~의 상당 부분",example:"We invested a significant portion of the cash in fixed-income securities.",exampleKo:"현금의 상당 부분을 채권형 증권에 투자했습니다."},
+    {pattern:"cause significant uncertainty",ko:"상당한 불확실성을 야기하다",example:"The political situation caused significant uncertainty in the financial markets.",exampleKo:"정치 상황이 금융시장에 상당한 불확실성을 일으켰습니다."},
+    {pattern:"rise sharply",ko:"급등하다",example:"Bond yields suddenly rose sharply.",exampleKo:"채권 금리가 갑자기 급등했습니다."},
+    {pattern:"drop significantly",ko:"크게 하락하다",example:"The market value of our bond investments dropped significantly.",exampleKo:"채권 투자자산의 시장가치가 크게 하락했습니다."},
+    {pattern:"suffer a significant loss",ko:"상당한 손실을 입다",example:"We suffered a significant investment loss.",exampleKo:"우리는 상당한 투자손실을 입었습니다."},
+    {pattern:"To make matters worse, ~",ko:"설상가상으로 ~",example:"To make matters worse, the company's operating performance was already weak.",exampleKo:"설상가상으로 회사의 영업 실적도 이미 좋지 않았습니다."},
+    {pattern:"put pressure on someone to V",ko:"누군가에게 ~하라고 압박하다",example:"Senior management put tremendous pressure on us to recover the losses.",exampleKo:"경영진은 우리에게 손실을 만회하라고 큰 압박을 가했습니다."},
+    {pattern:"recover the losses",ko:"손실을 만회하다",example:"We were under pressure to recover the losses.",exampleKo:"우리는 손실을 만회해야 한다는 압박을 받고 있었습니다."},
+    {pattern:"That left us struggling to ~",ko:"그 결과 우리는 ~하느라 힘들게 되었다",example:"That left us struggling to deal with the situation with fewer people.",exampleKo:"그 결과 더 적은 인원으로 상황을 처리하느라 힘들었습니다."},
+    {pattern:"reassess our strategy",ko:"전략을 재검토하다",example:"We needed to completely reassess our investment strategy.",exampleKo:"투자전략을 전면 재검토해야 했습니다."},
+    {pattern:"prevent A from ~ing",ko:"A가 ~하지 못하게 막다",example:"Our priority was to prevent the situation from getting any worse.",exampleKo:"최우선 과제는 상황이 더 악화되는 것을 막는 것이었습니다."}
+  ],
+  speaking:[
+    {prompt:"Have you ever faced a problem while working on a project? What was the issue, and how did you solve it? Please describe the situation in detail.",promptKo:"프로젝트를 수행하면서 문제를 겪은 적이 있나요? 문제는 무엇이었고 어떻게 해결했나요? 자세히 설명해 주세요.",text:"Yes, I once faced a pretty serious problem when I was working on the finance team at my previous company. At the time, I was responsible for managing the company's cash reserves. We were managing about 140 billion won, and our main goal was to manage those funds safely while generating additional returns. So, we invested a significant portion of the money in fixed-income securities. Unfortunately, an unexpected political situation created a lot of uncertainty in the financial markets, and bond yields suddenly rose sharply. As a result, the market value of our bond investments dropped significantly, and we suffered a substantial investment loss. To make matters worse, the company's operating performance was already weak at the time, so the investment loss put even more pressure on the company's financial performance. Naturally, senior management was extremely concerned about the situation, and they put tremendous pressure on our team to recover the losses. The situation became so stressful that two members of our team eventually left the company. That left the rest of us struggling to deal with the situation with fewer people. At that point, I realized that we couldn't simply wait for the market to recover. We needed to completely reassess our investment strategy and come up with a way to minimize further losses.",ko:"이전 회사 재무팀에서 회사의 현금 보유액을 운용할 때 심각한 문제를 겪었습니다. 당시 약 1,400억 원을 운용했고, 안전하게 자금을 관리하면서 추가 수익을 창출하는 것이 목표였습니다. 상당 부분을 채권형 증권에 투자했는데 예상치 못한 정치 상황으로 금융시장의 불확실성이 커지고 채권 금리가 급등했습니다. 그 결과 채권 투자자산의 시장가치가 크게 떨어져 상당한 투자손실이 발생했습니다. 당시 회사의 영업 실적도 좋지 않아 상황은 더 악화됐고 경영진은 손실 만회를 강하게 요구했습니다. 압박으로 팀원 두 명이 회사를 떠나 남은 인원이 더 적은 사람으로 상황을 처리해야 했습니다. 그때 시장 회복만 기다릴 수 없다고 판단했고 투자전략을 전면 재검토해 추가 손실을 최소화할 방법을 찾아야 했습니다."}
+  ],
+  habits:[
+    {title:"① 이 답변은 Solution이 아직 미완성",text:"제공된 실제 경험에는 문제 발생과 투자전략 재검토 필요성까지만 있다. 실제로 채권 매도·만기보유·상품 전환·리스크 기준 변경 중 무엇을 했는지 확인한 뒤 해결과 결과를 추가한다."},
+    {title:"② Problem → Impact → Solution 구조",text:"금리 급등 → 채권가치 하락 → 투자손실 → 인력 이탈까지 Problem/Impact를 설명한 뒤 실제 해결 행동을 반드시 붙인다."},
+    {title:"③ 금융용어 정확히 사용",text:"bond yields, fixed-income securities, investment loss, recover the losses처럼 실제 금융 맥락에 맞는 표현을 사용한다."}
+  ]
+};
+
+
+const OPIC_LESSON_4 = {
+  corrections:[
+    {ko:"앞서 말했듯이 저는 FDC 시스템을 위한 AI 프로젝트를 담당했습니다.",en:"As I mentioned earlier, I was in charge of an AI project for our FDC system.",bad:"I was in charge of my project of AI system for FTS.",tip:"be in charge of + 명사 = ~을 담당하다."},
+    {ko:"처음에는 여러 팀의 사람들이 하나의 프로젝트 팀으로 협업해 모든 것이 순조롭게 진행됐습니다.",en:"In the beginning, everything went smoothly because people from several different teams were working together as one project team.",bad:"In the very beginning, there was no problem because many members and with many teams made one team.",tip:"everything went smoothly / work together as one team."},
+    {ko:"하지만 연말 무렵 회사가 대규모 조직개편을 겪었습니다.",en:"However, toward the end of the year, the company went through a major organizational restructuring.",bad:"But suddenly, at the end of the year, the company tried to restructure the organizations.",tip:"go through an organizational restructuring = 조직개편을 겪다."},
+    {ko:"그 결과 AI 지원팀 중 하나가 두 개의 별도 팀으로 나뉘었습니다.",en:"As a result, one of the AI support teams was split into two separate teams.",bad:"Because of that, one of AI support team divided into two teams.",tip:"be split into ~ = ~로 분리되다."},
+    {ko:"일부 핵심 프로젝트 구성원들도 다른 팀으로 재배치됐습니다.",en:"Even some of the core project members were reassigned to different teams.",bad:"Even the corporate members divided into two other teams.",tip:"be reassigned to another team = 다른 팀으로 재배치되다."},
+    {ko:"그 결과 하나의 팀으로 프로젝트를 계속 진행하기가 매우 어려워졌습니다.",en:"As a result, it became extremely difficult to keep the project moving forward as one team.",bad:"It was really hard to make one team to moving forward our AI project.",tip:"keep the project moving forward = 프로젝트가 계속 진행되게 하다."},
+    {ko:"설상가상으로 초기 AI 알고리즘 개발을 담당한 핵심 인력도 다른 팀으로 재배치됐습니다.",en:"To make matters worse, the key member who was responsible for developing the initial AI algorithm was reassigned to another team.",bad:"One member who was in charge of developing initial algorithm of AI left another team.",tip:"key member / be responsible for ~ing / be reassigned to another team."},
+    {ko:"그 사람이 없이는 계획대로 알고리즘 개발을 계속할 수 없었습니다.",en:"Without that person, we could no longer continue developing the algorithm as planned.",bad:"At that time we couldn't develop some AI algorithm.",tip:"as planned = 계획대로."},
+    {ko:"그래서 자원의 우선순위를 다시 정하기로 결정했습니다.",en:"So, I decided to reprioritize our resources.",bad:"I put two eligible members, two qualified members to the AI project instead of dropping some other project.",tip:"reprioritize our resources = 자원의 우선순위를 재조정하다."},
+    {ko:"우선순위가 낮은 프로젝트에서 자격을 갖춘 두 명을 AI 프로젝트로 재배치했습니다.",en:"I reassigned two qualified members from a lower-priority project to the AI project.",bad:"I put two eligible members, two qualified members to the AI project instead of dropping some other project.",tip:"reassign A from X to Y = A를 X에서 Y로 재배치하다."},
+    {ko:"새 구성원들과 긴밀하게 소통해 팀을 하나로 결속시키고 프로젝트가 계획대로 진행되도록 했습니다.",en:"I also communicated closely with the new members to bring the team together and keep the project on track.",bad:"And then I tried to communicate with them deeply to make one team to move forward our project.",tip:"bring the team together / keep the project on track."},
+    {ko:"가장 큰 어려움은 조직개편으로 갑자기 적합한 전문인력이 부족해진 것이었습니다.",en:"Looking back, the biggest challenge we faced was a sudden shortage of qualified resources caused by the organizational restructuring.",bad:"Looking back, in the very beginning, because of the restructuring organization, we faced a big issue of the resource.",tip:"a shortage of qualified resources = 적합한 전문인력 부족."},
+    {ko:"적합한 인력을 프로젝트에 재배치하고 팀을 재구성함으로써 문제를 해결할 수 있었습니다.",en:"However, I was able to address the issue by reallocating qualified people to the project and rebuilding the team.",bad:"But I couldn't, I could address the issue to put some other qualified members...",tip:"address the issue by ~ing = ~함으로써 문제를 해결하다."},
+    {ko:"결국 예상치 못한 차질에도 프로젝트를 성공적으로 완료했습니다.",en:"In the end, we were able to complete the project successfully despite the unexpected setback.",bad:"Finally, we can finish our project well.",tip:"despite the unexpected setback = 예상치 못한 차질에도 불구하고."}
+  ],
+  chunks:[
+    {pattern:"everything went smoothly",ko:"모든 것이 순조롭게 진행되다",example:"In the beginning, everything went smoothly.",exampleKo:"처음에는 모든 것이 순조롭게 진행됐습니다."},
+    {pattern:"work together as one team",ko:"하나의 팀으로 함께 일하다",example:"People from several teams worked together as one project team.",exampleKo:"여러 팀의 사람들이 하나의 프로젝트 팀으로 협업했습니다."},
+    {pattern:"go through an organizational restructuring",ko:"조직개편을 겪다",example:"The company went through a major organizational restructuring.",exampleKo:"회사가 대규모 조직개편을 겪었습니다."},
+    {pattern:"be split into ~",ko:"~로 분리되다",example:"The support team was split into two separate teams.",exampleKo:"지원팀이 두 개의 별도 팀으로 나뉘었습니다."},
+    {pattern:"be reassigned to ~",ko:"~로 재배치되다",example:"Several core members were reassigned to different teams.",exampleKo:"몇몇 핵심 구성원이 다른 팀으로 재배치됐습니다."},
+    {pattern:"keep the project moving forward",ko:"프로젝트를 계속 진행시키다",example:"It became difficult to keep the project moving forward.",exampleKo:"프로젝트를 계속 진행하기가 어려워졌습니다."},
+    {pattern:"To make matters worse, ~",ko:"설상가상으로 ~",example:"To make matters worse, a key member was reassigned.",exampleKo:"설상가상으로 핵심 인력도 재배치됐습니다."},
+    {pattern:"as planned",ko:"계획대로",example:"We could no longer develop the algorithm as planned.",exampleKo:"계획대로 알고리즘을 개발할 수 없었습니다."},
+    {pattern:"reprioritize our resources",ko:"자원 우선순위를 재조정하다",example:"I decided to reprioritize our resources.",exampleKo:"자원의 우선순위를 재조정하기로 했습니다."},
+    {pattern:"reassign A from X to Y",ko:"A를 X에서 Y로 재배치하다",example:"I reassigned two qualified members from a lower-priority project to the AI project.",exampleKo:"우선순위가 낮은 프로젝트에서 두 명을 AI 프로젝트로 재배치했습니다."},
+    {pattern:"bring the team together",ko:"팀을 하나로 결속시키다",example:"I communicated closely with the new members to bring the team together.",exampleKo:"새 구성원들과 긴밀하게 소통해 팀을 결속시켰습니다."},
+    {pattern:"keep the project on track",ko:"프로젝트를 정상 궤도에 유지하다",example:"We worked hard to keep the project on track.",exampleKo:"프로젝트가 계획대로 진행되도록 노력했습니다."},
+    {pattern:"a shortage of qualified resources",ko:"적합한 전문인력 부족",example:"We faced a sudden shortage of qualified resources.",exampleKo:"갑작스러운 전문인력 부족을 겪었습니다."},
+    {pattern:"address the issue by ~ing",ko:"~함으로써 문제를 해결하다",example:"I addressed the issue by reallocating qualified people.",exampleKo:"적합한 인력을 재배치해 문제를 해결했습니다."},
+    {pattern:"despite the unexpected setback",ko:"예상치 못한 차질에도 불구하고",example:"We completed the project successfully despite the unexpected setback.",exampleKo:"예상치 못한 차질에도 프로젝트를 성공적으로 완료했습니다."}
+  ],
+  speaking:[
+    {prompt:"On a project, what was the issue and how did you solve it? Please describe the situation in detail.",promptKo:"프로젝트에서 어떤 문제가 있었고 어떻게 해결했나요? 상황을 자세히 설명해 주세요.",text:"Yes, actually, I faced a major problem while working on the AI project I mentioned earlier. I was in charge of developing an AI-based system for our FDC system. In the beginning, everything went smoothly because people from several different teams were working together as one project team. However, toward the end of the year, my company went through a major organizational restructuring. As a result, some of the teams involved in the project were split up, and several core project members were reassigned to different teams. To make matters worse, the key member who was responsible for developing the initial AI algorithm was also reassigned to another team. Without that person, we could no longer continue developing the algorithm as planned. So, at that point, the biggest problem was a sudden shortage of qualified resources. As the project leader, I knew I had to act quickly. First, I reprioritized our resources and reassigned two qualified members from a lower-priority project to the AI project. Of course, that wasn't an easy decision because it meant putting another project on hold. Next, I communicated closely with the new members and spent a lot of time bringing the team together. I made sure everyone understood the goal of the project, their individual roles, and what we needed to accomplish. Gradually, we got the project back on track and were able to continue developing the AI algorithm. In the end, we successfully completed the initial development phase despite the unexpected setback. Looking back, the experience taught me that when you're managing a project, technical skills are important, but being able to reorganize a team and reallocate resources quickly can be just as important. I was especially proud that we were able to overcome such a major organizational change and still complete the project successfully.",ko:"앞서 말한 AI 프로젝트를 진행하면서 큰 문제를 겪었습니다. 처음에는 여러 팀의 사람들이 하나의 프로젝트 팀으로 협업해 순조롭게 진행됐지만 연말 무렵 대규모 조직개편이 있었습니다. 여러 핵심 구성원이 다른 팀으로 재배치됐고, 설상가상으로 초기 AI 알고리즘 개발을 담당한 핵심 인력도 이동했습니다. 그 결과 계획대로 개발을 계속할 수 없었고 적합한 전문인력이 갑자기 부족해졌습니다. 프로젝트 리더로서 신속하게 대응해야 했습니다. 먼저 자원 우선순위를 재조정하고 우선순위가 낮은 프로젝트에서 자격을 갖춘 두 명을 AI 프로젝트로 재배치했습니다. 이후 새 구성원들과 긴밀히 소통하며 프로젝트 목표와 각자의 역할을 명확히 하고 팀을 다시 결속시켰습니다. 점차 프로젝트를 정상 궤도에 올렸고 결국 예상치 못한 차질에도 초기 개발 단계를 성공적으로 완료했습니다. 이 경험을 통해 프로젝트 관리에서는 기술뿐 아니라 팀을 재구성하고 자원을 신속히 재배치하는 능력도 중요하다는 것을 배웠습니다."}
+  ],
+  habits:[
+    {title:"① Problem → Impact → Decision → Action → Result",text:"조직개편 → 핵심인력 이탈 → 개발 차질 → 자원 우선순위 재조정 → 인력 재배치/팀 결속 → 프로젝트 완료 순서로 말한다."},
+    {title:"② 리더의 판단을 분명히 보여주기",text:"I decided to reprioritize our resources처럼 내가 내린 판단을 먼저 말하고 실제 인력 재배치 행동으로 연결한다."},
+    {title:"③ 기술 문제보다 사람·자원 관리 강조",text:"technical skills뿐 아니라 reorganize a team / reallocate resources가 중요했다는 교훈으로 마무리한다."},
+    {title:"④ 앞선 FDC 답변과 자연스럽게 연결",text:"As I mentioned earlier를 사용하면 OPIC 2의 FDC 프로젝트와 동일한 프로젝트의 후속 문제 경험처럼 자연스럽게 이어진다."}
+  ]
+};
+
+
+const OPIC_LESSON_5 = {
+  corrections:[
+    {ko:"작년에 저는 회사의 연간 성과를 평가하는 업무를 담당했습니다.",en:"Last year, I was in charge of evaluating our company's annual performance.",bad:"Last year, last year I was in charge of evaluations of our company's goal.",tip:"be in charge of + ~ing. annual performance = 연간 성과."},
+    {ko:"제 역할은 연간 성과를 정확하게 평가하고 최종 보고서를 본사에 제출하는 것이었습니다.",en:"My role was to evaluate our annual performance accurately and submit the final report to headquarters.",bad:"My role was to evaluate this year's performance properly, and I submitted to the headquarters.",tip:"submit은 목적어가 필요하다: submit the report to headquarters."},
+    {ko:"평가 결과는 직원들의 인센티브에 직접적인 영향을 미쳤습니다.",en:"The evaluation results directly affected our employees' incentives.",bad:"The outcome of evaluations is connected to our incentives.",tip:"directly affect = 직접 영향을 미치다."},
+    {ko:"그래서 회사 전체 직원들의 보너스에 영향을 주기 때문에 매우 중요했습니다.",en:"So, it was extremely important because the results affected the bonuses of employees across the entire company.",bad:"This is really, really important because it connects to our whole company employees' benefit.",tip:"employees across the entire company = 회사 전체 직원들."},
+    {ko:"저는 평가 보고서를 준비하는 데 엄청난 시간과 노력을 쏟았습니다.",en:"I put a tremendous amount of time and effort into preparing the evaluation report.",bad:"I dedicated myself to make an evaluation report.",tip:"put time and effort into ~ing = ~하는 데 시간과 노력을 쏟다."},
+    {ko:"야간과 주말을 포함해 장시간 일했습니다.",en:"I worked long hours, including nights and weekends.",bad:"I overworked almost every day and on weekends too.",tip:"work long hours가 회화에서 자연스럽다."},
+    {ko:"여러 팀의 지원을 받아 최종 평가 보고서를 완성할 수 있었습니다.",en:"With support from many other teams, I was finally able to complete the evaluation report.",bad:"With many other teams' support, I finally made an evaluation report.",tip:"complete a report = 보고서를 완성하다."},
+    {ko:"결과적으로 평가 결과는 이전 2년보다 훨씬 좋았습니다.",en:"In the end, our evaluation results were significantly better than they had been in the previous two years.",bad:"The evaluation outcome is much more better than the two years ago's financial result.",tip:"better 자체가 비교급. significantly better than ~."},
+    {ko:"우리의 보너스는 전년 대비 거의 두 배가 되었습니다.",en:"Our bonuses nearly doubled compared to the previous year.",bad:"Our incentives increased two times more than last year.",tip:"double = 두 배가 되다."},
+    {ko:"많은 사람들의 지원과 제가 쏟은 노력 덕분에 좋은 결과를 얻었습니다.",en:"Thanks to everyone's support and all the effort I put into the project, we achieved a great result.",bad:"But with many people's support and my endeavor, the result was really good.",tip:"all the effort I put into it = 내가 쏟은 모든 노력."},
+    {ko:"우리가 이룬 성과가 매우 자랑스러웠고, 그래서 이 프로젝트가 아직도 기억에 남습니다.",en:"I was extremely proud of what we had accomplished, and that's why the project is still so memorable to me.",bad:"I was very proud of myself, and I am very satisfied with the result.",tip:"memorable 질문에 마지막 문장을 다시 연결한다."}
+  ],
+  chunks:[
+    {pattern:"be in charge of evaluating ~",ko:"~의 평가를 담당하다",example:"I was in charge of evaluating our company's annual performance.",exampleKo:"회사의 연간 성과 평가를 담당했습니다."},
+    {pattern:"submit A to B",ko:"A를 B에 제출하다",example:"I submitted the final report to headquarters.",exampleKo:"최종 보고서를 본사에 제출했습니다."},
+    {pattern:"directly affect ~",ko:"~에 직접 영향을 미치다",example:"The evaluation results directly affected our employees' incentives.",exampleKo:"평가 결과는 직원 인센티브에 직접 영향을 미쳤습니다."},
+    {pattern:"employees across the entire company",ko:"회사 전체 직원들",example:"The results affected employees across the entire company.",exampleKo:"그 결과는 회사 전체 직원들에게 영향을 미쳤습니다."},
+    {pattern:"put a tremendous amount of time and effort into ~",ko:"~에 엄청난 시간과 노력을 쏟다",example:"I put a tremendous amount of time and effort into the project.",exampleKo:"프로젝트에 엄청난 시간과 노력을 쏟았습니다."},
+    {pattern:"work long hours",ko:"장시간 일하다",example:"I worked long hours, including nights and weekends.",exampleKo:"야간과 주말을 포함해 장시간 일했습니다."},
+    {pattern:"with support from ~",ko:"~의 지원을 받아",example:"With support from multiple teams, I completed the report.",exampleKo:"여러 팀의 지원을 받아 보고서를 완성했습니다."},
+    {pattern:"nearly double",ko:"거의 두 배가 되다",example:"Our bonuses nearly doubled compared to the previous year.",exampleKo:"보너스가 전년 대비 거의 두 배가 됐습니다."},
+    {pattern:"all that hard work paid off",ko:"그동안의 모든 노력이 결실을 맺다",example:"In the end, all that hard work paid off.",exampleKo:"결국 그동안의 모든 노력이 결실을 맺었습니다."},
+    {pattern:"a strong sense of accomplishment",ko:"강한 성취감",example:"I still feel a strong sense of accomplishment.",exampleKo:"지금도 강한 성취감을 느낍니다."}
+  ],
+  speaking:[
+    {prompt:"What is the most memorable project you've ever worked on? Why was it so memorable?",promptKo:"가장 기억에 남는 프로젝트는 무엇인가요? 왜 그렇게 기억에 남나요?",text:"One of the most memorable projects I've ever worked on was our annual performance evaluation project last year. I was in charge of evaluating our company's annual performance and preparing the final report for headquarters. It was a huge responsibility because the evaluation results directly affected the bonuses of employees across the entire company. So, naturally, I felt a lot of pressure. I wanted to make sure that our performance was evaluated accurately and that all of our achievements were properly reflected in the report. First, I collected performance data from multiple teams and reviewed it carefully. Then, I worked closely with those teams to make sure the data was accurate and that we had enough evidence to support our results. Finally, I organized everything into a comprehensive evaluation report and submitted it to headquarters. I put a tremendous amount of time and effort into the project. I worked long hours, including nights and weekends, but fortunately, I received a lot of support from other teams. In the end, all that hard work paid off. Our evaluation results were significantly better than they had been in the previous two years, and our bonuses nearly doubled compared to the previous year. I was extremely proud of what we had accomplished. What made the project especially memorable was that the results directly affected everyone in the company, not just me or my team. It was definitely one of the most challenging projects I've ever worked on, but it was also one of the most rewarding. Looking back, I still feel a strong sense of accomplishment whenever I think about it.",ko:"작년 회사 연간 성과평가 프로젝트가 가장 기억에 남습니다. 저는 회사의 연간 성과를 평가하고 본사에 제출할 최종 보고서를 준비했습니다. 그 결과가 회사 전체 직원들의 보너스에 직접 영향을 미쳤기 때문에 책임이 매우 컸습니다. 여러 팀의 성과 데이터를 수집하고 정확성을 검토했으며, 근거자료를 확인한 뒤 종합 평가 보고서로 정리해 본사에 제출했습니다. 야간과 주말을 포함해 많은 시간과 노력을 쏟았지만 다른 팀들의 지원도 많이 받았습니다. 결국 노력의 결실로 평가 결과가 이전 2년보다 훨씬 좋아졌고 보너스도 전년 대비 거의 두 배가 됐습니다. 나와 우리 팀뿐 아니라 회사 전체 직원들에게 직접 영향을 준 결과였기 때문에 특히 기억에 남고 지금도 강한 성취감을 느낍니다."}
+  ],
+  habits:[
+    {title:"① Why memorable에 바로 답하기",text:"성과평가 결과가 나와 우리 팀뿐 아니라 회사 전체 직원의 보너스에 영향을 줬다는 점을 핵심 이유로 잡는다."},
+    {title:"② 과정은 Collect → Review → Organize → Submit",text:"성과자료 수집 → 검증 → 보고서 정리 → 본사 제출 순서로 설명한다."},
+    {title:"③ 결과는 paid off로 정리",text:"all that hard work paid off → bonuses nearly doubled → strong sense of accomplishment 흐름으로 마무리한다."}
+  ]
+};
+
+
+const OPIC_LESSON_6 = {
+  corrections:[
+    {ko:"제가 지금까지 수행한 프로젝트 중 가장 기억에 남는 것 중 하나는 2024년 중국 프로젝트였습니다.",en:"One of the most memorable projects I've ever worked on was a project in China in 2024.",bad:"One of my memorable projects I have ever had is China project two years ago.",tip:"one of the most memorable projects I've ever worked on."},
+    {ko:"당시 우리 회사는 중국의 한 반도체 회사를 인수하는 과정에 있었습니다.",en:"At the time, my company was in the process of acquiring a semiconductor company in China.",bad:"In 2024, my company tried to take over one semiconductor company in China.",tip:"be in the process of ~ing = ~하는 과정에 있다."},
+    {ko:"우리의 업무는 인수 전 그 회사의 인력, 운영, 시스템을 평가하는 것이었습니다.",en:"Our job was to assess the company's personnel, operations, and systems before the acquisition.",bad:"We have to check those personnel and those systems.",tip:"assess = 평가하다/점검하다."},
+    {ko:"회사는 인수를 위한 TFT를 구성했고 저는 팀 리더로 임명됐습니다.",en:"My company set up a task force for the acquisition, and I was appointed as the leader of the team.",bad:"The company set up the TFTC, and then I was in charge of, leader of the TFTC.",tip:"be appointed as the leader = 리더로 임명되다."},
+    {ko:"처음 도착했을 때 현지 엔지니어들이 우리를 회사를 인수하러 온 외부인으로 보고 있다는 걸 느낄 수 있었습니다.",en:"When we first arrived, I could tell that the local engineers saw us as outsiders who were there to take over their company.",bad:"When we visited there, the Chinese engineers, they might feel like we are some kind of conqueror.",tip:"I could tell that ~ = ~라는 것을 느낄 수 있었다."},
+    {ko:"그들은 매우 경계했고 우리와 정보 공유를 꺼렸습니다.",en:"They were very guarded and reluctant to share information with us.",bad:"When we tried to communicate with them, they blocked many informations.",tip:"be reluctant to share information = 정보 공유를 꺼리다."},
+    {ko:"저는 핵심이 먼저 신뢰를 쌓는 것이라고 깨달았습니다.",en:"I realized that the key was to build trust with them first.",bad:"I realized that it was really important to open together.",tip:"The key was to build trust first."},
+    {ko:"그래서 가능한 한 많이 소통하려고 의식적으로 노력했습니다.",en:"So, I made a conscious effort to communicate with them as much as possible.",bad:"I tried to communicate with them much.",tip:"make a conscious effort to ~ = 적극적으로/의식적으로 노력하다."},
+    {ko:"함께 저녁을 먹고 때로는 술도 마시면서 더 개인적인 차원에서 서로를 알아갈 기회를 가졌습니다.",en:"I had dinner with them many times, and sometimes we had drinks together. That gave us a chance to get to know each other on a more personal level.",bad:"I ate out with them so many times to drink alcohol, to bonding, to bond with them.",tip:"get to know someone on a personal level."},
+    {ko:"시간이 지나면서 그들은 점차 우리에게 마음을 열기 시작했습니다.",en:"As time went on, they gradually started to open up to us.",bad:"As time goes on, gradually they opened their mind.",tip:"open up to someone = ~에게 마음을 열다."},
+    {ko:"그들은 우리를 외부인이 아니라 같은 목표를 향해 일하는 파트너로 보기 시작했습니다.",en:"They stopped seeing us as outsiders and started seeing us as partners working toward the same goal.",bad:"They started recognizing us to be not competitors, to corporate teams.",tip:"stop seeing A as X and start seeing A as Y."},
+    {ko:"프로젝트 기간 동안 중국으로 7번 출장을 갔습니다.",en:"Over the course of the project, I made seven business trips to China.",bad:"I went on business trip to China seven times.",tip:"make seven business trips."},
+    {ko:"결국 인수는 성공적으로 완료됐고 그 회사는 우리 자회사 중 하나가 됐습니다.",en:"Eventually, the acquisition was completed successfully, and the company became one of our subsidiaries.",bad:"Finally my company could take over those companies as our child companies.",tip:"subsidiary = 자회사."},
+    {ko:"현재 그 자회사는 우리 회사에 상당한 가치를 창출하고 있습니다.",en:"Today, that subsidiary is generating significant value for our company.",bad:"Thanks to advancement in AI, that company we took over two years ago, they delivered so many, so much benefits for our company.",tip:"generate significant value = 상당한 가치를 창출하다."}
+  ],
+  chunks:[
+    {pattern:"be in the process of ~ing",ko:"~하는 과정에 있다",example:"My company was in the process of acquiring a semiconductor company.",exampleKo:"우리 회사는 반도체 회사를 인수하는 과정에 있었습니다."},
+    {pattern:"assess A before B",ko:"B 전에 A를 평가하다",example:"We assessed the company's operations before the acquisition.",exampleKo:"인수 전에 회사 운영을 평가했습니다."},
+    {pattern:"be appointed as the leader of ~",ko:"~의 리더로 임명되다",example:"I was appointed as the leader of the task force.",exampleKo:"TFT 리더로 임명됐습니다."},
+    {pattern:"I could tell that ~",ko:"~라는 것을 느낄 수 있었다",example:"I could tell that the local engineers were uncomfortable.",exampleKo:"현지 엔지니어들이 불편해한다는 것을 느낄 수 있었습니다."},
+    {pattern:"be reluctant to share ~",ko:"~을 공유하기를 꺼리다",example:"They were reluctant to share information with us.",exampleKo:"그들은 정보 공유를 꺼렸습니다."},
+    {pattern:"The key was to ~",ko:"핵심은 ~하는 것이었다",example:"The key was to build trust with them first.",exampleKo:"핵심은 먼저 신뢰를 쌓는 것이었습니다."},
+    {pattern:"make a conscious effort to ~",ko:"의식적으로/적극적으로 ~하려 노력하다",example:"I made a conscious effort to communicate with them.",exampleKo:"그들과 소통하려고 적극적으로 노력했습니다."},
+    {pattern:"get to know someone on a personal level",ko:"개인적으로 더 깊이 알아가다",example:"We got to know each other on a more personal level.",exampleKo:"우리는 서로를 개인적으로 더 깊이 알아갔습니다."},
+    {pattern:"open up to someone",ko:"누군가에게 마음을 열다",example:"They gradually started to open up to us.",exampleKo:"그들은 점차 우리에게 마음을 열기 시작했습니다."},
+    {pattern:"stop seeing A as X and start seeing A as Y",ko:"A를 X가 아니라 Y로 보기 시작하다",example:"They stopped seeing us as outsiders and started seeing us as partners.",exampleKo:"그들은 우리를 외부인이 아니라 파트너로 보기 시작했습니다."},
+    {pattern:"over the course of ~",ko:"~ 기간 동안",example:"Over the course of the project, I made seven business trips to China.",exampleKo:"프로젝트 기간 동안 중국으로 7번 출장을 갔습니다."},
+    {pattern:"generate significant value",ko:"상당한 가치를 창출하다",example:"The subsidiary is generating significant value for our company.",exampleKo:"그 자회사는 회사에 상당한 가치를 창출하고 있습니다."},
+    {pattern:"a strong sense of accomplishment",ko:"강한 성취감",example:"The project still gives me a strong sense of accomplishment.",exampleKo:"그 프로젝트는 지금도 강한 성취감을 줍니다."}
+  ],
+  speaking:[
+    {prompt:"What is the most memorable project you've ever worked on? Why was it so memorable?",promptKo:"가장 기억에 남는 프로젝트는 무엇인가요? 왜 그렇게 기억에 남나요?",text:"One of the most memorable projects I've ever worked on was an acquisition project in China in 2024. At the time, my company was in the process of acquiring a semiconductor company in China. We set up a special task force to assess the company's personnel, operations, and systems before the acquisition, and I was appointed as the leader of the team. When we first arrived in China, things were not easy. I could tell that the local engineers saw us as outsiders who were there to take over their company. Naturally, they were very guarded and reluctant to share information with us. At that point, I realized that the key was to build trust with them first. So, instead of focusing only on work, I made a conscious effort to communicate with them as much as possible. I had dinner with them many times, and sometimes we had drinks together. That gave us a chance to get to know each other on a more personal level. As time went on, they gradually started to open up to us. They stopped seeing us as outsiders and started seeing us as partners working toward the same goal. Once we built that trust, communication became much easier, and the project started moving forward much more smoothly. Over the course of the project, I made seven business trips to China. Since English was our main language of communication, I also had plenty of opportunities to practice my English, so my communication skills improved significantly. Eventually, the acquisition was completed successfully, and the company became one of our subsidiaries. What makes this project especially memorable is what happened afterward. Today, with the rapid growth of AI, that subsidiary is generating significant value for our company. Whenever I see how well the business is doing now, I think back to those days in China and feel a strong sense of accomplishment. Looking back, I learned that building trust can be just as important as technical expertise when you're working with people from different backgrounds. That's why this is still one of the most memorable projects of my career.",ko:"2024년 중국 기업 인수 프로젝트가 가장 기억에 남습니다. 회사는 중국의 반도체 회사를 인수하는 과정에 있었고, 인력·운영·시스템을 평가하기 위한 TFT를 구성했으며 저는 리더로 임명됐습니다. 처음에는 현지 엔지니어들이 우리를 외부인으로 보고 매우 경계하며 정보 공유를 꺼렸습니다. 그래서 먼저 신뢰를 쌓는 것이 핵심이라고 판단했고, 업무 외에도 함께 식사하고 대화하면서 개인적인 차원에서 서로를 알아가려고 노력했습니다. 시간이 지나며 그들은 점차 마음을 열었고 우리를 같은 목표를 향해 일하는 파트너로 보기 시작했습니다. 프로젝트 기간 동안 중국에 7번 출장했고 영어 의사소통 능력도 크게 향상됐습니다. 결국 인수는 성공적으로 완료됐고 그 회사는 자회사가 됐습니다. 지금은 AI 성장과 함께 그 자회사가 회사에 상당한 가치를 창출하고 있어 당시를 돌아볼 때마다 큰 성취감을 느낍니다."}
+  ],
+  habits:[
+    {title:"① M&A보다 사람 관계 변화가 핵심",text:"outsiders → build trust → open up → partners의 변화가 가장 기억에 남는 이유로 들리게 한다."},
+    {title:"② conqueror 대신 outsiders",text:"기업 인수 상황에서 공격적으로 들릴 수 있는 conqueror 대신 outsiders who were there to take over their company를 사용한다."},
+    {title:"③ 리더십 교훈으로 마무리",text:"building trust can be just as important as technical expertise로 경험의 의미를 확장한다."}
+  ]
+};
+
+
+const OPIC_LESSON_7 = {
+  corrections:[
+    {ko:"제가 가장 자주 가던 도서관은 Negeok Library입니다.",en:"The library I used to visit most often is called Negeok Library.",bad:"The most I usually go to the library is called Negeok Library.",tip:"The library I used to visit most often..."},
+    {ko:"혼자 살던 당시 그 도서관은 예전 집 근처에 있었습니다.",en:"When I lived alone, it was located near my old place.",bad:"When I had lived alone at the time, so this is near my previous house.",tip:"When I lived alone처럼 단순과거 사용."},
+    {ko:"집에서 걸어서 5분밖에 안 걸렸습니다.",en:"It was only a five-minute walk from my place.",bad:"It took only five minutes to walk.",tip:"a five-minute walk from ~."},
+    {ko:"특별한 약속이 없을 때마다 혼자 그곳에 가곤 했습니다.",en:"Whenever I didn't have any plans, I would go there by myself.",bad:"I don't have any appointment or meeting with my friends. I used to go to this library alone.",tip:"plans = 일반적인 약속/일정."},
+    {ko:"그곳에서 여러 종류의 책을 읽으며 몇 시간씩 보내곤 했습니다.",en:"I used to spend hours there reading all kinds of books.",bad:"I used to read books, very variety genres of books in the library.",tip:"spend hours ~ing / all kinds of books."},
+    {ko:"들어가자마자 책으로 가득 찬 줄지어 늘어선 책장이 보입니다.",en:"As soon as you walk in, you can see rows and rows of bookshelves filled with books.",bad:"When you come to this library, you can see a lot of books on the shelves.",tip:"As soon as you walk in / rows and rows of ~."},
+    {ko:"방문객들이 책을 검색할 수 있는 컴퓨터도 여러 대 있습니다.",en:"There are also several computers that visitors can use to search for books.",bad:"There are so many computers, and they can make you to search for books immediately.",tip:"computers that visitors can use to ~."},
+    {ko:"안내 데스크에는 책을 찾는 것을 도와주는 사서들이 있습니다.",en:"There are also librarians at the information desk who can help you find books.",bad:"There are some special employee for searching for books.",tip:"librarian = 사서."},
+    {ko:"도서관 분위기는 매우 조용하고 평화롭습니다.",en:"The atmosphere is very quiet and peaceful.",bad:"The atmosphere is very silent.",tip:"도서관 분위기는 quiet가 자연스럽다."},
+    {ko:"사람들은 모두 목소리를 낮추려고 합니다.",en:"Everyone tries to keep their voice down.",bad:"Everyone doesn't make any noise.",tip:"keep your voice down = 목소리를 낮추다."},
+    {ko:"읽고 있는 내용에 집중하기가 정말 쉽습니다.",en:"It's really easy to concentrate on what you're reading.",bad:"You can concentrate only books.",tip:"concentrate on ~."}
+  ],
+  chunks:[
+    {pattern:"a five-minute walk from ~",ko:"~에서 걸어서 5분 거리",example:"It was only a five-minute walk from my place.",exampleKo:"집에서 걸어서 5분밖에 안 걸렸습니다."},
+    {pattern:"Whenever I didn't have any plans, ~",ko:"특별한 약속이 없을 때마다 ~",example:"Whenever I didn't have any plans, I would go there by myself.",exampleKo:"약속이 없을 때마다 혼자 그곳에 갔습니다."},
+    {pattern:"spend hours ~ing",ko:"~하며 몇 시간씩 보내다",example:"I used to spend hours there reading.",exampleKo:"그곳에서 책을 읽으며 몇 시간씩 보냈습니다."},
+    {pattern:"As soon as you walk in, ~",ko:"들어가자마자 ~",example:"As soon as you walk in, you can see rows of bookshelves.",exampleKo:"들어가자마자 줄지어 늘어선 책장이 보입니다."},
+    {pattern:"rows and rows of ~",ko:"줄지어 늘어선 많은 ~",example:"There are rows and rows of bookshelves.",exampleKo:"수많은 책장이 줄지어 늘어서 있습니다."},
+    {pattern:"ask someone for help",ko:"누군가에게 도움을 요청하다",example:"You can ask one of the librarians for help.",exampleKo:"사서에게 도움을 요청할 수 있습니다."},
+    {pattern:"keep one's voice down",ko:"목소리를 낮추다",example:"Everyone tries to keep their voice down.",exampleKo:"모두 목소리를 낮추려고 합니다."},
+    {pattern:"concentrate on ~",ko:"~에 집중하다",example:"It's easy to concentrate on what you're reading.",exampleKo:"읽고 있는 내용에 집중하기 쉽습니다."}
+  ],
+  speaking:[
+    {prompt:"Describe a library you often visit. Where is it located? What does it look like from the outside? How is the interior arranged? Provide as many details as possible.",promptKo:"자주 가는 도서관을 묘사해 주세요. 어디에 있고 외관은 어떠하며 내부는 어떻게 구성되어 있나요?",text:"The library I used to visit most often is called Negeok Library. When I lived alone, it was located very close to my place. It was only about a five-minute walk away, so whenever I didn't have any plans, I would often go there by myself and spend a few hours reading. From the outside, [it looks like a fairly modern building / it's not particularly large, but it looks clean and well maintained]. As soon as you walk in, there's an information desk near the entrance. There are librarians there, so if you have trouble finding a book, you can simply ask them for help. The main reading area is filled with rows and rows of bookshelves. The books are organized by category, so it's pretty easy to find what you're looking for. There are also several computers that visitors can use to search for books. Another thing I really like about the library is its atmosphere. The whole place is very quiet and peaceful. Everyone tries to keep their voice down, so it's really easy to concentrate on what you're reading. I used to spend hours there reading all kinds of books. For me, it was the perfect place to get away from distractions and just focus on reading. So, if I wanted a quiet place to read or study, that library was always my first choice.",ko:"제가 가장 자주 가던 도서관은 Negeok Library입니다. 혼자 살던 당시 집에서 걸어서 5분 정도로 매우 가까웠고 약속이 없을 때마다 혼자 가서 몇 시간씩 책을 읽곤 했습니다. 외관에 대한 구체적인 사실은 제공되지 않아 답변에는 선택 가능한 표현을 괄호로 남겨두었습니다. 입구 근처에는 안내 데스크와 사서들이 있고, 안쪽에는 책으로 가득 찬 책장이 줄지어 있습니다. 책은 분류별로 정리되어 있고 검색용 컴퓨터도 있습니다. 전체적으로 매우 조용하고 평화로워 독서에 집중하기 좋은 곳이었습니다."}
+  ],
+  habits:[
+    {title:"① 외관 정보는 아직 미확정",text:"사용자가 실제 외관을 말하지 않았으므로 AL 답변의 [ ] 부분은 실제 모습 확인 후 교체한다."},
+    {title:"② 위치 → 외관 → 입구 → 내부 → 분위기",text:"장소 묘사 질문의 요구 순서를 그대로 따라간다."},
+    {title:"③ 공간 이동 표현 활용",text:"As soon as you walk in → rows and rows of → information desk처럼 눈앞에서 이동하듯 묘사한다."}
+  ]
+};
+
+
+const OPIC_LESSON_8 = {
+  corrections:[
+    {ko:"제가 가장 자주 가는 도서관은 인천에 있는 Buchu Library입니다.",en:"The library I visit most often is called Buchu Library in Incheon.",bad:"The library I use visit most often is called Buchu Library in Incheon.",tip:"I visit most often."},
+    {ko:"집에서 차로 약 10분 거리입니다.",en:"It's located very close to my place, only about a ten-minute drive away.",bad:"It is located very close to my place. It takes just ten minutes by my car.",tip:"a ten-minute drive away."},
+    {ko:"도착하면 가장 먼저 눈에 들어오는 것은 5층짜리 도서관 건물입니다.",en:"When you get there, the first thing you notice is the five-story library building.",bad:"When you walk in, you can see the five-story building of that library.",tip:"The first thing you notice is ~."},
+    {ko:"건물 앞에는 넓은 잔디 공간이 있습니다.",en:"There's a large grassy area in front of the building.",bad:"In front of the building there are some large fields.",tip:"grassy area / lawn = 잔디 공간."},
+    {ko:"날씨 좋은 날에는 사람들이 잔디에 앉아 밖에서 책을 읽는 모습을 볼 수 있습니다.",en:"On nice days, you can see people sitting on the grass and reading books outside.",bad:"So many people, they can read books under the field.",tip:"sit on the grass."},
+    {ko:"건물에 들어가면 학습공간 좌석을 예약할 수 있는 키오스크가 여러 대 있습니다.",en:"Once you enter the building, you can see several kiosks where you can reserve a seat in the study area.",bad:"And you walk in the building, you can see many kiosks to make a reservation, the place to study.",tip:"Once you enter / reserve a seat."},
+    {ko:"층별로 하나씩 설명해 볼게요.",en:"Let me walk you through the library floor by floor.",bad:"From now on, I will warn you about the library more detailly.",tip:"walk someone through ~ = 차근차근 설명하다."},
+    {ko:"1층에는 유아와 초등학생을 위한 어린이 자료실이 있습니다.",en:"On the first floor, there's a children's section for preschool and elementary school students.",bad:"First floor, they place some library for the preschool and elementary schools.",tip:"children's section = 어린이 자료실."},
+    {ko:"책장은 어린이 책으로 가득 차 있습니다.",en:"The shelves are packed with children's books.",bad:"Each bookshelf is filled with, like, very many books.",tip:"be packed with ~ = ~로 가득 차 있다."},
+    {ko:"2층과 3층에는 책으로 가득 찬 책장이 줄지어 늘어서 있습니다.",en:"On the second and third floors, there are rows and rows of bookshelves filled with books.",bad:"Second and third floors, there are so many books, and rows and rows of shelves with books.",tip:"rows and rows of bookshelves."},
+    {ko:"반대편에는 1층부터 5층까지 이어지는 학습공간이 있습니다.",en:"On the other side of the building, there are study areas that extend from the first floor all the way up to the fifth floor.",bad:"And the other side of the building, from one floor to five floors, there is a place to study.",tip:"all the way up to the fifth floor."},
+    {ko:"지하에는 심지어 식당도 있습니다.",en:"Finally, there's even a restaurant in the basement.",bad:"And the last one, the basement, there is a restaurant.",tip:"There's even ~ = 심지어 ~도 있다."},
+    {ko:"합리적인 가격에 괜찮은 식사를 할 수 있습니다.",en:"You can get a decent meal there at a reasonable price.",bad:"You can eat some really delicious food at regular prices.",tip:"at a reasonable price = 합리적인 가격에."},
+    {ko:"도서관에 있으면 방해요소를 완전히 차단하고 읽거나 공부하는 데 집중할 수 있습니다.",en:"Whenever I'm there, I can completely shut out distractions and focus on what I'm reading or studying.",bad:"As you can feel deep peace.",tip:"shut out distractions = 방해요소를 차단하다."}
+  ],
+  chunks:[
+    {pattern:"a ten-minute drive away",ko:"차로 10분 거리",example:"It's only about a ten-minute drive away.",exampleKo:"차로 약 10분 거리입니다."},
+    {pattern:"The first thing you notice is ~",ko:"가장 먼저 눈에 들어오는 것은 ~",example:"The first thing you notice is the five-story building.",exampleKo:"가장 먼저 눈에 들어오는 것은 5층 건물입니다."},
+    {pattern:"in front of ~",ko:"~ 앞에",example:"There's a large grassy area in front of the building.",exampleKo:"건물 앞에 넓은 잔디 공간이 있습니다."},
+    {pattern:"Once you enter ~",ko:"~에 들어가면",example:"Once you enter the building, you can see several kiosks.",exampleKo:"건물에 들어가면 키오스크가 여러 대 보입니다."},
+    {pattern:"reserve a seat",ko:"좌석을 예약하다",example:"You can reserve a seat in the study area.",exampleKo:"학습공간 좌석을 예약할 수 있습니다."},
+    {pattern:"Let me walk you through ~",ko:"~을 하나씩 설명해 볼게요",example:"Let me walk you through the library floor by floor.",exampleKo:"도서관을 층별로 설명해 볼게요."},
+    {pattern:"be packed with ~",ko:"~로 가득 차 있다",example:"The shelves are packed with children's books.",exampleKo:"책장은 어린이 책으로 가득 차 있습니다."},
+    {pattern:"rows and rows of ~",ko:"줄지어 늘어선 많은 ~",example:"There are rows and rows of bookshelves.",exampleKo:"책장이 줄지어 늘어서 있습니다."},
+    {pattern:"all the way up to ~",ko:"~까지 쭉",example:"The study areas extend all the way up to the fifth floor.",exampleKo:"학습공간은 5층까지 쭉 이어집니다."},
+    {pattern:"There's even ~",ko:"심지어 ~도 있다",example:"There's even a restaurant in the basement.",exampleKo:"지하에는 심지어 식당도 있습니다."},
+    {pattern:"at a reasonable price",ko:"합리적인 가격에",example:"You can get a decent meal at a reasonable price.",exampleKo:"합리적인 가격에 괜찮은 식사를 할 수 있습니다."},
+    {pattern:"shut out distractions",ko:"방해요소를 차단하다",example:"I can completely shut out distractions.",exampleKo:"방해요소를 완전히 차단할 수 있습니다."}
+  ],
+  speaking:[
+    {prompt:"Describe a library you often visit. Where is it located? What does it look like from the outside? How is the interior arranged? Provide as many details as possible.",promptKo:"자주 가는 도서관을 묘사해 주세요. 어디에 있고 외관은 어떠하며 내부는 어떻게 구성되어 있나요?",text:"Well, the library I visit most often is called Buchu Library in Incheon. It's located very close to my place, only about a ten-minute drive away. When you get there, the first thing you notice is the five-story library building. There's a large grassy area in front of it, and on nice days, you can see people sitting on the grass and reading books outside. It gives the whole place a really relaxing atmosphere. Once you enter the building, you can see several kiosks where you can reserve a seat in the study area. Let me walk you through the library floor by floor. On the first floor, there's a children's section for preschool and elementary school students. The shelves are packed with children's books. On the second and third floors, there are rows and rows of bookshelves filled with all kinds of books, including novels and technology books. On the other side of the building, there are study areas that extend from the first floor all the way up to the fifth floor. If you want to study there, you first reserve a seat using one of the kiosks. The study areas are extremely quiet and peaceful, so you can really focus without being distracted. Finally, there's even a restaurant in the basement. You can get a decent meal there at a reasonable price, so you don't even have to leave the building when you get hungry. Overall, what I like most about this library is its calm and peaceful atmosphere. Whenever I'm there, I can completely shut out distractions and focus on what I'm reading or studying. So, if you're looking for a quiet place to read or study, I'd definitely recommend this library.",ko:"제가 가장 자주 가는 곳은 인천 Buchu Library입니다. 집에서 차로 약 10분 거리이고, 도착하면 5층짜리 건물이 가장 먼저 눈에 들어옵니다. 앞에는 넓은 잔디 공간이 있어 날씨 좋은 날에는 사람들이 밖에서 책을 읽습니다. 안으로 들어가면 학습좌석 예약용 키오스크가 있고, 1층에는 어린이 자료실, 2·3층에는 다양한 책이 있는 일반 자료 공간이 있습니다. 반대편에는 1층부터 5층까지 이어지는 학습공간이 있고 지하에는 식당도 있습니다. 전체적으로 매우 조용하고 평화로워 방해요소를 차단하고 독서나 공부에 집중하기 좋은 곳입니다."}
+  ],
+  habits:[
+    {title:"① 위치 → 외관 → 입구 → 층별 구조 → 분위기",text:"질문의 요구 순서를 그대로 따라가면 장소 묘사가 자연스럽다."},
+    {title:"② floor by floor를 Natural Entry로 사용",text:"Let me walk you through the library floor by floor를 기준으로 1층 → 2·3층 → 학습공간 → 지하 순서로 이동한다."},
+    {title:"③ 어려운 단어보다 공간 이동 표현",text:"When you get there → Once you enter → On the first floor → On the other side → Finally 구조를 자동화한다."}
+  ]
+};
+
 const STUDY_COURSES = {
   my:{
     key:'my',
@@ -4956,11 +5370,11 @@ const STUDY_COURSES = {
     homeMode:'sori',
     studyOrder:['chunks','corrections','speaking','habits'],
     speakingMode:'pattern',
-    meta:()=>({1:{
-      title:'8/28–8/29 통합 복습 · 3 Scripts',
-      goal:'<b>복습 목표</b> · Drinking Culture / To Tip or Skip? / Dumplin\' Day 1의 핵심 문장과 의미 Chunk를 소리로 자동화합니다.'
-    }}),
-    data:(n)=>SORI_GROUP_1,
+    meta:()=>({
+      1:{title:'8/28–8/29 통합 복습 · 3 Scripts',goal:'<b>복습 목표</b> · Drinking Culture / To Tip or Skip? / Dumplin\' Day 1의 핵심 문장과 의미 Chunk를 소리로 자동화합니다.'},
+      2:{title:'통합 복습 2 · 3 Scripts',goal:'<b>복습 목표</b> · Dumplin\' Day #2 / To Fill or Not to Fill / The Ring Rescue에서 선택한 핵심 문장과 Chunk를 기존 소리영어 포맷으로 자동화합니다.'}
+    }),
+    data:(n)=>Number(n)===2?SORI_GROUP_2:SORI_GROUP_1,
     tabs:{corrections:'⭐ 핵심 문장',chunks:'🧩 Chunk',speaking:'🗣 말하기',habits:'🎧 소리 Point'},
     singular:{corrections:'핵심 문장',chunks:'Chunk',speaking:'말하기',habits:'소리 Point'}
   },
@@ -4969,12 +5383,21 @@ const STUDY_COURSES = {
     title:'OPIC',
     icon:'🎤',
     homeMode:'opic',
-    studyOrder:['chunks','corrections','speaking','habits'],
-    speakingMode:'answer',
-    meta:()=>({}),
-    data:()=>({corrections:[],chunks:[],speaking:[],habits:[]}),
-    tabs:{corrections:'⭐ 핵심 답변',chunks:'🧩 Chunk',speaking:'🗣 말하기',habits:'🏆 AL Point'},
-    singular:{corrections:'핵심 답변',chunks:'Chunk',speaking:'말하기',habits:'AL Point'}
+    studyOrder:['corrections','chunks','speaking','habits'],
+    speakingMode:'free',
+    meta:()=>({
+      1:{title:'Tell me about a recent project you completed. What kind of project was it? Was it successful?',shortTitle:'KPI/AX 재무효과 평가 프로젝트',goal:'<b>OPIC 질문</b> · KPI/AX 재무효과 평가 프레임워크 프로젝트'},
+      2:{title:'Tell me about a recent project you completed. What kind of project was it? Was it successful?',shortTitle:'AI 기반 FDC 시스템 프로젝트',goal:'<b>OPIC 질문</b> · AI 기반 FDC 시스템 초기 개발 프로젝트'},
+      3:{title:'Have you ever faced a problem while working on a project? What was the issue, and how did you solve it? Please describe the situation in detail.',shortTitle:'재무 투자손실 대응 프로젝트',goal:'<b>OPIC 질문</b> · 재무팀 채권 투자손실 및 전략 재검토 경험'},
+      4:{title:'On a project, what was the issue and how did you solve it? Please describe the situation in detail.',shortTitle:'FDC 프로젝트 조직개편 대응',goal:'<b>OPIC 질문</b> · 조직개편으로 인한 핵심인력 부족과 자원 재배치'},
+      5:{title:"What is the most memorable project you've ever worked on? Why was it so memorable?",shortTitle:'연간 성과평가 프로젝트',goal:'<b>OPIC 질문</b> · 회사 연간 성과평가와 전사 인센티브'},
+      6:{title:"What is the most memorable project you've ever worked on? Why was it so memorable?",shortTitle:'중국 기업 인수 프로젝트',goal:'<b>OPIC 질문</b> · 중국 반도체 기업 인수와 신뢰 형성'},
+      7:{title:'Describe a library you often visit. Where is it located? What does it look like from the outside? How is the interior arranged? Provide as many details as possible.',shortTitle:'Negeok Library 묘사',goal:'<b>OPIC 질문</b> · 도서관 위치·외관·내부·분위기 묘사'},
+      8:{title:'Describe a library you often visit. Where is it located? What does it look like from the outside? How is the interior arranged? Provide as many details as possible.',shortTitle:'Buchu Library 묘사',goal:'<b>OPIC 질문</b> · 5층 도서관의 층별 구조와 분위기'}
+    }),
+    data:(n)=>Number(n)===8?OPIC_LESSON_8:(Number(n)===7?OPIC_LESSON_7:(Number(n)===6?OPIC_LESSON_6:(Number(n)===5?OPIC_LESSON_5:(Number(n)===4?OPIC_LESSON_4:(Number(n)===3?OPIC_LESSON_3:(Number(n)===2?OPIC_LESSON_2:(Number(n)===1?OPIC_LESSON_1:{corrections:[],chunks:[],speaking:[],habits:[]}))))))),
+    tabs:{corrections:'✅ 핵심 교정',chunks:'🧩 Chunk',speaking:'🗣 말하기',habits:'⚠ 습관'},
+    singular:{corrections:'핵심 교정',chunks:'Chunk',speaking:'말하기',habits:'습관'}
   }
 };
 
@@ -5109,7 +5532,9 @@ function studyCardCourseLesson(card){
   const id=String(card.id||'');
 
   if(id==='soriGroup1Card')return {course:'sori',lesson:1};
-  if(id==='opicGroup1Card')return {course:'opic',lesson:1};
+  if(id==='soriGroup2Card')return {course:'sori',lesson:2};
+  const opicMatch=id.match(/^opicGroup(\d+)Card$/);
+  if(opicMatch)return {course:'opic',lesson:Number(opicMatch[1])||1};
 
   const my=id.match(/^myClassLesson(\d+)Card$/);
   if(my)return {course:'my',lesson:Number(my[1])||1};
@@ -5129,21 +5554,19 @@ function studyStampCourseCards(){
     card.setAttribute('tabindex','0');
   });
 
-  const sori=document.getElementById('soriGroup1Card');
-  if(sori){
+  document.querySelectorAll('#homePage .soriClassSection .soriCourseCard').forEach((sori,i)=>{
     sori.dataset.studyCourse='sori';
-    sori.dataset.studyLesson='1';
+    sori.dataset.studyLesson=String(Number(sori.dataset.studyLesson)||i+1);
     sori.setAttribute('role','button');
     sori.setAttribute('tabindex','0');
-  }
+  });
 
-  const opic=document.getElementById('opicGroup1Card');
-  if(opic){
+  document.querySelectorAll('#homePage .opicClassSection .opicCourseCard').forEach((opic,i)=>{
     opic.dataset.studyCourse='opic';
-    opic.dataset.studyLesson='1';
+    opic.dataset.studyLesson=String(Number(opic.dataset.studyLesson)||i+1);
     opic.setAttribute('role','button');
     opic.setAttribute('tabindex','0');
-  }
+  });
 }
 window.studyStampCourseCards=studyStampCourseCards;
 
@@ -5160,7 +5583,7 @@ function studyCourseCardFromEventTarget(target){
   if(target.closest('input,label,button,a,select,textarea,[data-no-card-open]'))return null;
   return target.closest(
     '#myClassLesson1Card,#myClassLesson2Card,#myClassLesson3Card,#myClassLesson4Card,#myClassLesson5Card,'+
-    '#soriGroup1Card,#opicGroup1Card,[data-study-course][data-study-lesson]'
+    '#soriGroup1Card,#soriGroup2Card,[data-study-course][data-study-lesson]'
   );
 }
 window.studyCourseCardFromEventTarget=studyCourseCardFromEventTarget;
@@ -10559,7 +10982,7 @@ function mvSentenceEntryAudit182(){
 window.mvSentenceEntryAudit182=mvSentenceEntryAudit182;
 
 /* ===== V5.3.189 · STANDARD APP INFO / UPDATE HISTORY ===== */
-const MV_APP_VERSION='5.3.191';
+const MV_APP_VERSION='5.3.204';
 
 function mvCloseInfoOverlay(){
   const overlay=document.getElementById('mvInfoOverlay');
@@ -13183,7 +13606,7 @@ window.mvDayPlaybackPanelAudit=mvDayPlaybackPanelAudit;
 /* ===== V5.3.189 · DIRECT CARD NAV AUDIT ===== */
 function mvDirectCardNavAudit(){
   studyStampCourseCards();
-  const ids=['myClassLesson1Card','myClassLesson2Card','myClassLesson3Card','myClassLesson4Card','myClassLesson5Card','soriGroup1Card','opicGroup1Card'];
+  const ids=['myClassLesson1Card','myClassLesson2Card','myClassLesson3Card','myClassLesson4Card','myClassLesson5Card','soriGroup1Card','soriGroup2Card','opicGroup1Card'];
   return {
     version:'5.3.187',
     directNavigator:window.studyDirectOpenCourse===studyDirectOpenCourse,
@@ -13205,7 +13628,7 @@ function mvCourseCardEntryAudit(){
   studyStampCourseCards();
   const ids=[
     'myClassLesson1Card','myClassLesson2Card','myClassLesson3Card',
-    'myClassLesson4Card','myClassLesson5Card','soriGroup1Card','opicGroup1Card'
+    'myClassLesson4Card','myClassLesson5Card','soriGroup1Card','soriGroup2Card','opicGroup1Card'
   ];
   return {
     version:'5.3.187',
@@ -13454,7 +13877,7 @@ function installVisibleBuildBadge(){
   if(!badge){
     badge=document.createElement('div');
     badge.id='mvBuildBadge';
-    badge.textContent='v5.3.191';
+    badge.textContent='v5.3.204';
     badge.title='현재 실행 중인 MY VOCA 빌드';
     document.body.appendChild(badge);
   }
@@ -13831,49 +14254,56 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   }
 
   function ensureSoriCheckbox(){
-    const card=document.getElementById('soriGroup1Card');
-    const c=ensureStandardCourseCheckbox(card,'sori',1,'소리영어 통합 복습 1');
-    if(!c)return;
-    const selected=readJson(STUDY_SELECT_KEYS.sori,[1]).map(Number);
-    c.checked=selected.includes(1);
-    card.classList.toggle('myClassChecked',c.checked);
-    c.onchange=()=>{
-      writeJson(STUDY_SELECT_KEYS.sori,c.checked?[1]:[]);
+    const selected=readJson(STUDY_SELECT_KEYS.sori,[1,2]).map(Number);
+    document.querySelectorAll('#homePage .soriClassSection .soriCourseCard').forEach((card,i)=>{
+      const lesson=Number(card.dataset.studyLesson)||i+1;
+      const c=ensureStandardCourseCheckbox(card,'sori',lesson,`소리영어 통합 복습 ${lesson}`);
+      if(!c)return;
+      c.checked=selected.includes(lesson);
       card.classList.toggle('myClassChecked',c.checked);
-      syncSharedStudySelectionUI('sori');
-    };
+      c.onchange=()=>{
+        persistModeSelection('sori');
+        syncSharedStudySelectionUI('sori');
+      };
+    });
   }
 
   function convertOpicPlaceholderToStandardCard(){
     const sec=document.querySelector('#homePage .opicClassSection');
     if(!sec)return;
-    let card=document.getElementById('opicGroup1Card');
-    if(!card){
-      const old=sec.querySelector('.opicReadyCard');
-      if(old)old.remove();
-      card=document.createElement('div');
-      card.id='opicGroup1Card';
+    const meta=studyCourseMeta('opic')||{};
+    const lessons=Object.keys(meta).map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
+    const selected=readJson(STUDY_SELECT_KEYS.opic,[]).map(Number).filter(n=>lessons.includes(n));
+    sec.querySelectorAll('.opicCourseCard,.opicReadyCard').forEach(x=>x.remove());
+    lessons.forEach(n=>{
+      const d=studyCourseData('opic',n)||{corrections:[],chunks:[],speaking:[],habits:[]};
+      const card=document.createElement('div');
+      card.id=`opicGroup${n}Card`;
       card.className='myClassCard opicCourseCard';
+      card.dataset.studyCourse='opic';
+      card.dataset.studyLesson=String(n);
       card.setAttribute('role','button');
       card.setAttribute('tabindex','0');
-      card.setAttribute('onclick',"studyDirectOpenCourse('opic',1)");
+      card.setAttribute('onclick',`studyDirectOpenCourse('opic',${n})`);
+      const projectTitle=n===1?'KPI/AX 재무효과 평가 프로젝트':n===2?'AI 기반 FDC 시스템 프로젝트':(meta[n]?.shortTitle||`OPIC 프로젝트 ${n}`);
       card.innerHTML=`
-        <div class="myClassTop"><b>OPIC · 표준 학습 세트</b><span class="myClassBadge">READY</span></div>
-        <div class="myClassTitle">OPIC 콘텐츠 추가 준비</div>
-        <div class="myClassDesc">MY 수업·소리영어와 동일한 핵심 답변 → Chunk → 말하기 → AL Point 표준 포맷을 사용합니다.</div>
-        <div class="myClassMeta"><span>⭐ 핵심 답변 0</span><span>🧩 Chunk 0</span><span>🗣 말하기 0</span><span>🏆 AL Point 0</span></div>`;
+        <div class="myClassTop"><b>OPIC ${n} — ${projectTitle}</b><span class="myClassBadge">AL</span></div>
+        <div class="myClassTitle">${meta[n]?.title||''}</div>
+        <div class="myClassMeta"><span>✅ 핵심 교정 ${(d.corrections||[]).length}</span><span>🧩 Chunk ${(d.chunks||[]).length}</span><span>🗣 말하기 ${(d.speaking||[]).length}</span><span>⚠ 습관 ${(d.habits||[]).length}</span></div>`;
       sec.appendChild(card);
-    }
-    studyStampCourseCards();
-    const c=ensureStandardCourseCheckbox(card,'opic',1,'OPIC 표준 학습 세트');
-    const selected=readJson(STUDY_SELECT_KEYS.opic,[]).map(Number);
-    c.checked=selected.includes(1);
-    card.classList.toggle('myClassChecked',c.checked);
-    c.onchange=()=>{
-      writeJson(STUDY_SELECT_KEYS.opic,c.checked?[1]:[]);
-      card.classList.toggle('myClassChecked',c.checked);
-      syncSharedStudySelectionUI('opic');
-    };
+      const c=ensureStandardCourseCheckbox(card,'opic',n,`OPIC ${n}`);
+      if(c){
+        c.checked=selected.includes(n);
+        card.classList.toggle('myClassChecked',c.checked);
+        c.onchange=()=>{
+          let cur=readJson(STUDY_SELECT_KEYS.opic,[]).map(Number).filter(x=>lessons.includes(x));
+          cur=c.checked?[...new Set([...cur,n])]:cur.filter(x=>x!==n);
+          writeJson(STUDY_SELECT_KEYS.opic,cur.sort((a,b)=>a-b));
+          card.classList.toggle('myClassChecked',c.checked);
+          syncSharedStudySelectionUI('opic');
+        };
+      }
+    });
     studyStampCourseCards();
   }
 
@@ -14050,8 +14480,10 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     }
 
     if(mode==='opic'){
-      if(!studyCourseSentenceCards('opic',1).length){
-        alert('OPIC 학습 콘텐츠는 아직 추가되지 않았습니다. 체크박스/선택/반복 구조는 표준화되어 있으며, 콘텐츠가 추가되면 같은 버튼으로 실행됩니다.');
+      const selectedOpic=studyCourseSelectedLessons('opic');
+      const hasContent=selectedOpic.some(n=>studyCourseSentenceCards('opic',n).length);
+      if(!hasContent){
+        alert('선택한 OPIC 수업에 재생할 콘텐츠가 없습니다.');
         return;
       }
     }
@@ -14068,10 +14500,12 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   // Replace the course-selection adapter used by the shared MY/SORI/OPIC playback engine.
   studyCourseSelectedLessons=function(course=ACTIVE_STUDY_COURSE){
     if(course==='sori'){
-      return readJson(STUDY_SELECT_KEYS.sori,[1]).map(Number).filter(n=>n===1);
+      const valid=Object.keys(studyCourseMeta('sori')||{}).map(Number).filter(Number.isFinite);
+      return [...new Set(readJson(STUDY_SELECT_KEYS.sori,[1]).map(Number).filter(n=>valid.includes(n)))].sort((a,b)=>a-b);
     }
     if(course==='opic'){
-      return readJson(STUDY_SELECT_KEYS.opic,[]).map(Number).filter(n=>n===1);
+      const valid=Object.keys(studyCourseMeta('opic')||{}).map(Number).filter(Number.isFinite);
+      return [...new Set(readJson(STUDY_SELECT_KEYS.opic,[]).map(Number).filter(n=>valid.includes(n)))].sort((a,b)=>a-b);
     }
     const all=Object.keys(MY_CLASS_META||{}).map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
     let selected=[];
@@ -14119,8 +14553,21 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   window.syncSharedStudySelectionUI=syncSharedStudySelectionUI;
 
   setTimeout(initializeSharedSelection,220);
+
+  // V5.3.196: SORI selection must accept every registered lesson, not only lesson 1.
+  window.mvSoriSelectionAudit196=function(){
+    const valid=Object.keys(studyCourseMeta('sori')||{}).map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
+    const stored=readJson(STUDY_SELECT_KEYS.sori,[1]).map(Number);
+    return {version:'v5.3.196',validLessons:valid,stored,selected:studyCourseSelectedLessons('sori'),checked:soriChecks().filter(c=>c.checked).map(c=>Number(c.dataset.studyId))};
+  };
 })();
 
+
+/* ===== V5.3.195 · SORI GROUP 2 RING RESCUE SELECTION FIX AUDIT ===== */
+function mvSoriGroup2Audit194(){
+  return {version:'v5.3.196',lessonCount:studyCourseLessonCount('sori'),core:SORI_GROUP_2.corrections.length,chunks:SORI_GROUP_2.chunks.length,speaking:SORI_GROUP_2.speaking.length,points:SORI_GROUP_2.habits.length,sources:[...new Set(SORI_GROUP_2.corrections.map(x=>x.source))],card:!!document.getElementById('soriGroup2Card')};
+}
+window.mvSoriGroup2Audit194=mvSoriGroup2Audit194;
 </script>
 
 
@@ -14157,5 +14604,452 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     <div id="mvInfoBody" class="mvInfoBody"></div>
   </section>
 </div>
+
+<script id="v532192SpeakingQuestionPlaybackStandard">
+/* ===== V5.3.192 · SHARED SPEAKING QUESTION + ANSWER PLAYBACK STANDARD ===== */
+(function(){
+'use strict';
+
+function studySpeakingRow192(itemOrIndex){
+  const course=String(itemOrIndex?.course||ACTIVE_STUDY_COURSE||'my');
+  const lesson=Number(itemOrIndex?.lesson||myClassLessonNo||1);
+  const index=Number(itemOrIndex?.index ?? itemOrIndex ?? 0);
+  const data=(typeof studyCourseData==='function')?studyCourseData(course,lesson):myClassData();
+  return (data?.speaking||[])[index]||null;
+}
+
+function studySpeakingLead192(row){
+  if(!row)return '';
+  const raw=String(row.prompt||row.question||row.title||row.pattern||'').replace(/\s+/g,' ').trim();
+  if(!raw)return '';
+  const ans=String(row.text||'').replace(/\s+/g,' ').trim();
+  if(raw.toLowerCase()===ans.toLowerCase())return '';
+  return raw;
+}
+
+function studySpeakingLeadForTTS192(row){
+  return studySpeakingLead192(row)
+    .replace(/~ing\b/gi,'')
+    .replace(/~\s*/g,'')
+    .replace(/\.{3,}/g,'')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+
+function studySpeakingLeadEl192(block){
+  if(!block)return null;
+  return block.querySelector('h3,.studySpeakingPatternEn')||null;
+}
+
+async function studySpeakSpeakingCard192(index,block=null){
+  const row=studySpeakingRow192(index);
+  if(!row)return false;
+  const answerParts=myClassSplitSentences(row.text||'').filter(Boolean);
+  const lead=studySpeakingLeadForTTS192(row);
+  if(!lead && !answerParts.length)return false;
+
+  myClassStop(false);
+  const token=++MY_CLASS_PLAY.token;
+  MY_CLASS_PLAY.active=true;
+  MY_CLASS_PLAY.paused=false;
+  const focusEl=block||document.getElementById(`mySpeakBlock${index}`);
+  if(focusEl)myClassFocus(focusEl);
+  myClassSyncButtons();
+
+  const pause=Math.max(0,Number(loadAppSettings().myClassPause||700));
+  const alive=()=>token===MY_CLASS_PLAY.token&&!MY_CLASS_PLAY.paused;
+
+  if(lead){
+    const leadEl=studySpeakingLeadEl192(focusEl);
+    MY_CLASS_PLAY.currentText=lead;
+    if(leadEl && !String(row.prompt||row.pattern||'').includes('~')){
+      try{mvDomStartHighlight(lead,leadEl)}catch(e){}
+    }
+    myClassSetStatus(`SPEAKING ${Number(index)+1} · 질문`,true);
+    await speakOne(lead,getSpeechRate(),'en-US');
+    if(!alive())return false;
+    if(pause){await new Promise(r=>setTimeout(r,Math.min(500,pause)));if(!alive())return false;}
+  }
+
+  const sentenceEls=focusEl?Array.from(focusEl.querySelectorAll('.mySpeakSentence')):[];
+  for(let i=0;i<answerParts.length;i++){
+    if(!alive())return false;
+    const text=answerParts[i];
+    MY_CLASS_PLAY.currentText=text;
+    const sentenceEl=sentenceEls[i]||null;
+    if(sentenceEl){try{mvDomStartHighlight(text,sentenceEl)}catch(e){}}
+    try{myClassSetSpeakingKoHighlight(focusEl,i)}catch(e){}
+    myClassSetStatus(`SPEAKING ${Number(index)+1} · 답변 ${i+1}/${answerParts.length}`,true);
+    await speakOne(text,getSpeechRate(),'en-US');
+    if(!alive())return false;
+    if(i<answerParts.length-1&&pause){await new Promise(r=>setTimeout(r,Math.min(350,pause)));}
+  }
+
+  try{myClassClearSpeakingSentenceHighlight()}catch(e){}
+  if(alive()){
+    MY_CLASS_PLAY.active=false;
+    MY_CLASS_PLAY.paused=true;
+    myClassSyncButtons();
+    myClassSetStatus('재생 완료',false);
+  }
+  return true;
+}
+window.studySpeakSpeakingCard192=studySpeakSpeakingCard192;
+window.studySpeakingLead192=studySpeakingLead192;
+window.studySpeakingLeadForTTS192=studySpeakingLeadForTTS192;
+
+// Individual SPEAKING card button: top question/pattern cue -> model answer.
+function studyBindSpeakingQuestionPlayback192(){
+  if(myClassTab!=='speaking')return;
+  document.querySelectorAll('#myClassPage .mySpeakBlock').forEach((block,i)=>{
+    const btn=[...block.querySelectorAll('button')].find(b=>b.textContent.includes('전체 듣기'));
+    if(btn){
+      btn.textContent='🔊 질문 + 문단 전체 듣기';
+      btn.onclick=()=>studySpeakSpeakingCard192(i,block);
+    }
+  });
+  const hint=document.querySelector('#myClassPage .myClassStudyHint');
+  if(hint)hint.textContent='핵심 교정·Chunk는 문장 단위, 말하기는 상단 질문(또는 패턴 Cue) → 모범답안 문단 전체 순서로 재생·반복됩니다.';
+  const badge=document.querySelector('#myClassPage .myClassParagraphBadge');
+  document.querySelectorAll('#myClassPage .myClassParagraphBadge').forEach(x=>x.textContent='질문 + 문단 전체가 1회 반복 단위');
+}
+window.studyBindSpeakingQuestionPlayback192=studyBindSpeakingQuestionPlayback192;
+
+// Wrap the final shared renderer so MY / 소리영어 / OPIC all receive the same binding.
+const baseRenderMyClass192=renderMyClass;
+renderMyClass=function(){
+  baseRenderMyClass192();
+  studyBindSpeakingQuestionPlayback192();
+};
+
+// Canonical whole-play / infinite-play engine: prepend the displayed speaking question/pattern cue.
+const baseM536SpeakItem192=m536SpeakItem;
+m536SpeakItem=async function(item,focusEl,guard=null){
+  if(!item || item.tab!=='speaking')return baseM536SpeakItem192(item,focusEl,guard);
+
+  const row=studySpeakingRow192(item);
+  const lead=studySpeakingLeadForTTS192(row);
+  const parts=myClassSplitSentences(item.text||'');
+  const block=focusEl||document.getElementById(`mySpeakBlock${item.index}`);
+  const alive=()=>!guard||guard();
+  const pause=Math.max(0,Number(loadAppSettings().myClassPause||700));
+
+  if(lead){
+    if(!alive()){try{myClassClearSpeakingSentenceHighlight()}catch(e){}return false;}
+    MY_CLASS_PLAY.currentText=lead;
+    const leadEl=studySpeakingLeadEl192(block);
+    if(leadEl && !String(row?.prompt||row?.pattern||'').includes('~')){
+      try{mvDomStartHighlight(lead,leadEl)}catch(e){}
+    }
+    myClassSetStatus?.(`SPEAKING ${item.index+1} · 질문`,true);
+    await speakOne(lead,getSpeechRate(),'en-US');
+    if(!alive()){try{myClassClearSpeakingSentenceHighlight()}catch(e){}return false;}
+    if(pause){await new Promise(r=>setTimeout(r,Math.min(500,pause)));if(!alive())return false;}
+  }
+
+  for(let i=0;i<parts.length;i++){
+    if(!alive()){try{myClassClearSpeakingSentenceHighlight()}catch(e){}return false;}
+    MY_CLASS_PLAY.currentText=parts[i];
+    const sentenceEl=document.getElementById(`mySpeakSentence${item.index}_${i}`)||block?.querySelectorAll('.mySpeakSentence')?.[i]||null;
+    if(sentenceEl){try{mvDomStartHighlight(parts[i],sentenceEl)}catch(e){}}
+    try{myClassSetSpeakingKoHighlight(block,i)}catch(e){}
+    myClassSetStatus?.(`SPEAKING ${item.index+1} · 답변 ${i+1}/${parts.length}`,true);
+    await speakOne(parts[i],getSpeechRate(),'en-US');
+    if(!alive()){try{myClassClearSpeakingSentenceHighlight()}catch(e){}return false;}
+    if(i<parts.length-1&&pause){await new Promise(r=>setTimeout(r,Math.min(350,pause)));if(!alive())return false;}
+  }
+
+  try{myClassClearSpeakingSentenceHighlight()}catch(e){}
+  return true;
+};
+window.m536SpeakItem=m536SpeakItem;
+
+function mvSpeakingQuestionPlaybackAudit192(){
+  const courses=['my','sori','opic'];
+  return {
+    version:'v5.3.192',
+    sharedCourses:courses.map(course=>({course,enabled:!!STUDY_COURSES?.[course]})),
+    renderBound:renderMyClass!==baseRenderMyClass192,
+    canonicalM536:m536SpeakItem!==baseM536SpeakItem192,
+    individualHandler:typeof window.studySpeakSpeakingCard192==='function',
+    behavior:'speaking prompt/pattern cue -> model answer'
+  };
+}
+window.mvSpeakingQuestionPlaybackAudit192=mvSpeakingQuestionPlaybackAudit192;
+
+setTimeout(()=>{try{studyBindSpeakingQuestionPlayback192()}catch(e){}},0);
+})();
+</script>
+
+
+<script id="v532193SpeakingPlaybackCurrentScreenStandard">
+/* ===== V5.3.194 · SPEAKING QUESTION TTS + CURRENT-SCREEN FULL PLAY STANDARD ===== */
+(function(){
+'use strict';
+
+function studySpeakingRow193(itemOrIndex){
+  const course=String(itemOrIndex?.course||ACTIVE_STUDY_COURSE||'my');
+  const lesson=Number(itemOrIndex?.lesson||myClassLessonNo||1);
+  const index=Number(itemOrIndex?.index ?? itemOrIndex ?? 0);
+  const data=(typeof studyCourseData==='function')?studyCourseData(course,lesson):myClassData();
+  return (data?.speaking||[])[index]||null;
+}
+
+function studySpeakingQuestion193(row,block=null){
+  if(!row)return '';
+  let text=String(row.prompt||row.question||'').replace(/\s+/g,' ').trim();
+  // Pattern-speaking courses may use a pattern cue instead of a literal question.
+  if(!text)text=String(row.pattern||'').replace(/\s+/g,' ').trim();
+  // Final DOM fallback keeps TTS aligned with exactly what the learner sees.
+  if(!text && block){
+    text=String(block.querySelector('h3')?.textContent||block.querySelector('.studySpeakingPatternEn')?.textContent||'')
+      .replace(/\s+/g,' ').trim();
+  }
+  const answer=String(row.text||'').replace(/\s+/g,' ').trim();
+  if(text && text.toLowerCase()===answer.toLowerCase())return '';
+  return text
+    .replace(/~ing\b/gi,'')
+    .replace(/~\s*/g,'')
+    .replace(/\.{3,}/g,'')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+window.studySpeakingQuestion193=studySpeakingQuestion193;
+
+function studySpeakingQuestionEl193(block){
+  if(!block)return null;
+  const h3=block.querySelector('h3');
+  if(h3)return h3;
+  return block.querySelector('.studySpeakingPatternEn')||null;
+}
+
+async function studySpeakQuestionThenAnswer193(item,focusEl,guard=null){
+  const row=studySpeakingRow193(item);
+  if(!row)return false;
+  const block=focusEl||document.getElementById(`mySpeakBlock${item.index}`);
+  const question=studySpeakingQuestion193(row,block);
+  const parts=myClassSplitSentences(String(row.text||item.text||'')).filter(Boolean);
+  const alive=()=>!guard||guard();
+  const pause=Math.max(0,Number(loadAppSettings().myClassPause||700));
+
+  // Question is a first-class TTS item. Unlock before queueing it and give Android/Samsung
+  // speech synthesis a short stabilization gap before the answer begins.
+  if(question){
+    if(!alive())return false;
+    try{m536Unlock?.()}catch(e){}
+    MY_CLASS_PLAY.currentText=question;
+    const qEl=studySpeakingQuestionEl193(block);
+    myClassSetStatus?.(`SPEAKING ${item.index+1} · 질문`,true);
+    await speakOne(question,getSpeechRate(),'en-US',qEl);
+    if(!alive())return false;
+    await new Promise(r=>setTimeout(r,Math.max(220,Math.min(650,pause||220))));
+    if(!alive())return false;
+  }
+
+  for(let i=0;i<parts.length;i++){
+    if(!alive())return false;
+    const text=parts[i];
+    MY_CLASS_PLAY.currentText=text;
+    const sentenceEl=document.getElementById(`mySpeakSentence${item.index}_${i}`)||block?.querySelectorAll('.mySpeakSentence')?.[i]||null;
+    myClassSetStatus?.(`SPEAKING ${item.index+1} · 답변 ${i+1}/${parts.length}`,true);
+    await speakOne(text,getSpeechRate(),'en-US',sentenceEl);
+    if(!alive())return false;
+    try{myClassSetSpeakingKoHighlight(block,i)}catch(e){}
+    if(i<parts.length-1&&pause){
+      await new Promise(r=>setTimeout(r,Math.min(350,pause)));
+      if(!alive())return false;
+    }
+  }
+  try{myClassClearSpeakingSentenceHighlight()}catch(e){}
+  return true;
+}
+window.studySpeakQuestionThenAnswer193=studySpeakQuestionThenAnswer193;
+
+// Replace the final canonical item speaker so full play, infinite repeat, MY, SORI and OPIC
+// all use exactly the same question/cue -> answer sequence.
+const baseM536SpeakItem193=m536SpeakItem;
+m536SpeakItem=async function(item,focusEl,guard=null){
+  if(item?.tab==='speaking')return studySpeakQuestionThenAnswer193(item,focusEl,guard);
+  return baseM536SpeakItem193(item,focusEl,guard);
+};
+window.m536SpeakItem=m536SpeakItem;
+
+async function studySpeakSpeakingCard193(index,block=null){
+  const course=String(ACTIVE_STUDY_COURSE||'my');
+  const item=m536MakeItem(course,myClassLessonNo,'speaking',Number(index)||0);
+  if(!item)return false;
+  myClassStop(false);
+  const token=++MY_CLASS_PLAY.token;
+  MY_CLASS_PLAY.active=true;
+  MY_CLASS_PLAY.paused=false;
+  const focusEl=block||document.getElementById(`mySpeakBlock${index}`);
+  if(focusEl)myClassFocus?.(focusEl);
+  try{m536Unlock?.()}catch(e){}
+  myClassSyncButtons?.();
+  const alive=()=>token===MY_CLASS_PLAY.token&&!MY_CLASS_PLAY.paused;
+  const ok=await studySpeakQuestionThenAnswer193(item,focusEl,alive);
+  if(alive()){
+    MY_CLASS_PLAY.active=false;
+    MY_CLASS_PLAY.paused=true;
+    myClassSyncButtons?.();
+    myClassSetStatus?.(ok?'재생 완료':'재생 정지',false);
+  }
+  return ok;
+}
+window.studySpeakSpeakingCard193=studySpeakSpeakingCard193;
+
+function studyBindSpeakingPlayback193(){
+  if(myClassTab!=='speaking')return;
+  document.querySelectorAll('#myClassPage .mySpeakBlock').forEach((block,i)=>{
+    const btn=[...block.querySelectorAll('button')].find(b=>b.textContent.includes('전체 듣기')||b.textContent.includes('질문 + 문단'));
+    if(btn){
+      btn.textContent='🔊 질문 + 문단 전체 듣기';
+      btn.onclick=(e)=>{e?.preventDefault?.();e?.stopPropagation?.();studySpeakSpeakingCard193(i,block);};
+    }
+  });
+  document.querySelectorAll('#myClassPage .myClassParagraphBadge').forEach(x=>x.textContent='질문 + 문단 전체가 1회 반복 단위');
+}
+window.studyBindSpeakingPlayback193=studyBindSpeakingPlayback193;
+
+const baseRenderMyClass193=renderMyClass;
+renderMyClass=function(){
+  baseRenderMyClass193();
+  studyBindSpeakingPlayback193();
+};
+
+function m536VisibleCardIndex193(tab){
+  const selector=tab==='corrections'?'.myStudyCard[id^="myCorrectionCard"]'
+    :tab==='chunks'?'.myStudyCard[id^="myChunkCard"]'
+    :tab==='speaking'?'.mySpeakBlock[id^="mySpeakBlock"]':null;
+  if(!selector)return 0;
+  const cards=[...document.querySelectorAll(`#myClassContent ${selector}`)];
+  if(!cards.length)return 0;
+  const vh=window.innerHeight||document.documentElement.clientHeight||800;
+  // Prefer the first card whose center is currently on screen. This also makes replay
+  // start naturally from where the learner has scrolled, not merely from item #1.
+  let chosen=cards.find(el=>{const r=el.getBoundingClientRect();const c=(r.top+r.bottom)/2;return c>=80&&c<=vh-80;});
+  if(!chosen)chosen=cards.find(el=>{const r=el.getBoundingClientRect();return r.bottom>80&&r.top<vh;})||cards[0];
+  const m=String(chosen.id||'').match(/(\d+)$/);
+  return m?Number(m[1])||0:0;
+}
+
+function m536CurrentScreenStartIndex193(course=ACTIVE_STUDY_COURSE){
+  const c=String(course||'my');
+  const list=m536BuildPlaylist(c);
+  if(!list.length)return 0;
+  const lesson=Number(myClassLessonNo||list[0].lesson||1);
+  const tab=String(myClassTab||studyCourseOrder(c)[0]||'corrections');
+  const visibleIndex=m536VisibleCardIndex193(tab);
+  let pos=list.findIndex(x=>Number(x.lesson)===lesson&&String(x.tab)===tab&&Number(x.index)===visibleIndex);
+  if(pos<0)pos=list.findIndex(x=>Number(x.lesson)===lesson&&String(x.tab)===tab);
+  if(pos<0)pos=list.findIndex(x=>Number(x.lesson)===lesson);
+  return pos<0?0:pos;
+}
+window.m536CurrentScreenStartIndex193=m536CurrentScreenStartIndex193;
+
+// Global ▶ button standard: if playback is stopped, start from the tab/card currently
+// visible. If it was explicitly paused, resume the saved playback position as before.
+const baseM536ResumeGlobal193=m536ResumeGlobal;
+m536ResumeGlobal=function(){
+  const pausedMode=String(M536_TOGGLE_STATE.pausedMode||'idle');
+  const course=String(ACTIVE_STUDY_COURSE||M536.course||'my');
+  const chosen=m536Lessons(course);
+  if(!chosen.length){
+    myClassSetStatus?.('재생할 선택 항목이 없습니다',false);
+    myClassSyncButtons?.();
+    return false;
+  }
+
+  // Resume only when the learner is still looking at the same lesson/tab that was paused.
+  // If they moved to another tab (e.g. 핵심 교정 -> 말하기), the visible screen wins.
+  if(pausedMode==='full'){
+    const pausedCourse=String(M536_TOGGLE_STATE.pausedCourse||course);
+    const pausedList=m536BuildPlaylist(pausedCourse);
+    const pausedItem=pausedList[Math.max(0,Number(M536_TOGGLE_STATE.pausedCursor)||0)]||null;
+    const sameScreen=pausedCourse===course && pausedItem &&
+      Number(pausedItem.lesson)===Number(myClassLessonNo) &&
+      String(pausedItem.tab)===String(myClassTab);
+    if(sameScreen)return baseM536ResumeGlobal193();
+  }else if(pausedMode==='infinite'){
+    const x=M536_TOGGLE_STATE.pausedInfiniteItem;
+    const sameScreen=x && String(x.course||course)===course &&
+      Number(x.lesson)===Number(myClassLessonNo) &&
+      String(x.tab)===String(myClassTab);
+    if(sameScreen)return baseM536ResumeGlobal193();
+  }
+
+  // New start or screen changed after a stop: start exactly from the current visible card.
+  M536_TOGGLE_STATE.pausedMode='idle';
+  M536_TOGGLE_STATE.pausedInfiniteItem=null;
+  M536.course=course;
+  const startAt=m536CurrentScreenStartIndex193(course);
+  m536RunFull(startAt);
+  return true;
+};
+window.m536ResumeGlobal=m536ResumeGlobal;
+
+m536ToggleGlobalPlayback=function(){
+  if(m536IsPlaying())return m536PauseGlobal();
+  return m536ResumeGlobal();
+};
+window.m536ToggleGlobalPlayback=m536ToggleGlobalPlayback;
+
+function mvSpeakingPlaybackAudit193(){
+  const course=String(ACTIVE_STUDY_COURSE||'my');
+  const row=studySpeakingRow193({course,lesson:myClassLessonNo,index:0});
+  return {
+    version:'v5.3.196',
+    questionDetected:studySpeakingQuestion193(row),
+    currentCourse:course,
+    currentLesson:myClassLessonNo,
+    currentTab:myClassTab,
+    currentStartIndex:m536CurrentScreenStartIndex193(course),
+    canonicalQuestionThenAnswer:m536SpeakItem!==baseM536SpeakItem193,
+    sharedCourses:['my','sori','opic'].map(x=>({course:x,enabled:!!STUDY_COURSES?.[x]})),
+    behavior:'idle 전체 재생 = current visible tab/card; paused 전체 재생 = resume saved cursor'
+  };
+}
+window.mvSpeakingPlaybackAudit193=mvSpeakingPlaybackAudit193;
+
+setTimeout(()=>{try{studyBindSpeakingPlayback193()}catch(e){}},0);
+})();
+</script>
+
+
+<script id="v53197PatternGrammarSlotStandard">
+/* ===== V5.3.204 · PATTERN GRAMMAR-SLOT HIGHLIGHT STANDARD =====
+   All courses use studyFindPatternHits(). Grammar labels such as S/V/O/C/A/B
+   are placeholders only; actual sentence words are highlighted instead.
+*/
+function mvPatternGrammarSlotAudit197(){
+  const cases=[
+    ['wonder whether S would ~','I wonder whether I would be satisfied.'],
+    ['so that S can V','I work extra hours so that we can make ends meet.'],
+    ['the thought that S might ~','The thought that I might look younger was tempting.'],
+    ['remind A of B','It reminds me of her.'],
+    ['make someone think that ~','Seeing them makes me think that natural aging may be better.']
+  ];
+  const rows=cases.map(([pattern,text])=>({pattern,text,fixedParts:studyPatternFixedParts(pattern),hits:studyFindPatternHits(text,pattern)}));
+  return {version:'v5.3.204',rule:'S/V/O/C/A/B are grammar slots, never literal match tokens',passed:rows.every(r=>r.hits.length>0),rows};
+}
+window.mvPatternGrammarSlotAudit197=mvPatternGrammarSlotAudit197;
+</script>
+
+
+<script>
+/* ===== V5.3.204 · OPIC REGISTRY CARD AUDIT ===== */
+window.mvOpicRegistryAudit202=function(){
+  const meta=studyCourseMeta('opic')||{};
+  const lessons=Object.keys(meta).map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
+  return {
+    version:'v5.3.204',
+    lessons,
+    lessonCount:studyCourseLessonCount('opic'),
+    cards:[...document.querySelectorAll('#homePage .opicClassSection .opicCourseCard')].map(c=>({id:c.id,lesson:Number(c.dataset.studyLesson),title:c.querySelector('.myClassTop b')?.textContent||''})),
+    selected:studyCourseSelectedLessons('opic')
+  };
+};
+</script>
+
 </body></html>
 
