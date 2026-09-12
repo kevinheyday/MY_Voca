@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.237</title>
+<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.241</title>
 
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
@@ -2766,13 +2766,13 @@ html[data-mv-activity="sentence"] .quizModeSwitch{
 /* V5.3.189 · MY/SORI/OPIC correction Tip-pattern color standard */
 #myClassPage .myStudyEn .studyCoreChunkMark{color:#0f766e!important;background:#ccfbf1!important;font-weight:950!important;border-radius:5px;padding:0 2px;}
 
-/* v5.3.237 · Why + exact wrong-token highlight standard */
+/* v5.3.241 · Why + exact wrong-token highlight standard */
 .myStudyBadMark229{color:#8a2b06;background:#ffd86b;font-weight:900;border-radius:6px;padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 .myStudyWhy229{margin:8px 0 10px;padding:10px 12px;border-radius:12px;background:#eef7ff;border:1px solid #cfe8fb;color:#24516f;font-size:.92rem;font-weight:750;line-height:1.45}
 .myStudyRuleToken229{display:inline-block;padding:0 .22em;margin:0 .04em;border-radius:5px;background:rgba(255,216,107,.55);color:#7b3a08;font-weight:850}
 
 
-/* v5.3.237 · unified compact correction-reason box */
+/* v5.3.241 · unified compact correction-reason box */
 .myStudyReason230{
   margin:7px 0 9px;
   padding:8px 10px;
@@ -2798,17 +2798,17 @@ html[data-mv-activity="sentence"] .quizModeSwitch{
 }
 
 
-/* v5.3.237 · vertical edge lesson navigation standard */
+/* v5.3.241 · vertical edge lesson navigation standard */
 .myClassSwipeHint b{font-weight:850;color:#5b3bb5}
 
 
-/* v5.3.237 · prevent browser pull-to-refresh from hijacking lesson edge swipes */
+/* v5.3.241 · prevent browser pull-to-refresh from hijacking lesson edge swipes */
 #myClassPage{
   overscroll-behavior-y: contain;
 }
 
 
-/* v5.3.237 · hard guard for Android content:// pull-to-refresh */
+/* v5.3.241 · hard guard for Android content:// pull-to-refresh */
 html,body{
   overscroll-behavior-y:none;
 }
@@ -2830,6 +2830,77 @@ html,body{
 #sharedStudyStart{grid-row:2!important;grid-column:2!important;width:100%!important;min-height:64px!important;border-radius:14px!important;padding:8px!important;line-height:1.25!important}
 @media(max-width:520px){#sharedStudyRepeatParts206{padding:8px}#sharedStudyRepeatParts206 label{font-size:9.5px}#sharedStudyStart{font-size:10px!important}}
 </style>
+
+<style id="v532239StudyFavoriteStyle">
+/* v5.3.241 · shared study favorite standard */
+#myClassContent .myStudyCard,
+#myClassContent .mySpeakBlock{position:relative!important}
+#myClassContent .myStudyCard .myStudyNum,
+#myClassContent .mySpeakBlock .myStudyNum{padding-right:102px!important;box-sizing:border-box}
+.studyFavoriteBtn239{
+  position:absolute!important;
+  top:12px!important;
+  right:12px!important;
+  z-index:8!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:4px!important;
+  min-height:34px!important;
+  padding:7px 9px!important;
+  border:1px solid #d0d5dd!important;
+  border-radius:11px!important;
+  background:#fff!important;
+  color:#667085!important;
+  font-size:10.5px!important;
+  font-weight:950!important;
+  line-height:1!important;
+  box-shadow:0 2px 7px rgba(15,23,42,.07)!important;
+  cursor:pointer!important;
+  touch-action:manipulation!important;
+  -webkit-tap-highlight-color:transparent!important;
+}
+.studyFavoriteBtn239 .star{font-size:16px!important;line-height:1!important;color:#98a2b3!important}
+.studyFavoriteBtn239.active{
+  border-color:#f6c453!important;
+  background:#fff9df!important;
+  color:#8a5a00!important;
+}
+.studyFavoriteBtn239.active .star{color:#f4b400!important}
+#myClassContent .studyFavoriteCard239{
+  border-color:#f2cc63!important;
+  box-shadow:0 4px 14px rgba(244,180,0,.10)!important;
+}
+#sharedStudyRepeatParts206 .studyFavoriteOnly239{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:4px!important;
+  padding:5px 7px!important;
+  border:1px solid #f1d06a!important;
+  background:#fff9df!important;
+  color:#7a5300!important;
+  border-radius:9px!important;
+  font-size:10px!important;
+  font-weight:950!important;
+  white-space:nowrap!important;
+}
+#sharedStudyRepeatParts206 .studyFavoriteOnly239 input{
+  width:16px!important;
+  height:16px!important;
+  margin:0!important;
+  accent-color:#e0a400!important;
+}
+#sharedStudyRepeatParts206.favoriteOnly239{
+  border-color:#f0ca5c!important;
+  background:#fffdf4!important;
+}
+@media(max-width:520px){
+  .studyFavoriteBtn239{top:10px!important;right:10px!important;padding:6px 7px!important;font-size:10px!important}
+  #myClassContent .myStudyCard .myStudyNum,
+  #myClassContent .mySpeakBlock .myStudyNum{padding-right:94px!important}
+}
+</style>
+
 </head><body>
 
 <button id="drawerMenuButton" class="drawerMenuButton" type="button" aria-label="메뉴 열기" aria-expanded="false">☰</button>
@@ -2879,7 +2950,7 @@ html,body{
       <div>
         <div class="homeEyebrow" id="homeCourseEyebrow">MY VOCA UNIFIED COURSE · 69 DAYS</div>
         <h1 id="homeCourseTitle">MY VOCA</h1>
-        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.237</div>
+        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.241</div>
       </div>
       <div class="homeDayBadge"><b id="homeRegisteredDays">30</b><span>등록 Day</span></div>
     </section>
@@ -3052,7 +3123,15 @@ html,body{
         <div class="myClassDesc">선택한 핵심 문장과 Chunk를 기존 소리영어와 동일한 Chunk → 핵심 문장 → 말하기 → 소리 Point 포맷으로 학습합니다.</div>
         <div class="myClassMeta"><span>⭐ 핵심 문장 28</span><span>🧩 Chunk 35</span><span>🗣 말하기 12</span><span>🎧 소리 Point 7</span></div>
       </div>
-    </section>
+    
+      <div class="myClassCard soriCourseCard" id="soriGroup3Card" data-study-course="sori" data-study-lesson="3" role="button" tabindex="0" onclick="studyDirectOpenCourse('sori',3)">
+        <div class="myClassTop"><b>소리영어 · 수업 3</b><span class="myClassBadge">NEW · 9/12</span></div>
+        <div class="myClassTitle">Daycare Should Mean Care</div>
+        <div class="soriLessonStrip"><span>① Daycare Should Mean Care</span></div>
+        <div class="myClassDesc">Daycare 지문의 핵심 Chunk와 문장을 Chunk → 핵심 문장 → 말하기 → 소리 Point 포맷으로 학습합니다.</div>
+        <div class="myClassMeta"><span>⭐ 핵심 문장 16</span><span>🧩 Chunk 24</span><span>🗣 말하기 7</span><span>🎧 소리 Point 6</span></div>
+      </div>
+</section>
 
     <section class="opicClassSection" style="display:none">
       <div class="sectionHead"><div><b>🎤 OPIC</b><span class="sectionSub">MY 수업·소리영어와 같은 공통 학습 엔진으로 확장됩니다.</span></div></div>
@@ -3756,7 +3835,7 @@ async function myClassSpeakSequence(texts,{focusEl=null,statusPrefix='전체 듣
   if(!list.length)return;
 
   myClassStop(false);
-  // v5.3.237: Samsung/Android content:// TTS must be unlocked from the same tap path.
+  // v5.3.241: Samsung/Android content:// TTS must be unlocked from the same tap path.
   try{unlockTTSFromGesture?.()}catch(e){}
   const token=++MY_CLASS_PLAY.token;
   MY_CLASS_PLAY.active=true;
@@ -5480,6 +5559,8 @@ const OPIC_LESSON_18 = {"corrections":[{"ko":"저는 보통 출퇴근 시간에 
 const OPIC_LESSON_19 = {"corrections":[{"ko":"제가 가장 좋아하는 웹사이트는 Daum입니다.","en":"I would say my favorite website is Daum.","bad":"Well, my favorite website is Daum.","tip":"I would say를 넣으면 말하기가 자연스럽다.","whyType":"표현","why":"`Well` → `I would say` / I would say를 넣으면 말하기가 자연스럽다","badMarks":[{"start":0,"end":4}]},{"ko":"개인적으로 오랫동안 Daum을 사용해 왔습니다.","en":"Personally, I've been using Daum for a long time.","bad":"For the time being, I have been using Daum.","tip":"for the time being=당분간, for a long time=오랫동안.","whyType":"표현","why":"`For the time being, I have` → `Personally I've`","badMarks":[{"start":0,"end":26}]},{"ko":"Daum에서 오랫동안 같은 닉네임을 사용해 왔습니다.","en":"I've had the same nickname, “Baramdori,” on Daum for years.","bad":"I have a special, my nickname in Daum...","tip":"I've had + 기간.","grammar":"관사/소유격: `a + my` 함께 사용 불가"},{"ko":"매일 아침 가장 먼저 이메일을 확인합니다.","en":"Every morning, the first thing I do is check my email.","bad":"When I start the day, every day, first of all, I check my email...","tip":"the first thing I do is ~.","whyType":"표현","why":"`start the day, every day, first of all, I` → `do is` / the first thing I do is ~","badMarks":[{"start":7,"end":48}]},{"ko":"특히 금융 섹션을 자주 둘러봅니다.","en":"I usually browse different sections on Daum, especially the finance section.","bad":"Especially money section.","tip":"finance section.","whyType":"표현","why":"`money` → `the finance` / finance section","badMarks":[{"start":11,"end":16}]},{"ko":"미국·한국 주식시장과 세계 경제 동향을 확인합니다.","en":"I check updates on the U.S. and Korean stock markets, as well as global economic trends.","bad":"I check the American stock market ... even Koreans too.","tip":"stock markets / global economic trends.","whyType":"표현","why":"`American` → `U S and Korean` / stock markets / global economic trends","badMarks":[{"start":12,"end":20}]},{"ko":"다른 사람들의 이야기를 읽으면 제 삶을 돌아보게 될 때도 있습니다.","en":"Sometimes, other people's personal stories make me reflect on my own life.","bad":"Sometimes I reflect myself.","tip":"reflect on my own life.","whyType":"표현","why":"`myself` → `on my own life` / reflect on my own life","badMarks":[{"start":20,"end":26}]},{"ko":"시간을 때우고 싶을 때 웹툰이나 만화를 읽습니다.","en":"When I want to kill some time, I read webtoons or comics.","bad":"When I want to time killing...","tip":"kill some time.","whyType":"표현","why":"`killing` → `I read webtoons or comics` / kill some time","badMarks":[{"start":20,"end":27}]},{"ko":"만화를 읽으면 긴장을 풀고 스트레스를 해소하는 데 도움이 됩니다.","en":"Reading comics helps me unwind and relieve stress.","bad":"I can relieve my stress by some kind of comic.","tip":"unwind and relieve stress.","whyType":"표현","why":"`I can` → `Reading comics helps me unwind and` / unwind and relieve stress","badMarks":[{"start":0,"end":5}]},{"ko":"가끔 영상을 보다 보면 시간 가는 줄 모릅니다.","en":"I sometimes lose track of time while watching videos.","bad":"","tip":"lose track of time = 시간 가는 줄 모르다."}],"chunks":[{"pattern":"for a long time","ko":"오랫동안","example":"I've been using Daum for a long time.","exampleKo":"오랫동안 Daum을 사용해 왔습니다."},{"pattern":"The first thing I do is ~","ko":"가장 먼저 하는 일은 ~이다","example":"The first thing I do in the morning is check my email.","exampleKo":"아침에 가장 먼저 하는 일은 이메일 확인입니다."},{"pattern":"keep up with the latest ~","ko":"최신 ~을 계속 확인하다","example":"I keep up with the latest financial news.","exampleKo":"최신 금융 뉴스를 계속 확인합니다."},{"pattern":"reflect on one's own life","ko":"자신의 삶을 돌아보다","example":"Some stories make me reflect on my own life.","exampleKo":"어떤 이야기는 제 삶을 돌아보게 합니다."},{"pattern":"kill some time","ko":"시간을 때우다","example":"When I want to kill some time, I read webtoons.","exampleKo":"시간을 때우고 싶을 때 웹툰을 봅니다."},{"pattern":"unwind and relieve stress","ko":"긴장을 풀고 스트레스를 해소하다","example":"It's a great way to unwind and relieve stress.","exampleKo":"긴장을 풀고 스트레스를 해소하기 좋은 방법입니다."},{"pattern":"feel attached to ~","ko":"~에 애착을 느끼다","example":"I feel somewhat attached to Daum.","exampleKo":"Daum에 어느 정도 애착을 느낍니다."},{"pattern":"lose track of time while ~ing","ko":"~하다가 시간 가는 줄 모르다","example":"I sometimes lose track of time while watching videos.","exampleKo":"영상을 보다 보면 가끔 시간 가는 줄 모릅니다."}],"habits":[{"title":"① favorite 이유를 기능+감정으로","text":"정보·금융뉴스·이메일뿐 아니라 오랜 사용과 닉네임 때문에 애착이 있다는 점을 넣는다."},{"title":"② finance / stories / webtoons로 구체화","text":"사이트에서 실제로 하는 일을 세 갈래로 나눠 말한다."},{"title":"③ kill time vs lose track of time","text":"kill some time=시간을 때우다, lose track of time=시간 가는 줄 모르다를 구분한다."}],"speaking":[{"prompt":"What is your favorite website? Why do you like it, and what do you usually do there?","promptKo":"OPIC 질문에 맞춰 AL 수준으로 답해 보세요.","text":"Well, I would say my favorite website is Daum. I know most Koreans tend to use Naver these days, but personally, I’ve been using Daum for a very long time, so I’m really familiar with it.\n\nActually, I’ve even had the same nickname, “Baramdori,” on Daum for years, so I feel somewhat attached to the website.\n\nThe first thing I do in the morning is check my email. After that, I usually browse the finance section because I’m very interested in the economy and investing. I check updates on the U.S. and Korean stock markets, as well as the latest global economic trends.\n\nI also enjoy reading articles and personal stories posted by individual users. Sometimes, their stories make me reflect on my own life, which I find quite interesting.\n\nAnd when I just want to kill some time, I read webtoons or comics. They help me unwind and relieve stress.\n\nSo, for me, Daum is more than just a website. It’s a place where I can get useful information, keep up with financial news, and entertain myself at the same time. That’s why I still use it almost every day.","ko":"위 핵심 교정과 Chunk를 활용해 전체 답변의 흐름을 익히세요."}]};
 
 
+const SORI_GROUP_3 = {"corrections":[{"source":"① Daycare Should Mean Care","ko":"최근 보도들을 보면 정말 안심하고 아이를 맡길 수 있을지 의문이 듭니다.","chunkRefs":[{"id":"day_0_0","text":"make me wonder whether"},{"id":"day_0_1","text":"with peace of mind"}],"en":"Recent reports make me wonder whether I will truly be able to leave him there with peace of mind.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"아이들이 학대받는 사례가 뉴스에 너무 자주 등장하는 것 같습니다.","chunkRefs":[{"id":"day_1_0","text":"Cases of children being mistreated"},{"id":"day_1_1","text":"seem to appear"},{"id":"day_1_2","text":"far too often"}],"en":"Cases of children being mistreated seem to appear in the news far too often.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"인내심과 진심 어린 애정으로 아이들을 돌보는 헌신적인 교사들이 많다는 것을 압니다.","chunkRefs":[{"id":"day_2_0","text":"care for children"},{"id":"day_2_1","text":"with patience and genuine affection"}],"en":"I know there are many devoted teachers who care for children with patience and genuine affection.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"그렇지만 내 아이가 항상 그런 선생님을 만날 만큼 운이 좋으리라는 보장은 없습니다.","chunkRefs":[{"id":"day_3_0","text":"there is no guarantee that"},{"id":"day_3_1","text":"fortunate enough to meet"}],"en":"Still, there is no guarantee that my child will always be fortunate enough to meet such teachers.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"최근 어린이집에서 치아가 부러진 아이에 관한 이야기를 들었습니다.","chunkRefs":[{"id":"day_4_0","text":"heard about a child"},{"id":"day_4_1","text":"whose tooth was broken"}],"en":"Recently, I heard about a child whose tooth was broken at a daycare center.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"그 보도를 보니 정말 화가 치밀었습니다.","chunkRefs":[{"id":"day_5_0","text":"made my blood boil"}],"en":"Merely watching the report made my blood boil.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"그 아이의 부모가 어떤 일을 겪었을지 상상하기조차 어렵습니다.","chunkRefs":[{"id":"day_6_0","text":"could hardly imagine"},{"id":"day_6_1","text":"must have gone through"}],"en":"I could hardly imagine what the child's parents must have gone through.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"부모로서 저는 육아가 얼마나 힘들 수 있는지 직접 경험으로 압니다.","chunkRefs":[{"id":"day_7_0","text":"As a parent"},{"id":"day_7_1","text":"know firsthand how exhausting childcare can be"}],"en":"As a parent, I know firsthand how exhausting childcare can be.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"어린아이들은 끊임없는 관심과 인내심, 정서적 에너지를 필요로 합니다.","chunkRefs":[{"id":"day_8_0","text":"require constant attention"}],"en":"Young children require constant attention, patience, and emotional energy.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"어린이집 교사들은 낮은 보수와 엄청난 스트레스에 시달릴 수 있고, 그런 문제들은 진지하게 다뤄져야 합니다.","chunkRefs":[{"id":"day_9_0","text":"burdened with tremendous stress"},{"id":"day_9_1","text":"deserve serious attention"}],"en":"Daycare teachers may be underpaid and burdened with tremendous stress, and those problems deserve serious attention.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"하지만 어떤 어려움도 힘없는 아이들에게 분풀이하는 것을 정당화할 수는 없습니다.","chunkRefs":[{"id":"day_10_0","text":"can never excuse"},{"id":"day_10_1","text":"taking frustration out on"}],"en":"However, hardship can never excuse taking frustration out on defenseless children.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"아이들을 책임지는 어른들은 감정을 통제하고 아이들의 안전을 최우선으로 해야 합니다.","chunkRefs":[{"id":"day_11_0","text":"keep their emotions in check"},{"id":"day_11_1","text":"put the children's safety first"}],"en":"Adults responsible for children must keep their emotions in check and put the children's safety first.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"교사들만이 유일한 걱정거리는 아닙니다.","chunkRefs":[{"id":"day_12_0","text":"not the only concern"}],"en":"Teachers are not the only concern.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"일부 원장들은 어린이집 운영을 그저 사업 기회 정도로 여기는 듯합니다.","chunkRefs":[{"id":"day_13_0","text":"regard running a daycare center as"},{"id":"day_13_1","text":"little more than a business opportunity"}],"en":"Some directors appear to regard running a daycare center as little more than a business opportunity.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"그런 학대를 저지르거나 방치하는 사람은 보육 현장에서 영구적으로 배제되어야 합니다.","chunkRefs":[{"id":"day_14_0","text":"should be permanently removed from childcare"}],"en":"Anyone who abuses children or knowingly allows such abuse should be permanently removed from childcare.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"아이들은 항상 스스로 목소리를 낼 수 있는 것은 아니므로 어른과 기관이 그들을 옹호해야 합니다.","chunkRefs":[{"id":"day_15_0","text":"speak up for themselves"},{"id":"day_15_1","text":"stand up for them"}],"en":"Children cannot always speak up for themselves, so adults and institutions must stand up for them.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."}],"chunks":[{"source":"① Daycare Should Mean Care","id":"day_chunk_0","pattern":"make + person + wonder whether ~","ko":"~인지 의문이 들게 하다","example":"Recent reports make me wonder whether the daycare is truly safe.","exampleKo":"최근 보도를 보면 그 어린이집이 정말 안전한지 의문이 든다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_1","pattern":"with peace of mind","ko":"안심하고 / 마음 놓고","example":"I want to leave my child there with peace of mind.","exampleKo":"나는 안심하고 아이를 그곳에 맡기고 싶다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_2","pattern":"cases of A being p.p.","ko":"A가 ~당하는 사례","example":"Cases of children being mistreated should never be ignored.","exampleKo":"아이들이 학대받는 사례는 절대 무시되어서는 안 된다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_3","pattern":"seem to + V","ko":"~인 것 같다","example":"These incidents seem to appear in the news too often.","exampleKo":"이런 사건들이 뉴스에 너무 자주 나오는 것 같다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_4","pattern":"far too + adjective/adverb","ko":"지나치게 너무 ~","example":"These cases happen far too often.","exampleKo":"이런 사례는 지나치게 자주 발생한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_5","pattern":"care for + person","ko":"~을 돌보다","example":"Good teachers care for children with patience.","exampleKo":"좋은 교사들은 인내심을 가지고 아이들을 돌본다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_6","pattern":"there is no guarantee that ~","ko":"~라는 보장은 없다","example":"There is no guarantee that every daycare provides the same quality of care.","exampleKo":"모든 어린이집이 같은 수준의 돌봄을 제공한다는 보장은 없다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_7","pattern":"be fortunate enough to + V","ko":"운 좋게도 ~하다","example":"We were fortunate enough to meet a caring teacher.","exampleKo":"우리는 운 좋게도 따뜻한 선생님을 만났다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_8","pattern":"a person whose + noun + V","ko":"~의 …가 ~한 사람","example":"I heard about a child whose tooth was broken at daycare.","exampleKo":"어린이집에서 치아가 부러진 아이 이야기를 들었다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_9","pattern":"make one's blood boil","ko":"몹시 화나게 하다","example":"The report made my blood boil.","exampleKo":"그 보도를 보고 정말 화가 치밀었다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_10","pattern":"can hardly imagine ~","ko":"~을 상상하기조차 어렵다","example":"I can hardly imagine how worried the parents were.","exampleKo":"부모가 얼마나 걱정했을지 상상하기조차 어렵다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_11","pattern":"must have + p.p.","ko":"분명 ~했을 것이다","example":"The parents must have gone through a terrible time.","exampleKo":"그 부모들은 분명 끔찍한 시간을 겪었을 것이다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_12","pattern":"know firsthand how ~","ko":"직접 경험해서 얼마나 ~한지 알다","example":"As a parent, I know firsthand how exhausting childcare can be.","exampleKo":"부모로서 나는 육아가 얼마나 힘든지 직접 안다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_13","pattern":"require + noun","ko":"~을 필요로 하다","example":"Young children require constant attention.","exampleKo":"어린아이들은 지속적인 관심을 필요로 한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_14","pattern":"be burdened with ~","ko":"~의 부담을 지다","example":"Many teachers are burdened with tremendous stress.","exampleKo":"많은 교사들이 엄청난 스트레스에 시달린다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_15","pattern":"deserve serious attention","ko":"진지하게 다뤄질 필요가 있다","example":"Those problems deserve serious attention.","exampleKo":"그 문제들은 진지하게 다뤄져야 한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_16","pattern":"can never excuse ~","ko":"~을 절대 정당화할 수 없다","example":"Stress can never excuse hurting a child.","exampleKo":"스트레스가 아이를 해치는 것을 정당화할 수 없다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_17","pattern":"take A out on B","ko":"A를 B에게 풀다","example":"Don't take your frustration out on other people.","exampleKo":"다른 사람에게 화풀이하지 마라."},{"source":"① Daycare Should Mean Care","id":"day_chunk_18","pattern":"keep A in check","ko":"A를 억제하고 통제하다","example":"Adults need to keep their emotions in check.","exampleKo":"어른들은 감정을 통제해야 한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_19","pattern":"put A first","ko":"A를 최우선으로 두다","example":"We must put children's safety first.","exampleKo":"우리는 아이들의 안전을 최우선으로 해야 한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_20","pattern":"regard A as B","ko":"A를 B로 여기다","example":"Some people regard childcare as just a business opportunity.","exampleKo":"일부 사람들은 보육을 그저 사업 기회로 여긴다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_21","pattern":"little more than ~","ko":"~에 지나지 않는","example":"They treat the center as little more than a business.","exampleKo":"그들은 그 시설을 사업에 지나지 않는 것으로 취급한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_22","pattern":"speak up for oneself","ko":"자기 자신을 위해 목소리를 내다","example":"Young children cannot always speak up for themselves.","exampleKo":"어린아이들은 항상 스스로 목소리를 낼 수 있는 것은 아니다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_23","pattern":"stand up for + person","ko":"~을 옹호하다","example":"Adults must stand up for children who cannot protect themselves.","exampleKo":"어른들은 스스로를 보호할 수 없는 아이들을 옹호해야 한다."}],"speaking":[{"source":"① Daycare Should Mean Care","pattern":"make + person + wonder whether ~","prompt":"What recent issue makes you wonder whether a service is truly safe?","promptKo":"","text":"Recent reports make me wonder whether some daycare centers are truly safe.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"there is no guarantee that ~","prompt":"What can parents never be completely sure about?","promptKo":"","text":"There is no guarantee that every child will always meet a caring teacher.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"know firsthand how ~","prompt":"What do you know firsthand from your own experience?","promptKo":"","text":"As a parent, I know firsthand how much attention young children need.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"take A out on B","prompt":"What should people avoid doing when they are under stress?","promptKo":"","text":"People should never take their frustration out on someone weaker than them.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"put A first","prompt":"What should a daycare put first?","promptKo":"","text":"A daycare must put children's safety and well-being first.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"regard A as B","prompt":"How should childcare be regarded?","promptKo":"","text":"We should regard childcare as a responsibility, not merely as a business opportunity.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"stand up for + person","prompt":"Who should stand up for children who cannot speak for themselves?","promptKo":"","text":"Adults and institutions must stand up for children who cannot protect themselves.","ko":""}],"habits":[{"title":"① 긴 문장은 의미 덩어리로","text":"make me wonder whether / with peace of mind처럼 Chunk 단위로 연결한다."},{"title":"② 감정 표현은 한 덩어리로","text":"made my blood boil / could hardly imagine / must have gone through를 끊지 않는다."},{"title":"③ 핵심어에 강세","text":"GUARANTEE / FORTUNATE / SERIOUS처럼 의미 핵심어에 강세를 둔다."},{"title":"④ 병렬 리듬","text":"constant attention, patience, and emotional energy를 일정한 리듬으로 말한다."},{"title":"⑤ A-B 패턴 대비","text":"take A out ON B / regard A AS B / put A FIRST의 핵심 부분을 분명히 한다."},{"title":"⑥ speak up / stand up 구분","text":"speak up for themselves는 스스로 목소리를 내는 것, stand up for them은 다른 사람이 옹호하는 것이다."}]};
+
 const STUDY_COURSES = {
   my:{
     key:'my',
@@ -5502,9 +5583,10 @@ const STUDY_COURSES = {
     speakingMode:'pattern',
     meta:()=>({
       1:{title:'8/28–8/29 통합 복습 · 3 Scripts',goal:'<b>복습 목표</b> · Drinking Culture / To Tip or Skip? / Dumplin\' Day 1의 핵심 문장과 의미 Chunk를 소리로 자동화합니다.'},
-      2:{title:'통합 복습 2 · 3 Scripts',goal:'<b>복습 목표</b> · Dumplin\' Day #2 / To Fill or Not to Fill / The Ring Rescue에서 선택한 핵심 문장과 Chunk를 기존 소리영어 포맷으로 자동화합니다.'}
+      2:{title:'통합 복습 2 · 3 Scripts',goal:'<b>복습 목표</b> · Dumplin\' Day #2 / To Fill or Not to Fill / The Ring Rescue에서 선택한 핵심 문장과 Chunk를 기존 소리영어 포맷으로 자동화합니다.'},
+      3:{title:'9/12 · Daycare Should Mean Care',goal:'<b>복습 목표</b> · Daycare 핵심 문장과 Chunk를 Chunk → 핵심 문장 → 말하기 → 소리 Point 순서로 학습합니다.'}
     }),
-    data:(n)=>Number(n)===2?SORI_GROUP_2:SORI_GROUP_1,
+    data:(n)=>Number(n)===3?SORI_GROUP_3:Number(n)===2?SORI_GROUP_2:SORI_GROUP_1,
     tabs:{corrections:'⭐ 핵심 문장',chunks:'🧩 Chunk',speaking:'🗣 말하기',habits:'🎧 소리 Point'},
     singular:{corrections:'핵심 문장',chunks:'Chunk',speaking:'말하기',habits:'소리 Point'}
   },
@@ -5674,6 +5756,7 @@ function studyCardCourseLesson(card){
 
   if(id==='soriGroup1Card')return {course:'sori',lesson:1};
   if(id==='soriGroup2Card')return {course:'sori',lesson:2};
+  if(id==='soriGroup3Card')return {course:'sori',lesson:3};
   const opicMatch=id.match(/^opicGroup(\d+)Card$/);
   if(opicMatch)return {course:'opic',lesson:Number(opicMatch[1])||1};
 
@@ -5724,7 +5807,7 @@ function studyCourseCardFromEventTarget(target){
   if(target.closest('input,label,button,a,select,textarea,[data-no-card-open]'))return null;
   return target.closest(
     '#myClassLesson1Card,#myClassLesson2Card,#myClassLesson3Card,#myClassLesson4Card,#myClassLesson5Card,'+
-    '#soriGroup1Card,#soriGroup2Card,[data-study-course][data-study-lesson]'
+    '#soriGroup1Card,#soriGroup2Card,#soriGroup3Card,[data-study-course][data-study-lesson]'
   );
 }
 window.studyCourseCardFromEventTarget=studyCourseCardFromEventTarget;
@@ -7450,7 +7533,7 @@ async function autoReadAndAdvance(w,renderVersion=__renderVersion){
   const completed=await autoRead(w,renderVersion);
   if(!completed)return;
 
-  // v5.3.237: integrated repeat owns navigation after a card has been fully read.
+  // v5.3.241: integrated repeat owns navigation after a card has been fully read.
   // The legacy renderVersion/__renderedCardKey guard can change during the long
   // DAY reading sequence on Android even though the same card is still current.
   // That produced the exact symptom: status says "전체 읽기 완료" but playback stops.
@@ -11223,7 +11306,7 @@ function mvSentenceEntryAudit182(){
 window.mvSentenceEntryAudit182=mvSentenceEntryAudit182;
 
 /* ===== V5.3.189 · STANDARD APP INFO / UPDATE HISTORY ===== */
-const MV_APP_VERSION='5.3.237';
+const MV_APP_VERSION='5.3.241';
 
 function mvCloseInfoOverlay(){
   const overlay=document.getElementById('mvInfoOverlay');
@@ -12476,8 +12559,12 @@ function m536BuildPlaylist(course=m536ActiveCourse()){
       });
     }
   }
+  if(c!=='day' && typeof window.studyFavoriteOnly239==='function' && window.studyFavoriteOnly239(c)){
+    return out.filter(item=>window.studyFavoriteHasItem239?.(item));
+  }
   return out;
 }
+window.m536BuildPlaylist=m536BuildPlaylist;
 function m536ResolveEl(item){
   if(item.tab==='corrections')return document.getElementById(`myCorrectionCard${item.index}`);
   if(item.tab==='chunks')return document.getElementById(`myChunkCard${item.index}`);
@@ -12583,7 +12670,7 @@ function m536StopController(keepResume=false){
   m536SyncInfinityButtons();
 }
 
-/* ===== V5.3.237 · BACKGROUND PLAYBACK POSITION STANDARD =====
+/* ===== V5.3.241 · BACKGROUND PLAYBACK POSITION STANDARD =====
    Shared by MY / SORI / OPIC. A background transition may finish only the
    repetition already in progress; it never runs ahead into unrelated items.
    On return:
@@ -12689,7 +12776,7 @@ async function m536RunFull(startAt=0,startRep=0){
     });
     M536.cursor=next;
 
-    // v5.3.237: optional outer-orchestrator completion hook.
+    // v5.3.241: optional outer-orchestrator completion hook.
     // Dormant during normal MY/SORI/OPIC repeat, so individual repeat behavior is unchanged.
     if(next===0 && typeof window.MV_COURSE_ONCE_COMPLETE_219==='function'){
       const done=window.MV_COURSE_ONCE_COMPLETE_219;
@@ -12702,7 +12789,7 @@ async function m536RunFull(startAt=0,startRep=0){
       return;
     }
 
-    // v5.3.237: deterministic integrated controller - one playlist per course.
+    // v5.3.241: deterministic integrated controller - one playlist per course.
     if(window.MV_ALL_REPEAT_215?.active && window.MV_MIXED_COURSE_ONCE_215 && next===0){
       window.MV_MIXED_COURSE_ONCE_215=false;
       M536.busy=false;
@@ -12713,7 +12800,7 @@ async function m536RunFull(startAt=0,startRep=0){
       return;
     }
 
-    // Legacy v5.3.237 hook retained outside v215 sessions.
+    // Legacy v5.3.241 hook retained outside v215 sessions.
     if(window.MV_ALL_REPEAT_209?.active && window.MV_MIXED_COURSE_ONCE_209 && next===0){
       window.MV_MIXED_COURSE_ONCE_209=false;
       M536.busy=false;
@@ -13619,7 +13706,7 @@ function goMyClassTab(dir){
   let nextLesson=Number(myClassLessonNo)||1;
   const maxLesson=(typeof studyCourseLessonCount==='function'?studyCourseLessonCount(ACTIVE_STUDY_COURSE):Object.keys(studyCourseMeta?.(ACTIVE_STUDY_COURSE)||{}).length)||1;
 
-  // v5.3.237 shared swipe standard:
+  // v5.3.241 shared swipe standard:
   // first tab + right swipe => previous lesson's last tab
   // last tab + left swipe => next lesson's first tab
   if(ni<0){
@@ -13709,7 +13796,7 @@ function bindSwipe(){
    startAtBottom=studyAtPageBottom231();
  },{passive:true,capture:true});
 
- // v5.3.237
+ // v5.3.241
  // Android Chrome/Samsung Internet can treat a downward pull at page top as
  // browser pull-to-refresh. With content:// that reloads the app and lands on Home.
  // Once the gesture is clearly an edge-navigation swipe, consume it here.
@@ -13771,7 +13858,7 @@ function addHint(){
  h.innerHTML='← → 탭 이동 · <b>맨 위에서 ↓ 이전 수업</b> · <b>맨 아래에서 ↑ 다음 수업</b>';
  root.parentNode&&root.parentNode.insertBefore(h,root);
 }
-// v5.3.237 shared local-listen gesture unlock (MY/SORI/OPIC).
+// v5.3.241 shared local-listen gesture unlock (MY/SORI/OPIC).
 document.addEventListener('pointerdown',e=>{
  const b=e.target.closest?.('#myClassPage .myStudyBtn.primary');
  if(!b)return;
@@ -14208,7 +14295,7 @@ window.mvDayPlaybackPanelAudit=mvDayPlaybackPanelAudit;
 /* ===== V5.3.189 · DIRECT CARD NAV AUDIT ===== */
 function mvDirectCardNavAudit(){
   studyStampCourseCards();
-  const ids=['myClassLesson1Card','myClassLesson2Card','myClassLesson3Card','myClassLesson4Card','myClassLesson5Card','soriGroup1Card','soriGroup2Card','opicGroup1Card'];
+  const ids=['myClassLesson1Card','myClassLesson2Card','myClassLesson3Card','myClassLesson4Card','myClassLesson5Card','soriGroup1Card','soriGroup2Card','soriGroup3Card','opicGroup1Card'];
   return {
     version:'5.3.187',
     directNavigator:window.studyDirectOpenCourse===studyDirectOpenCourse,
@@ -14230,7 +14317,7 @@ function mvCourseCardEntryAudit(){
   studyStampCourseCards();
   const ids=[
     'myClassLesson1Card','myClassLesson2Card','myClassLesson3Card',
-    'myClassLesson4Card','myClassLesson5Card','soriGroup1Card','soriGroup2Card','opicGroup1Card'
+    'myClassLesson4Card','myClassLesson5Card','soriGroup1Card','soriGroup2Card','soriGroup3Card','opicGroup1Card'
   ];
   return {
     version:'5.3.187',
@@ -14479,7 +14566,7 @@ function installVisibleBuildBadge(){
   if(!badge){
     badge=document.createElement('div');
     badge.id='mvBuildBadge';
-    badge.textContent='v5.3.237';
+    badge.textContent='v5.3.241';
     badge.title='현재 실행 중인 MY VOCA 빌드';
     document.body.appendChild(badge);
   }
@@ -15061,7 +15148,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   }
 
 
-  /* ===== V5.3.237 · REPEAT PART SELECTION STANDARD ===== */
+  /* ===== V5.3.241 · REPEAT PART SELECTION STANDARD ===== */
   const STUDY_REPEAT_PARTS_206={
     day:{items:[['word','단어·뜻'],['example','예문'],['paraphrase','패러프레이즈'],['extra','추가 표현']],defaults:['word','example']},
     my:{items:[['corrections','핵심 교정'],['chunks','Chunk'],['speaking','말하기']],defaults:['corrections','chunks','speaking']},
@@ -15092,6 +15179,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
       if(!now.length){c.checked=true;now=[c.dataset.rp206]}
       saveStudyRepeatParts206(mode,now);
     });
+    try{studyFavoriteRenderFilter239(mode,box)}catch(e){}
   }
   window.studyRepeatParts206=studyRepeatParts206;
   window.renderStudyRepeatParts206=renderStudyRepeatParts206;
@@ -15121,6 +15209,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
       if(count)count.textContent=`${soriChecks().filter(c=>c.checked).length} 선택`;
     }
     renderStudyRepeatParts206(mode);
+    try{studyFavoriteSyncStartLabel239(mode)}catch(e){}
 
     // DAY-specific range/repeat selectors stay in DAY itself,
     // but its old start button is removed from the interaction layer.
@@ -15182,7 +15271,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   }
 
 
-  /* ===== V5.3.237 · CROSS-COURSE ALL REPEAT STANDARD ===== */
+  /* ===== V5.3.241 · CROSS-COURSE ALL REPEAT STANDARD ===== */
   const MV_ALL_REPEAT_209={
     active:false,
     order:['day','my','sori','opic'],
@@ -15313,7 +15402,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   window.allRepeatAdvance209=allRepeatAdvance209;
 
   function startAllRepeat209(explicitStartMode){
-    // v5.3.237: start from the exact mode the learner has clicked.
+    // v5.3.241: start from the exact mode the learner has clicked.
     // Do not infer a stale/default DAY state from a rebuilt DOM.
     const validModes=['day','my','sori','opic'];
     const startMode=validModes.includes(explicitStartMode)?explicitStartMode:currentHomeStudyMode();
@@ -15350,7 +15439,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   window.toggleAllRepeat214=toggleAllRepeat214;
 
 
-  /* ===== V5.3.237 · DETERMINISTIC CROSS-COURSE REPEAT CONTROLLER ===== */
+  /* ===== V5.3.241 · DETERMINISTIC CROSS-COURSE REPEAT CONTROLLER ===== */
   const MV_ALL_REPEAT_215={active:false,queue:[],index:0,current:'',cycle:0,advancing:false,token:0,snapshots:null};
   window.MV_ALL_REPEAT_215=MV_ALL_REPEAT_215;
 
@@ -15500,7 +15589,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   window.toggleAllRepeat215=toggleAllRepeat215;
 
 
-  /* ===== V5.3.237 · ISOLATED OUTER ALL-REPEAT ORCHESTRATOR =====
+  /* ===== V5.3.241 · ISOLATED OUTER ALL-REPEAT ORCHESTRATOR =====
      Normal DAY/MY/SORI/OPIC engines are not replaced. This layer only:
      1) reads saved selections, 2) calls the existing starter, 3) receives one completion callback.
   */
@@ -15725,6 +15814,14 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
       if(!hasContent){
         alert('선택한 OPIC 수업에 재생할 콘텐츠가 없습니다.');
         return;
+      }
+    }
+
+    if(typeof window.studyFavoriteOnly239==='function' && window.studyFavoriteOnly239(mode)){
+      const favoriteList=(typeof window.m536BuildPlaylist==='function'?window.m536BuildPlaylist(mode):[]);
+      if(!favoriteList.length){
+        alert('선택한 수업과 반복 항목에 즐겨찾기로 표시된 콘텐츠가 없습니다.');
+        return false;
       }
     }
 
@@ -16074,7 +16171,8 @@ async function studySpeakQuestionThenAnswer193(item,focusEl,guard=null){
   // speech synthesis a short stabilization gap before the answer begins.
   if(question){
     if(!alive())return false;
-    try{m536Unlock?.()}catch(e){}
+    // Do not enqueue a silent unlock here: on Android it can swallow the first audible question.
+    try{if(window.speechSynthesis?.paused)window.speechSynthesis.resume()}catch(e){}
     MY_CLASS_PLAY.currentText=question;
     const qEl=studySpeakingQuestionEl193(block);
     myClassSetStatus?.(`SPEAKING ${item.index+1} · 질문`,true);
@@ -16107,7 +16205,12 @@ window.studySpeakQuestionThenAnswer193=studySpeakQuestionThenAnswer193;
 // all use exactly the same question/cue -> answer sequence.
 const baseM536SpeakItem193=m536SpeakItem;
 m536SpeakItem=async function(item,focusEl,guard=null){
-  if(item?.tab==='speaking')return studySpeakQuestionThenAnswer193(item,focusEl,guard);
+  if(item?.tab==='speaking'){
+    try{unlockTTSFromGesture?.()}catch(e){}
+    await new Promise(r=>setTimeout(r,260));
+    if(guard&&!guard())return false;
+    return studySpeakQuestionThenAnswer193(item,focusEl,guard);
+  }
   return baseM536SpeakItem193(item,focusEl,guard);
 };
 window.m536SpeakItem=m536SpeakItem;
@@ -16122,9 +16225,14 @@ async function studySpeakSpeakingCard193(index,block=null){
   MY_CLASS_PLAY.paused=false;
   const focusEl=block||document.getElementById(`mySpeakBlock${index}`);
   if(focusEl)myClassFocus?.(focusEl);
-  try{m536Unlock?.()}catch(e){}
+  // v5.3.241: unlock from the same tap, then let Samsung/content:// TTS settle
+  // BEFORE the first audible item (the question/cue) is queued.
+  try{unlockTTSFromGesture?.()}catch(e){}
+  try{if(window.speechSynthesis?.paused)window.speechSynthesis.resume()}catch(e){}
   myClassSyncButtons?.();
   const alive=()=>token===MY_CLASS_PLAY.token&&!MY_CLASS_PLAY.paused;
+  await new Promise(r=>setTimeout(r,260));
+  if(!alive())return false;
   const ok=await studySpeakQuestionThenAnswer193(item,focusEl,alive);
   if(alive()){
     MY_CLASS_PLAY.active=false;
@@ -16136,10 +16244,20 @@ async function studySpeakSpeakingCard193(index,block=null){
 }
 window.studySpeakSpeakingCard193=studySpeakSpeakingCard193;
 
+function mvSpeakingQuestionAudioAudit238(){
+  return {
+    version:'v5.3.241',
+    order:'question/cue -> answer',
+    androidContentFix:'silent unlock settles before first audible question',
+    shared:['my','sori','opic','full','infinite']
+  };
+}
+window.mvSpeakingQuestionAudioAudit238=mvSpeakingQuestionAudioAudit238;
+
 function mvSpeakingQuestionFirstAudit236(){
   const courses=['my','sori','opic'];
   return {
-    version:'v5.3.237',
+    version:'v5.3.241',
     courses:courses,
     individualButton:'studySpeakSpeakingCard193',
     repeatEngine:'studySpeakQuestionThenAnswer193',
@@ -16267,7 +16385,7 @@ setTimeout(()=>{try{studyBindSpeakingPlayback193()}catch(e){}},0);
 
 
 <script id="v53197PatternGrammarSlotStandard">
-/* ===== V5.3.237 · PATTERN GRAMMAR-SLOT HIGHLIGHT STANDARD =====
+/* ===== V5.3.241 · PATTERN GRAMMAR-SLOT HIGHLIGHT STANDARD =====
    All courses use studyFindPatternHits(). Grammar labels such as S/V/O/C/A/B
    are placeholders only; actual sentence words are highlighted instead.
 */
@@ -16280,19 +16398,19 @@ function mvPatternGrammarSlotAudit197(){
     ['make someone think that ~','Seeing them makes me think that natural aging may be better.']
   ];
   const rows=cases.map(([pattern,text])=>({pattern,text,fixedParts:studyPatternFixedParts(pattern),hits:studyFindPatternHits(text,pattern)}));
-  return {version:'v5.3.237',rule:'S/V/O/C/A/B are grammar slots, never literal match tokens',passed:rows.every(r=>r.hits.length>0),rows};
+  return {version:'v5.3.241',rule:'S/V/O/C/A/B are grammar slots, never literal match tokens',passed:rows.every(r=>r.hits.length>0),rows};
 }
 window.mvPatternGrammarSlotAudit197=mvPatternGrammarSlotAudit197;
 </script>
 
 
 <script>
-/* ===== V5.3.237 · OPIC REGISTRY CARD AUDIT ===== */
+/* ===== V5.3.241 · OPIC REGISTRY CARD AUDIT ===== */
 window.mvOpicRegistryAudit202=function(){
   const meta=studyCourseMeta('opic')||{};
   const lessons=Object.keys(meta).map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
   return {
-    version:'v5.3.237',
+    version:'v5.3.241',
     lessons,
     lessonCount:studyCourseLessonCount('opic'),
     cards:[...document.querySelectorAll('#homePage .opicClassSection .opicCourseCard')].map(c=>({id:c.id,lesson:Number(c.dataset.studyLesson),title:c.querySelector('.myClassTop b')?.textContent||''})),
@@ -16311,7 +16429,7 @@ window.mvAllRepeatAudit211=function(){
     try{selections[c]=studyCourseSelectedLessons(c)}catch(e){selections[c]=[]}
   }
   return {
-    version:'v5.3.237',
+    version:'v5.3.241',
     currentMode:mode,
     queue:typeof allRepeatQueue209==='function'?allRepeatQueue209(mode):[],
     selections,
@@ -16331,7 +16449,7 @@ window.mvAllRepeatAudit212=function(){
     try{selected[c]=studyCourseSelectedLessons(c)}catch(e){selected[c]=[]}
   }
   return {
-    version:'v5.3.237',
+    version:'v5.3.241',
     startMode:mode,
     active:!!window.MV_ALL_REPEAT_209?.active,
     current:window.MV_ALL_REPEAT_209?.current||'',
@@ -16351,7 +16469,7 @@ window.mvAllRepeatAudit213=function(){
   const selected={};
   try{selected.day=JSON.parse(localStorage.getItem(selectedDaysKey())||'[]')}catch(e){selected.day=[]}
   for(const c of ['my','sori','opic']){try{selected[c]=studyCourseSelectedLessons(c)}catch(e){selected[c]=[]}}
-  return {version:'v5.3.237',visibleMode:map[active?.id]||null,savedMode:localStorage.getItem('mv_homeStudyMode212'),
+  return {version:'v5.3.241',visibleMode:map[active?.id]||null,savedMode:localStorage.getItem('mv_homeStudyMode212'),
     queue:[...(window.MV_ALL_REPEAT_209?.queue||[])],current:window.MV_ALL_REPEAT_209?.current||'',
     active:!!window.MV_ALL_REPEAT_209?.active,selected,dayActive:typeof AUTO!=='undefined'?AUTO.active:null,
     dayPass:typeof AUTO!=='undefined'?AUTO.pass:null,dayRepeats:typeof AUTO!=='undefined'?AUTO.repeats:null};
@@ -16364,7 +16482,7 @@ window.mvAllRepeatAudit214=function(){
   const a=document.querySelector('#homeStudyModePanel .homeStudyModeBtn.active');
   const map={homeModeDay:'day',homeModeMy:'my',homeModeSori:'sori',homeModeOpic:'opic'};
   return {
-    version:'v5.3.237',
+    version:'v5.3.241',
     visibleMode:map[a?.id]||null,
     enabled:!!document.getElementById('homeAllRepeat209')?.checked,
     active:!!window.MV_ALL_REPEAT_209?.active,
@@ -16395,7 +16513,7 @@ window.mvAllRepeatAudit214=function(){
 <script id="v532215AllRepeatAudit">
 window.mvAllRepeatAudit215=function(){
   const s=window.MV_ALL_REPEAT_215||{};
-  return {version:'v5.3.237',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],index:s.index||0,cycle:s.cycle||0,
+  return {version:'v5.3.241',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],index:s.index||0,cycle:s.cycle||0,
     advancing:!!s.advancing,snapshots:s.snapshots||null,dayActive:typeof AUTO!=='undefined'?AUTO.active:null,
     dayPass:typeof AUTO!=='undefined'?AUTO.pass:null,dayRepeats:typeof AUTO!=='undefined'?AUTO.repeats:null,
     m536Mode:typeof M536!=='undefined'?M536.mode:null,m536Course:typeof M536!=='undefined'?M536.course:null,
@@ -16419,7 +16537,7 @@ window.mvAllRepeatTrace216=function(event,extra={}){
 <script id="v532217DayAdvanceAudit">
 window.mvDayAdvanceAudit217=function(){
   return {
-    version:'v5.3.237',
+    version:'v5.3.241',
     integrated:!!window.MV_ALL_REPEAT_215?.active,
     currentCourse:window.MV_ALL_REPEAT_215?.current||'',
     queue:[...(window.MV_ALL_REPEAT_215?.queue||[])],
@@ -16441,7 +16559,7 @@ window.mvDayAdvanceAudit217=function(){
 window.mvAllRepeatAudit219=function(){
   const s=window.MV_ALL_REPEAT_219||{};
   return {
-    version:'v5.3.237',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],
+    version:'v5.3.241',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],
     index:s.index??null,snapshot:s.snapshot||null,
     dayHook:typeof window.MV_DAY_ONCE_COMPLETE_219,
     courseHook:typeof window.MV_COURSE_ONCE_COMPLETE_219,
@@ -16480,7 +16598,7 @@ window.mvAllRepeatAudit219=function(){
 window.mvControllerAudit221=function(){
   const b=document.getElementById('homeAllRepeatStart210');
   return {
-    version:'v5.3.237',
+    version:'v5.3.241',
     buttonText:b?.textContent||'',
     v209:!!window.MV_ALL_REPEAT_209?.active,
     v215:!!window.MV_ALL_REPEAT_215?.active,
@@ -16502,7 +16620,7 @@ window.mvControllerAudit221=function(){
 window.mvOverallIsolationAudit222=function(){
   const s=window.MV_ALL_REPEAT_219||{};
   return {
-    version:'v5.3.237',
+    version:'v5.3.241',
     active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],index:s.index??null,
     snapshot:s.snapshot||null,
     internalStart:!!window.MV_ALL_REPEAT_INTERNAL_START_222,
@@ -16515,6 +16633,205 @@ window.mvOverallIsolationAudit222=function(){
     m536Mode:typeof M536!=='undefined'?M536.mode:null,
     m536Course:typeof M536!=='undefined'?M536.course:null
   };
+};
+</script>
+
+
+<script id="v532239StudyFavoriteStandard">
+/* ===== V5.3.241 · CORRECTION / CHUNK / SPEAKING FAVORITE STANDARD ===== */
+(function(){
+'use strict';
+const MV_STUDY_FAVORITES_KEY_239='mv_study_favorites_239';
+
+function studyFavoriteHash239(text){
+  let h=2166136261>>>0;
+  const s=String(text||'');
+  for(let i=0;i<s.length;i++){
+    h^=s.charCodeAt(i);
+    h=Math.imul(h,16777619)>>>0;
+  }
+  return h.toString(36);
+}
+function studyFavoriteRow239(course,lesson,tab,index){
+  try{
+    const d=studyCourseData(course,Number(lesson))||{};
+    const rows=tab==='corrections'?(d.corrections||[])
+      :tab==='chunks'?(d.chunks||[])
+      :tab==='speaking'?(d.speaking||[])
+      :[];
+    return rows[Number(index)]||null;
+  }catch(e){return null}
+}
+function studyFavoriteKey239(course,lesson,tab,index){
+  const row=studyFavoriteRow239(course,lesson,tab,index)||{};
+  const signature=tab==='corrections'
+    ? `${row.en||''}|${row.bad||''}`
+    :tab==='chunks'
+      ? `${row.pattern||''}|${row.example||''}`
+      :`${row.prompt||row.question||row.pattern||''}|${row.text||''}`;
+  return `${String(course||'my')}|${Number(lesson)||1}|${String(tab||'')}|${studyFavoriteHash239(signature)}`;
+}
+function studyFavoriteSet239(){
+  try{
+    const a=JSON.parse(localStorage.getItem(MV_STUDY_FAVORITES_KEY_239)||'[]');
+    return new Set(Array.isArray(a)?a:[]);
+  }catch(e){return new Set()}
+}
+function studyFavoriteSave239(set){
+  try{localStorage.setItem(MV_STUDY_FAVORITES_KEY_239,JSON.stringify([...set]))}catch(e){}
+}
+function studyFavoriteHas239(course,lesson,tab,index){
+  return studyFavoriteSet239().has(studyFavoriteKey239(course,lesson,tab,index));
+}
+function studyFavoriteHasItem239(item){
+  if(!item)return false;
+  return studyFavoriteHas239(item.course||ACTIVE_STUDY_COURSE,item.lesson,item.tab,item.index);
+}
+function studyFavoriteToggle239(course,lesson,tab,index){
+  const key=studyFavoriteKey239(course,lesson,tab,index);
+  const set=studyFavoriteSet239();
+  if(set.has(key))set.delete(key);else set.add(key);
+  studyFavoriteSave239(set);
+  studyFavoriteDecorateCards239();
+  try{studyFavoriteSyncStartLabel239(currentHomeStudyMode?.()||course)}catch(e){}
+  return set.has(key);
+}
+function studyFavoriteButton239(course,lesson,tab,index,card){
+  if(!card)return;
+  const key=studyFavoriteKey239(course,lesson,tab,index);
+  let b=card.querySelector('.studyFavoriteBtn239');
+  if(!b){
+    b=document.createElement('button');
+    b.type='button';
+    b.className='studyFavoriteBtn239';
+    b.innerHTML='<span class="star">☆</span><span class="label">즐겨찾기</span>';
+    b.addEventListener('click',(e)=>{
+      e.preventDefault();
+      e.stopPropagation();
+      studyFavoriteToggle239(course,lesson,tab,index);
+    });
+    card.appendChild(b);
+  }
+  b.dataset.favoriteKey=key;
+  const on=studyFavoriteSet239().has(key);
+  b.classList.toggle('active',on);
+  b.setAttribute('aria-pressed',on?'true':'false');
+  b.setAttribute('aria-label',on?'즐겨찾기 해제':'즐겨찾기 추가');
+  const star=b.querySelector('.star');if(star)star.textContent=on?'★':'☆';
+  card.classList.toggle('studyFavoriteCard239',on);
+}
+function studyFavoriteDecorateCards239(){
+  const course=String(ACTIVE_STUDY_COURSE||'my');
+  const lesson=Number(myClassLessonNo||1);
+  const tab=String(myClassTab||'');
+  if(!['corrections','chunks','speaking'].includes(tab))return;
+  const d=studyCourseData(course,lesson)||{};
+  const rows=tab==='corrections'?(d.corrections||[])
+    :tab==='chunks'?(d.chunks||[])
+    :(d.speaking||[]);
+  rows.forEach((_,i)=>{
+    const card=document.getElementById(
+      tab==='corrections'?`myCorrectionCard${i}`:
+      tab==='chunks'?`myChunkCard${i}`:`mySpeakBlock${i}`
+    );
+    studyFavoriteButton239(course,lesson,tab,i,card);
+  });
+}
+function studyFavoriteOnly239(mode){
+  if(!['my','sori','opic'].includes(String(mode||'')))return false;
+  return localStorage.getItem(`mv_study_favorite_only_239_${mode}`)==='1';
+}
+function studyFavoriteSetOnly239(mode,on){
+  if(!['my','sori','opic'].includes(String(mode||'')))return;
+  try{localStorage.setItem(`mv_study_favorite_only_239_${mode}`,on?'1':'0')}catch(e){}
+}
+function studyFavoriteRenderFilter239(mode,box){
+  if(!box)return;
+  box.classList.toggle('favoriteOnly239',studyFavoriteOnly239(mode));
+  box.querySelector('.studyFavoriteOnly239')?.remove();
+  if(!['my','sori','opic'].includes(String(mode||'')))return;
+  const checks=box.querySelector('.rp206Checks');
+  if(!checks)return;
+  const label=document.createElement('label');
+  label.className='studyFavoriteOnly239';
+  label.innerHTML=`<input type="checkbox" data-favorite-only-239="1" ${studyFavoriteOnly239(mode)?'checked':''}><span>⭐ 즐겨찾기만</span>`;
+  checks.appendChild(label);
+  const input=label.querySelector('input');
+  input.onchange=()=>{
+    studyFavoriteSetOnly239(mode,input.checked);
+    box.classList.toggle('favoriteOnly239',input.checked);
+    studyFavoriteSyncStartLabel239(mode);
+  };
+}
+function studyFavoriteSyncStartLabel239(mode){
+  const start=document.getElementById('sharedStudyStart');
+  if(!start||!['my','sori','opic'].includes(String(mode||'')))return;
+  if(studyFavoriteOnly239(mode)){
+    start.textContent='▶ 즐겨찾기 집중 반복';
+  }
+}
+function studyFavoriteCount239(course){
+  const lessons=typeof studyCourseSelectedLessons==='function'?studyCourseSelectedLessons(course):[];
+  let n=0;
+  for(const lesson of lessons){
+    const d=studyCourseData(course,lesson)||{};
+    for(const tab of ['corrections','chunks','speaking']){
+      const rows=tab==='corrections'?(d.corrections||[]):tab==='chunks'?(d.chunks||[]):(d.speaking||[]);
+      rows.forEach((_,i)=>{if(studyFavoriteHas239(course,lesson,tab,i))n++});
+    }
+  }
+  return n;
+}
+
+window.studyFavoriteHash239=studyFavoriteHash239;
+window.studyFavoriteKey239=studyFavoriteKey239;
+window.studyFavoriteHas239=studyFavoriteHas239;
+window.studyFavoriteHasItem239=studyFavoriteHasItem239;
+window.studyFavoriteToggle239=studyFavoriteToggle239;
+window.studyFavoriteDecorateCards239=studyFavoriteDecorateCards239;
+window.studyFavoriteOnly239=studyFavoriteOnly239;
+window.studyFavoriteSetOnly239=studyFavoriteSetOnly239;
+window.studyFavoriteRenderFilter239=studyFavoriteRenderFilter239;
+window.studyFavoriteSyncStartLabel239=studyFavoriteSyncStartLabel239;
+window.studyFavoriteCount239=studyFavoriteCount239;
+
+/* Always re-attach stars after the shared renderer rebuilds a tab. */
+const prevRender239=window.renderMyClass;
+window.renderMyClass=function(){
+  const r=prevRender239.apply(this,arguments);
+  try{studyFavoriteDecorateCards239()}catch(e){}
+  return r;
+};
+
+/* Also restore stars after delayed decorators alter speaking cards. */
+document.addEventListener('click',(e)=>{
+  if(e.target?.closest?.('.myClassTab,.studyFavoriteBtn239'))setTimeout(studyFavoriteDecorateCards239,30);
+},true);
+
+window.mvStudyFavoriteAudit239=function(){
+  return {
+    version:'v5.3.241',
+    storage:MV_STUDY_FAVORITES_KEY_239,
+    tabs:['corrections','chunks','speaking'],
+    courses:['my','sori','opic'],
+    favoriteOnly:{
+      my:studyFavoriteOnly239('my'),
+      sori:studyFavoriteOnly239('sori'),
+      opic:studyFavoriteOnly239('opic')
+    }
+  };
+};
+})();
+</script>
+
+
+
+<script id="v532241Sori3VisibilityAudit">
+window.mvSori3VisibilityAudit241=function(){
+  const card=document.getElementById('soriGroup3Card');
+  const sec=document.querySelector('.soriClassSection');
+  return {version:'v5.3.241',cardExists:!!card,insideSori:!!card&&card.closest('.soriClassSection')===sec,
+    lesson:studyCardCourseLesson(card)?.lesson||0,lessonCount:studyCourseLessonCount('sori')};
 };
 </script>
 
