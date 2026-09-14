@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.254</title>
+<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.256</title>
 
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
@@ -2766,13 +2766,13 @@ html[data-mv-activity="sentence"] .quizModeSwitch{
 /* V5.3.189 · MY/SORI/OPIC correction Tip-pattern color standard */
 #myClassPage .myStudyEn .studyCoreChunkMark{color:#0f766e!important;background:#ccfbf1!important;font-weight:950!important;border-radius:5px;padding:0 2px;}
 
-/* v5.3.254 · Why + exact wrong-token highlight standard */
+/* v5.3.256 · Why + exact wrong-token highlight standard */
 .myStudyBadMark229{color:#8a2b06;background:#ffd86b;font-weight:900;border-radius:6px;padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 .myStudyWhy229{margin:8px 0 10px;padding:10px 12px;border-radius:12px;background:#eef7ff;border:1px solid #cfe8fb;color:#24516f;font-size:.92rem;font-weight:750;line-height:1.45}
 .myStudyRuleToken229{display:inline-block;padding:0 .22em;margin:0 .04em;border-radius:5px;background:rgba(255,216,107,.55);color:#7b3a08;font-weight:850}
 
 
-/* v5.3.254 · unified compact correction-reason box */
+/* v5.3.256 · unified compact correction-reason box */
 .myStudyReason230{
   margin:7px 0 9px;
   padding:8px 10px;
@@ -2798,17 +2798,17 @@ html[data-mv-activity="sentence"] .quizModeSwitch{
 }
 
 
-/* v5.3.254 · vertical edge lesson navigation standard */
+/* v5.3.256 · vertical edge lesson navigation standard */
 .myClassSwipeHint b{font-weight:850;color:#5b3bb5}
 
 
-/* v5.3.254 · prevent browser pull-to-refresh from hijacking lesson edge swipes */
+/* v5.3.256 · prevent browser pull-to-refresh from hijacking lesson edge swipes */
 #myClassPage{
   overscroll-behavior-y: contain;
 }
 
 
-/* v5.3.254 · hard guard for Android content:// pull-to-refresh */
+/* v5.3.256 · hard guard for Android content:// pull-to-refresh */
 html,body{
   overscroll-behavior-y:none;
 }
@@ -2832,7 +2832,7 @@ html,body{
 </style>
 
 <style id="v532239StudyFavoriteStyle">
-/* v5.3.254 · shared study favorite standard */
+/* v5.3.256 · shared study favorite standard */
 #myClassContent .myStudyCard,
 #myClassContent .mySpeakBlock{position:relative!important}
 #myClassContent .myStudyCard .myStudyNum,
@@ -2907,7 +2907,7 @@ html,body{
 
 
 <style id="v532246FreeDragPageStyle">
-/* v5.3.254 · 2D finger-follow page card */
+/* v5.3.256 · 2D finger-follow page card */
 .mvSwipeStage246{position:fixed;inset:0;z-index:9997;overflow:hidden;pointer-events:none;perspective:1400px;background:transparent}
 .mvSwipeCard246{
   position:absolute;inset:0;width:100vw;height:100vh;overflow:hidden;
@@ -2981,7 +2981,7 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
       <div>
         <div class="homeEyebrow" id="homeCourseEyebrow">MY VOCA UNIFIED COURSE · 69 DAYS</div>
         <h1 id="homeCourseTitle">MY VOCA</h1>
-        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.254</div>
+        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.256</div>
       </div>
       <div class="homeDayBadge"><b id="homeRegisteredDays">30</b><span>등록 Day</span></div>
     </section>
@@ -3838,6 +3838,14 @@ function myClassFocus(el){
     try{el.scrollIntoView({behavior:'smooth',block:'center'})}catch(e){}
   }
 }
+function myClassFocusNoScroll255(el){
+  myClassClearFocus();
+  if(!el)return;
+  MY_CLASS_PLAY.currentEl=el;
+  if(el.classList.contains('mySpeakSentence'))myClassHighlightSpeakingSentence(el);
+  else el.classList.add('myClassNow');
+}
+
 function myClassPlaybackItems(){
   if(myClassTab==='corrections')return myClassData().corrections.map((x,i)=>({text:x.en,el:document.getElementById(`myCorrectionCard${i}`)}));
   if(myClassTab==='chunks')return myClassData().chunks.map((x,i)=>({text:x.example,el:document.getElementById(`myChunkCard${i}`)}));
@@ -3866,7 +3874,7 @@ async function myClassSpeakSequence(texts,{focusEl=null,statusPrefix='전체 듣
   if(!list.length)return;
 
   myClassStop(false);
-  // v5.3.254: Samsung/Android content:// TTS must be unlocked from the same tap path.
+  // v5.3.256: Samsung/Android content:// TTS must be unlocked from the same tap path.
   try{unlockTTSFromGesture?.()}catch(e){}
   const token=++MY_CLASS_PLAY.token;
   MY_CLASS_PLAY.active=true;
@@ -7564,7 +7572,7 @@ async function autoReadAndAdvance(w,renderVersion=__renderVersion){
   const completed=await autoRead(w,renderVersion);
   if(!completed)return;
 
-  // v5.3.254: integrated repeat owns navigation after a card has been fully read.
+  // v5.3.256: integrated repeat owns navigation after a card has been fully read.
   // The legacy renderVersion/__renderedCardKey guard can change during the long
   // DAY reading sequence on Android even though the same card is still current.
   // That produced the exact symptom: status says "전체 읽기 완료" but playback stops.
@@ -7580,14 +7588,15 @@ async function autoReadAndAdvance(w,renderVersion=__renderVersion){
     if(!AUTO.active||!window.MV_ALL_REPEAT_219?.active)return;
 
     if(i<deck.length-1){
-      i++;
-      render(true);
+      const next=()=>{i++;render(true);};
+      if(typeof window.mvAutoDayPlaybackTurn255==='function')await window.mvAutoDayPlaybackTurn255(next);
+      else next();
       return;
     }
     if(AUTO.pass<AUTO.repeats){
-      AUTO.pass++;
-      i=0;
-      render(true);
+      const restart=()=>{AUTO.pass++;i=0;render(true);};
+      if(typeof window.mvAutoDayPlaybackTurn255==='function')await window.mvAutoDayPlaybackTurn255(restart);
+      else restart();
       return;
     }
 
@@ -10682,7 +10691,7 @@ $('todayStartBtn').onclick=()=>{
   AUTO.token++;
   forceReleaseWakeLock();forceReleaseWakeLock();let due=dueWordsAll();if(due.length){openDay(due[0].newDay,'forget');return}let next=Array.from({length:currentCfg().days},(_,i)=>i+1).find(d=>dayProgress(d).learned<dayProgress(d).total)||1;openDay(next,'learn')};
 
-// v5.3.254 · DAY 학습도 공통 Swipe 화면 전환 표준 사용
+// v5.3.256 · DAY 학습도 공통 Swipe 화면 전환 표준 사용
 {
  const cardEl=$('card');
  let dsx=0,dsy=0,dlock=false,ddir=0,dtracking=false;
@@ -11377,7 +11386,7 @@ function mvSentenceEntryAudit182(){
 window.mvSentenceEntryAudit182=mvSentenceEntryAudit182;
 
 /* ===== V5.3.189 · STANDARD APP INFO / UPDATE HISTORY ===== */
-const MV_APP_VERSION='5.3.254';
+const MV_APP_VERSION='5.3.256';
 
 function mvCloseInfoOverlay(){
   const overlay=document.getElementById('mvInfoOverlay');
@@ -12656,6 +12665,32 @@ function m536RenderItem(item){
   m536SyncInfinityButtons();
   return el;
 }
+
+async function m536RenderItemForFull255(item){
+  const course=m536ItemCourse(item);
+  const changed=ACTIVE_STUDY_COURSE!==course || myClassLessonNo!==item.lesson || myClassTab!==item.tab || !m536ResolveEl(item);
+
+  if(changed && typeof window.mvAutoPlaybackPageTurn255==='function'){
+    await window.mvAutoPlaybackPageTurn255(()=>{
+      M536.course=course;
+      ACTIVE_STUDY_COURSE=course;
+      myClassLessonNo=item.lesson;
+      myClassTab=item.tab;
+      myClassUpdateHeader?.();
+      renderMyClass();
+      studySyncCourseUI?.();
+      document.querySelectorAll('.myClassTab').forEach(b=>b.classList.toggle('active',b.dataset.myclassTab===myClassTab));
+    },1);
+    const el=m536ResolveEl(item);
+    myClassFocusNoScroll255?.(el);
+    m536SyncInfinityButtons();
+    return el;
+  }
+
+  return m536RenderItem(item);
+}
+window.m536RenderItemForFull255=m536RenderItemForFull255;
+
 async function m536Speak(text,paragraph){
   // 일반 문장/Chunk는 기존 방식 유지
   if(paragraph && typeof speakComplete==='function')await speakComplete(text,getSpeechRate(),'en-US');
@@ -12741,7 +12776,7 @@ function m536StopController(keepResume=false){
   m536SyncInfinityButtons();
 }
 
-/* ===== V5.3.254 · BACKGROUND PLAYBACK POSITION STANDARD =====
+/* ===== V5.3.256 · BACKGROUND PLAYBACK POSITION STANDARD =====
    Shared by MY / SORI / OPIC. A background transition may finish only the
    repetition already in progress; it never runs ahead into unrelated items.
    On return:
@@ -12799,7 +12834,8 @@ async function m536RunFull(startAt=0,startRep=0){
   while(token===M536.token && hardEpoch===MY_CLASS_HARD_STOP_EPOCH && M536.mode==='full'){
     const item=M536.playlist[M536.cursor];
     if(!item)return;
-    const el=m536RenderItem(item);
+    const el=await m536RenderItemForFull255(item);
+    if(token!==M536.token || hardEpoch!==MY_CLASS_HARD_STOP_EPOCH || M536.mode!=='full')return;
     const cfg=loadAppSettings();
     const reps=Math.max(1,parseInt(cfg.myClassSentenceRepeat||2,10));
     const pause=Math.max(0,parseInt(cfg.myClassPause||700,10));
@@ -12847,7 +12883,7 @@ async function m536RunFull(startAt=0,startRep=0){
     });
     M536.cursor=next;
 
-    // v5.3.254: optional outer-orchestrator completion hook.
+    // v5.3.256: optional outer-orchestrator completion hook.
     // Dormant during normal MY/SORI/OPIC repeat, so individual repeat behavior is unchanged.
     if(next===0 && typeof window.MV_COURSE_ONCE_COMPLETE_219==='function'){
       const done=window.MV_COURSE_ONCE_COMPLETE_219;
@@ -12860,7 +12896,7 @@ async function m536RunFull(startAt=0,startRep=0){
       return;
     }
 
-    // v5.3.254: deterministic integrated controller - one playlist per course.
+    // v5.3.256: deterministic integrated controller - one playlist per course.
     if(window.MV_ALL_REPEAT_215?.active && window.MV_MIXED_COURSE_ONCE_215 && next===0){
       window.MV_MIXED_COURSE_ONCE_215=false;
       M536.busy=false;
@@ -12871,7 +12907,7 @@ async function m536RunFull(startAt=0,startRep=0){
       return;
     }
 
-    // Legacy v5.3.254 hook retained outside v215 sessions.
+    // Legacy v5.3.256 hook retained outside v215 sessions.
     if(window.MV_ALL_REPEAT_209?.active && window.MV_MIXED_COURSE_ONCE_209 && next===0){
       window.MV_MIXED_COURSE_ONCE_209=false;
       M536.busy=false;
@@ -13777,7 +13813,7 @@ function goMyClassTab(dir){
   let nextLesson=Number(myClassLessonNo)||1;
   const maxLesson=(typeof studyCourseLessonCount==='function'?studyCourseLessonCount(ACTIVE_STUDY_COURSE):Object.keys(studyCourseMeta?.(ACTIVE_STUDY_COURSE)||{}).length)||1;
 
-  // v5.3.254 shared swipe standard:
+  // v5.3.256 shared swipe standard:
   // first tab + right swipe => previous lesson's last tab
   // last tab + left swipe => next lesson's first tab
   if(ni<0){
@@ -13957,7 +13993,7 @@ function addHint(){
  h.innerHTML='↔ 탭 이동 · 맨 위에서 ↓ 이전 수업 · 맨 아래에서 ↑ 다음 수업도 같은 카드 Swipe';
  root.parentNode&&root.parentNode.insertBefore(h,root);
 }
-// v5.3.254 shared local-listen gesture unlock (MY/SORI/OPIC).
+// v5.3.256 shared local-listen gesture unlock (MY/SORI/OPIC).
 document.addEventListener('pointerdown',e=>{
  const b=e.target.closest?.('#myClassPage .myStudyBtn.primary');
  if(!b)return;
@@ -14665,7 +14701,7 @@ function installVisibleBuildBadge(){
   if(!badge){
     badge=document.createElement('div');
     badge.id='mvBuildBadge';
-    badge.textContent='v5.3.254';
+    badge.textContent='v5.3.256';
     badge.title='현재 실행 중인 MY VOCA 빌드';
     document.body.appendChild(badge);
   }
@@ -15247,7 +15283,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   }
 
 
-  /* ===== V5.3.254 · REPEAT PART SELECTION STANDARD ===== */
+  /* ===== V5.3.256 · REPEAT PART SELECTION STANDARD ===== */
   const STUDY_REPEAT_PARTS_206={
     day:{items:[['word','단어·뜻'],['example','예문'],['paraphrase','패러프레이즈'],['extra','추가 표현']],defaults:['word','example']},
     my:{items:[['corrections','핵심 교정'],['chunks','Chunk'],['speaking','말하기']],defaults:['corrections','chunks','speaking']},
@@ -15370,7 +15406,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   }
 
 
-  /* ===== V5.3.254 · CROSS-COURSE ALL REPEAT STANDARD ===== */
+  /* ===== V5.3.256 · CROSS-COURSE ALL REPEAT STANDARD ===== */
   const MV_ALL_REPEAT_209={
     active:false,
     order:['day','my','sori','opic'],
@@ -15501,7 +15537,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   window.allRepeatAdvance209=allRepeatAdvance209;
 
   function startAllRepeat209(explicitStartMode){
-    // v5.3.254: start from the exact mode the learner has clicked.
+    // v5.3.256: start from the exact mode the learner has clicked.
     // Do not infer a stale/default DAY state from a rebuilt DOM.
     const validModes=['day','my','sori','opic'];
     const startMode=validModes.includes(explicitStartMode)?explicitStartMode:currentHomeStudyMode();
@@ -15538,7 +15574,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   window.toggleAllRepeat214=toggleAllRepeat214;
 
 
-  /* ===== V5.3.254 · DETERMINISTIC CROSS-COURSE REPEAT CONTROLLER ===== */
+  /* ===== V5.3.256 · DETERMINISTIC CROSS-COURSE REPEAT CONTROLLER ===== */
   const MV_ALL_REPEAT_215={active:false,queue:[],index:0,current:'',cycle:0,advancing:false,token:0,snapshots:null};
   window.MV_ALL_REPEAT_215=MV_ALL_REPEAT_215;
 
@@ -15688,7 +15724,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   window.toggleAllRepeat215=toggleAllRepeat215;
 
 
-  /* ===== V5.3.254 · ISOLATED OUTER ALL-REPEAT ORCHESTRATOR =====
+  /* ===== V5.3.256 · ISOLATED OUTER ALL-REPEAT ORCHESTRATOR =====
      Normal DAY/MY/SORI/OPIC engines are not replaced. This layer only:
      1) reads saved selections, 2) calls the existing starter, 3) receives one completion callback.
   */
@@ -16324,7 +16360,7 @@ async function studySpeakSpeakingCard193(index,block=null){
   MY_CLASS_PLAY.paused=false;
   const focusEl=block||document.getElementById(`mySpeakBlock${index}`);
   if(focusEl)myClassFocus?.(focusEl);
-  // v5.3.254: unlock from the same tap, then let Samsung/content:// TTS settle
+  // v5.3.256: unlock from the same tap, then let Samsung/content:// TTS settle
   // BEFORE the first audible item (the question/cue) is queued.
   try{unlockTTSFromGesture?.()}catch(e){}
   try{if(window.speechSynthesis?.paused)window.speechSynthesis.resume()}catch(e){}
@@ -16345,7 +16381,7 @@ window.studySpeakSpeakingCard193=studySpeakSpeakingCard193;
 
 function mvSpeakingQuestionAudioAudit238(){
   return {
-    version:'v5.3.254',
+    version:'v5.3.256',
     order:'question/cue -> answer',
     androidContentFix:'silent unlock settles before first audible question',
     shared:['my','sori','opic','full','infinite']
@@ -16356,7 +16392,7 @@ window.mvSpeakingQuestionAudioAudit238=mvSpeakingQuestionAudioAudit238;
 function mvSpeakingQuestionFirstAudit236(){
   const courses=['my','sori','opic'];
   return {
-    version:'v5.3.254',
+    version:'v5.3.256',
     courses:courses,
     individualButton:'studySpeakSpeakingCard193',
     repeatEngine:'studySpeakQuestionThenAnswer193',
@@ -16484,7 +16520,7 @@ setTimeout(()=>{try{studyBindSpeakingPlayback193()}catch(e){}},0);
 
 
 <script id="v53197PatternGrammarSlotStandard">
-/* ===== V5.3.254 · PATTERN GRAMMAR-SLOT HIGHLIGHT STANDARD =====
+/* ===== V5.3.256 · PATTERN GRAMMAR-SLOT HIGHLIGHT STANDARD =====
    All courses use studyFindPatternHits(). Grammar labels such as S/V/O/C/A/B
    are placeholders only; actual sentence words are highlighted instead.
 */
@@ -16497,19 +16533,19 @@ function mvPatternGrammarSlotAudit197(){
     ['make someone think that ~','Seeing them makes me think that natural aging may be better.']
   ];
   const rows=cases.map(([pattern,text])=>({pattern,text,fixedParts:studyPatternFixedParts(pattern),hits:studyFindPatternHits(text,pattern)}));
-  return {version:'v5.3.254',rule:'S/V/O/C/A/B are grammar slots, never literal match tokens',passed:rows.every(r=>r.hits.length>0),rows};
+  return {version:'v5.3.256',rule:'S/V/O/C/A/B are grammar slots, never literal match tokens',passed:rows.every(r=>r.hits.length>0),rows};
 }
 window.mvPatternGrammarSlotAudit197=mvPatternGrammarSlotAudit197;
 </script>
 
 
 <script>
-/* ===== V5.3.254 · OPIC REGISTRY CARD AUDIT ===== */
+/* ===== V5.3.256 · OPIC REGISTRY CARD AUDIT ===== */
 window.mvOpicRegistryAudit202=function(){
   const meta=studyCourseMeta('opic')||{};
   const lessons=Object.keys(meta).map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
   return {
-    version:'v5.3.254',
+    version:'v5.3.256',
     lessons,
     lessonCount:studyCourseLessonCount('opic'),
     cards:[...document.querySelectorAll('#homePage .opicClassSection .opicCourseCard')].map(c=>({id:c.id,lesson:Number(c.dataset.studyLesson),title:c.querySelector('.myClassTop b')?.textContent||''})),
@@ -16528,7 +16564,7 @@ window.mvAllRepeatAudit211=function(){
     try{selections[c]=studyCourseSelectedLessons(c)}catch(e){selections[c]=[]}
   }
   return {
-    version:'v5.3.254',
+    version:'v5.3.256',
     currentMode:mode,
     queue:typeof allRepeatQueue209==='function'?allRepeatQueue209(mode):[],
     selections,
@@ -16548,7 +16584,7 @@ window.mvAllRepeatAudit212=function(){
     try{selected[c]=studyCourseSelectedLessons(c)}catch(e){selected[c]=[]}
   }
   return {
-    version:'v5.3.254',
+    version:'v5.3.256',
     startMode:mode,
     active:!!window.MV_ALL_REPEAT_209?.active,
     current:window.MV_ALL_REPEAT_209?.current||'',
@@ -16568,7 +16604,7 @@ window.mvAllRepeatAudit213=function(){
   const selected={};
   try{selected.day=JSON.parse(localStorage.getItem(selectedDaysKey())||'[]')}catch(e){selected.day=[]}
   for(const c of ['my','sori','opic']){try{selected[c]=studyCourseSelectedLessons(c)}catch(e){selected[c]=[]}}
-  return {version:'v5.3.254',visibleMode:map[active?.id]||null,savedMode:localStorage.getItem('mv_homeStudyMode212'),
+  return {version:'v5.3.256',visibleMode:map[active?.id]||null,savedMode:localStorage.getItem('mv_homeStudyMode212'),
     queue:[...(window.MV_ALL_REPEAT_209?.queue||[])],current:window.MV_ALL_REPEAT_209?.current||'',
     active:!!window.MV_ALL_REPEAT_209?.active,selected,dayActive:typeof AUTO!=='undefined'?AUTO.active:null,
     dayPass:typeof AUTO!=='undefined'?AUTO.pass:null,dayRepeats:typeof AUTO!=='undefined'?AUTO.repeats:null};
@@ -16581,7 +16617,7 @@ window.mvAllRepeatAudit214=function(){
   const a=document.querySelector('#homeStudyModePanel .homeStudyModeBtn.active');
   const map={homeModeDay:'day',homeModeMy:'my',homeModeSori:'sori',homeModeOpic:'opic'};
   return {
-    version:'v5.3.254',
+    version:'v5.3.256',
     visibleMode:map[a?.id]||null,
     enabled:!!document.getElementById('homeAllRepeat209')?.checked,
     active:!!window.MV_ALL_REPEAT_209?.active,
@@ -16612,7 +16648,7 @@ window.mvAllRepeatAudit214=function(){
 <script id="v532215AllRepeatAudit">
 window.mvAllRepeatAudit215=function(){
   const s=window.MV_ALL_REPEAT_215||{};
-  return {version:'v5.3.254',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],index:s.index||0,cycle:s.cycle||0,
+  return {version:'v5.3.256',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],index:s.index||0,cycle:s.cycle||0,
     advancing:!!s.advancing,snapshots:s.snapshots||null,dayActive:typeof AUTO!=='undefined'?AUTO.active:null,
     dayPass:typeof AUTO!=='undefined'?AUTO.pass:null,dayRepeats:typeof AUTO!=='undefined'?AUTO.repeats:null,
     m536Mode:typeof M536!=='undefined'?M536.mode:null,m536Course:typeof M536!=='undefined'?M536.course:null,
@@ -16636,7 +16672,7 @@ window.mvAllRepeatTrace216=function(event,extra={}){
 <script id="v532217DayAdvanceAudit">
 window.mvDayAdvanceAudit217=function(){
   return {
-    version:'v5.3.254',
+    version:'v5.3.256',
     integrated:!!window.MV_ALL_REPEAT_215?.active,
     currentCourse:window.MV_ALL_REPEAT_215?.current||'',
     queue:[...(window.MV_ALL_REPEAT_215?.queue||[])],
@@ -16658,7 +16694,7 @@ window.mvDayAdvanceAudit217=function(){
 window.mvAllRepeatAudit219=function(){
   const s=window.MV_ALL_REPEAT_219||{};
   return {
-    version:'v5.3.254',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],
+    version:'v5.3.256',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],
     index:s.index??null,snapshot:s.snapshot||null,
     dayHook:typeof window.MV_DAY_ONCE_COMPLETE_219,
     courseHook:typeof window.MV_COURSE_ONCE_COMPLETE_219,
@@ -16697,7 +16733,7 @@ window.mvAllRepeatAudit219=function(){
 window.mvControllerAudit221=function(){
   const b=document.getElementById('homeAllRepeatStart210');
   return {
-    version:'v5.3.254',
+    version:'v5.3.256',
     buttonText:b?.textContent||'',
     v209:!!window.MV_ALL_REPEAT_209?.active,
     v215:!!window.MV_ALL_REPEAT_215?.active,
@@ -16719,7 +16755,7 @@ window.mvControllerAudit221=function(){
 window.mvOverallIsolationAudit222=function(){
   const s=window.MV_ALL_REPEAT_219||{};
   return {
-    version:'v5.3.254',
+    version:'v5.3.256',
     active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],index:s.index??null,
     snapshot:s.snapshot||null,
     internalStart:!!window.MV_ALL_REPEAT_INTERNAL_START_222,
@@ -16737,7 +16773,7 @@ window.mvOverallIsolationAudit222=function(){
 
 
 <script id="v532239StudyFavoriteStandard">
-/* ===== V5.3.254 · CORRECTION / CHUNK / SPEAKING FAVORITE STANDARD ===== */
+/* ===== V5.3.256 · CORRECTION / CHUNK / SPEAKING FAVORITE STANDARD ===== */
 (function(){
 'use strict';
 const MV_STUDY_FAVORITES_KEY_239='mv_study_favorites_239';
@@ -16909,7 +16945,7 @@ document.addEventListener('click',(e)=>{
 
 window.mvStudyFavoriteAudit239=function(){
   return {
-    version:'v5.3.254',
+    version:'v5.3.256',
     storage:MV_STUDY_FAVORITES_KEY_239,
     tabs:['corrections','chunks','speaking'],
     courses:['my','sori','opic'],
@@ -16929,7 +16965,7 @@ window.mvStudyFavoriteAudit239=function(){
 window.mvSori3VisibilityAudit241=function(){
   const card=document.getElementById('soriGroup3Card');
   const sec=document.querySelector('.soriClassSection');
-  return {version:'v5.3.254',cardExists:!!card,insideSori:!!card&&card.closest('.soriClassSection')===sec,
+  return {version:'v5.3.256',cardExists:!!card,insideSori:!!card&&card.closest('.soriClassSection')===sec,
     lesson:studyCardCourseLesson(card)?.lesson||0,lessonCount:studyCourseLessonCount('sori')};
 };
 </script>
@@ -17160,7 +17196,7 @@ window.mvSwipePage246={
   forceCleanup:()=>cleanup246()
 };
 window.mvSwipePageAudit246=()=>({
- version:'v5.3.254',
+ version:'v5.3.256',
  mode:'2D full-screen card drag',
  followsX:true,followsY:true,velocityAware:true,
  navigation:'once on touchend',
@@ -17174,7 +17210,7 @@ window.mvSwipePageAudit246=()=>({
 <script id="v532247VerticalTiltAudit">
 window.mvSwipeVerticalTiltAudit247=function(){
   return {
-    version:'v5.3.254',
+    version:'v5.3.256',
     verticalTilt:'opposite by dy sign',
     upward:'rotateZ negative',
     downward:'rotateZ positive',
@@ -17188,7 +17224,7 @@ window.mvSwipeVerticalTiltAudit247=function(){
 <script id="v532248BidirectionalTiltAudit">
 window.mvSwipeBidirectionalTiltAudit248=function(){
   return {
-    version:'v5.3.254',
+    version:'v5.3.256',
     leftSwipe:'vertical tilt flips by up/down',
     rightSwipe:'mirrored vertical tilt flips by up/down',
     mirroredByHorizontalDirection:true,
@@ -17202,7 +17238,7 @@ window.mvSwipeBidirectionalTiltAudit248=function(){
 <script id="v532249RightTiltVisualFixAudit">
 window.mvSwipeRightTiltVisualFix249=function(){
   return {
-    version:'v5.3.254',
+    version:'v5.3.256',
     fix:'remove rotateY visual cancellation + quadrant transform-origin',
     leftSwipe:{up:'opposite angle',down:'opposite angle'},
     rightSwipe:{up:'mirrored angle',down:'mirrored angle'},
@@ -17216,7 +17252,7 @@ window.mvSwipeRightTiltVisualFix249=function(){
 <script id="v532250SwipeCommitAudit">
 window.mvSwipeCommitAudit250=function(){
   return {
-    version:'v5.3.254',
+    version:'v5.3.256',
     completion:'2D distance + velocity',
     xThreshold:.10,
     diagonalThreshold:.18,
@@ -17232,7 +17268,7 @@ window.mvSwipeCommitAudit250=function(){
 <script id="v532251SwipeCommitSamsungAudit">
 window.mvSwipeCommitSamsungAudit251=function(){
   return {
-    version:'v5.3.254',
+    version:'v5.3.256',
     samsungTouchCancel:'uses normal commit thresholds instead of forced cancel',
     destination:'resolved explicitly before render',
     expected:'corrections left swipe -> chunks',
@@ -17426,7 +17462,7 @@ window.mvVerticalLessonSwipe252={
   forceCleanup:()=>cleanup252()
 };
 window.mvVerticalLessonSwipeAudit252=()=>({
-  version:'v5.3.254',
+  version:'v5.3.256',
   topPullDown:'previous lesson same tab',
   bottomPushUp:'next lesson same tab',
   liveCard:true,
@@ -17442,7 +17478,7 @@ window.mvVerticalLessonSwipeAudit252=()=>({
 <script id="v532253SwipeCornerCleanupAudit">
 window.mvSwipeCornerCleanupAudit253=function(){
   return {
-    version:'v5.3.254',
+    version:'v5.3.256',
     fix:'clean swipe-card corners and duplicate floating overlays',
     cardRadius:0,
     shadow:'reduced',
@@ -17576,11 +17612,187 @@ window.MV_SWIPE_STANDARD_254={
   active:()=>!!U,forceCleanup:()=>cleanup254()
 };
 window.mvSwipeStandardAudit254=()=>({
-  version:'v5.3.254',
+  version:'v5.3.256',
   standard:'full-screen snapshot + finger-follow + mirrored tilt + velocity commit',
   applied:['MY/SORI/OPIC tabs','MY/SORI/OPIC lesson edges','DAY learning cards','word quiz questions']
 });
 })();
+</script>
+
+
+<script id="v532255AutoPlaybackPageTurn">
+(function(){
+'use strict';
+let busy=false;
+
+function clonePage255(root){
+  if(!root)return null;
+  const scrollY=window.scrollY||document.documentElement.scrollTop||0;
+  const clone=root.cloneNode(true);
+  clone.removeAttribute('id');
+  clone.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
+  clone.querySelectorAll('button,input,select,textarea,a').forEach(el=>el.setAttribute('tabindex','-1'));
+  clone.querySelectorAll('[style*="position: fixed"],[style*="position:fixed"],.floatingControls,.fixedBottom,.bottomDock').forEach(el=>{
+    el.style.visibility='hidden';
+  });
+  clone.style.pointerEvents='none';
+  clone.style.margin='0';
+  clone.style.width='100vw';
+
+  const inner=document.createElement('div');
+  inner.className='mvSwipeCardInner246';
+  inner.style.top=(-scrollY)+'px';
+  inner.appendChild(clone);
+  return inner;
+}
+
+function topNow255(){
+  try{window.scrollTo({top:0,left:0,behavior:'auto'})}catch(e){window.scrollTo(0,0)}
+  try{document.documentElement.scrollTop=0;document.body.scrollTop=0}catch(e){}
+}
+
+async function autoTurn255(commit,dir=1){
+  if(typeof commit!=='function')return false;
+  const root=document.getElementById('myClassPage');
+  if(!root||root.classList.contains('hidden')||busy){
+    commit(); topNow255(); return true;
+  }
+
+  const inner=clonePage255(root);
+  if(!inner){commit();topNow255();return true}
+
+  busy=true;
+  const stage=document.createElement('div');
+  stage.className='mvSwipeStage246';
+  const card=document.createElement('div');
+  card.className='mvSwipeCard246 '+(dir>0?'next':'prev');
+  const shade=document.createElement('div');
+  shade.className='mvSwipeShade246';
+  card.append(inner,shade);stage.appendChild(card);document.body.appendChild(stage);
+  document.body.classList.add('mvSwipeActive246');
+
+  // Render the destination at the top underneath the old-page snapshot.
+  commit();
+  topNow255();
+
+  const w=Math.max(1,window.innerWidth);
+  const h=Math.max(1,window.innerHeight);
+  const targetX=dir>0?-w*1.16:w*1.16;
+  const targetY=-Math.min(h*.12,90);
+  const rotZ=dir>0?-8:8;
+  card.style.transformOrigin=dir>0?'right bottom':'left bottom';
+
+  // Human-like page turn: brief grab -> visible mid-swipe -> finish.
+  await new Promise(r=>setTimeout(r,140));
+
+  await new Promise(resolve=>{
+    const phase1=330;
+    card.style.transition=`transform ${phase1}ms cubic-bezier(.22,.64,.20,1),filter ${phase1}ms ease-out`;
+    shade.style.transition=`opacity ${phase1}ms ease-out`;
+    requestAnimationFrame(()=>{
+      card.style.transform=`translate3d(${targetX*.48}px,${targetY*.45}px,0) rotateZ(${rotZ*.58}deg) scale(.992)`;
+      card.style.filter='brightness(.965)';
+      shade.style.opacity='.08';
+    });
+    setTimeout(resolve,phase1+25);
+  });
+
+  await new Promise(resolve=>{
+    const phase2=390;
+    card.style.transition=`transform ${phase2}ms cubic-bezier(.18,.78,.16,1),opacity ${phase2}ms ease-out,filter ${phase2}ms ease-out`;
+    shade.style.transition=`opacity ${phase2}ms ease-out`;
+    requestAnimationFrame(()=>{
+      card.style.transform=`translate3d(${targetX}px,${targetY}px,0) rotateZ(${rotZ}deg) scale(.98)`;
+      card.style.opacity='0';
+      card.style.filter='brightness(.91)';
+      shade.style.opacity='0';
+    });
+    setTimeout(resolve,phase2+35);
+  });
+
+  try{stage.remove()}catch(e){}
+  document.body.classList.remove('mvSwipeActive246');
+  busy=false;
+  topNow255();
+  return true;
+}
+
+window.mvAutoPlaybackPageTurn255=autoTurn255;
+window.mvAutoPlaybackPageTurnAudit255=()=>({
+  version:'v5.3.256',
+  use:'automatic full-playback tab/lesson screen changes',
+  style:'same full-screen swipe-card standard',
+  destinationStartsAtTop:true,
+  noVisibleScrollToTop:true,
+  scope:['my','sori','opic']
+});
+})();
+</script>
+
+
+<script id="v532255AutoDayTurn">
+window.mvAutoDayPlaybackTurn255=async function(commit){
+  if(typeof commit!=='function')return false;
+  const root=document.getElementById('dayAppPage');
+  if(!root||root.classList.contains('hidden')){commit();return true}
+
+  const scrollY=window.scrollY||document.documentElement.scrollTop||0;
+  const clone=root.cloneNode(true);
+  clone.removeAttribute('id');
+  clone.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
+  clone.querySelectorAll('button,input,select,textarea,a').forEach(el=>el.setAttribute('tabindex','-1'));
+  clone.querySelectorAll('[style*="position: fixed"],[style*="position:fixed"],.floatingControls,.fixedBottom,.bottomDock').forEach(el=>el.style.visibility='hidden');
+  clone.style.pointerEvents='none';clone.style.margin='0';clone.style.width='100vw';
+
+  const inner=document.createElement('div');inner.className='mvSwipeCardInner246';inner.style.top=(-scrollY)+'px';inner.appendChild(clone);
+  const stage=document.createElement('div');stage.className='mvSwipeStage246';
+  const card=document.createElement('div');card.className='mvSwipeCard246 next';
+  const shade=document.createElement('div');shade.className='mvSwipeShade246';
+  card.append(inner,shade);stage.appendChild(card);document.body.appendChild(stage);
+  document.body.classList.add('mvSwipeActive246');
+
+  commit();
+  try{window.scrollTo({top:0,left:0,behavior:'auto'})}catch(e){window.scrollTo(0,0)}
+
+  const w=Math.max(1,window.innerWidth),h=Math.max(1,window.innerHeight);
+  const tx=-w*1.16,ty=-Math.min(h*.10,80);
+  card.style.transformOrigin='right bottom';
+
+  await new Promise(r=>setTimeout(r,140));
+
+  const p1=320;
+  card.style.transition=`transform ${p1}ms cubic-bezier(.22,.64,.20,1),filter ${p1}ms ease-out`;
+  requestAnimationFrame(()=>{
+    card.style.transform=`translate3d(${tx*.48}px,${ty*.45}px,0) rotateZ(-4.6deg) scale(.992)`;
+    card.style.filter='brightness(.965)';
+  });
+  await new Promise(r=>setTimeout(r,p1+25));
+
+  const p2=380;
+  card.style.transition=`transform ${p2}ms cubic-bezier(.18,.78,.16,1),opacity ${p2}ms ease-out,filter ${p2}ms ease-out`;
+  requestAnimationFrame(()=>{
+    card.style.transform=`translate3d(${tx}px,${ty}px,0) rotateZ(-8deg) scale(.98)`;
+    card.style.opacity='0';card.style.filter='brightness(.91)';
+  });
+  await new Promise(r=>setTimeout(r,p2+35));
+  stage.remove();document.body.classList.remove('mvSwipeActive246');
+  return true;
+};
+</script>
+
+
+<script id="v532256HumanAutoSwipeSpeedAudit">
+window.mvHumanAutoSwipeSpeedAudit256=function(){
+  return {
+    version:'v5.3.256',
+    automaticTurn:'human-like visible speed',
+    preHoldMs:140,
+    midSwipeMs:330,
+    finishSwipeMs:390,
+    totalVisualMs:'about 900ms',
+    dayTurn:'same slower two-phase standard'
+  };
+};
 </script>
 
 </body></html>
