@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.256</title>
+<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.268</title>
 
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
@@ -2766,13 +2766,13 @@ html[data-mv-activity="sentence"] .quizModeSwitch{
 /* V5.3.189 · MY/SORI/OPIC correction Tip-pattern color standard */
 #myClassPage .myStudyEn .studyCoreChunkMark{color:#0f766e!important;background:#ccfbf1!important;font-weight:950!important;border-radius:5px;padding:0 2px;}
 
-/* v5.3.256 · Why + exact wrong-token highlight standard */
+/* v5.3.268 · Why + exact wrong-token highlight standard */
 .myStudyBadMark229{color:#8a2b06;background:#ffd86b;font-weight:900;border-radius:6px;padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 .myStudyWhy229{margin:8px 0 10px;padding:10px 12px;border-radius:12px;background:#eef7ff;border:1px solid #cfe8fb;color:#24516f;font-size:.92rem;font-weight:750;line-height:1.45}
 .myStudyRuleToken229{display:inline-block;padding:0 .22em;margin:0 .04em;border-radius:5px;background:rgba(255,216,107,.55);color:#7b3a08;font-weight:850}
 
 
-/* v5.3.256 · unified compact correction-reason box */
+/* v5.3.268 · unified compact correction-reason box */
 .myStudyReason230{
   margin:7px 0 9px;
   padding:8px 10px;
@@ -2798,17 +2798,17 @@ html[data-mv-activity="sentence"] .quizModeSwitch{
 }
 
 
-/* v5.3.256 · vertical edge lesson navigation standard */
+/* v5.3.268 · vertical edge lesson navigation standard */
 .myClassSwipeHint b{font-weight:850;color:#5b3bb5}
 
 
-/* v5.3.256 · prevent browser pull-to-refresh from hijacking lesson edge swipes */
+/* v5.3.268 · prevent browser pull-to-refresh from hijacking lesson edge swipes */
 #myClassPage{
   overscroll-behavior-y: contain;
 }
 
 
-/* v5.3.256 · hard guard for Android content:// pull-to-refresh */
+/* v5.3.268 · hard guard for Android content:// pull-to-refresh */
 html,body{
   overscroll-behavior-y:none;
 }
@@ -2832,7 +2832,7 @@ html,body{
 </style>
 
 <style id="v532239StudyFavoriteStyle">
-/* v5.3.256 · shared study favorite standard */
+/* v5.3.268 · shared study favorite standard */
 #myClassContent .myStudyCard,
 #myClassContent .mySpeakBlock{position:relative!important}
 #myClassContent .myStudyCard .myStudyNum,
@@ -2907,7 +2907,7 @@ html,body{
 
 
 <style id="v532246FreeDragPageStyle">
-/* v5.3.256 · 2D finger-follow page card */
+/* v5.3.268 · 2D finger-follow page card */
 .mvSwipeStage246{position:fixed;inset:0;z-index:9997;overflow:hidden;pointer-events:none;perspective:1400px;background:transparent}
 .mvSwipeCard246{
   position:absolute;inset:0;width:100vw;height:100vh;overflow:hidden;
@@ -2930,6 +2930,76 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
 .mvSwipeCard246.next::after{right:0}
 .mvSwipeCard246.prev::after{left:0}
 
+</style>
+
+
+<style id="v532258PlaybackProgressSafeStyle">
+/* v5.3.268 · non-invasive playback progress */
+.myClassPlaybackStatus{min-width:0}
+.myClassMiniStatus{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  flex:1 1 auto;
+}
+.mvPlaybackProgress258{
+  display:none;
+  align-items:center;
+  justify-content:flex-end;
+  gap:5px;
+  flex:0 0 clamp(104px,29vw,154px);
+  width:clamp(104px,29vw,154px);
+  min-width:0;
+  margin-left:6px;
+}
+.mvPlaybackProgress258.on{display:flex}
+.mvPlaybackTrack258{
+  height:7px;
+  flex:1 1 auto;
+  min-width:48px;
+  border-radius:999px;
+  background:rgba(99,102,241,.20);
+  overflow:hidden;
+  box-shadow:inset 0 0 0 1px rgba(99,102,241,.08)
+}
+.mvPlaybackFill258{
+  display:block;height:100%;width:0;border-radius:inherit;
+  background:linear-gradient(90deg,#4f46e5,#7c3aed);
+  transition:width .32s ease
+}
+.mvPlaybackCount258{
+  font-size:10px;
+  font-weight:950;
+  color:#4338ca;
+  white-space:nowrap;
+  min-width:30px;
+  text-align:right
+}
+.myClassPlaybackStatus.mvProgress258On{
+  gap:6px;
+}
+.myClassPlaybackStatus.mvProgress258On .myClassMiniStatus{
+  flex:1 1 0;
+  min-width:0;
+}
+.myClassPlaybackStatus.mvProgress258On .myClassAutoChip{display:none!important}
+@media(max-width:520px){
+  .myClassPlaybackStatus.mvProgress258On{padding-left:9px;padding-right:9px;gap:5px}
+  .mvPlaybackProgress258{
+    flex-basis:112px;
+    width:112px;
+    margin-left:2px;
+    gap:4px
+  }
+  .mvPlaybackTrack258{min-width:62px;height:6px}
+  .mvPlaybackCount258{font-size:9px;min-width:28px}
+}
+@media(max-width:380px){
+  .mvPlaybackProgress258{flex-basis:102px;width:102px}
+  .mvPlaybackTrack258{min-width:54px}
+  .mvPlaybackCount258{font-size:9px;min-width:27px}
+}
 </style>
 
 </head><body>
@@ -2981,7 +3051,7 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
       <div>
         <div class="homeEyebrow" id="homeCourseEyebrow">MY VOCA UNIFIED COURSE · 69 DAYS</div>
         <h1 id="homeCourseTitle">MY VOCA</h1>
-        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.256</div>
+        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.268</div>
       </div>
       <div class="homeDayBadge"><b id="homeRegisteredDays">30</b><span>등록 Day</span></div>
     </section>
@@ -3180,7 +3250,7 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
     </div>
     <div class="myClassHabit"><b>이번 수업의 최우선 목표</b><p id="myClassGoal"><strong>쉬운 영어를 짧고 정확하게.</strong> 문장을 만들기 전에 So / you know로 시작하지 말고, 0.5~1초 쉬었다가 주어 + 동사부터 말합니다.</p></div>
     <div class="myClassTabs"><button class="myClassTab active" data-myclass-tab="corrections">✅ 핵심 교정</button><button class="myClassTab" data-myclass-tab="chunks">🧩 Chunk</button><button class="myClassTab" data-myclass-tab="speaking">🗣 말하기</button><button class="myClassTab" data-myclass-tab="habits">⚠ 습관</button></div>
-    <div id="myClassPlaybackStatus" class="myClassPlaybackStatus paused"><span class="myClassMiniStatus">MY 수업 자동 재생 준비</span><span class="myClassAutoChip">문장 단위</span></div>
+    <div id="myClassPlaybackStatus" class="myClassPlaybackStatus paused"><span class="myClassMiniStatus">MY 수업 자동 재생 준비</span><span class="mvPlaybackProgress258" aria-label="현재 탭 진행률"><span class="mvPlaybackTrack258"><span class="mvPlaybackFill258"></span></span><span class="mvPlaybackCount258">0/0</span></span><span class="myClassAutoChip">문장 단위</span></div>
     <div class="myClassStudyHint">DAY 학습처럼 영어 문장을 한 문장씩 읽고, 현재 카드로 자동 이동합니다. 하단 버튼에서 언제든 정지·재시작하거나 현재 학습 문장으로 바로 말하기 연습을 할 수 있습니다.</div>
     <div id="myClassContent"></div>
   </div>
@@ -3874,7 +3944,7 @@ async function myClassSpeakSequence(texts,{focusEl=null,statusPrefix='전체 듣
   if(!list.length)return;
 
   myClassStop(false);
-  // v5.3.256: Samsung/Android content:// TTS must be unlocked from the same tap path.
+  // v5.3.268: Samsung/Android content:// TTS must be unlocked from the same tap path.
   try{unlockTTSFromGesture?.()}catch(e){}
   const token=++MY_CLASS_PLAY.token;
   MY_CLASS_PLAY.active=true;
@@ -6606,7 +6676,7 @@ async function readPracticeStoryList(cards,renderVersion){
       if(!alive())return false;
       await speakOne(item.example||item.word,.84,'en-US');
       if(!alive())return false;
-      await new Promise(r=>setTimeout(r,220));
+      await new Promise(r=>setTimeout(r,170));
     }
     await new Promise(r=>setTimeout(r,320));
   }
@@ -6939,8 +7009,18 @@ function finishSelectedRepeatAndContinue(w){
   if(!AUTO.active)return;
   const st=stats[w.word];st.studyCount=(st.studyCount||0)+1;st.lastSeen=Date.now();save();
   learningPlaybackPaused=false;updateLearningPlaybackButton();
-  if(i<deck.length-1){i++;render(true);return;}
-  if(AUTO.pass<AUTO.repeats){AUTO.pass++;i=0;render(true);return;}
+  if(i<deck.length-1){
+    const next=()=>{i++;render(true);};
+    if(typeof window.mvDayAutoAdvance266==='function')window.mvDayAutoAdvance266(next);
+    else next();
+    return;
+  }
+  if(AUTO.pass<AUTO.repeats){
+    const restart=()=>{AUTO.pass++;i=0;render(true);};
+    if(typeof window.mvDayAutoAdvance266==='function')window.mvDayAutoAdvance266(restart);
+    else restart();
+    return;
+  }
   stopSpeech();clearSelectedProgress();AUTO.active=false;forceReleaseWakeLock();clearExactReadingFocus();updateAutoBadge();$('bar').style.width='100%';
   if(typeof window.MV_DAY_ONCE_COMPLETE_219==='function'){
     const done=window.MV_DAY_ONCE_COMPLETE_219;
@@ -7572,7 +7652,7 @@ async function autoReadAndAdvance(w,renderVersion=__renderVersion){
   const completed=await autoRead(w,renderVersion);
   if(!completed)return;
 
-  // v5.3.256: integrated repeat owns navigation after a card has been fully read.
+  // v5.3.268: integrated repeat owns navigation after a card has been fully read.
   // The legacy renderVersion/__renderedCardKey guard can change during the long
   // DAY reading sequence on Android even though the same card is still current.
   // That produced the exact symptom: status says "전체 읽기 완료" but playback stops.
@@ -7589,13 +7669,13 @@ async function autoReadAndAdvance(w,renderVersion=__renderVersion){
 
     if(i<deck.length-1){
       const next=()=>{i++;render(true);};
-      if(typeof window.mvAutoDayPlaybackTurn255==='function')await window.mvAutoDayPlaybackTurn255(next);
+      if(typeof window.mvDayAutoAdvance266==='function')await window.mvDayAutoAdvance266(next);
       else next();
       return;
     }
     if(AUTO.pass<AUTO.repeats){
       const restart=()=>{AUTO.pass++;i=0;render(true);};
-      if(typeof window.mvAutoDayPlaybackTurn255==='function')await window.mvAutoDayPlaybackTurn255(restart);
+      if(typeof window.mvDayAutoAdvance266==='function')await window.mvDayAutoAdvance266(restart);
       else restart();
       return;
     }
@@ -7628,8 +7708,18 @@ async function autoReadAndAdvance(w,renderVersion=__renderVersion){
   if(!AUTO.active||autoToken!==AUTO.token)return;
   if(renderVersion!==__renderVersion||cardKey(cur())!==expectedKey||__renderedCardKey!==expectedKey)return;
 
-  if(i<deck.length-1){i++;render(true);return}
-  if(AUTO.pass<AUTO.repeats){AUTO.pass++;i=0;render(true);return}
+  if(i<deck.length-1){
+    const next=()=>{i++;render(true);};
+    if(typeof window.mvDayAutoAdvance266==='function')await window.mvDayAutoAdvance266(next);
+    else next();
+    return;
+  }
+  if(AUTO.pass<AUTO.repeats){
+    const restart=()=>{AUTO.pass++;i=0;render(true);};
+    if(typeof window.mvDayAutoAdvance266==='function')await window.mvDayAutoAdvance266(restart);
+    else restart();
+    return;
+  }
 
   stopSpeech();clearSelectedProgress();AUTO.active=false; forceReleaseWakeLock();clearExactReadingFocus();updateAutoBadge();$('bar').style.width='100%';
   if(window.MV_ALL_REPEAT_219?.active){
@@ -10691,7 +10781,7 @@ $('todayStartBtn').onclick=()=>{
   AUTO.token++;
   forceReleaseWakeLock();forceReleaseWakeLock();let due=dueWordsAll();if(due.length){openDay(due[0].newDay,'forget');return}let next=Array.from({length:currentCfg().days},(_,i)=>i+1).find(d=>dayProgress(d).learned<dayProgress(d).total)||1;openDay(next,'learn')};
 
-// v5.3.256 · DAY 학습도 공통 Swipe 화면 전환 표준 사용
+// v5.3.268 · DAY 학습도 공통 Swipe 화면 전환 표준 사용
 {
  const cardEl=$('card');
  let dsx=0,dsy=0,dlock=false,ddir=0,dtracking=false;
@@ -11386,7 +11476,7 @@ function mvSentenceEntryAudit182(){
 window.mvSentenceEntryAudit182=mvSentenceEntryAudit182;
 
 /* ===== V5.3.189 · STANDARD APP INFO / UPDATE HISTORY ===== */
-const MV_APP_VERSION='5.3.256';
+const MV_APP_VERSION='5.3.268';
 
 function mvCloseInfoOverlay(){
   const overlay=document.getElementById('mvInfoOverlay');
@@ -12776,7 +12866,7 @@ function m536StopController(keepResume=false){
   m536SyncInfinityButtons();
 }
 
-/* ===== V5.3.256 · BACKGROUND PLAYBACK POSITION STANDARD =====
+/* ===== V5.3.268 · BACKGROUND PLAYBACK POSITION STANDARD =====
    Shared by MY / SORI / OPIC. A background transition may finish only the
    repetition already in progress; it never runs ahead into unrelated items.
    On return:
@@ -12816,9 +12906,16 @@ async function m536RunFull(startAt=0,startRep=0){
   m536StopLegacyPlaybackOnly();
   const list=m536BuildPlaylist(course);
   if(!list.length){
+    // v5.3.268: in overall repeat, empty favorite-only course = skip to next course.
+    if(window.MV_ALL_REPEAT_219?.active && typeof window.MV_COURSE_ONCE_COMPLETE_219==='function'){
+      const done=window.MV_COURSE_ONCE_COMPLETE_219;
+      window.MV_COURSE_ONCE_COMPLETE_219=null;
+      setTimeout(()=>done(course),80);
+      return false;
+    }
     const courseName=(typeof studyCourseConfig==='function'?studyCourseConfig(ACTIVE_STUDY_COURSE)?.title:null)||'학습';
     alert(`반복할 ${courseName} 콘텐츠가 없습니다.`);
-    return;
+    return false;
   }
 
   M536.playlist=list;
@@ -12883,7 +12980,7 @@ async function m536RunFull(startAt=0,startRep=0){
     });
     M536.cursor=next;
 
-    // v5.3.256: optional outer-orchestrator completion hook.
+    // v5.3.268: optional outer-orchestrator completion hook.
     // Dormant during normal MY/SORI/OPIC repeat, so individual repeat behavior is unchanged.
     if(next===0 && typeof window.MV_COURSE_ONCE_COMPLETE_219==='function'){
       const done=window.MV_COURSE_ONCE_COMPLETE_219;
@@ -12896,7 +12993,7 @@ async function m536RunFull(startAt=0,startRep=0){
       return;
     }
 
-    // v5.3.256: deterministic integrated controller - one playlist per course.
+    // v5.3.268: deterministic integrated controller - one playlist per course.
     if(window.MV_ALL_REPEAT_215?.active && window.MV_MIXED_COURSE_ONCE_215 && next===0){
       window.MV_MIXED_COURSE_ONCE_215=false;
       M536.busy=false;
@@ -12907,7 +13004,7 @@ async function m536RunFull(startAt=0,startRep=0){
       return;
     }
 
-    // Legacy v5.3.256 hook retained outside v215 sessions.
+    // Legacy v5.3.268 hook retained outside v215 sessions.
     if(window.MV_ALL_REPEAT_209?.active && window.MV_MIXED_COURSE_ONCE_209 && next===0){
       window.MV_MIXED_COURSE_ONCE_209=false;
       M536.busy=false;
@@ -13813,7 +13910,7 @@ function goMyClassTab(dir){
   let nextLesson=Number(myClassLessonNo)||1;
   const maxLesson=(typeof studyCourseLessonCount==='function'?studyCourseLessonCount(ACTIVE_STUDY_COURSE):Object.keys(studyCourseMeta?.(ACTIVE_STUDY_COURSE)||{}).length)||1;
 
-  // v5.3.256 shared swipe standard:
+  // v5.3.268 shared swipe standard:
   // first tab + right swipe => previous lesson's last tab
   // last tab + left swipe => next lesson's first tab
   if(ni<0){
@@ -13993,7 +14090,7 @@ function addHint(){
  h.innerHTML='↔ 탭 이동 · 맨 위에서 ↓ 이전 수업 · 맨 아래에서 ↑ 다음 수업도 같은 카드 Swipe';
  root.parentNode&&root.parentNode.insertBefore(h,root);
 }
-// v5.3.256 shared local-listen gesture unlock (MY/SORI/OPIC).
+// v5.3.268 shared local-listen gesture unlock (MY/SORI/OPIC).
 document.addEventListener('pointerdown',e=>{
  const b=e.target.closest?.('#myClassPage .myStudyBtn.primary');
  if(!b)return;
@@ -14701,7 +14798,7 @@ function installVisibleBuildBadge(){
   if(!badge){
     badge=document.createElement('div');
     badge.id='mvBuildBadge';
-    badge.textContent='v5.3.256';
+    badge.textContent='v5.3.268';
     badge.title='현재 실행 중인 MY VOCA 빌드';
     document.body.appendChild(badge);
   }
@@ -15283,7 +15380,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   }
 
 
-  /* ===== V5.3.256 · REPEAT PART SELECTION STANDARD ===== */
+  /* ===== V5.3.268 · REPEAT PART SELECTION STANDARD ===== */
   const STUDY_REPEAT_PARTS_206={
     day:{items:[['word','단어·뜻'],['example','예문'],['paraphrase','패러프레이즈'],['extra','추가 표현']],defaults:['word','example']},
     my:{items:[['corrections','핵심 교정'],['chunks','Chunk'],['speaking','말하기']],defaults:['corrections','chunks','speaking']},
@@ -15406,7 +15503,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   }
 
 
-  /* ===== V5.3.256 · CROSS-COURSE ALL REPEAT STANDARD ===== */
+  /* ===== V5.3.268 · CROSS-COURSE ALL REPEAT STANDARD ===== */
   const MV_ALL_REPEAT_209={
     active:false,
     order:['day','my','sori','opic'],
@@ -15537,7 +15634,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   window.allRepeatAdvance209=allRepeatAdvance209;
 
   function startAllRepeat209(explicitStartMode){
-    // v5.3.256: start from the exact mode the learner has clicked.
+    // v5.3.268: start from the exact mode the learner has clicked.
     // Do not infer a stale/default DAY state from a rebuilt DOM.
     const validModes=['day','my','sori','opic'];
     const startMode=validModes.includes(explicitStartMode)?explicitStartMode:currentHomeStudyMode();
@@ -15574,7 +15671,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   window.toggleAllRepeat214=toggleAllRepeat214;
 
 
-  /* ===== V5.3.256 · DETERMINISTIC CROSS-COURSE REPEAT CONTROLLER ===== */
+  /* ===== V5.3.268 · DETERMINISTIC CROSS-COURSE REPEAT CONTROLLER ===== */
   const MV_ALL_REPEAT_215={active:false,queue:[],index:0,current:'',cycle:0,advancing:false,token:0,snapshots:null};
   window.MV_ALL_REPEAT_215=MV_ALL_REPEAT_215;
 
@@ -15724,7 +15821,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   window.toggleAllRepeat215=toggleAllRepeat215;
 
 
-  /* ===== V5.3.256 · ISOLATED OUTER ALL-REPEAT ORCHESTRATOR =====
+  /* ===== V5.3.268 · ISOLATED OUTER ALL-REPEAT ORCHESTRATOR =====
      Normal DAY/MY/SORI/OPIC engines are not replaced. This layer only:
      1) reads saved selections, 2) calls the existing starter, 3) receives one completion callback.
   */
@@ -15874,10 +15971,40 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
       return false;
     }
 
+    // Restore the favorite-only choice captured when 전체 반복 began.
+    // This prevents a hidden course UI from silently reverting to full playback.
+    const favoriteOnly=!!MV_ALL_REPEAT_219.favoriteOnlySnapshot?.[course];
+    if(['my','sori','opic'].includes(course)){
+      try{window.studyFavoriteSetOnly239?.(course,favoriteOnly)}catch(e){}
+    }
+
+    // If this course is in favorite-only mode, inspect the EXACT playlist
+    // before starting. Zero favorites means SKIP this course, never play all.
+    if(favoriteOnly){
+      let favoriteList=[];
+      try{
+        applySnapshotToVisibleChecks222(course);
+        restoreSnapshot219(course);
+        favoriteList=typeof window.m536BuildPlaylist==='function'
+          ? window.m536BuildPlaylist(course)
+          : [];
+      }catch(e){favoriteList=[]}
+
+      if(!favoriteList.length){
+        window.MV_COURSE_ONCE_COMPLETE_219=null;
+        setTimeout(complete,80);
+        return false;
+      }
+    }
+
     setTimeout(()=>{
       if(!s.active||token!==s.token||s.current!==course)return;
       try{
-        startIndividualCourseForOverall222(course);
+        const started=startIndividualCourseForOverall222(course);
+        if(started===false){
+          window.MV_COURSE_ONCE_COMPLETE_219=null;
+          setTimeout(complete,80);
+        }
       }catch(err){
         window.MV_ALL_REPEAT_LAST_ERROR_222=String(err?.stack||err);
         window.MV_COURSE_ONCE_COMPLETE_219=null;
@@ -15911,6 +16038,14 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     try{MV_ALL_REPEAT_215.active=false;MV_ALL_REPEAT_215.queue=[]}catch(e){}
     window.MV_MIXED_COURSE_ONCE_209=false;
     window.MV_MIXED_COURSE_ONCE_215=false;
+
+    // v5.3.268: freeze favorite-only state for the whole overall-repeat session.
+    // Course switches / hidden UI rebuilds must never fall back to "play all".
+    s.favoriteOnlySnapshot={
+      my:!!window.studyFavoriteOnly239?.('my'),
+      sori:!!window.studyFavoriteOnly239?.('sori'),
+      opic:!!window.studyFavoriteOnly239?.('opic')
+    };
 
     s.active=true;s.snapshot=snap;s.queue=q;s.index=0;s.current='';s.token++;
     runAllRepeatCourse219(q[0],s.token);
@@ -15955,7 +16090,10 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     if(typeof window.studyFavoriteOnly239==='function' && window.studyFavoriteOnly239(mode)){
       const favoriteList=(typeof window.m536BuildPlaylist==='function'?window.m536BuildPlaylist(mode):[]);
       if(!favoriteList.length){
-        alert('선택한 수업과 반복 항목에 즐겨찾기로 표시된 콘텐츠가 없습니다.');
+        // During 전체 반복 this is a normal skip condition, not an error.
+        if(!window.MV_ALL_REPEAT_INTERNAL_START_222){
+          alert('선택한 수업과 반복 항목에 즐겨찾기로 표시된 콘텐츠가 없습니다.');
+        }
         return false;
       }
     }
@@ -16360,7 +16498,7 @@ async function studySpeakSpeakingCard193(index,block=null){
   MY_CLASS_PLAY.paused=false;
   const focusEl=block||document.getElementById(`mySpeakBlock${index}`);
   if(focusEl)myClassFocus?.(focusEl);
-  // v5.3.256: unlock from the same tap, then let Samsung/content:// TTS settle
+  // v5.3.268: unlock from the same tap, then let Samsung/content:// TTS settle
   // BEFORE the first audible item (the question/cue) is queued.
   try{unlockTTSFromGesture?.()}catch(e){}
   try{if(window.speechSynthesis?.paused)window.speechSynthesis.resume()}catch(e){}
@@ -16381,7 +16519,7 @@ window.studySpeakSpeakingCard193=studySpeakSpeakingCard193;
 
 function mvSpeakingQuestionAudioAudit238(){
   return {
-    version:'v5.3.256',
+    version:'v5.3.268',
     order:'question/cue -> answer',
     androidContentFix:'silent unlock settles before first audible question',
     shared:['my','sori','opic','full','infinite']
@@ -16392,7 +16530,7 @@ window.mvSpeakingQuestionAudioAudit238=mvSpeakingQuestionAudioAudit238;
 function mvSpeakingQuestionFirstAudit236(){
   const courses=['my','sori','opic'];
   return {
-    version:'v5.3.256',
+    version:'v5.3.268',
     courses:courses,
     individualButton:'studySpeakSpeakingCard193',
     repeatEngine:'studySpeakQuestionThenAnswer193',
@@ -16520,7 +16658,7 @@ setTimeout(()=>{try{studyBindSpeakingPlayback193()}catch(e){}},0);
 
 
 <script id="v53197PatternGrammarSlotStandard">
-/* ===== V5.3.256 · PATTERN GRAMMAR-SLOT HIGHLIGHT STANDARD =====
+/* ===== V5.3.268 · PATTERN GRAMMAR-SLOT HIGHLIGHT STANDARD =====
    All courses use studyFindPatternHits(). Grammar labels such as S/V/O/C/A/B
    are placeholders only; actual sentence words are highlighted instead.
 */
@@ -16533,19 +16671,19 @@ function mvPatternGrammarSlotAudit197(){
     ['make someone think that ~','Seeing them makes me think that natural aging may be better.']
   ];
   const rows=cases.map(([pattern,text])=>({pattern,text,fixedParts:studyPatternFixedParts(pattern),hits:studyFindPatternHits(text,pattern)}));
-  return {version:'v5.3.256',rule:'S/V/O/C/A/B are grammar slots, never literal match tokens',passed:rows.every(r=>r.hits.length>0),rows};
+  return {version:'v5.3.268',rule:'S/V/O/C/A/B are grammar slots, never literal match tokens',passed:rows.every(r=>r.hits.length>0),rows};
 }
 window.mvPatternGrammarSlotAudit197=mvPatternGrammarSlotAudit197;
 </script>
 
 
 <script>
-/* ===== V5.3.256 · OPIC REGISTRY CARD AUDIT ===== */
+/* ===== V5.3.268 · OPIC REGISTRY CARD AUDIT ===== */
 window.mvOpicRegistryAudit202=function(){
   const meta=studyCourseMeta('opic')||{};
   const lessons=Object.keys(meta).map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
   return {
-    version:'v5.3.256',
+    version:'v5.3.268',
     lessons,
     lessonCount:studyCourseLessonCount('opic'),
     cards:[...document.querySelectorAll('#homePage .opicClassSection .opicCourseCard')].map(c=>({id:c.id,lesson:Number(c.dataset.studyLesson),title:c.querySelector('.myClassTop b')?.textContent||''})),
@@ -16564,7 +16702,7 @@ window.mvAllRepeatAudit211=function(){
     try{selections[c]=studyCourseSelectedLessons(c)}catch(e){selections[c]=[]}
   }
   return {
-    version:'v5.3.256',
+    version:'v5.3.268',
     currentMode:mode,
     queue:typeof allRepeatQueue209==='function'?allRepeatQueue209(mode):[],
     selections,
@@ -16584,7 +16722,7 @@ window.mvAllRepeatAudit212=function(){
     try{selected[c]=studyCourseSelectedLessons(c)}catch(e){selected[c]=[]}
   }
   return {
-    version:'v5.3.256',
+    version:'v5.3.268',
     startMode:mode,
     active:!!window.MV_ALL_REPEAT_209?.active,
     current:window.MV_ALL_REPEAT_209?.current||'',
@@ -16604,7 +16742,7 @@ window.mvAllRepeatAudit213=function(){
   const selected={};
   try{selected.day=JSON.parse(localStorage.getItem(selectedDaysKey())||'[]')}catch(e){selected.day=[]}
   for(const c of ['my','sori','opic']){try{selected[c]=studyCourseSelectedLessons(c)}catch(e){selected[c]=[]}}
-  return {version:'v5.3.256',visibleMode:map[active?.id]||null,savedMode:localStorage.getItem('mv_homeStudyMode212'),
+  return {version:'v5.3.268',visibleMode:map[active?.id]||null,savedMode:localStorage.getItem('mv_homeStudyMode212'),
     queue:[...(window.MV_ALL_REPEAT_209?.queue||[])],current:window.MV_ALL_REPEAT_209?.current||'',
     active:!!window.MV_ALL_REPEAT_209?.active,selected,dayActive:typeof AUTO!=='undefined'?AUTO.active:null,
     dayPass:typeof AUTO!=='undefined'?AUTO.pass:null,dayRepeats:typeof AUTO!=='undefined'?AUTO.repeats:null};
@@ -16617,7 +16755,7 @@ window.mvAllRepeatAudit214=function(){
   const a=document.querySelector('#homeStudyModePanel .homeStudyModeBtn.active');
   const map={homeModeDay:'day',homeModeMy:'my',homeModeSori:'sori',homeModeOpic:'opic'};
   return {
-    version:'v5.3.256',
+    version:'v5.3.268',
     visibleMode:map[a?.id]||null,
     enabled:!!document.getElementById('homeAllRepeat209')?.checked,
     active:!!window.MV_ALL_REPEAT_209?.active,
@@ -16648,7 +16786,7 @@ window.mvAllRepeatAudit214=function(){
 <script id="v532215AllRepeatAudit">
 window.mvAllRepeatAudit215=function(){
   const s=window.MV_ALL_REPEAT_215||{};
-  return {version:'v5.3.256',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],index:s.index||0,cycle:s.cycle||0,
+  return {version:'v5.3.268',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],index:s.index||0,cycle:s.cycle||0,
     advancing:!!s.advancing,snapshots:s.snapshots||null,dayActive:typeof AUTO!=='undefined'?AUTO.active:null,
     dayPass:typeof AUTO!=='undefined'?AUTO.pass:null,dayRepeats:typeof AUTO!=='undefined'?AUTO.repeats:null,
     m536Mode:typeof M536!=='undefined'?M536.mode:null,m536Course:typeof M536!=='undefined'?M536.course:null,
@@ -16672,7 +16810,7 @@ window.mvAllRepeatTrace216=function(event,extra={}){
 <script id="v532217DayAdvanceAudit">
 window.mvDayAdvanceAudit217=function(){
   return {
-    version:'v5.3.256',
+    version:'v5.3.268',
     integrated:!!window.MV_ALL_REPEAT_215?.active,
     currentCourse:window.MV_ALL_REPEAT_215?.current||'',
     queue:[...(window.MV_ALL_REPEAT_215?.queue||[])],
@@ -16694,7 +16832,7 @@ window.mvDayAdvanceAudit217=function(){
 window.mvAllRepeatAudit219=function(){
   const s=window.MV_ALL_REPEAT_219||{};
   return {
-    version:'v5.3.256',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],
+    version:'v5.3.268',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],
     index:s.index??null,snapshot:s.snapshot||null,
     dayHook:typeof window.MV_DAY_ONCE_COMPLETE_219,
     courseHook:typeof window.MV_COURSE_ONCE_COMPLETE_219,
@@ -16733,7 +16871,7 @@ window.mvAllRepeatAudit219=function(){
 window.mvControllerAudit221=function(){
   const b=document.getElementById('homeAllRepeatStart210');
   return {
-    version:'v5.3.256',
+    version:'v5.3.268',
     buttonText:b?.textContent||'',
     v209:!!window.MV_ALL_REPEAT_209?.active,
     v215:!!window.MV_ALL_REPEAT_215?.active,
@@ -16755,7 +16893,7 @@ window.mvControllerAudit221=function(){
 window.mvOverallIsolationAudit222=function(){
   const s=window.MV_ALL_REPEAT_219||{};
   return {
-    version:'v5.3.256',
+    version:'v5.3.268',
     active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],index:s.index??null,
     snapshot:s.snapshot||null,
     internalStart:!!window.MV_ALL_REPEAT_INTERNAL_START_222,
@@ -16773,7 +16911,7 @@ window.mvOverallIsolationAudit222=function(){
 
 
 <script id="v532239StudyFavoriteStandard">
-/* ===== V5.3.256 · CORRECTION / CHUNK / SPEAKING FAVORITE STANDARD ===== */
+/* ===== V5.3.268 · CORRECTION / CHUNK / SPEAKING FAVORITE STANDARD ===== */
 (function(){
 'use strict';
 const MV_STUDY_FAVORITES_KEY_239='mv_study_favorites_239';
@@ -16945,7 +17083,7 @@ document.addEventListener('click',(e)=>{
 
 window.mvStudyFavoriteAudit239=function(){
   return {
-    version:'v5.3.256',
+    version:'v5.3.268',
     storage:MV_STUDY_FAVORITES_KEY_239,
     tabs:['corrections','chunks','speaking'],
     courses:['my','sori','opic'],
@@ -16965,7 +17103,7 @@ window.mvStudyFavoriteAudit239=function(){
 window.mvSori3VisibilityAudit241=function(){
   const card=document.getElementById('soriGroup3Card');
   const sec=document.querySelector('.soriClassSection');
-  return {version:'v5.3.256',cardExists:!!card,insideSori:!!card&&card.closest('.soriClassSection')===sec,
+  return {version:'v5.3.268',cardExists:!!card,insideSori:!!card&&card.closest('.soriClassSection')===sec,
     lesson:studyCardCourseLesson(card)?.lesson||0,lessonCount:studyCourseLessonCount('sori')};
 };
 </script>
@@ -17196,7 +17334,7 @@ window.mvSwipePage246={
   forceCleanup:()=>cleanup246()
 };
 window.mvSwipePageAudit246=()=>({
- version:'v5.3.256',
+ version:'v5.3.268',
  mode:'2D full-screen card drag',
  followsX:true,followsY:true,velocityAware:true,
  navigation:'once on touchend',
@@ -17210,7 +17348,7 @@ window.mvSwipePageAudit246=()=>({
 <script id="v532247VerticalTiltAudit">
 window.mvSwipeVerticalTiltAudit247=function(){
   return {
-    version:'v5.3.256',
+    version:'v5.3.268',
     verticalTilt:'opposite by dy sign',
     upward:'rotateZ negative',
     downward:'rotateZ positive',
@@ -17224,7 +17362,7 @@ window.mvSwipeVerticalTiltAudit247=function(){
 <script id="v532248BidirectionalTiltAudit">
 window.mvSwipeBidirectionalTiltAudit248=function(){
   return {
-    version:'v5.3.256',
+    version:'v5.3.268',
     leftSwipe:'vertical tilt flips by up/down',
     rightSwipe:'mirrored vertical tilt flips by up/down',
     mirroredByHorizontalDirection:true,
@@ -17238,7 +17376,7 @@ window.mvSwipeBidirectionalTiltAudit248=function(){
 <script id="v532249RightTiltVisualFixAudit">
 window.mvSwipeRightTiltVisualFix249=function(){
   return {
-    version:'v5.3.256',
+    version:'v5.3.268',
     fix:'remove rotateY visual cancellation + quadrant transform-origin',
     leftSwipe:{up:'opposite angle',down:'opposite angle'},
     rightSwipe:{up:'mirrored angle',down:'mirrored angle'},
@@ -17252,7 +17390,7 @@ window.mvSwipeRightTiltVisualFix249=function(){
 <script id="v532250SwipeCommitAudit">
 window.mvSwipeCommitAudit250=function(){
   return {
-    version:'v5.3.256',
+    version:'v5.3.268',
     completion:'2D distance + velocity',
     xThreshold:.10,
     diagonalThreshold:.18,
@@ -17268,7 +17406,7 @@ window.mvSwipeCommitAudit250=function(){
 <script id="v532251SwipeCommitSamsungAudit">
 window.mvSwipeCommitSamsungAudit251=function(){
   return {
-    version:'v5.3.256',
+    version:'v5.3.268',
     samsungTouchCancel:'uses normal commit thresholds instead of forced cancel',
     destination:'resolved explicitly before render',
     expected:'corrections left swipe -> chunks',
@@ -17462,7 +17600,7 @@ window.mvVerticalLessonSwipe252={
   forceCleanup:()=>cleanup252()
 };
 window.mvVerticalLessonSwipeAudit252=()=>({
-  version:'v5.3.256',
+  version:'v5.3.268',
   topPullDown:'previous lesson same tab',
   bottomPushUp:'next lesson same tab',
   liveCard:true,
@@ -17478,7 +17616,7 @@ window.mvVerticalLessonSwipeAudit252=()=>({
 <script id="v532253SwipeCornerCleanupAudit">
 window.mvSwipeCornerCleanupAudit253=function(){
   return {
-    version:'v5.3.256',
+    version:'v5.3.268',
     fix:'clean swipe-card corners and duplicate floating overlays',
     cardRadius:0,
     shadow:'reduced',
@@ -17612,7 +17750,7 @@ window.MV_SWIPE_STANDARD_254={
   active:()=>!!U,forceCleanup:()=>cleanup254()
 };
 window.mvSwipeStandardAudit254=()=>({
-  version:'v5.3.256',
+  version:'v5.3.268',
   standard:'full-screen snapshot + finger-follow + mirrored tilt + velocity commit',
   applied:['MY/SORI/OPIC tabs','MY/SORI/OPIC lesson edges','DAY learning cards','word quiz questions']
 });
@@ -17682,32 +17820,21 @@ async function autoTurn255(commit,dir=1){
   const rotZ=dir>0?-8:8;
   card.style.transformOrigin=dir>0?'right bottom':'left bottom';
 
-  // Human-like page turn: brief grab -> visible mid-swipe -> finish.
-  await new Promise(r=>setTimeout(r,140));
+  // v5.3.268 · continuous human-speed page turn.
+  // No mid-point pause: one uninterrupted motion from start to finish.
+  await new Promise(r=>setTimeout(r,110));
 
   await new Promise(resolve=>{
-    const phase1=330;
-    card.style.transition=`transform ${phase1}ms cubic-bezier(.22,.64,.20,1),filter ${phase1}ms ease-out`;
-    shade.style.transition=`opacity ${phase1}ms ease-out`;
-    requestAnimationFrame(()=>{
-      card.style.transform=`translate3d(${targetX*.48}px,${targetY*.45}px,0) rotateZ(${rotZ*.58}deg) scale(.992)`;
-      card.style.filter='brightness(.965)';
-      shade.style.opacity='.08';
-    });
-    setTimeout(resolve,phase1+25);
-  });
-
-  await new Promise(resolve=>{
-    const phase2=390;
-    card.style.transition=`transform ${phase2}ms cubic-bezier(.18,.78,.16,1),opacity ${phase2}ms ease-out,filter ${phase2}ms ease-out`;
-    shade.style.transition=`opacity ${phase2}ms ease-out`;
+    const dur=720;
+    card.style.transition=`transform ${dur}ms cubic-bezier(.20,.62,.18,1),opacity ${dur}ms cubic-bezier(.55,.05,.70,.35),filter ${dur}ms ease-out`;
+    shade.style.transition=`opacity ${dur}ms ease-out`;
     requestAnimationFrame(()=>{
       card.style.transform=`translate3d(${targetX}px,${targetY}px,0) rotateZ(${rotZ}deg) scale(.98)`;
       card.style.opacity='0';
       card.style.filter='brightness(.91)';
       shade.style.opacity='0';
     });
-    setTimeout(resolve,phase2+35);
+    setTimeout(resolve,dur+40);
   });
 
   try{stage.remove()}catch(e){}
@@ -17719,7 +17846,7 @@ async function autoTurn255(commit,dir=1){
 
 window.mvAutoPlaybackPageTurn255=autoTurn255;
 window.mvAutoPlaybackPageTurnAudit255=()=>({
-  version:'v5.3.256',
+  version:'v5.3.268',
   use:'automatic full-playback tab/lesson screen changes',
   style:'same full-screen swipe-card standard',
   destinationStartsAtTop:true,
@@ -17758,24 +17885,22 @@ window.mvAutoDayPlaybackTurn255=async function(commit){
   const tx=-w*1.16,ty=-Math.min(h*.10,80);
   card.style.transformOrigin='right bottom';
 
-  await new Promise(r=>setTimeout(r,140));
+  // v5.3.268 · DAY uses the same uninterrupted page-turn timing.
+  await new Promise(r=>setTimeout(r,110));
 
-  const p1=320;
-  card.style.transition=`transform ${p1}ms cubic-bezier(.22,.64,.20,1),filter ${p1}ms ease-out`;
-  requestAnimationFrame(()=>{
-    card.style.transform=`translate3d(${tx*.48}px,${ty*.45}px,0) rotateZ(-4.6deg) scale(.992)`;
-    card.style.filter='brightness(.965)';
-  });
-  await new Promise(r=>setTimeout(r,p1+25));
-
-  const p2=380;
-  card.style.transition=`transform ${p2}ms cubic-bezier(.18,.78,.16,1),opacity ${p2}ms ease-out,filter ${p2}ms ease-out`;
+  const dur=700;
+  card.style.transition=`transform ${dur}ms cubic-bezier(.20,.62,.18,1),opacity ${dur}ms cubic-bezier(.55,.05,.70,.35),filter ${dur}ms ease-out`;
   requestAnimationFrame(()=>{
     card.style.transform=`translate3d(${tx}px,${ty}px,0) rotateZ(-8deg) scale(.98)`;
-    card.style.opacity='0';card.style.filter='brightness(.91)';
+    card.style.opacity='0';
+    card.style.filter='brightness(.91)';
   });
-  await new Promise(r=>setTimeout(r,p2+35));
-  stage.remove();document.body.classList.remove('mvSwipeActive246');
+  await new Promise(r=>setTimeout(r,dur+40));
+  stage.remove();
+  document.body.classList.remove('mvSwipeActive246');
+
+  // Ensure the destination frame has actually painted before resolving.
+  await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
   return true;
 };
 </script>
@@ -17784,13 +17909,320 @@ window.mvAutoDayPlaybackTurn255=async function(commit){
 <script id="v532256HumanAutoSwipeSpeedAudit">
 window.mvHumanAutoSwipeSpeedAudit256=function(){
   return {
-    version:'v5.3.256',
+    version:'v5.3.268',
     automaticTurn:'human-like visible speed',
     preHoldMs:140,
     midSwipeMs:330,
     finishSwipeMs:390,
     totalVisualMs:'about 900ms',
     dayTurn:'same slower two-phase standard'
+  };
+};
+</script>
+
+
+<script id="v532259PlaybackProgressStatusDriven">
+(function(){
+'use strict';
+
+function parts259(){
+  const status=document.getElementById('myClassPlaybackStatus');
+  return {
+    status,
+    box:status?.querySelector('.mvPlaybackProgress258'),
+    fill:status?.querySelector('.mvPlaybackFill258'),
+    count:status?.querySelector('.mvPlaybackCount258')
+  };
+}
+function hide259(){
+  const {status,box,fill,count}=parts259();
+  box?.classList.remove('on');
+  status?.classList.remove('mvProgress258On');
+  if(fill)fill.style.width='0%';
+  if(count)count.textContent='0/0';
+}
+function total259(tab,lesson,course){
+  try{
+    const d=studyCourseData?.(course,lesson);
+    const a=d?.[tab];
+    if(Array.isArray(a)&&a.length)return a.length;
+  }catch(e){}
+  // DOM fallback: current rendered cards.
+  const map={corrections:'.myStudyCard[data-study-tab="corrections"],.myCorrectionCard',
+             chunks:'.myStudyCard[data-study-tab="chunks"],.myChunkCard',
+             speaking:'.myStudyCard[data-study-tab="speaking"],.mySpeakBlock'};
+  try{
+    const n=document.querySelectorAll(map[tab]||'.myStudyCard').length;
+    if(n)return n;
+  }catch(e){}
+  return 0;
+}
+function sync259(text,playing){
+  try{
+    if(!playing){hide259();return}
+    const {status,box,fill,count}=parts259();
+    if(!status||!box||!fill||!count)return;
+
+    const s=String(text||'');
+    let tab='';
+    if(/핵심\s*교정|Correction/i.test(s))tab='corrections';
+    else if(/Chunk/i.test(s))tab='chunks';
+    else if(/말하기|Speaking/i.test(s))tab='speaking';
+    else {hide259();return}
+
+    // Status examples: "전체 반복 · 수업 1 · 핵심 교정 10 · 문장 2/2"
+    // or "Chunk · 5/12 · 1/2". Prefer the card number immediately after tab label.
+    let current=0;
+    const patterns=tab==='corrections'
+      ? [/핵심\s*교정\s*(\d+)/i,/Correction\s*(\d+)/i]
+      : tab==='chunks'
+      ? [/Chunk\s*(\d+)/i]
+      : [/말하기\s*(\d+)/i,/Speaking\s*(\d+)/i];
+    for(const rx of patterns){const m=s.match(rx);if(m){current=Number(m[1])||0;break}}
+
+    const lessonMatch=s.match(/수업\s*(\d+)/);
+    const lesson=lessonMatch?Number(lessonMatch[1]):Number(window.myClassLessonNo||1);
+    const course=String(window.ACTIVE_STUDY_COURSE||window.M536?.course||'my');
+    let total=total259(tab,lesson,course);
+
+    const playlist=Array.isArray(window.M536?.playlist)?window.M536.playlist:[];
+    const samePlaylist=playlist.filter(x=>
+      Number(x.lesson)===lesson &&
+      String(x.tab||'')===tab &&
+      String(x.course||course)===course
+    );
+    const configuredFavoriteOnly=!!window.studyFavoriteOnly239?.(course);
+    const favoriteCheck=document.querySelector('[data-favorite-only-239="1"]');
+    const favoriteCheckOn=!!favoriteCheck?.checked;
+    const favoriteStartLabel=/즐겨찾기\s*집중\s*반복/.test(String(document.getElementById('sharedStudyStart')?.textContent||''));
+    const favoriteOnly=configuredFavoriteOnly || favoriteCheckOn || favoriteStartLabel;
+
+    // Favorite-only STANDARD:
+    // Never infer the denominator from the full tab or from original card numbering.
+    // Count the actual ★ favorite indices in THIS lesson + THIS tab.
+    // Example: favorites are original cards 2, 7, 11 among 12 =>
+    // progress MUST be 1/3, 2/3, 3/3 (not 2/12, 7/12, 11/12).
+    let favoriteIndices=[];
+    if(favoriteOnly){
+      try{
+        const d=window.studyCourseData?.(course,lesson)||{};
+        const rows=Array.isArray(d?.[tab])?d[tab]:[];
+        favoriteIndices=rows.map((_,idx)=>idx).filter(idx=>
+          !!window.studyFavoriteHas239?.(course,lesson,tab,idx)
+        );
+      }catch(e){favoriteIndices=[]}
+    }
+
+    if(favoriteOnly && favoriteIndices.length){
+      total=favoriteIndices.length;
+
+      // Resolve the actual original card index currently being played.
+      const item=playlist[Number(window.M536?.cursor)||0];
+      let originalIndex=-1;
+      if(item && Number(item.lesson)===lesson && String(item.tab||'')===tab){
+        originalIndex=Number(item.index);
+      }
+      if(!Number.isFinite(originalIndex)||originalIndex<0){
+        // Status label is 1-based original card number, e.g. "핵심 교정 11".
+        originalIndex=Math.max(0,(Number(current)||1)-1);
+      }
+
+      const favoritePos=favoriteIndices.indexOf(originalIndex);
+      if(favoritePos>=0)current=favoritePos+1;
+      else{
+        // Last-resort fallback: match the closest favorite position without
+        // ever using the original 1..N card number as the displayed numerator.
+        const prior=favoriteIndices.filter(idx=>idx<=originalIndex).length;
+        current=Math.max(1,Math.min(total,prior||1));
+      }
+    }else{
+      // Original v259 fallback for normal playback.
+      if(!total && samePlaylist.length)total=samePlaylist.length;
+      if(!current && samePlaylist.length){
+        const item=playlist[Number(window.M536?.cursor)||0];
+        if(item && Number(item.lesson)===lesson && String(item.tab||'')===tab){
+          const key=typeof window.m536ItemKey==='function'?window.m536ItemKey(item):null;
+          const idx=samePlaylist.findIndex(x=>key&&window.m536ItemKey(x)===key);
+          current=idx>=0?idx+1:(Number(item.index)||0)+1;
+          if(!total)total=samePlaylist.length;
+        }
+      }
+    }
+
+    if(!total||!current){hide259();return}
+    current=Math.max(1,Math.min(total,current));
+    fill.style.width=(current/total*100)+'%';
+    count.textContent=`${current}/${total}`;
+    box.classList.add('on');
+    status.classList.add('mvProgress258On');
+  }catch(e){hide259()}
+}
+
+const original=window.myClassSetStatus;
+if(typeof original==='function'){
+  window.myClassSetStatus=function(text,playing=false){
+    const result=original.apply(this,arguments);
+    // UI-only: update after canonical status paint; never changes playback state.
+    try{sync259(text,playing)}catch(e){}
+    return result;
+  };
+}
+window.mvPlaybackProgressSync259=sync259;
+window.mvPlaybackProgressAudit259=()=>({
+  version:'v5.3.268',
+  trigger:'canonical status paint',
+  playbackEngineTouched:false,
+  progress:'current card / total cards in current lesson+tab',
+  scope:['MY','SORI','OPIC']
+});
+})();
+</script>
+
+
+<script id="v532261FavoriteProgressSafeAudit">
+window.mvFavoriteProgressSafeAudit261=function(){
+  return {
+    version:'v5.3.268',
+    base:'v5.3.268 visible progress implementation',
+    favoriteOnly:'counter uses filtered active playlist',
+    normalPlayback:'v259 logic preserved',
+    playbackEngineTouched:false
+  };
+};
+</script>
+
+
+<script id="v532262FavoriteDenominatorAudit">
+window.mvFavoriteDenominatorAudit262=function(){
+ return {
+   version:'v5.3.268',
+   rule:'favorite-only 100% = actual filtered favorites in current lesson+tab',
+   example:'3 favorites among 12 => 1/3, 2/3, 3/3',
+   detection:['favorite-only setting','actual playlist smaller than full tab'],
+   base:'v5.3.268 / v5.3.259 visible progress path',
+   playbackEngineTouched:false
+ };
+};
+</script>
+
+
+<script id="v532263FavoriteExactCountAudit">
+window.mvFavoriteExactCountAudit263=function(course=window.ACTIVE_STUDY_COURSE||'my',lesson=window.myClassLessonNo||1,tab=window.myClassTab||'corrections'){
+  let favoriteIndices=[];
+  try{
+    const d=window.studyCourseData?.(course,lesson)||{};
+    const rows=Array.isArray(d?.[tab])?d[tab]:[];
+    favoriteIndices=rows.map((_,idx)=>idx).filter(idx=>!!window.studyFavoriteHas239?.(course,lesson,tab,idx));
+  }catch(e){}
+  return {
+    version:'v5.3.268',
+    rule:'favorite denominator = exact favorite count in current lesson+tab',
+    favoriteIndices,
+    denominator:favoriteIndices.length,
+    example:'original cards 2,7,11 => progress 1/3,2/3,3/3',
+    playbackEngineTouched:false
+  };
+};
+</script>
+
+
+<script id="v532264ProgressLayoutAudit">
+window.mvProgressLayoutAudit264=function(){
+  return {
+    version:'v5.3.268',
+    change:'progress bar width reduced and right-aligned to protect status label',
+    mobileWidthPx:112,
+    maxWidthPx:154,
+    countAlwaysVisible:true,
+    countingLogicChanged:false,
+    playbackEngineTouched:false
+  };
+};
+</script>
+
+
+<script id="v532265OverallFavoriteSkipAudit">
+window.mvOverallFavoriteSkipAudit265=function(){
+  const s=window.MV_ALL_REPEAT_219||{};
+  return {
+    version:'v5.3.268',
+    rule:'overall repeat + favorite-only + zero favorites => skip course',
+    neverFallbackToAll:true,
+    favoriteOnlySnapshot:s.favoriteOnlySnapshot||null,
+    engineEmptyPlaylistGuard:true,
+    individualRepeatBehavior:'unchanged'
+  };
+};
+</script>
+
+
+<script id="v532266DayAutoPageTurnStandard">
+(function(){
+'use strict';
+let chain=Promise.resolve();
+
+window.mvDayAutoAdvance266=function(commit){
+  if(typeof commit!=='function')return Promise.resolve(false);
+
+  // Serialize automatic DAY transitions so a second card can never cut off
+  // the page-turn animation that is already visible.
+  chain=chain.catch(()=>{}).then(async()=>{
+    if(typeof window.mvAutoDayPlaybackTurn255==='function'){
+      await window.mvAutoDayPlaybackTurn255(commit);
+
+      // v5.3.268 timing standard:
+      // wait until the turned page is fully gone and the destination card is stable
+      // before autoRead of the next word can begin.
+      await new Promise(r=>setTimeout(r,220));
+      return true;
+    }
+    commit();
+    await new Promise(r=>setTimeout(r,120));
+    return true;
+  });
+  return chain;
+};
+
+window.mvDayAutoPageTurnAudit266=function(){
+  return {
+    version:'v5.3.268',
+    rule:'every automatic DAY next-word / repeat-pass transition uses page turn',
+    engine:'mvAutoDayPlaybackTurn255 human-speed visual',
+    serialized:true,
+    manualSwipe:'unchanged'
+  };
+};
+})();
+</script>
+
+
+<script id="v532267DayTurnPlaybackTimingAudit">
+window.mvDayTurnPlaybackTimingAudit267=function(){
+  return {
+    version:'v5.3.268',
+    rule:'next DAY word audio starts only after page turn fully completes',
+    pageTurn:'human-speed two phase',
+    postTurnSettleMs:220,
+    finalPaintFrames:2,
+    fallbackSettleMs:120,
+    scope:['DAY automatic full playback','DAY repeat-pass restart']
+  };
+};
+</script>
+
+
+<script id="v532268ContinuousPageTurnAudit">
+window.mvContinuousPageTurnAudit268=function(){
+  return {
+    version:'v5.3.268',
+    fix:'remove mid-turn pause from automatic page transitions',
+    generalAutoTurnMs:720,
+    dayAutoTurnMs:700,
+    preHoldMs:110,
+    dayPostTurnAudioSettleMs:170,
+    motion:'single continuous transition',
+    applies:['DAY automatic word changes','MY/SORI/OPIC automatic tab/lesson changes'],
+    manualSwipe:'unchanged'
   };
 };
 </script>
