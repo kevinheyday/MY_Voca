@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.241</title>
+<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.254</title>
 
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
@@ -2766,13 +2766,13 @@ html[data-mv-activity="sentence"] .quizModeSwitch{
 /* V5.3.189 · MY/SORI/OPIC correction Tip-pattern color standard */
 #myClassPage .myStudyEn .studyCoreChunkMark{color:#0f766e!important;background:#ccfbf1!important;font-weight:950!important;border-radius:5px;padding:0 2px;}
 
-/* v5.3.241 · Why + exact wrong-token highlight standard */
+/* v5.3.254 · Why + exact wrong-token highlight standard */
 .myStudyBadMark229{color:#8a2b06;background:#ffd86b;font-weight:900;border-radius:6px;padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 .myStudyWhy229{margin:8px 0 10px;padding:10px 12px;border-radius:12px;background:#eef7ff;border:1px solid #cfe8fb;color:#24516f;font-size:.92rem;font-weight:750;line-height:1.45}
 .myStudyRuleToken229{display:inline-block;padding:0 .22em;margin:0 .04em;border-radius:5px;background:rgba(255,216,107,.55);color:#7b3a08;font-weight:850}
 
 
-/* v5.3.241 · unified compact correction-reason box */
+/* v5.3.254 · unified compact correction-reason box */
 .myStudyReason230{
   margin:7px 0 9px;
   padding:8px 10px;
@@ -2798,17 +2798,17 @@ html[data-mv-activity="sentence"] .quizModeSwitch{
 }
 
 
-/* v5.3.241 · vertical edge lesson navigation standard */
+/* v5.3.254 · vertical edge lesson navigation standard */
 .myClassSwipeHint b{font-weight:850;color:#5b3bb5}
 
 
-/* v5.3.241 · prevent browser pull-to-refresh from hijacking lesson edge swipes */
+/* v5.3.254 · prevent browser pull-to-refresh from hijacking lesson edge swipes */
 #myClassPage{
   overscroll-behavior-y: contain;
 }
 
 
-/* v5.3.241 · hard guard for Android content:// pull-to-refresh */
+/* v5.3.254 · hard guard for Android content:// pull-to-refresh */
 html,body{
   overscroll-behavior-y:none;
 }
@@ -2832,7 +2832,7 @@ html,body{
 </style>
 
 <style id="v532239StudyFavoriteStyle">
-/* v5.3.241 · shared study favorite standard */
+/* v5.3.254 · shared study favorite standard */
 #myClassContent .myStudyCard,
 #myClassContent .mySpeakBlock{position:relative!important}
 #myClassContent .myStudyCard .myStudyNum,
@@ -2901,6 +2901,37 @@ html,body{
 }
 </style>
 
+
+
+
+
+
+<style id="v532246FreeDragPageStyle">
+/* v5.3.254 · 2D finger-follow page card */
+.mvSwipeStage246{position:fixed;inset:0;z-index:9997;overflow:hidden;pointer-events:none;perspective:1400px;background:transparent}
+.mvSwipeCard246{
+  position:absolute;inset:0;width:100vw;height:100vh;overflow:hidden;
+  background:#f7f8fc;transform-origin:center center;
+  will-change:transform,opacity,filter;backface-visibility:hidden;
+  /* Clean flat page edge: avoids stacked white arcs in rotated corners on Samsung/content:// */
+  border-radius:0;
+  box-shadow:0 10px 24px rgba(15,23,42,.16);
+  outline:1px solid rgba(148,163,184,.10);
+}
+.mvSwipeCard246.next,.mvSwipeCard246.prev{border-radius:0}
+.mvSwipeCardInner246{position:absolute;left:0;width:100vw;min-height:100vh;pointer-events:none}
+.mvSwipeShade246{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,transparent 56%,rgba(15,23,42,.14) 100%);opacity:0;will-change:opacity}
+body.mvSwipeActive246{overscroll-behavior:none!important}
+.mvSwipeCard246::after{
+  content:"";position:absolute;top:0;bottom:0;width:2px;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.85),rgba(148,163,184,.22),rgba(255,255,255,.55));
+  opacity:.72;
+}
+.mvSwipeCard246.next::after{right:0}
+.mvSwipeCard246.prev::after{left:0}
+
+</style>
+
 </head><body>
 
 <button id="drawerMenuButton" class="drawerMenuButton" type="button" aria-label="메뉴 열기" aria-expanded="false">☰</button>
@@ -2950,7 +2981,7 @@ html,body{
       <div>
         <div class="homeEyebrow" id="homeCourseEyebrow">MY VOCA UNIFIED COURSE · 69 DAYS</div>
         <h1 id="homeCourseTitle">MY VOCA</h1>
-        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.241</div>
+        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.254</div>
       </div>
       <div class="homeDayBadge"><b id="homeRegisteredDays">30</b><span>등록 Day</span></div>
     </section>
@@ -3835,7 +3866,7 @@ async function myClassSpeakSequence(texts,{focusEl=null,statusPrefix='전체 듣
   if(!list.length)return;
 
   myClassStop(false);
-  // v5.3.241: Samsung/Android content:// TTS must be unlocked from the same tap path.
+  // v5.3.254: Samsung/Android content:// TTS must be unlocked from the same tap path.
   try{unlockTTSFromGesture?.()}catch(e){}
   const token=++MY_CLASS_PLAY.token;
   MY_CLASS_PLAY.active=true;
@@ -7533,7 +7564,7 @@ async function autoReadAndAdvance(w,renderVersion=__renderVersion){
   const completed=await autoRead(w,renderVersion);
   if(!completed)return;
 
-  // v5.3.241: integrated repeat owns navigation after a card has been fully read.
+  // v5.3.254: integrated repeat owns navigation after a card has been fully read.
   // The legacy renderVersion/__renderedCardKey guard can change during the long
   // DAY reading sequence on Android even though the same card is still current.
   // That produced the exact symptom: status says "전체 읽기 완료" but playback stops.
@@ -10134,32 +10165,52 @@ $('nextq').onclick=()=>{
   const quizEl=document.getElementById('quiz');
   if(!quizEl||quizEl.dataset.swipeReady==='1')return;
   quizEl.dataset.swipeReady='1';
-  let sx=0,sy=0,dx=0,dy=0,tracking=false,horizontal=false;
+  let sx=0,sy=0,tracking=false,locked=false,dir=0;
   const isInteractive=target=>!!target?.closest('button,select,input,textarea,a,[role="button"],.compareSheet,.drawerPanel');
+
+  const canQuiz=d=>{
+    if(d>0)return !quizSessionDone && quizIndex<quizDeck.length-1;
+    return quizIndex>0 || quizSessionDone;
+  };
+  const commitQuiz=d=>{
+    clearQuizAutoNext?.();
+    if(d>0){goToNextQuizQuestion();return true}
+    const prev=$('prevq');
+    if(prev){prev.click();return true}
+    return false;
+  };
+
   quizEl.addEventListener('touchstart',e=>{
     if(e.touches.length!==1||isInteractive(e.target))return;
-    sx=e.touches[0].clientX;sy=e.touches[0].clientY;dx=0;dy=0;tracking=true;horizontal=false;
+    sx=e.touches[0].clientX;sy=e.touches[0].clientY;tracking=true;locked=false;dir=0;
   },{passive:true});
   quizEl.addEventListener('touchmove',e=>{
     if(!tracking||e.touches.length!==1)return;
-    dx=e.touches[0].clientX-sx;dy=e.touches[0].clientY-sy;
-    if(!horizontal){
-      if(Math.abs(dy)>Math.abs(dx)+8){tracking=false;return}
-      if(Math.abs(dx)<12)return;
-      horizontal=true;
+    const t=e.touches[0],dx=t.clientX-sx,dy=t.clientY-sy;
+    if(!locked&&Math.abs(dx)>=12&&Math.abs(dx)>=Math.abs(dy)*.82){
+      dir=dx<0?1:-1;
+      if(canQuiz(dir)){
+        locked=window.MV_SWIPE_STANDARD_254?.begin?.({
+          root:quizEl,dir,x:sx,y:sy,onCommit:commitQuiz
+        })===true;
+      }
     }
-    if(horizontal)e.preventDefault();
+    if(locked){
+      e.preventDefault();
+      window.MV_SWIPE_STANDARD_254?.move?.(t.clientX,t.clientY);
+    }
   },{passive:false});
-  quizEl.addEventListener('touchend',()=>{
-    if(!tracking||!horizontal)return;
-    const threshold=Math.min(80,Math.max(55,quizEl.clientWidth*.12));
-    if(Math.abs(dx)>=threshold&&Math.abs(dx)>Math.abs(dy)*1.25){
-      if(dx<0)goToNextQuizQuestion();
-      else $('prevq')?.click();
-    }
-    tracking=false;horizontal=false;dx=dy=0;
+  quizEl.addEventListener('touchend',e=>{
+    if(!tracking)return;
+    const t=e.changedTouches&&e.changedTouches[0];
+    if(locked&&t)window.MV_SWIPE_STANDARD_254?.finalPoint?.(t.clientX,t.clientY);
+    tracking=false;
+    if(locked){locked=false;window.MV_SWIPE_STANDARD_254?.end?.(false)}
   },{passive:true});
-  quizEl.addEventListener('touchcancel',()=>{tracking=false;horizontal=false;dx=dy=0},{passive:true});
+  quizEl.addEventListener('touchcancel',()=>{
+    tracking=false;
+    if(locked){locked=false;window.MV_SWIPE_STANDARD_254?.end?.(false)}
+  },{passive:true});
 })();
 
 
@@ -10631,35 +10682,55 @@ $('todayStartBtn').onclick=()=>{
   AUTO.token++;
   forceReleaseWakeLock();forceReleaseWakeLock();let due=dueWordsAll();if(due.length){openDay(due[0].newDay,'forget');return}let next=Array.from({length:currentCfg().days},(_,i)=>i+1).find(d=>dayProgress(d).learned<dayProgress(d).total)||1;openDay(next,'learn')};
 
-let sx=0;
-$('card').addEventListener('touchstart',e=>{
-  sx=e.touches[0].clientX;
-},{passive:true});
-$('card').addEventListener('touchend',e=>{
-  const dx=e.changedTouches[0].clientX-sx;
-  if(Math.abs(dx)<=70)return;
-
-  // Swipe is navigation only. It must never change 알고 있어요/몰라요 statistics.
-  stopSpeech();
-  AUTO.token++;
-  saveSelectedProgress();
-
-  if(dx>0){
-    // 오른쪽으로 밀기 → 이전 단어
-    if(i>0){
-      i--;
-      render();
-    }
-  }else{
-    // 왼쪽으로 밀기 → 다음 단어
-    if(i<deck.length-1){
-      i++;
-      render();
-    }else{
-      finishLearning();
-    }
-  }
-},{passive:true});{const rateSelect=document.getElementById('homeSpeechRate');if(rateSelect){rateSelect.value=String(getSpeechRate());rateSelect.addEventListener('change',()=>setSpeechRate(rateSelect.value));}}{const m=$('speechMode').value;$('autoStatus').textContent=m==='off'?'자동 읽기가 꺼져 있습니다.':m==='word'?'단어 읽기: 영어 단어와 한글 뜻만 3회 읽습니다.':m==='full'?'전체 읽기: 학습 단어만 영어와 한글 뜻을 읽고, 그 외 모든 항목은 영어만 읽습니다.':'학습 단어만 영어와 한글 뜻을 읽고, 예문과 패러프레이즈는 영어만 읽습니다.';}decodeDataEntities(UNIFIED_WORDS);decodeDataEntities(UNIFIED_DAY_META);decodeDataEntities(V);ALL_WORDS=UNIFIED_WORDS;DAY_META=UNIFIED_DAY_META;currentDay=1;W=ALL_WORDS.filter(w=>w.newDay===1);deck=[...W];loadPackState();applyPackUI();quizSelectedDay=currentDay;quizAllWrongMode=false;updateQuizDayNav();buildDeck('book');updateHomeDashboard();$('dayAppPage').classList.add('hidden');$('homePage').classList.remove('hidden');
+// v5.3.254 · DAY 학습도 공통 Swipe 화면 전환 표준 사용
+{
+ const cardEl=$('card');
+ let dsx=0,dsy=0,dlock=false,ddir=0,dtracking=false;
+ const canDay=(dir)=>dir>0?(i<deck.length-1):(i>0);
+ const commitDay=(dir)=>{
+   // Swipe is navigation only. It must never change 알고 있어요/몰라요 statistics.
+   stopSpeech();AUTO.token++;saveSelectedProgress();
+   if(dir>0){
+     if(i<deck.length-1){i++;render();return true}
+     return false;
+   }else{
+     if(i>0){i--;render();return true}
+     return false;
+   }
+ };
+ cardEl.addEventListener('touchstart',e=>{
+   if(e.touches.length!==1)return;
+   dsx=e.touches[0].clientX;dsy=e.touches[0].clientY;dlock=false;ddir=0;dtracking=true;
+ },{passive:true});
+ cardEl.addEventListener('touchmove',e=>{
+   if(!dtracking||e.touches.length!==1)return;
+   const t=e.touches[0],dx=t.clientX-dsx,dy=t.clientY-dsy;
+   if(!dlock&&Math.abs(dx)>=12&&Math.abs(dx)>=Math.abs(dy)*.82){
+     ddir=dx<0?1:-1;
+     if(canDay(ddir)){
+       dlock=window.MV_SWIPE_STANDARD_254?.begin?.({
+         root:document.getElementById('dayAppPage'),
+         dir:ddir,x:dsx,y:dsy,onCommit:commitDay
+       })===true;
+     }
+   }
+   if(dlock){
+     e.preventDefault();
+     window.MV_SWIPE_STANDARD_254?.move?.(t.clientX,t.clientY);
+   }
+ },{passive:false});
+ cardEl.addEventListener('touchend',e=>{
+   if(!dtracking)return;
+   const t=e.changedTouches&&e.changedTouches[0];
+   if(dlock&&t)window.MV_SWIPE_STANDARD_254?.finalPoint?.(t.clientX,t.clientY);
+   dtracking=false;
+   if(dlock){dlock=false;window.MV_SWIPE_STANDARD_254?.end?.(false)}
+ },{passive:true});
+ cardEl.addEventListener('touchcancel',()=>{
+   dtracking=false;
+   if(dlock){dlock=false;window.MV_SWIPE_STANDARD_254?.end?.(false)}
+ },{passive:true});
+}{const rateSelect=document.getElementById('homeSpeechRate');if(rateSelect){rateSelect.value=String(getSpeechRate());rateSelect.addEventListener('change',()=>setSpeechRate(rateSelect.value));}}{const m=$('speechMode').value;$('autoStatus').textContent=m==='off'?'자동 읽기가 꺼져 있습니다.':m==='word'?'단어 읽기: 영어 단어와 한글 뜻만 3회 읽습니다.':m==='full'?'전체 읽기: 학습 단어만 영어와 한글 뜻을 읽고, 그 외 모든 항목은 영어만 읽습니다.':'학습 단어만 영어와 한글 뜻을 읽고, 예문과 패러프레이즈는 영어만 읽습니다.';}decodeDataEntities(UNIFIED_WORDS);decodeDataEntities(UNIFIED_DAY_META);decodeDataEntities(V);ALL_WORDS=UNIFIED_WORDS;DAY_META=UNIFIED_DAY_META;currentDay=1;W=ALL_WORDS.filter(w=>w.newDay===1);deck=[...W];loadPackState();applyPackUI();quizSelectedDay=currentDay;quizAllWrongMode=false;updateQuizDayNav();buildDeck('book');updateHomeDashboard();$('dayAppPage').classList.add('hidden');$('homePage').classList.remove('hidden');
 
 
 
@@ -11306,7 +11377,7 @@ function mvSentenceEntryAudit182(){
 window.mvSentenceEntryAudit182=mvSentenceEntryAudit182;
 
 /* ===== V5.3.189 · STANDARD APP INFO / UPDATE HISTORY ===== */
-const MV_APP_VERSION='5.3.241';
+const MV_APP_VERSION='5.3.254';
 
 function mvCloseInfoOverlay(){
   const overlay=document.getElementById('mvInfoOverlay');
@@ -12670,7 +12741,7 @@ function m536StopController(keepResume=false){
   m536SyncInfinityButtons();
 }
 
-/* ===== V5.3.241 · BACKGROUND PLAYBACK POSITION STANDARD =====
+/* ===== V5.3.254 · BACKGROUND PLAYBACK POSITION STANDARD =====
    Shared by MY / SORI / OPIC. A background transition may finish only the
    repetition already in progress; it never runs ahead into unrelated items.
    On return:
@@ -12776,7 +12847,7 @@ async function m536RunFull(startAt=0,startRep=0){
     });
     M536.cursor=next;
 
-    // v5.3.241: optional outer-orchestrator completion hook.
+    // v5.3.254: optional outer-orchestrator completion hook.
     // Dormant during normal MY/SORI/OPIC repeat, so individual repeat behavior is unchanged.
     if(next===0 && typeof window.MV_COURSE_ONCE_COMPLETE_219==='function'){
       const done=window.MV_COURSE_ONCE_COMPLETE_219;
@@ -12789,7 +12860,7 @@ async function m536RunFull(startAt=0,startRep=0){
       return;
     }
 
-    // v5.3.241: deterministic integrated controller - one playlist per course.
+    // v5.3.254: deterministic integrated controller - one playlist per course.
     if(window.MV_ALL_REPEAT_215?.active && window.MV_MIXED_COURSE_ONCE_215 && next===0){
       window.MV_MIXED_COURSE_ONCE_215=false;
       M536.busy=false;
@@ -12800,7 +12871,7 @@ async function m536RunFull(startAt=0,startRep=0){
       return;
     }
 
-    // Legacy v5.3.241 hook retained outside v215 sessions.
+    // Legacy v5.3.254 hook retained outside v215 sessions.
     if(window.MV_ALL_REPEAT_209?.active && window.MV_MIXED_COURSE_ONCE_209 && next===0){
       window.MV_MIXED_COURSE_ONCE_209=false;
       M536.busy=false;
@@ -13706,7 +13777,7 @@ function goMyClassTab(dir){
   let nextLesson=Number(myClassLessonNo)||1;
   const maxLesson=(typeof studyCourseLessonCount==='function'?studyCourseLessonCount(ACTIVE_STUDY_COURSE):Object.keys(studyCourseMeta?.(ACTIVE_STUDY_COURSE)||{}).length)||1;
 
-  // v5.3.241 shared swipe standard:
+  // v5.3.254 shared swipe standard:
   // first tab + right swipe => previous lesson's last tab
   // last tab + left swipe => next lesson's first tab
   if(ni<0){
@@ -13728,7 +13799,8 @@ function goMyClassTab(dir){
   studySyncCourseUI?.();
   document.querySelectorAll('.myClassTab').forEach(b=>b.classList.toggle('active',b.dataset.myclassTab===myClassTab));
   myClassSetStatus?.('화면 전환 · 재생 정지',false);
-  window.scrollTo({top:0,behavior:'smooth'});
+  if(typeof window.mvStudyScrollTopInstant242==='function')window.mvStudyScrollTopInstant242();
+  else window.scrollTo({top:0,behavior:'auto'});
 }
 
 function studySameTabLessonNav231(dir){
@@ -13784,81 +13856,108 @@ function bindSwipe(){
  root.dataset.cleanSwipe='1';
 
  let startAtTop=false,startAtBottom=false;
- let edgeVerticalLock=false;
+ let hLocked=false,hDir=0,vLocked=false,vDir=0;
+
+ const endHorizontal=(cancel)=>{
+   if(!hLocked)return false;
+   hLocked=false;
+   window.mvSwipePage246?.end?.(!!cancel);
+   return true;
+ };
+ const endVertical=(cancel)=>{
+   if(!vLocked)return false;
+   vLocked=false;
+   window.mvVerticalLessonSwipe252?.end?.(!!cancel);
+   return true;
+ };
 
  root.addEventListener('touchstart',e=>{
    if(e.touches.length!==1)return;
-   touching=true;
-   edgeVerticalLock=false;
-   sx=e.touches[0].clientX;
-   sy=e.touches[0].clientY;
-   startAtTop=studyAtPageTop231();
-   startAtBottom=studyAtPageBottom231();
+   touching=true; hLocked=false; hDir=0; vLocked=false; vDir=0;
+   sx=e.touches[0].clientX; sy=e.touches[0].clientY;
+   startAtTop=studyAtPageTop231(); startAtBottom=studyAtPageBottom231();
  },{passive:true,capture:true});
 
- // v5.3.241
- // Android Chrome/Samsung Internet can treat a downward pull at page top as
- // browser pull-to-refresh. With content:// that reloads the app and lands on Home.
- // Once the gesture is clearly an edge-navigation swipe, consume it here.
  root.addEventListener('touchmove',e=>{
    if(!touching||e.touches.length!==1)return;
-   const t=e.touches[0];
-   const dx=t.clientX-sx,dy=t.clientY-sy;
+   const t=e.touches[0],dx=t.clientX-sx,dy=t.clientY-sy;
    const ax=Math.abs(dx),ay=Math.abs(dy);
-   if(ay<18||ay<ax*1.25)return;
 
-   const pullingPrev=(dy>0&&startAtTop);
-   const pushingNext=(dy<0&&startAtBottom);
-   if(pullingPrev||pushingNext){
-     edgeVerticalLock=true;
+   // Horizontal tab/page swipe.
+   if(!hLocked&&!vLocked&&ax>=12&&ax>=ay*.82){
+     hDir=dx<0?1:-1;
+     if(window.mvSwipePage246?.canGo?.(hDir)){
+       hLocked=window.mvSwipePage246.begin(hDir,sx,sy)===true;
+     }
+   }
+   if(hLocked){
      e.preventDefault();
+     window.mvSwipePage246?.move?.(t.clientX,t.clientY);
+     return;
+   }
+
+   // Vertical edge lesson swipe: same tab, previous/next lesson.
+   if(!vLocked&&!hLocked&&ay>=14&&ay>=ax*1.10){
+     const wantsPrev=(dy>0&&startAtTop);
+     const wantsNext=(dy<0&&startAtBottom);
+     if(wantsPrev||wantsNext){
+       vDir=wantsNext?1:-1;
+       if(window.mvVerticalLessonSwipe252?.canGo?.(vDir)){
+         vLocked=window.mvVerticalLessonSwipe252.begin(vDir,sx,sy)===true;
+       }
+     }
+   }
+   if(vLocked){
+     e.preventDefault();
+     window.mvVerticalLessonSwipe252?.move?.(t.clientX,t.clientY);
+     return;
    }
  },{passive:false,capture:true});
 
  root.addEventListener('touchend',e=>{
    if(!touching)return;
-   touching=false;
    const t=e.changedTouches&&e.changedTouches[0];
-   if(!t){edgeVerticalLock=false;return;}
 
-   const dx=t.clientX-sx,dy=t.clientY-sy;
-   const ax=Math.abs(dx),ay=Math.abs(dy);
+   if(hLocked&&t)window.mvSwipePage246?.finalPoint?.(t.clientX,t.clientY);
+   if(vLocked&&t)window.mvVerticalLessonSwipe252?.finalPoint?.(t.clientX,t.clientY);
 
-   // Horizontal: keep the existing tab flow.
-   if(ax>=70&&ax>=ay*1.3){
-     edgeVerticalLock=false;
-     if(dx<0)goMyClassTab(1);else goMyClassTab(-1);
-     return;
-   }
-
-   // Vertical edge navigation:
-   // top + pull DOWN -> previous lesson, same tab
-   // bottom + push UP -> next lesson, same tab
-   // Using the touch-start edge state is intentional because preventDefault()
-   // blocks native overscroll from changing the page position.
-   if(ay>=85&&ay>=ax*1.25){
-     if(dy>0&&startAtTop){
-       studySameTabLessonNav231(-1);
-     }else if(dy<0&&startAtBottom){
-       studySameTabLessonNav231(1);
-     }
-   }
-   edgeVerticalLock=false;
+   touching=false;
+   if(endHorizontal(false))return;
+   if(endVertical(false))return;
  },{passive:true,capture:true});
 
  root.addEventListener('touchcancel',()=>{
    touching=false;
-   edgeVerticalLock=false;
+   // Samsung/content:// can emit touchcancel for valid swipes.
+   if(hLocked)endHorizontal(false);
+   if(vLocked)endVertical(false);
  },{passive:true,capture:true});
+
+ window.addEventListener('touchend',e=>{
+   if(hLocked){
+     const t=e.changedTouches&&e.changedTouches[0];
+     if(t)window.mvSwipePage246?.finalPoint?.(t.clientX,t.clientY);
+     touching=false; endHorizontal(false);
+   }else if(vLocked){
+     const t=e.changedTouches&&e.changedTouches[0];
+     if(t)window.mvVerticalLessonSwipe252?.finalPoint?.(t.clientX,t.clientY);
+     touching=false; endVertical(false);
+   }
+ },{passive:true,capture:false});
+
+ window.addEventListener('touchcancel',()=>{
+   if(hLocked){touching=false;endHorizontal(false)}
+   else if(vLocked){touching=false;endVertical(false)}
+ },{passive:true,capture:false});
 }
 function addHint(){
  const root=document.getElementById('myClassContent');
  if(!root||document.querySelector('.myClassSwipeHint'))return;
  const h=document.createElement('div');h.className='myClassSwipeHint';
- h.innerHTML='← → 탭 이동 · <b>맨 위에서 ↓ 이전 수업</b> · <b>맨 아래에서 ↑ 다음 수업</b>';
+ h.innerHTML='↔ 탭 이동 · 맨 위에서 ↓ 이전 수업 · 맨 아래에서 ↑ 다음 수업도 같은 카드 Swipe';
  root.parentNode&&root.parentNode.insertBefore(h,root);
 }
-// v5.3.241 shared local-listen gesture unlock (MY/SORI/OPIC).
+// v5.3.254 shared local-listen gesture unlock (MY/SORI/OPIC).
 document.addEventListener('pointerdown',e=>{
  const b=e.target.closest?.('#myClassPage .myStudyBtn.primary');
  if(!b)return;
@@ -14566,7 +14665,7 @@ function installVisibleBuildBadge(){
   if(!badge){
     badge=document.createElement('div');
     badge.id='mvBuildBadge';
-    badge.textContent='v5.3.241';
+    badge.textContent='v5.3.254';
     badge.title='현재 실행 중인 MY VOCA 빌드';
     document.body.appendChild(badge);
   }
@@ -15148,7 +15247,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   }
 
 
-  /* ===== V5.3.241 · REPEAT PART SELECTION STANDARD ===== */
+  /* ===== V5.3.254 · REPEAT PART SELECTION STANDARD ===== */
   const STUDY_REPEAT_PARTS_206={
     day:{items:[['word','단어·뜻'],['example','예문'],['paraphrase','패러프레이즈'],['extra','추가 표현']],defaults:['word','example']},
     my:{items:[['corrections','핵심 교정'],['chunks','Chunk'],['speaking','말하기']],defaults:['corrections','chunks','speaking']},
@@ -15271,7 +15370,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   }
 
 
-  /* ===== V5.3.241 · CROSS-COURSE ALL REPEAT STANDARD ===== */
+  /* ===== V5.3.254 · CROSS-COURSE ALL REPEAT STANDARD ===== */
   const MV_ALL_REPEAT_209={
     active:false,
     order:['day','my','sori','opic'],
@@ -15402,7 +15501,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   window.allRepeatAdvance209=allRepeatAdvance209;
 
   function startAllRepeat209(explicitStartMode){
-    // v5.3.241: start from the exact mode the learner has clicked.
+    // v5.3.254: start from the exact mode the learner has clicked.
     // Do not infer a stale/default DAY state from a rebuilt DOM.
     const validModes=['day','my','sori','opic'];
     const startMode=validModes.includes(explicitStartMode)?explicitStartMode:currentHomeStudyMode();
@@ -15439,7 +15538,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   window.toggleAllRepeat214=toggleAllRepeat214;
 
 
-  /* ===== V5.3.241 · DETERMINISTIC CROSS-COURSE REPEAT CONTROLLER ===== */
+  /* ===== V5.3.254 · DETERMINISTIC CROSS-COURSE REPEAT CONTROLLER ===== */
   const MV_ALL_REPEAT_215={active:false,queue:[],index:0,current:'',cycle:0,advancing:false,token:0,snapshots:null};
   window.MV_ALL_REPEAT_215=MV_ALL_REPEAT_215;
 
@@ -15589,7 +15688,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   window.toggleAllRepeat215=toggleAllRepeat215;
 
 
-  /* ===== V5.3.241 · ISOLATED OUTER ALL-REPEAT ORCHESTRATOR =====
+  /* ===== V5.3.254 · ISOLATED OUTER ALL-REPEAT ORCHESTRATOR =====
      Normal DAY/MY/SORI/OPIC engines are not replaced. This layer only:
      1) reads saved selections, 2) calls the existing starter, 3) receives one completion callback.
   */
@@ -16225,7 +16324,7 @@ async function studySpeakSpeakingCard193(index,block=null){
   MY_CLASS_PLAY.paused=false;
   const focusEl=block||document.getElementById(`mySpeakBlock${index}`);
   if(focusEl)myClassFocus?.(focusEl);
-  // v5.3.241: unlock from the same tap, then let Samsung/content:// TTS settle
+  // v5.3.254: unlock from the same tap, then let Samsung/content:// TTS settle
   // BEFORE the first audible item (the question/cue) is queued.
   try{unlockTTSFromGesture?.()}catch(e){}
   try{if(window.speechSynthesis?.paused)window.speechSynthesis.resume()}catch(e){}
@@ -16246,7 +16345,7 @@ window.studySpeakSpeakingCard193=studySpeakSpeakingCard193;
 
 function mvSpeakingQuestionAudioAudit238(){
   return {
-    version:'v5.3.241',
+    version:'v5.3.254',
     order:'question/cue -> answer',
     androidContentFix:'silent unlock settles before first audible question',
     shared:['my','sori','opic','full','infinite']
@@ -16257,7 +16356,7 @@ window.mvSpeakingQuestionAudioAudit238=mvSpeakingQuestionAudioAudit238;
 function mvSpeakingQuestionFirstAudit236(){
   const courses=['my','sori','opic'];
   return {
-    version:'v5.3.241',
+    version:'v5.3.254',
     courses:courses,
     individualButton:'studySpeakSpeakingCard193',
     repeatEngine:'studySpeakQuestionThenAnswer193',
@@ -16385,7 +16484,7 @@ setTimeout(()=>{try{studyBindSpeakingPlayback193()}catch(e){}},0);
 
 
 <script id="v53197PatternGrammarSlotStandard">
-/* ===== V5.3.241 · PATTERN GRAMMAR-SLOT HIGHLIGHT STANDARD =====
+/* ===== V5.3.254 · PATTERN GRAMMAR-SLOT HIGHLIGHT STANDARD =====
    All courses use studyFindPatternHits(). Grammar labels such as S/V/O/C/A/B
    are placeholders only; actual sentence words are highlighted instead.
 */
@@ -16398,19 +16497,19 @@ function mvPatternGrammarSlotAudit197(){
     ['make someone think that ~','Seeing them makes me think that natural aging may be better.']
   ];
   const rows=cases.map(([pattern,text])=>({pattern,text,fixedParts:studyPatternFixedParts(pattern),hits:studyFindPatternHits(text,pattern)}));
-  return {version:'v5.3.241',rule:'S/V/O/C/A/B are grammar slots, never literal match tokens',passed:rows.every(r=>r.hits.length>0),rows};
+  return {version:'v5.3.254',rule:'S/V/O/C/A/B are grammar slots, never literal match tokens',passed:rows.every(r=>r.hits.length>0),rows};
 }
 window.mvPatternGrammarSlotAudit197=mvPatternGrammarSlotAudit197;
 </script>
 
 
 <script>
-/* ===== V5.3.241 · OPIC REGISTRY CARD AUDIT ===== */
+/* ===== V5.3.254 · OPIC REGISTRY CARD AUDIT ===== */
 window.mvOpicRegistryAudit202=function(){
   const meta=studyCourseMeta('opic')||{};
   const lessons=Object.keys(meta).map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
   return {
-    version:'v5.3.241',
+    version:'v5.3.254',
     lessons,
     lessonCount:studyCourseLessonCount('opic'),
     cards:[...document.querySelectorAll('#homePage .opicClassSection .opicCourseCard')].map(c=>({id:c.id,lesson:Number(c.dataset.studyLesson),title:c.querySelector('.myClassTop b')?.textContent||''})),
@@ -16429,7 +16528,7 @@ window.mvAllRepeatAudit211=function(){
     try{selections[c]=studyCourseSelectedLessons(c)}catch(e){selections[c]=[]}
   }
   return {
-    version:'v5.3.241',
+    version:'v5.3.254',
     currentMode:mode,
     queue:typeof allRepeatQueue209==='function'?allRepeatQueue209(mode):[],
     selections,
@@ -16449,7 +16548,7 @@ window.mvAllRepeatAudit212=function(){
     try{selected[c]=studyCourseSelectedLessons(c)}catch(e){selected[c]=[]}
   }
   return {
-    version:'v5.3.241',
+    version:'v5.3.254',
     startMode:mode,
     active:!!window.MV_ALL_REPEAT_209?.active,
     current:window.MV_ALL_REPEAT_209?.current||'',
@@ -16469,7 +16568,7 @@ window.mvAllRepeatAudit213=function(){
   const selected={};
   try{selected.day=JSON.parse(localStorage.getItem(selectedDaysKey())||'[]')}catch(e){selected.day=[]}
   for(const c of ['my','sori','opic']){try{selected[c]=studyCourseSelectedLessons(c)}catch(e){selected[c]=[]}}
-  return {version:'v5.3.241',visibleMode:map[active?.id]||null,savedMode:localStorage.getItem('mv_homeStudyMode212'),
+  return {version:'v5.3.254',visibleMode:map[active?.id]||null,savedMode:localStorage.getItem('mv_homeStudyMode212'),
     queue:[...(window.MV_ALL_REPEAT_209?.queue||[])],current:window.MV_ALL_REPEAT_209?.current||'',
     active:!!window.MV_ALL_REPEAT_209?.active,selected,dayActive:typeof AUTO!=='undefined'?AUTO.active:null,
     dayPass:typeof AUTO!=='undefined'?AUTO.pass:null,dayRepeats:typeof AUTO!=='undefined'?AUTO.repeats:null};
@@ -16482,7 +16581,7 @@ window.mvAllRepeatAudit214=function(){
   const a=document.querySelector('#homeStudyModePanel .homeStudyModeBtn.active');
   const map={homeModeDay:'day',homeModeMy:'my',homeModeSori:'sori',homeModeOpic:'opic'};
   return {
-    version:'v5.3.241',
+    version:'v5.3.254',
     visibleMode:map[a?.id]||null,
     enabled:!!document.getElementById('homeAllRepeat209')?.checked,
     active:!!window.MV_ALL_REPEAT_209?.active,
@@ -16513,7 +16612,7 @@ window.mvAllRepeatAudit214=function(){
 <script id="v532215AllRepeatAudit">
 window.mvAllRepeatAudit215=function(){
   const s=window.MV_ALL_REPEAT_215||{};
-  return {version:'v5.3.241',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],index:s.index||0,cycle:s.cycle||0,
+  return {version:'v5.3.254',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],index:s.index||0,cycle:s.cycle||0,
     advancing:!!s.advancing,snapshots:s.snapshots||null,dayActive:typeof AUTO!=='undefined'?AUTO.active:null,
     dayPass:typeof AUTO!=='undefined'?AUTO.pass:null,dayRepeats:typeof AUTO!=='undefined'?AUTO.repeats:null,
     m536Mode:typeof M536!=='undefined'?M536.mode:null,m536Course:typeof M536!=='undefined'?M536.course:null,
@@ -16537,7 +16636,7 @@ window.mvAllRepeatTrace216=function(event,extra={}){
 <script id="v532217DayAdvanceAudit">
 window.mvDayAdvanceAudit217=function(){
   return {
-    version:'v5.3.241',
+    version:'v5.3.254',
     integrated:!!window.MV_ALL_REPEAT_215?.active,
     currentCourse:window.MV_ALL_REPEAT_215?.current||'',
     queue:[...(window.MV_ALL_REPEAT_215?.queue||[])],
@@ -16559,7 +16658,7 @@ window.mvDayAdvanceAudit217=function(){
 window.mvAllRepeatAudit219=function(){
   const s=window.MV_ALL_REPEAT_219||{};
   return {
-    version:'v5.3.241',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],
+    version:'v5.3.254',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],
     index:s.index??null,snapshot:s.snapshot||null,
     dayHook:typeof window.MV_DAY_ONCE_COMPLETE_219,
     courseHook:typeof window.MV_COURSE_ONCE_COMPLETE_219,
@@ -16598,7 +16697,7 @@ window.mvAllRepeatAudit219=function(){
 window.mvControllerAudit221=function(){
   const b=document.getElementById('homeAllRepeatStart210');
   return {
-    version:'v5.3.241',
+    version:'v5.3.254',
     buttonText:b?.textContent||'',
     v209:!!window.MV_ALL_REPEAT_209?.active,
     v215:!!window.MV_ALL_REPEAT_215?.active,
@@ -16620,7 +16719,7 @@ window.mvControllerAudit221=function(){
 window.mvOverallIsolationAudit222=function(){
   const s=window.MV_ALL_REPEAT_219||{};
   return {
-    version:'v5.3.241',
+    version:'v5.3.254',
     active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],index:s.index??null,
     snapshot:s.snapshot||null,
     internalStart:!!window.MV_ALL_REPEAT_INTERNAL_START_222,
@@ -16638,7 +16737,7 @@ window.mvOverallIsolationAudit222=function(){
 
 
 <script id="v532239StudyFavoriteStandard">
-/* ===== V5.3.241 · CORRECTION / CHUNK / SPEAKING FAVORITE STANDARD ===== */
+/* ===== V5.3.254 · CORRECTION / CHUNK / SPEAKING FAVORITE STANDARD ===== */
 (function(){
 'use strict';
 const MV_STUDY_FAVORITES_KEY_239='mv_study_favorites_239';
@@ -16810,7 +16909,7 @@ document.addEventListener('click',(e)=>{
 
 window.mvStudyFavoriteAudit239=function(){
   return {
-    version:'v5.3.241',
+    version:'v5.3.254',
     storage:MV_STUDY_FAVORITES_KEY_239,
     tabs:['corrections','chunks','speaking'],
     courses:['my','sori','opic'],
@@ -16830,9 +16929,658 @@ window.mvStudyFavoriteAudit239=function(){
 window.mvSori3VisibilityAudit241=function(){
   const card=document.getElementById('soriGroup3Card');
   const sec=document.querySelector('.soriClassSection');
-  return {version:'v5.3.241',cardExists:!!card,insideSori:!!card&&card.closest('.soriClassSection')===sec,
+  return {version:'v5.3.254',cardExists:!!card,insideSori:!!card&&card.closest('.soriClassSection')===sec,
     lesson:studyCardCourseLesson(card)?.lesson||0,lessonCount:studyCourseLessonCount('sori')};
 };
+</script>
+
+
+
+
+
+
+<script id="v532246FreeDragPage">
+(function(){
+'use strict';
+let S=null;
+
+function topNow246(){
+  try{window.scrollTo({top:0,left:0,behavior:'auto'})}catch(e){window.scrollTo(0,0)}
+  try{document.documentElement.scrollTop=0;document.body.scrollTop=0}catch(e){}
+}
+window.mvStudyScrollTopInstant242=topNow246;
+
+function canGo246(dir){
+  const tabs=(typeof studyCourseOrder==='function'?studyCourseOrder(ACTIVE_STUDY_COURSE):['corrections','chunks','speaking','habits']).filter(Boolean);
+  let i=tabs.indexOf(myClassTab); if(i<0)i=0;
+  const lesson=Number(myClassLessonNo)||1;
+  const max=(typeof studyCourseLessonCount==='function'?studyCourseLessonCount(ACTIVE_STUDY_COURSE):1)||1;
+  const ni=i+dir;
+  if(ni>=0&&ni<tabs.length)return true;
+  if(ni<0)return lesson>1;
+  return lesson<max;
+}
+
+function makeSnapshot246(){
+  const page=document.getElementById('myClassPage');
+  if(!page)return null;
+  const scrollY=window.scrollY||document.documentElement.scrollTop||0;
+  const clone=page.cloneNode(true);
+  clone.removeAttribute('id');
+  clone.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
+  clone.querySelectorAll('button,input,select,textarea,a').forEach(el=>el.setAttribute('tabindex','-1'));
+  // Snapshot cleanup: fixed/floating controls are already present on the real destination page.
+  // Hiding only these duplicated overlay controls keeps the moving page edge clean.
+  clone.querySelectorAll('[style*="position: fixed"],[style*="position:fixed"],.floatingControls,.fixedBottom,.bottomDock').forEach(el=>{
+    el.style.visibility='hidden';
+  });
+  clone.style.pointerEvents='none';
+  clone.style.margin='0';
+  clone.style.width='100vw';
+
+  const inner=document.createElement('div');
+  inner.className='mvSwipeCardInner246';
+  inner.style.top=(-scrollY)+'px';
+  inner.appendChild(clone);
+  return inner;
+}
+
+function cleanup246(s=S){
+  if(!s)return;
+  try{s.stage?.remove()}catch(e){}
+  document.body.classList.remove('mvSwipeActive246');
+  if(S===s)S=null;
+}
+
+function begin246(dir,x,y){
+  if(S||!canGo246(dir))return false;
+  const inner=makeSnapshot246(); if(!inner)return false;
+
+  const stage=document.createElement('div'); stage.className='mvSwipeStage246';
+  const card=document.createElement('div'); card.className='mvSwipeCard246 '+(dir>0?'next':'prev');
+  const shade=document.createElement('div'); shade.className='mvSwipeShade246';
+  card.append(inner,shade); stage.appendChild(card); document.body.appendChild(stage);
+  document.body.classList.add('mvSwipeActive246');
+
+  S={dir,startX:x,startY:y,lastX:x,lastY:y,lastT:performance.now(),dx:0,dy:0,vx:0,vy:0,stage,card,shade,ending:false};
+  return true;
+}
+
+function move246(x,y){
+  if(!S||S.ending)return false;
+  const now=performance.now();
+  let dx=x-S.startX, dy=y-S.startY;
+
+  // Page direction remains left/right, but vertical movement follows the finger freely.
+  if(S.dir>0)dx=Math.min(0,dx); else dx=Math.max(0,dx);
+  dy=Math.max(-window.innerHeight*.42,Math.min(window.innerHeight*.42,dy));
+
+  const dt=Math.max(1,now-S.lastT);
+  S.vx=S.vx*.62+((x-S.lastX)/dt)*.38;
+  S.vy=S.vy*.62+((y-S.lastY)/dt)*.38;
+  S.lastX=x; S.lastY=y; S.lastT=now; S.dx=dx; S.dy=dy;
+
+  const w=Math.max(1,window.innerWidth), h=Math.max(1,window.innerHeight);
+  const px=Math.min(1,Math.abs(dx)/w), py=Math.min(.42,Math.abs(dy)/h);
+  // Tilt follows vertical finger position like a physical card.
+  // Vertical gesture direction controls the card tilt sign.
+  // Upward drag => one tilt direction, downward drag => the exact opposite.
+  const verticalSign=dy<0?-1:(dy>0?1:0);
+  const tiltMag=2.2 + 10.5*Math.min(.42,Math.abs(dy)/h) + 2.5*px;
+  const horizontalMirror=(S.dir>0?1:-1);
+  const z=verticalSign===0
+    ? (S.dir>0?-1:1)*1.2
+    : verticalSign*tiltMag*horizontalMirror;
+  const scale=1-.016*px-.008*py;
+
+  // Anchor the card at the opposite corner. This makes right-swipe tilt
+  // visibly mirror left-swipe tilt instead of being visually cancelled by perspective.
+  const originX=S.dir>0?'right':'left';
+  const originY=dy<0?'bottom':(dy>0?'top':'center');
+  S.card.style.transformOrigin=`${originX} ${originY}`;
+
+  S.card.style.transition='none';
+  S.card.style.transform=`translate3d(${dx}px,${dy}px,0) rotateZ(${z}deg) scale(${scale})`;
+  S.card.style.filter=`brightness(${1-.06*px})`;
+  S.shade.style.opacity=String(.15*Math.max(px,py));
+  return true;
+}
+
+function commitNavigation246(dir){
+  // Resolve the destination explicitly, then render it once.
+  // This avoids a Samsung/content:// touch-cancel path leaving the visual swipe
+  // completed while the underlying tab remains unchanged.
+  const tabs=(typeof studyCourseOrder==='function'
+    ? studyCourseOrder(ACTIVE_STUDY_COURSE)
+    : ['corrections','chunks','speaking','habits']).filter(Boolean);
+  let i=tabs.indexOf(myClassTab); if(i<0)i=0;
+  let ni=i+dir;
+  let nextLesson=Number(myClassLessonNo)||1;
+  const maxLesson=(typeof studyCourseLessonCount==='function'
+    ? studyCourseLessonCount(ACTIVE_STUDY_COURSE)
+    : 1)||1;
+
+  if(ni<0){
+    if(nextLesson<=1)return false;
+    nextLesson--; ni=tabs.length-1;
+  }else if(ni>=tabs.length){
+    if(nextLesson>=maxLesson)return false;
+    nextLesson++; ni=0;
+  }
+
+  stopAllMyClassPlayback?.(true);
+  myClassLessonNo=nextLesson;
+  myClassTab=tabs[ni];
+  try{M536.course=ACTIVE_STUDY_COURSE}catch(e){}
+  myClassUpdateHeader?.();
+  renderMyClass?.();
+  studySyncCourseUI?.();
+  document.querySelectorAll('.myClassTab').forEach(
+    b=>b.classList.toggle('active',b.dataset.myclassTab===myClassTab)
+  );
+  myClassSetStatus?.('화면 전환 · 재생 정지',false);
+  topNow246();
+  return true;
+}
+
+function end246(cancel){
+  if(!S||S.ending)return false;
+  const s=S; s.ending=true;
+  const w=Math.max(1,window.innerWidth), h=Math.max(1,window.innerHeight);
+  const progressX=Math.abs(s.dx)/w;
+  const travel=Math.hypot(s.dx,s.dy);
+  const travelRatio=travel/Math.max(1,Math.min(w,h));
+  const speed=Math.hypot(s.vx,s.vy);
+
+  // The gesture is already direction-locked as a horizontal page swipe.
+  // After that lock, diagonal/up/down dragging must still complete the page turn.
+  const finish=!cancel && (
+    progressX>=.10 ||
+    travelRatio>=.18 ||
+    Math.abs(s.vx)>=.28 ||
+    speed>=.46
+  );
+
+  if(!finish){
+    const dur=190;
+    s.card.style.transition=`transform ${dur}ms cubic-bezier(.22,.72,.18,1),filter ${dur}ms ease-out`;
+    s.shade.style.transition=`opacity ${dur}ms ease-out`;
+    requestAnimationFrame(()=>{
+      s.card.style.transform='translate3d(0,0,0) rotateY(0deg) rotateZ(0deg) scale(1)';
+      s.card.style.filter='brightness(1)'; s.shade.style.opacity='0';
+    });
+    setTimeout(()=>cleanup246(s),dur+40);
+    return false;
+  }
+
+  // Render destination underneath only now, once touch has ended.
+  let committed=false;
+  try{committed=commitNavigation246(s.dir)===true}catch(err){cleanup246(s);throw err}
+  if(!committed){
+    s.ending=false;
+    const dur=180;
+    s.card.style.transition=`transform ${dur}ms cubic-bezier(.22,.72,.18,1),filter ${dur}ms ease-out`;
+    requestAnimationFrame(()=>{s.card.style.transform='translate3d(0,0,0) rotateZ(0deg) scale(1)';s.card.style.filter='brightness(1)'});
+    setTimeout(()=>cleanup246(s),dur+35);
+    return false;
+  }
+
+  const targetX=s.dir>0?-w*1.18:w*1.18;
+  // Preserve the user's vertical throw, so diagonal/up/down swipes continue naturally.
+  const throwY=Math.max(-h*.48,Math.min(h*.48,s.dy + s.vy*110));
+  const dist=Math.hypot(targetX-s.dx,throwY-s.dy);
+  const pxms=Math.max(.85,speed);
+  const dur=Math.max(150,Math.min(340,dist/pxms));
+  const verticalSign=s.dy<0?-1:(s.dy>0?1:0);
+  const horizontalMirror=(s.dir>0?1:-1);
+  const rotZ=verticalSign===0
+    ? (s.dir>0?-10:10)
+    : verticalSign*14*horizontalMirror;
+  const originX=s.dir>0?'right':'left';
+  const originY=s.dy<0?'bottom':(s.dy>0?'top':'center');
+  s.card.style.transformOrigin=`${originX} ${originY}`;
+
+  s.card.style.transition=`transform ${dur}ms cubic-bezier(.18,.78,.16,1),opacity ${dur}ms ease-out,filter ${dur}ms ease-out`;
+  s.shade.style.transition=`opacity ${dur}ms ease-out`;
+  requestAnimationFrame(()=>{
+    s.card.style.transform=`translate3d(${targetX}px,${throwY}px,0) rotateZ(${rotZ}deg) scale(.975)`;
+    s.card.style.opacity='0'; s.card.style.filter='brightness(.90)'; s.shade.style.opacity='0';
+  });
+  setTimeout(()=>{cleanup246(s);topNow246()},dur+50);
+  return true;
+}
+
+window.mvSwipePage246={
+  canGo:canGo246,
+  begin:begin246,
+  move:move246,
+  end:end246,
+  finalPoint:(x,y)=>{ if(S&&!S.ending) move246(x,y); },
+  active:()=>!!S,
+  forceCleanup:()=>cleanup246()
+};
+window.mvSwipePageAudit246=()=>({
+ version:'v5.3.254',
+ mode:'2D full-screen card drag',
+ followsX:true,followsY:true,velocityAware:true,
+ navigation:'once on touchend',
+ destinationStartsAtTop:true,
+ scope:['my','sori','opic']
+});
+})();
+</script>
+
+
+<script id="v532247VerticalTiltAudit">
+window.mvSwipeVerticalTiltAudit247=function(){
+  return {
+    version:'v5.3.254',
+    verticalTilt:'opposite by dy sign',
+    upward:'rotateZ negative',
+    downward:'rotateZ positive',
+    finalThrowPreservesVerticalTilt:true,
+    scope:['my','sori','opic']
+  };
+};
+</script>
+
+
+<script id="v532248BidirectionalTiltAudit">
+window.mvSwipeBidirectionalTiltAudit248=function(){
+  return {
+    version:'v5.3.254',
+    leftSwipe:'vertical tilt flips by up/down',
+    rightSwipe:'mirrored vertical tilt flips by up/down',
+    mirroredByHorizontalDirection:true,
+    finalThrowMirrored:true,
+    scope:['my','sori','opic']
+  };
+};
+</script>
+
+
+<script id="v532249RightTiltVisualFixAudit">
+window.mvSwipeRightTiltVisualFix249=function(){
+  return {
+    version:'v5.3.254',
+    fix:'remove rotateY visual cancellation + quadrant transform-origin',
+    leftSwipe:{up:'opposite angle',down:'opposite angle'},
+    rightSwipe:{up:'mirrored angle',down:'mirrored angle'},
+    transformOrigin:'changes by horizontal direction and vertical direction',
+    scope:['my','sori','opic']
+  };
+};
+</script>
+
+
+<script id="v532250SwipeCommitAudit">
+window.mvSwipeCommitAudit250=function(){
+  return {
+    version:'v5.3.254',
+    completion:'2D distance + velocity',
+    xThreshold:.10,
+    diagonalThreshold:.18,
+    finalTouchPointApplied:true,
+    navigation:'goMyClassTab on successful release',
+    destinationStartsAtTop:true,
+    scope:['my','sori','opic']
+  };
+};
+</script>
+
+
+<script id="v532251SwipeCommitSamsungAudit">
+window.mvSwipeCommitSamsungAudit251=function(){
+  return {
+    version:'v5.3.254',
+    samsungTouchCancel:'uses normal commit thresholds instead of forced cancel',
+    destination:'resolved explicitly before render',
+    expected:'corrections left swipe -> chunks',
+    scope:['my','sori','opic']
+  };
+};
+</script>
+
+
+<script id="v532252VerticalLessonSwipe">
+(function(){
+'use strict';
+let V=null;
+
+function topNow252(){
+  try{window.scrollTo({top:0,left:0,behavior:'auto'})}catch(e){window.scrollTo(0,0)}
+  try{document.documentElement.scrollTop=0;document.body.scrollTop=0}catch(e){}
+}
+
+function canLesson252(dir){
+  const course=ACTIVE_STUDY_COURSE||'my';
+  const max=Math.max(1,Number(studyCourseLessonCount?.(course))||1);
+  const next=Number(myClassLessonNo||1)+(dir>0?1:-1);
+  return next>=1&&next<=max;
+}
+
+function snapshot252(){
+  const page=document.getElementById('myClassPage');
+  if(!page)return null;
+  const scrollY=window.scrollY||document.documentElement.scrollTop||0;
+  const clone=page.cloneNode(true);
+  clone.removeAttribute('id');
+  clone.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
+  clone.querySelectorAll('button,input,select,textarea,a').forEach(el=>el.setAttribute('tabindex','-1'));
+  // Snapshot cleanup: fixed/floating controls are already present on the real destination page.
+  // Hiding only these duplicated overlay controls keeps the moving page edge clean.
+  clone.querySelectorAll('[style*="position: fixed"],[style*="position:fixed"],.floatingControls,.fixedBottom,.bottomDock').forEach(el=>{
+    el.style.visibility='hidden';
+  });
+  clone.style.pointerEvents='none';
+  clone.style.margin='0';
+  clone.style.width='100vw';
+
+  const inner=document.createElement('div');
+  inner.className='mvSwipeCardInner246';
+  inner.style.top=(-scrollY)+'px';
+  inner.appendChild(clone);
+  return inner;
+}
+
+function cleanup252(s=V){
+  if(!s)return;
+  try{s.stage?.remove()}catch(e){}
+  document.body.classList.remove('mvSwipeActive246');
+  if(V===s)V=null;
+}
+
+function begin252(dir,x,y){
+  if(V||!canLesson252(dir))return false;
+  const inner=snapshot252(); if(!inner)return false;
+
+  const stage=document.createElement('div'); stage.className='mvSwipeStage246';
+  const card=document.createElement('div'); card.className='mvSwipeCard246';
+  const shade=document.createElement('div'); shade.className='mvSwipeShade246';
+  card.append(inner,shade); stage.appendChild(card); document.body.appendChild(stage);
+  document.body.classList.add('mvSwipeActive246');
+
+  V={
+    dir,startX:x,startY:y,lastX:x,lastY:y,lastT:performance.now(),
+    dx:0,dy:0,vx:0,vy:0,stage,card,shade,ending:false
+  };
+  return true;
+}
+
+function move252(x,y){
+  if(!V||V.ending)return false;
+  const now=performance.now();
+  let dx=x-V.startX, dy=y-V.startY;
+
+  // Same-tab lesson gesture keeps its vertical direction:
+  // dir +1 = next lesson from page bottom (finger moves upward)
+  // dir -1 = previous lesson from page top (finger moves downward)
+  if(V.dir>0)dy=Math.min(0,dy);
+  else dy=Math.max(0,dy);
+
+  // Keep a little horizontal freedom so it feels like the same draggable card.
+  dx=Math.max(-window.innerWidth*.35,Math.min(window.innerWidth*.35,dx));
+
+  const dt=Math.max(1,now-V.lastT);
+  V.vx=V.vx*.62+((x-V.lastX)/dt)*.38;
+  V.vy=V.vy*.62+((y-V.lastY)/dt)*.38;
+  V.lastX=x; V.lastY=y; V.lastT=now; V.dx=dx; V.dy=dy;
+
+  const w=Math.max(1,window.innerWidth), h=Math.max(1,window.innerHeight);
+  const py=Math.min(1,Math.abs(dy)/h);
+  const px=Math.min(.35,Math.abs(dx)/w);
+
+  // Vertical page turn: horizontal offset controls the lean, vertical motion controls travel.
+  const z=(dx===0?0:(dx>0?1:-1))*(2+9*px) + (V.dir>0?-1:1)*(2+5*py);
+  const scale=1-.014*py-.006*px;
+
+  V.card.style.transformOrigin=V.dir>0?'center top':'center bottom';
+  V.card.style.transition='none';
+  V.card.style.transform=`translate3d(${dx}px,${dy}px,0) rotateZ(${z}deg) scale(${scale})`;
+  V.card.style.filter=`brightness(${1-.055*py})`;
+  V.shade.style.opacity=String(.14*Math.max(py,px));
+  return true;
+}
+
+function commit252(dir){
+  const course=ACTIVE_STUDY_COURSE||'my';
+  const max=Math.max(1,Number(studyCourseLessonCount?.(course))||1);
+  const next=Number(myClassLessonNo||1)+(dir>0?1:-1);
+  if(next<1||next>max)return false;
+
+  stopAllMyClassPlayback?.(true);
+  myClassLessonNo=next;
+  try{M536.course=course}catch(e){}
+  myClassUpdateHeader?.();
+  renderMyClass?.();
+  studySyncCourseUI?.();
+  document.querySelectorAll('.myClassTab').forEach(
+    b=>b.classList.toggle('active',b.dataset.myclassTab===myClassTab)
+  );
+  myClassSetStatus?.(dir>0?'다음 수업 · 같은 학습':'이전 수업 · 같은 학습',false);
+  topNow252();
+  return true;
+}
+
+function end252(cancel){
+  if(!V||V.ending)return false;
+  const s=V; s.ending=true;
+  const w=Math.max(1,window.innerWidth), h=Math.max(1,window.innerHeight);
+  const progressY=Math.abs(s.dy)/h;
+  const travelRatio=Math.hypot(s.dx,s.dy)/Math.max(1,Math.min(w,h));
+  const speed=Math.hypot(s.vx,s.vy);
+  const finish=!cancel && (
+    progressY>=.10 ||
+    travelRatio>=.18 ||
+    Math.abs(s.vy)>=.28 ||
+    speed>=.46
+  );
+
+  if(!finish){
+    const dur=190;
+    s.card.style.transition=`transform ${dur}ms cubic-bezier(.22,.72,.18,1),filter ${dur}ms ease-out`;
+    s.shade.style.transition=`opacity ${dur}ms ease-out`;
+    requestAnimationFrame(()=>{
+      s.card.style.transform='translate3d(0,0,0) rotateZ(0deg) scale(1)';
+      s.card.style.filter='brightness(1)';
+      s.shade.style.opacity='0';
+    });
+    setTimeout(()=>cleanup252(s),dur+40);
+    return false;
+  }
+
+  let committed=false;
+  try{committed=commit252(s.dir)===true}catch(err){cleanup252(s);throw err}
+  if(!committed){
+    s.ending=false;
+    return end252(true);
+  }
+
+  const targetY=s.dir>0?-h*1.14:h*1.14;
+  const throwX=Math.max(-w*.45,Math.min(w*.45,s.dx+s.vx*100));
+  const dist=Math.hypot(throwX-s.dx,targetY-s.dy);
+  const dur=Math.max(150,Math.min(340,dist/Math.max(.85,speed)));
+
+  const leanSign=throwX===0?0:(throwX>0?1:-1);
+  const rotZ=leanSign*(10+Math.min(5,Math.abs(throwX)/w*10)) + (s.dir>0?-4:4);
+
+  s.card.style.transition=`transform ${dur}ms cubic-bezier(.18,.78,.16,1),opacity ${dur}ms ease-out,filter ${dur}ms ease-out`;
+  s.shade.style.transition=`opacity ${dur}ms ease-out`;
+  requestAnimationFrame(()=>{
+    s.card.style.transform=`translate3d(${throwX}px,${targetY}px,0) rotateZ(${rotZ}deg) scale(.975)`;
+    s.card.style.opacity='0';
+    s.card.style.filter='brightness(.90)';
+    s.shade.style.opacity='0';
+  });
+  setTimeout(()=>{cleanup252(s);topNow252()},dur+50);
+  return true;
+}
+
+window.mvVerticalLessonSwipe252={
+  canGo:canLesson252,
+  begin:begin252,
+  move:move252,
+  end:end252,
+  finalPoint:(x,y)=>{if(V&&!V.ending)move252(x,y)},
+  active:()=>!!V,
+  forceCleanup:()=>cleanup252()
+};
+window.mvVerticalLessonSwipeAudit252=()=>({
+  version:'v5.3.254',
+  topPullDown:'previous lesson same tab',
+  bottomPushUp:'next lesson same tab',
+  liveCard:true,
+  xFreedom:true,
+  velocityAware:true,
+  destinationStartsAtTop:true,
+  scope:['my','sori','opic']
+});
+})();
+</script>
+
+
+<script id="v532253SwipeCornerCleanupAudit">
+window.mvSwipeCornerCleanupAudit253=function(){
+  return {
+    version:'v5.3.254',
+    fix:'clean swipe-card corners and duplicate floating overlays',
+    cardRadius:0,
+    shadow:'reduced',
+    edge:'single subtle line',
+    scope:['horizontal tab swipe','vertical lesson swipe']
+  };
+};
+</script>
+
+
+<script id="v532254UniversalSwipeStandard">
+(function(){
+'use strict';
+let U=null;
+
+function snapshotRoot254(root){
+  if(!root)return null;
+  const scrollY=window.scrollY||document.documentElement.scrollTop||0;
+  const clone=root.cloneNode(true);
+  clone.removeAttribute('id');
+  clone.querySelectorAll('[id]').forEach(el=>el.removeAttribute('id'));
+  clone.querySelectorAll('button,input,select,textarea,a').forEach(el=>el.setAttribute('tabindex','-1'));
+  clone.querySelectorAll('[style*="position: fixed"],[style*="position:fixed"],.floatingControls,.fixedBottom,.bottomDock').forEach(el=>{
+    el.style.visibility='hidden';
+  });
+  clone.style.pointerEvents='none';
+  clone.style.margin='0';
+  clone.style.width='100vw';
+
+  const inner=document.createElement('div');
+  inner.className='mvSwipeCardInner246';
+  inner.style.top=(-scrollY)+'px';
+  inner.appendChild(clone);
+  return inner;
+}
+
+function cleanup254(s=U){
+  if(!s)return;
+  try{s.stage?.remove()}catch(e){}
+  document.body.classList.remove('mvSwipeActive246');
+  if(U===s)U=null;
+}
+
+function begin254(opts){
+  if(U||!opts?.root||typeof opts.onCommit!=='function')return false;
+  const inner=snapshotRoot254(opts.root); if(!inner)return false;
+  const dir=opts.dir>0?1:-1;
+  const stage=document.createElement('div'); stage.className='mvSwipeStage246';
+  const card=document.createElement('div'); card.className='mvSwipeCard246 '+(dir>0?'next':'prev');
+  const shade=document.createElement('div'); shade.className='mvSwipeShade246';
+  card.append(inner,shade); stage.appendChild(card); document.body.appendChild(stage);
+  document.body.classList.add('mvSwipeActive246');
+  U={
+    dir,startX:opts.x,startY:opts.y,lastX:opts.x,lastY:opts.y,lastT:performance.now(),
+    dx:0,dy:0,vx:0,vy:0,stage,card,shade,onCommit:opts.onCommit,ending:false
+  };
+  return true;
+}
+
+function move254(x,y){
+  if(!U||U.ending)return;
+  const now=performance.now();
+  let dx=x-U.startX,dy=y-U.startY;
+  if(U.dir>0)dx=Math.min(0,dx);else dx=Math.max(0,dx);
+  dy=Math.max(-window.innerHeight*.42,Math.min(window.innerHeight*.42,dy));
+  const dt=Math.max(1,now-U.lastT);
+  U.vx=U.vx*.62+((x-U.lastX)/dt)*.38;
+  U.vy=U.vy*.62+((y-U.lastY)/dt)*.38;
+  U.lastX=x;U.lastY=y;U.lastT=now;U.dx=dx;U.dy=dy;
+
+  const w=Math.max(1,window.innerWidth),h=Math.max(1,window.innerHeight);
+  const px=Math.min(1,Math.abs(dx)/w),py=Math.min(.42,Math.abs(dy)/h);
+  const verticalSign=dy<0?-1:(dy>0?1:0);
+  const horizontalMirror=(U.dir>0?1:-1);
+  const tiltMag=2.2+10.5*Math.min(.42,Math.abs(dy)/h)+2.5*px;
+  const z=verticalSign===0?(U.dir>0?-1:1)*1.2:verticalSign*tiltMag*horizontalMirror;
+  const originX=U.dir>0?'right':'left';
+  const originY=dy<0?'bottom':(dy>0?'top':'center');
+  U.card.style.transformOrigin=`${originX} ${originY}`;
+  U.card.style.transition='none';
+  U.card.style.transform=`translate3d(${dx}px,${dy}px,0) rotateZ(${z}deg) scale(${1-.016*px-.008*py})`;
+  U.card.style.filter=`brightness(${1-.06*px})`;
+  U.shade.style.opacity=String(.15*Math.max(px,py));
+}
+
+function end254(cancel){
+  if(!U||U.ending)return false;
+  const s=U;s.ending=true;
+  const w=Math.max(1,window.innerWidth),h=Math.max(1,window.innerHeight);
+  const progressX=Math.abs(s.dx)/w;
+  const travelRatio=Math.hypot(s.dx,s.dy)/Math.max(1,Math.min(w,h));
+  const speed=Math.hypot(s.vx,s.vy);
+  const finish=!cancel&&(progressX>=.10||travelRatio>=.18||Math.abs(s.vx)>=.28||speed>=.46);
+
+  if(!finish){
+    const dur=180;
+    s.card.style.transition=`transform ${dur}ms cubic-bezier(.22,.72,.18,1),filter ${dur}ms ease-out`;
+    s.shade.style.transition=`opacity ${dur}ms ease-out`;
+    requestAnimationFrame(()=>{
+      s.card.style.transform='translate3d(0,0,0) rotateZ(0deg) scale(1)';
+      s.card.style.filter='brightness(1)';s.shade.style.opacity='0';
+    });
+    setTimeout(()=>cleanup254(s),dur+35);
+    return false;
+  }
+
+  let ok=false;
+  try{ok=s.onCommit(s.dir)!==false}catch(err){cleanup254(s);throw err}
+  if(!ok){s.ending=false;return end254(true)}
+
+  const targetX=s.dir>0?-w*1.18:w*1.18;
+  const throwY=Math.max(-h*.48,Math.min(h*.48,s.dy+s.vy*110));
+  const dist=Math.hypot(targetX-s.dx,throwY-s.dy);
+  const dur=Math.max(150,Math.min(340,dist/Math.max(.85,speed)));
+  const verticalSign=s.dy<0?-1:(s.dy>0?1:0);
+  const mirror=(s.dir>0?1:-1);
+  const rotZ=verticalSign===0?(s.dir>0?-10:10):verticalSign*14*mirror;
+  s.card.style.transition=`transform ${dur}ms cubic-bezier(.18,.78,.16,1),opacity ${dur}ms ease-out,filter ${dur}ms ease-out`;
+  s.shade.style.transition=`opacity ${dur}ms ease-out`;
+  requestAnimationFrame(()=>{
+    s.card.style.transform=`translate3d(${targetX}px,${throwY}px,0) rotateZ(${rotZ}deg) scale(.975)`;
+    s.card.style.opacity='0';s.card.style.filter='brightness(.90)';s.shade.style.opacity='0';
+  });
+  setTimeout(()=>cleanup254(s),dur+45);
+  return true;
+}
+
+window.MV_SWIPE_STANDARD_254={
+  begin:begin254,move:move254,end:end254,
+  finalPoint:(x,y)=>{if(U&&!U.ending)move254(x,y)},
+  active:()=>!!U,forceCleanup:()=>cleanup254()
+};
+window.mvSwipeStandardAudit254=()=>({
+  version:'v5.3.254',
+  standard:'full-screen snapshot + finger-follow + mirrored tilt + velocity commit',
+  applied:['MY/SORI/OPIC tabs','MY/SORI/OPIC lesson edges','DAY learning cards','word quiz questions']
+});
+})();
 </script>
 
 </body></html>
