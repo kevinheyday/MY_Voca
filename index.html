@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.268</title>
+<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.272</title>
 
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
@@ -2766,13 +2766,13 @@ html[data-mv-activity="sentence"] .quizModeSwitch{
 /* V5.3.189 · MY/SORI/OPIC correction Tip-pattern color standard */
 #myClassPage .myStudyEn .studyCoreChunkMark{color:#0f766e!important;background:#ccfbf1!important;font-weight:950!important;border-radius:5px;padding:0 2px;}
 
-/* v5.3.268 · Why + exact wrong-token highlight standard */
+/* v5.3.272 · Why + exact wrong-token highlight standard */
 .myStudyBadMark229{color:#8a2b06;background:#ffd86b;font-weight:900;border-radius:6px;padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 .myStudyWhy229{margin:8px 0 10px;padding:10px 12px;border-radius:12px;background:#eef7ff;border:1px solid #cfe8fb;color:#24516f;font-size:.92rem;font-weight:750;line-height:1.45}
 .myStudyRuleToken229{display:inline-block;padding:0 .22em;margin:0 .04em;border-radius:5px;background:rgba(255,216,107,.55);color:#7b3a08;font-weight:850}
 
 
-/* v5.3.268 · unified compact correction-reason box */
+/* v5.3.272 · unified compact correction-reason box */
 .myStudyReason230{
   margin:7px 0 9px;
   padding:8px 10px;
@@ -2798,17 +2798,17 @@ html[data-mv-activity="sentence"] .quizModeSwitch{
 }
 
 
-/* v5.3.268 · vertical edge lesson navigation standard */
+/* v5.3.272 · vertical edge lesson navigation standard */
 .myClassSwipeHint b{font-weight:850;color:#5b3bb5}
 
 
-/* v5.3.268 · prevent browser pull-to-refresh from hijacking lesson edge swipes */
+/* v5.3.272 · prevent browser pull-to-refresh from hijacking lesson edge swipes */
 #myClassPage{
   overscroll-behavior-y: contain;
 }
 
 
-/* v5.3.268 · hard guard for Android content:// pull-to-refresh */
+/* v5.3.272 · hard guard for Android content:// pull-to-refresh */
 html,body{
   overscroll-behavior-y:none;
 }
@@ -2832,7 +2832,7 @@ html,body{
 </style>
 
 <style id="v532239StudyFavoriteStyle">
-/* v5.3.268 · shared study favorite standard */
+/* v5.3.272 · shared study favorite standard */
 #myClassContent .myStudyCard,
 #myClassContent .mySpeakBlock{position:relative!important}
 #myClassContent .myStudyCard .myStudyNum,
@@ -2907,7 +2907,7 @@ html,body{
 
 
 <style id="v532246FreeDragPageStyle">
-/* v5.3.268 · 2D finger-follow page card */
+/* v5.3.272 · 2D finger-follow page card */
 .mvSwipeStage246{position:fixed;inset:0;z-index:9997;overflow:hidden;pointer-events:none;perspective:1400px;background:transparent}
 .mvSwipeCard246{
   position:absolute;inset:0;width:100vw;height:100vh;overflow:hidden;
@@ -2934,7 +2934,7 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
 
 
 <style id="v532258PlaybackProgressSafeStyle">
-/* v5.3.268 · non-invasive playback progress */
+/* v5.3.272 · non-invasive playback progress */
 .myClassPlaybackStatus{min-width:0}
 .myClassMiniStatus{
   min-width:0;
@@ -3051,7 +3051,7 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
       <div>
         <div class="homeEyebrow" id="homeCourseEyebrow">MY VOCA UNIFIED COURSE · 69 DAYS</div>
         <h1 id="homeCourseTitle">MY VOCA</h1>
-        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.268</div>
+        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.272</div>
       </div>
       <div class="homeDayBadge"><b id="homeRegisteredDays">30</b><span>등록 Day</span></div>
     </section>
@@ -3944,7 +3944,7 @@ async function myClassSpeakSequence(texts,{focusEl=null,statusPrefix='전체 듣
   if(!list.length)return;
 
   myClassStop(false);
-  // v5.3.268: Samsung/Android content:// TTS must be unlocked from the same tap path.
+  // v5.3.272: Samsung/Android content:// TTS must be unlocked from the same tap path.
   try{unlockTTSFromGesture?.()}catch(e){}
   const token=++MY_CLASS_PLAY.token;
   MY_CLASS_PLAY.active=true;
@@ -5668,7 +5668,7 @@ const OPIC_LESSON_18 = {"corrections":[{"ko":"저는 보통 출퇴근 시간에 
 const OPIC_LESSON_19 = {"corrections":[{"ko":"제가 가장 좋아하는 웹사이트는 Daum입니다.","en":"I would say my favorite website is Daum.","bad":"Well, my favorite website is Daum.","tip":"I would say를 넣으면 말하기가 자연스럽다.","whyType":"표현","why":"`Well` → `I would say` / I would say를 넣으면 말하기가 자연스럽다","badMarks":[{"start":0,"end":4}]},{"ko":"개인적으로 오랫동안 Daum을 사용해 왔습니다.","en":"Personally, I've been using Daum for a long time.","bad":"For the time being, I have been using Daum.","tip":"for the time being=당분간, for a long time=오랫동안.","whyType":"표현","why":"`For the time being, I have` → `Personally I've`","badMarks":[{"start":0,"end":26}]},{"ko":"Daum에서 오랫동안 같은 닉네임을 사용해 왔습니다.","en":"I've had the same nickname, “Baramdori,” on Daum for years.","bad":"I have a special, my nickname in Daum...","tip":"I've had + 기간.","grammar":"관사/소유격: `a + my` 함께 사용 불가"},{"ko":"매일 아침 가장 먼저 이메일을 확인합니다.","en":"Every morning, the first thing I do is check my email.","bad":"When I start the day, every day, first of all, I check my email...","tip":"the first thing I do is ~.","whyType":"표현","why":"`start the day, every day, first of all, I` → `do is` / the first thing I do is ~","badMarks":[{"start":7,"end":48}]},{"ko":"특히 금융 섹션을 자주 둘러봅니다.","en":"I usually browse different sections on Daum, especially the finance section.","bad":"Especially money section.","tip":"finance section.","whyType":"표현","why":"`money` → `the finance` / finance section","badMarks":[{"start":11,"end":16}]},{"ko":"미국·한국 주식시장과 세계 경제 동향을 확인합니다.","en":"I check updates on the U.S. and Korean stock markets, as well as global economic trends.","bad":"I check the American stock market ... even Koreans too.","tip":"stock markets / global economic trends.","whyType":"표현","why":"`American` → `U S and Korean` / stock markets / global economic trends","badMarks":[{"start":12,"end":20}]},{"ko":"다른 사람들의 이야기를 읽으면 제 삶을 돌아보게 될 때도 있습니다.","en":"Sometimes, other people's personal stories make me reflect on my own life.","bad":"Sometimes I reflect myself.","tip":"reflect on my own life.","whyType":"표현","why":"`myself` → `on my own life` / reflect on my own life","badMarks":[{"start":20,"end":26}]},{"ko":"시간을 때우고 싶을 때 웹툰이나 만화를 읽습니다.","en":"When I want to kill some time, I read webtoons or comics.","bad":"When I want to time killing...","tip":"kill some time.","whyType":"표현","why":"`killing` → `I read webtoons or comics` / kill some time","badMarks":[{"start":20,"end":27}]},{"ko":"만화를 읽으면 긴장을 풀고 스트레스를 해소하는 데 도움이 됩니다.","en":"Reading comics helps me unwind and relieve stress.","bad":"I can relieve my stress by some kind of comic.","tip":"unwind and relieve stress.","whyType":"표현","why":"`I can` → `Reading comics helps me unwind and` / unwind and relieve stress","badMarks":[{"start":0,"end":5}]},{"ko":"가끔 영상을 보다 보면 시간 가는 줄 모릅니다.","en":"I sometimes lose track of time while watching videos.","bad":"","tip":"lose track of time = 시간 가는 줄 모르다."}],"chunks":[{"pattern":"for a long time","ko":"오랫동안","example":"I've been using Daum for a long time.","exampleKo":"오랫동안 Daum을 사용해 왔습니다."},{"pattern":"The first thing I do is ~","ko":"가장 먼저 하는 일은 ~이다","example":"The first thing I do in the morning is check my email.","exampleKo":"아침에 가장 먼저 하는 일은 이메일 확인입니다."},{"pattern":"keep up with the latest ~","ko":"최신 ~을 계속 확인하다","example":"I keep up with the latest financial news.","exampleKo":"최신 금융 뉴스를 계속 확인합니다."},{"pattern":"reflect on one's own life","ko":"자신의 삶을 돌아보다","example":"Some stories make me reflect on my own life.","exampleKo":"어떤 이야기는 제 삶을 돌아보게 합니다."},{"pattern":"kill some time","ko":"시간을 때우다","example":"When I want to kill some time, I read webtoons.","exampleKo":"시간을 때우고 싶을 때 웹툰을 봅니다."},{"pattern":"unwind and relieve stress","ko":"긴장을 풀고 스트레스를 해소하다","example":"It's a great way to unwind and relieve stress.","exampleKo":"긴장을 풀고 스트레스를 해소하기 좋은 방법입니다."},{"pattern":"feel attached to ~","ko":"~에 애착을 느끼다","example":"I feel somewhat attached to Daum.","exampleKo":"Daum에 어느 정도 애착을 느낍니다."},{"pattern":"lose track of time while ~ing","ko":"~하다가 시간 가는 줄 모르다","example":"I sometimes lose track of time while watching videos.","exampleKo":"영상을 보다 보면 가끔 시간 가는 줄 모릅니다."}],"habits":[{"title":"① favorite 이유를 기능+감정으로","text":"정보·금융뉴스·이메일뿐 아니라 오랜 사용과 닉네임 때문에 애착이 있다는 점을 넣는다."},{"title":"② finance / stories / webtoons로 구체화","text":"사이트에서 실제로 하는 일을 세 갈래로 나눠 말한다."},{"title":"③ kill time vs lose track of time","text":"kill some time=시간을 때우다, lose track of time=시간 가는 줄 모르다를 구분한다."}],"speaking":[{"prompt":"What is your favorite website? Why do you like it, and what do you usually do there?","promptKo":"OPIC 질문에 맞춰 AL 수준으로 답해 보세요.","text":"Well, I would say my favorite website is Daum. I know most Koreans tend to use Naver these days, but personally, I’ve been using Daum for a very long time, so I’m really familiar with it.\n\nActually, I’ve even had the same nickname, “Baramdori,” on Daum for years, so I feel somewhat attached to the website.\n\nThe first thing I do in the morning is check my email. After that, I usually browse the finance section because I’m very interested in the economy and investing. I check updates on the U.S. and Korean stock markets, as well as the latest global economic trends.\n\nI also enjoy reading articles and personal stories posted by individual users. Sometimes, their stories make me reflect on my own life, which I find quite interesting.\n\nAnd when I just want to kill some time, I read webtoons or comics. They help me unwind and relieve stress.\n\nSo, for me, Daum is more than just a website. It’s a place where I can get useful information, keep up with financial news, and entertain myself at the same time. That’s why I still use it almost every day.","ko":"위 핵심 교정과 Chunk를 활용해 전체 답변의 흐름을 익히세요."}]};
 
 
-const SORI_GROUP_3 = {"corrections":[{"source":"① Daycare Should Mean Care","ko":"최근 보도들을 보면 정말 안심하고 아이를 맡길 수 있을지 의문이 듭니다.","chunkRefs":[{"id":"day_0_0","text":"make me wonder whether"},{"id":"day_0_1","text":"with peace of mind"}],"en":"Recent reports make me wonder whether I will truly be able to leave him there with peace of mind.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"아이들이 학대받는 사례가 뉴스에 너무 자주 등장하는 것 같습니다.","chunkRefs":[{"id":"day_1_0","text":"Cases of children being mistreated"},{"id":"day_1_1","text":"seem to appear"},{"id":"day_1_2","text":"far too often"}],"en":"Cases of children being mistreated seem to appear in the news far too often.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"인내심과 진심 어린 애정으로 아이들을 돌보는 헌신적인 교사들이 많다는 것을 압니다.","chunkRefs":[{"id":"day_2_0","text":"care for children"},{"id":"day_2_1","text":"with patience and genuine affection"}],"en":"I know there are many devoted teachers who care for children with patience and genuine affection.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"그렇지만 내 아이가 항상 그런 선생님을 만날 만큼 운이 좋으리라는 보장은 없습니다.","chunkRefs":[{"id":"day_3_0","text":"there is no guarantee that"},{"id":"day_3_1","text":"fortunate enough to meet"}],"en":"Still, there is no guarantee that my child will always be fortunate enough to meet such teachers.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"최근 어린이집에서 치아가 부러진 아이에 관한 이야기를 들었습니다.","chunkRefs":[{"id":"day_4_0","text":"heard about a child"},{"id":"day_4_1","text":"whose tooth was broken"}],"en":"Recently, I heard about a child whose tooth was broken at a daycare center.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"그 보도를 보니 정말 화가 치밀었습니다.","chunkRefs":[{"id":"day_5_0","text":"made my blood boil"}],"en":"Merely watching the report made my blood boil.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"그 아이의 부모가 어떤 일을 겪었을지 상상하기조차 어렵습니다.","chunkRefs":[{"id":"day_6_0","text":"could hardly imagine"},{"id":"day_6_1","text":"must have gone through"}],"en":"I could hardly imagine what the child's parents must have gone through.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"부모로서 저는 육아가 얼마나 힘들 수 있는지 직접 경험으로 압니다.","chunkRefs":[{"id":"day_7_0","text":"As a parent"},{"id":"day_7_1","text":"know firsthand how exhausting childcare can be"}],"en":"As a parent, I know firsthand how exhausting childcare can be.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"어린아이들은 끊임없는 관심과 인내심, 정서적 에너지를 필요로 합니다.","chunkRefs":[{"id":"day_8_0","text":"require constant attention"}],"en":"Young children require constant attention, patience, and emotional energy.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"어린이집 교사들은 낮은 보수와 엄청난 스트레스에 시달릴 수 있고, 그런 문제들은 진지하게 다뤄져야 합니다.","chunkRefs":[{"id":"day_9_0","text":"burdened with tremendous stress"},{"id":"day_9_1","text":"deserve serious attention"}],"en":"Daycare teachers may be underpaid and burdened with tremendous stress, and those problems deserve serious attention.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"하지만 어떤 어려움도 힘없는 아이들에게 분풀이하는 것을 정당화할 수는 없습니다.","chunkRefs":[{"id":"day_10_0","text":"can never excuse"},{"id":"day_10_1","text":"taking frustration out on"}],"en":"However, hardship can never excuse taking frustration out on defenseless children.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"아이들을 책임지는 어른들은 감정을 통제하고 아이들의 안전을 최우선으로 해야 합니다.","chunkRefs":[{"id":"day_11_0","text":"keep their emotions in check"},{"id":"day_11_1","text":"put the children's safety first"}],"en":"Adults responsible for children must keep their emotions in check and put the children's safety first.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"교사들만이 유일한 걱정거리는 아닙니다.","chunkRefs":[{"id":"day_12_0","text":"not the only concern"}],"en":"Teachers are not the only concern.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"일부 원장들은 어린이집 운영을 그저 사업 기회 정도로 여기는 듯합니다.","chunkRefs":[{"id":"day_13_0","text":"regard running a daycare center as"},{"id":"day_13_1","text":"little more than a business opportunity"}],"en":"Some directors appear to regard running a daycare center as little more than a business opportunity.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"그런 학대를 저지르거나 방치하는 사람은 보육 현장에서 영구적으로 배제되어야 합니다.","chunkRefs":[{"id":"day_14_0","text":"should be permanently removed from childcare"}],"en":"Anyone who abuses children or knowingly allows such abuse should be permanently removed from childcare.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"아이들은 항상 스스로 목소리를 낼 수 있는 것은 아니므로 어른과 기관이 그들을 옹호해야 합니다.","chunkRefs":[{"id":"day_15_0","text":"speak up for themselves"},{"id":"day_15_1","text":"stand up for them"}],"en":"Children cannot always speak up for themselves, so adults and institutions must stand up for them.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."}],"chunks":[{"source":"① Daycare Should Mean Care","id":"day_chunk_0","pattern":"make + person + wonder whether ~","ko":"~인지 의문이 들게 하다","example":"Recent reports make me wonder whether the daycare is truly safe.","exampleKo":"최근 보도를 보면 그 어린이집이 정말 안전한지 의문이 든다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_1","pattern":"with peace of mind","ko":"안심하고 / 마음 놓고","example":"I want to leave my child there with peace of mind.","exampleKo":"나는 안심하고 아이를 그곳에 맡기고 싶다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_2","pattern":"cases of A being p.p.","ko":"A가 ~당하는 사례","example":"Cases of children being mistreated should never be ignored.","exampleKo":"아이들이 학대받는 사례는 절대 무시되어서는 안 된다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_3","pattern":"seem to + V","ko":"~인 것 같다","example":"These incidents seem to appear in the news too often.","exampleKo":"이런 사건들이 뉴스에 너무 자주 나오는 것 같다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_4","pattern":"far too + adjective/adverb","ko":"지나치게 너무 ~","example":"These cases happen far too often.","exampleKo":"이런 사례는 지나치게 자주 발생한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_5","pattern":"care for + person","ko":"~을 돌보다","example":"Good teachers care for children with patience.","exampleKo":"좋은 교사들은 인내심을 가지고 아이들을 돌본다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_6","pattern":"there is no guarantee that ~","ko":"~라는 보장은 없다","example":"There is no guarantee that every daycare provides the same quality of care.","exampleKo":"모든 어린이집이 같은 수준의 돌봄을 제공한다는 보장은 없다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_7","pattern":"be fortunate enough to + V","ko":"운 좋게도 ~하다","example":"We were fortunate enough to meet a caring teacher.","exampleKo":"우리는 운 좋게도 따뜻한 선생님을 만났다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_8","pattern":"a person whose + noun + V","ko":"~의 …가 ~한 사람","example":"I heard about a child whose tooth was broken at daycare.","exampleKo":"어린이집에서 치아가 부러진 아이 이야기를 들었다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_9","pattern":"make one's blood boil","ko":"몹시 화나게 하다","example":"The report made my blood boil.","exampleKo":"그 보도를 보고 정말 화가 치밀었다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_10","pattern":"can hardly imagine ~","ko":"~을 상상하기조차 어렵다","example":"I can hardly imagine how worried the parents were.","exampleKo":"부모가 얼마나 걱정했을지 상상하기조차 어렵다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_11","pattern":"must have + p.p.","ko":"분명 ~했을 것이다","example":"The parents must have gone through a terrible time.","exampleKo":"그 부모들은 분명 끔찍한 시간을 겪었을 것이다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_12","pattern":"know firsthand how ~","ko":"직접 경험해서 얼마나 ~한지 알다","example":"As a parent, I know firsthand how exhausting childcare can be.","exampleKo":"부모로서 나는 육아가 얼마나 힘든지 직접 안다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_13","pattern":"require + noun","ko":"~을 필요로 하다","example":"Young children require constant attention.","exampleKo":"어린아이들은 지속적인 관심을 필요로 한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_14","pattern":"be burdened with ~","ko":"~의 부담을 지다","example":"Many teachers are burdened with tremendous stress.","exampleKo":"많은 교사들이 엄청난 스트레스에 시달린다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_15","pattern":"deserve serious attention","ko":"진지하게 다뤄질 필요가 있다","example":"Those problems deserve serious attention.","exampleKo":"그 문제들은 진지하게 다뤄져야 한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_16","pattern":"can never excuse ~","ko":"~을 절대 정당화할 수 없다","example":"Stress can never excuse hurting a child.","exampleKo":"스트레스가 아이를 해치는 것을 정당화할 수 없다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_17","pattern":"take A out on B","ko":"A를 B에게 풀다","example":"Don't take your frustration out on other people.","exampleKo":"다른 사람에게 화풀이하지 마라."},{"source":"① Daycare Should Mean Care","id":"day_chunk_18","pattern":"keep A in check","ko":"A를 억제하고 통제하다","example":"Adults need to keep their emotions in check.","exampleKo":"어른들은 감정을 통제해야 한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_19","pattern":"put A first","ko":"A를 최우선으로 두다","example":"We must put children's safety first.","exampleKo":"우리는 아이들의 안전을 최우선으로 해야 한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_20","pattern":"regard A as B","ko":"A를 B로 여기다","example":"Some people regard childcare as just a business opportunity.","exampleKo":"일부 사람들은 보육을 그저 사업 기회로 여긴다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_21","pattern":"little more than ~","ko":"~에 지나지 않는","example":"They treat the center as little more than a business.","exampleKo":"그들은 그 시설을 사업에 지나지 않는 것으로 취급한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_22","pattern":"speak up for oneself","ko":"자기 자신을 위해 목소리를 내다","example":"Young children cannot always speak up for themselves.","exampleKo":"어린아이들은 항상 스스로 목소리를 낼 수 있는 것은 아니다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_23","pattern":"stand up for + person","ko":"~을 옹호하다","example":"Adults must stand up for children who cannot protect themselves.","exampleKo":"어른들은 스스로를 보호할 수 없는 아이들을 옹호해야 한다."}],"speaking":[{"source":"① Daycare Should Mean Care","pattern":"make + person + wonder whether ~","prompt":"What recent issue makes you wonder whether a service is truly safe?","promptKo":"","text":"Recent reports make me wonder whether some daycare centers are truly safe.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"there is no guarantee that ~","prompt":"What can parents never be completely sure about?","promptKo":"","text":"There is no guarantee that every child will always meet a caring teacher.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"know firsthand how ~","prompt":"What do you know firsthand from your own experience?","promptKo":"","text":"As a parent, I know firsthand how much attention young children need.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"take A out on B","prompt":"What should people avoid doing when they are under stress?","promptKo":"","text":"People should never take their frustration out on someone weaker than them.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"put A first","prompt":"What should a daycare put first?","promptKo":"","text":"A daycare must put children's safety and well-being first.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"regard A as B","prompt":"How should childcare be regarded?","promptKo":"","text":"We should regard childcare as a responsibility, not merely as a business opportunity.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"stand up for + person","prompt":"Who should stand up for children who cannot speak for themselves?","promptKo":"","text":"Adults and institutions must stand up for children who cannot protect themselves.","ko":""}],"habits":[{"title":"① 긴 문장은 의미 덩어리로","text":"make me wonder whether / with peace of mind처럼 Chunk 단위로 연결한다."},{"title":"② 감정 표현은 한 덩어리로","text":"made my blood boil / could hardly imagine / must have gone through를 끊지 않는다."},{"title":"③ 핵심어에 강세","text":"GUARANTEE / FORTUNATE / SERIOUS처럼 의미 핵심어에 강세를 둔다."},{"title":"④ 병렬 리듬","text":"constant attention, patience, and emotional energy를 일정한 리듬으로 말한다."},{"title":"⑤ A-B 패턴 대비","text":"take A out ON B / regard A AS B / put A FIRST의 핵심 부분을 분명히 한다."},{"title":"⑥ speak up / stand up 구분","text":"speak up for themselves는 스스로 목소리를 내는 것, stand up for them은 다른 사람이 옹호하는 것이다."}]};
+const SORI_GROUP_3 = {"corrections":[{"source":"① Daycare Should Mean Care","ko":"최근 보도들을 보면 정말 안심하고 아이를 맡길 수 있을지 의문이 듭니다.","chunkRefs":[{"id":"day_0_0","text":"make me wonder whether"},{"id":"day_0_1","text":"with peace of mind"}],"en":"Recent reports make me wonder whether I will truly be able to leave him there with peace of mind.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"아이들이 학대받는 사례가 뉴스에 너무 자주 등장하는 것 같습니다.","chunkRefs":[{"id":"day_1_0","text":"Cases of children being mistreated"},{"id":"day_1_1","text":"seem to appear"},{"id":"day_1_2","text":"far too often"}],"en":"Cases of children being mistreated seem to appear in the news far too often.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"인내심과 진심 어린 애정으로 아이들을 돌보는 헌신적인 교사들이 많다는 것을 압니다.","chunkRefs":[{"id":"day_2_0","text":"care for children"},{"id":"day_2_1","text":"with patience and genuine affection"}],"en":"I know there are many devoted teachers who care for children with patience and genuine affection.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"그렇지만 내 아이가 항상 그런 선생님을 만날 만큼 운이 좋으리라는 보장은 없습니다.","chunkRefs":[{"id":"day_3_0","text":"there is no guarantee that"},{"id":"day_3_1","text":"fortunate enough to meet"}],"en":"Still, there is no guarantee that my child will always be fortunate enough to meet such teachers.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"최근 어린이집에서 치아가 부러진 아이에 관한 이야기를 들었습니다.","chunkRefs":[{"id":"day_4_0","text":"heard about a child"},{"id":"day_4_1","text":"whose tooth was broken"}],"en":"Recently, I heard about a child whose tooth was broken at a daycare center.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"그 보도를 보니 정말 화가 치밀었습니다.","chunkRefs":[{"id":"day_5_0","text":"made my blood boil"}],"en":"Merely watching the report made my blood boil.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"그 아이의 부모가 어떤 일을 겪었을지 상상하기조차 어렵습니다.","chunkRefs":[{"id":"day_6_0","text":"could hardly imagine"},{"id":"day_6_1","text":"must have gone through"}],"en":"I could hardly imagine what the child's parents must have gone through.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"부모로서 저는 육아가 얼마나 힘들 수 있는지 직접 경험으로 압니다.","chunkRefs":[{"id":"day_7_0","text":"As a parent"},{"id":"day_7_1","text":"know firsthand how exhausting childcare can be"}],"en":"As a parent, I know firsthand how exhausting childcare can be.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"어린아이들은 끊임없는 관심과 인내심, 정서적 에너지를 필요로 합니다.","chunkRefs":[{"id":"day_8_0","text":"require constant attention"}],"en":"Young children require constant attention, patience, and emotional energy.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"어린이집 교사들은 낮은 보수와 엄청난 스트레스에 시달릴 수 있고, 그런 문제들은 진지하게 다뤄져야 합니다.","chunkRefs":[{"id":"day_9_0","text":"burdened with tremendous stress"},{"id":"day_9_1","text":"deserve serious attention"}],"en":"Daycare teachers may be underpaid and burdened with tremendous stress, and those problems deserve serious attention.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"하지만 어떤 어려움도 힘없는 아이들에게 분풀이하는 것을 정당화할 수는 없습니다.","chunkRefs":[{"id":"day_10_0","text":"can never excuse"},{"id":"day_10_1","text":"taking frustration out on"}],"en":"However, hardship can never excuse taking frustration out on defenseless children.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"아이들을 책임지는 어른들은 감정을 통제하고 아이들의 안전을 최우선으로 해야 합니다.","chunkRefs":[{"id":"day_11_0","text":"keep their emotions in check"},{"id":"day_11_1","text":"put the children's safety first"}],"en":"Adults responsible for children must keep their emotions in check and put the children's safety first.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"교사들만이 유일한 걱정거리는 아닙니다.","chunkRefs":[{"id":"day_12_0","text":"not the only concern"}],"en":"Teachers are not the only concern.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"일부 원장들은 어린이집 운영을 그저 사업 기회 정도로 여기는 듯합니다.","chunkRefs":[{"id":"day_13_0","text":"regard running a daycare center as"},{"id":"day_13_1","text":"little more than a business opportunity"}],"en":"Some directors appear to regard running a daycare center as little more than a business opportunity.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"그런 학대를 저지르거나 방치하는 사람은 보육 현장에서 영구적으로 배제되어야 합니다.","chunkRefs":[{"id":"day_14_0","text":"should be permanently removed from childcare"}],"en":"Anyone who abuses children or knowingly allows such abuse should be permanently removed from childcare.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"아이들은 항상 스스로 목소리를 낼 수 있는 것은 아니므로 어른과 기관이 그들을 옹호해야 합니다.","chunkRefs":[{"id":"day_15_0","text":"speak up for themselves"},{"id":"day_15_1","text":"stand up for them"}],"en":"Children cannot always speak up for themselves, so adults and institutions must stand up for them.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care · Pattern Expansion","ko":"나는 친구를 사귀는 것이 얼마나 어려운지 직접 경험해서 안다.","chunkRefs":[{"id":"day_16_0","text":"know firsthand how difficult it is to"},{"id":"day_16_1","text":"make friends"}],"en":"I know firsthand how difficult it is to make friends.","tip":"OPIC에서는 can be를 넣어 I know firsthand how difficult it can be to make new friends.로 확장하면 활용도가 높다."}],"chunks":[{"source":"① Daycare Should Mean Care","id":"day_chunk_0","pattern":"make + person + wonder whether ~","ko":"~인지 의문이 들게 하다","example":"Recent reports make me wonder whether the daycare is truly safe.","exampleKo":"최근 보도를 보면 그 어린이집이 정말 안전한지 의문이 든다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_1","pattern":"with peace of mind","ko":"안심하고 / 마음 놓고","example":"I want to leave my child there with peace of mind.","exampleKo":"나는 안심하고 아이를 그곳에 맡기고 싶다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_2","pattern":"cases of A being p.p.","ko":"A가 ~당하는 사례","example":"Cases of children being mistreated should never be ignored.","exampleKo":"아이들이 학대받는 사례는 절대 무시되어서는 안 된다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_3","pattern":"seem to + V","ko":"~인 것 같다","example":"These incidents seem to appear in the news too often.","exampleKo":"이런 사건들이 뉴스에 너무 자주 나오는 것 같다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_4","pattern":"far too + adjective/adverb","ko":"지나치게 너무 ~","example":"These cases happen far too often.","exampleKo":"이런 사례는 지나치게 자주 발생한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_5","pattern":"care for + person","ko":"~을 돌보다","example":"Good teachers care for children with patience.","exampleKo":"좋은 교사들은 인내심을 가지고 아이들을 돌본다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_6","pattern":"there is no guarantee that ~","ko":"~라는 보장은 없다","example":"There is no guarantee that every daycare provides the same quality of care.","exampleKo":"모든 어린이집이 같은 수준의 돌봄을 제공한다는 보장은 없다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_7","pattern":"be fortunate enough to + V","ko":"운 좋게도 ~하다","example":"We were fortunate enough to meet a caring teacher.","exampleKo":"우리는 운 좋게도 따뜻한 선생님을 만났다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_8","pattern":"a person whose + noun + V","ko":"~의 …가 ~한 사람","example":"I heard about a child whose tooth was broken at daycare.","exampleKo":"어린이집에서 치아가 부러진 아이 이야기를 들었다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_9","pattern":"make one's blood boil","ko":"몹시 화나게 하다","example":"The report made my blood boil.","exampleKo":"그 보도를 보고 정말 화가 치밀었다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_10","pattern":"can hardly imagine ~","ko":"~을 상상하기조차 어렵다","example":"I can hardly imagine how worried the parents were.","exampleKo":"부모가 얼마나 걱정했을지 상상하기조차 어렵다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_11","pattern":"must have + p.p.","ko":"분명 ~했을 것이다","example":"The parents must have gone through a terrible time.","exampleKo":"그 부모들은 분명 끔찍한 시간을 겪었을 것이다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_12","pattern":"know firsthand how + adjective + S + can be","ko":"직접 경험해서 S가 얼마나 ~할 수 있는지 알다","example":"I know firsthand how difficult it can be to make new friends.","exampleKo":"새로운 친구를 사귀는 게 얼마나 어려울 수 있는지 직접 경험해서 안다.","note":"핵심 구조: how difficult + 주어 + is → how difficult making friends is / 더 쉬운 구조: how difficult it is to + 동사 → how difficult it is to make friends / OPIC 활용: I know firsthand how difficult it can be to make new friends."},{"source":"① Daycare Should Mean Care","id":"day_chunk_13","pattern":"require + noun","ko":"~을 필요로 하다","example":"Young children require constant attention.","exampleKo":"어린아이들은 지속적인 관심을 필요로 한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_14","pattern":"be burdened with ~","ko":"~의 부담을 지다","example":"Many teachers are burdened with tremendous stress.","exampleKo":"많은 교사들이 엄청난 스트레스에 시달린다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_15","pattern":"deserve serious attention","ko":"진지하게 다뤄질 필요가 있다","example":"Those problems deserve serious attention.","exampleKo":"그 문제들은 진지하게 다뤄져야 한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_16","pattern":"can never excuse ~","ko":"~을 절대 정당화할 수 없다","example":"Stress can never excuse hurting a child.","exampleKo":"스트레스가 아이를 해치는 것을 정당화할 수 없다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_17","pattern":"take A out on B","ko":"A를 B에게 풀다","example":"Don't take your frustration out on other people.","exampleKo":"다른 사람에게 화풀이하지 마라."},{"source":"① Daycare Should Mean Care","id":"day_chunk_18","pattern":"keep A in check","ko":"A를 억제하고 통제하다","example":"Adults need to keep their emotions in check.","exampleKo":"어른들은 감정을 통제해야 한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_19","pattern":"put A first","ko":"A를 최우선으로 두다","example":"We must put children's safety first.","exampleKo":"우리는 아이들의 안전을 최우선으로 해야 한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_20","pattern":"regard A as B","ko":"A를 B로 여기다","example":"Some people regard childcare as just a business opportunity.","exampleKo":"일부 사람들은 보육을 그저 사업 기회로 여긴다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_21","pattern":"little more than ~","ko":"~에 지나지 않는","example":"They treat the center as little more than a business.","exampleKo":"그들은 그 시설을 사업에 지나지 않는 것으로 취급한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_22","pattern":"speak up for oneself","ko":"자기 자신을 위해 목소리를 내다","example":"Young children cannot always speak up for themselves.","exampleKo":"어린아이들은 항상 스스로 목소리를 낼 수 있는 것은 아니다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_23","pattern":"stand up for + person","ko":"~을 옹호하다","example":"Adults must stand up for children who cannot protect themselves.","exampleKo":"어른들은 스스로를 보호할 수 없는 아이들을 옹호해야 한다."}],"speaking":[{"source":"① Daycare Should Mean Care","pattern":"make + person + wonder whether ~","prompt":"What recent issue makes you wonder whether a service is truly safe?","promptKo":"","text":"Recent reports make me wonder whether some daycare centers are truly safe.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"there is no guarantee that ~","prompt":"What can parents never be completely sure about?","promptKo":"","text":"There is no guarantee that every child will always meet a caring teacher.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"know firsthand how ~","prompt":"What do you know firsthand from your own experience?","promptKo":"","text":"As a parent, I know firsthand how much attention young children need.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"take A out on B","prompt":"What should people avoid doing when they are under stress?","promptKo":"","text":"People should never take their frustration out on someone weaker than them.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"put A first","prompt":"What should a daycare put first?","promptKo":"","text":"A daycare must put children's safety and well-being first.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"regard A as B","prompt":"How should childcare be regarded?","promptKo":"","text":"We should regard childcare as a responsibility, not merely as a business opportunity.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"stand up for + person","prompt":"Who should stand up for children who cannot speak for themselves?","promptKo":"","text":"Adults and institutions must stand up for children who cannot protect themselves.","ko":""}],"habits":[{"title":"① 긴 문장은 의미 덩어리로","text":"make me wonder whether / with peace of mind처럼 Chunk 단위로 연결한다."},{"title":"② 감정 표현은 한 덩어리로","text":"made my blood boil / could hardly imagine / must have gone through를 끊지 않는다."},{"title":"③ 핵심어에 강세","text":"GUARANTEE / FORTUNATE / SERIOUS처럼 의미 핵심어에 강세를 둔다."},{"title":"④ 병렬 리듬","text":"constant attention, patience, and emotional energy를 일정한 리듬으로 말한다."},{"title":"⑤ A-B 패턴 대비","text":"take A out ON B / regard A AS B / put A FIRST의 핵심 부분을 분명히 한다."},{"title":"⑥ speak up / stand up 구분","text":"speak up for themselves는 스스로 목소리를 내는 것, stand up for them은 다른 사람이 옹호하는 것이다."}]};
 
 const STUDY_COURSES = {
   my:{
@@ -7652,7 +7652,7 @@ async function autoReadAndAdvance(w,renderVersion=__renderVersion){
   const completed=await autoRead(w,renderVersion);
   if(!completed)return;
 
-  // v5.3.268: integrated repeat owns navigation after a card has been fully read.
+  // v5.3.272: integrated repeat owns navigation after a card has been fully read.
   // The legacy renderVersion/__renderedCardKey guard can change during the long
   // DAY reading sequence on Android even though the same card is still current.
   // That produced the exact symptom: status says "전체 읽기 완료" but playback stops.
@@ -9152,11 +9152,17 @@ function sentenceRecordingReleasePreparedMic(){
   sentenceRecordingPreparedAt=0;
 }
 
+let mvMicWarmDeniedShown272=false;
 function sentenceRecordingWarmMic(){
   // 3단계 진입 시 마이크를 미리 준비한다.
   // 이미 권한이 있으면 버튼 누르기 전에 스트림이 준비되어 거의 즉시 녹음 가능.
   if(!sentenceRecordingAvailable())return;
-  sentenceRecordingPrepareMic().catch(()=>{});
+  sentenceRecordingPrepareMic().catch(e=>{
+    if(e&&e.name==='NotAllowedError'&&!mvMicWarmDeniedShown272){
+      mvMicWarmDeniedShown272=true;
+      sentenceRecordingToast('마이크 권한 필요 · 설정 → 앱 → Chrome → 권한 → 마이크 → 앱 사용 중에만 허용');
+    }
+  });
 }
 
 function sentenceRecordingStopWave(){
@@ -9605,9 +9611,11 @@ async function sentenceRecordingStart(q){
     sentenceRecordingRecorder=null;
 
     if(e&&e.name==='NotAllowedError'){
-      sentenceRecordingToast('마이크 사용 권한을 허용해 주세요.');
+      sentenceRecordingToast('마이크 권한이 꺼져 있습니다. 휴대폰 설정 → 앱 → Chrome → 권한 → 마이크 → 앱 사용 중에만 허용로 변경한 뒤 다시 눌러 주세요.');
+    }else if(location.protocol==='content:' || !window.isSecureContext){
+      sentenceRecordingToast('현재 파일(content://)에서는 마이크 사용이 제한될 수 있습니다. 먼저 Chrome 마이크 권한을 허용하고, 계속 안 되면 앱을 HTTPS 주소에서 실행해 주세요.');
     }else{
-      sentenceRecordingToast('마이크를 시작할 수 없습니다.');
+      sentenceRecordingToast('마이크를 시작할 수 없습니다. 휴대폰 설정 → 앱 → Chrome → 권한 → 마이크를 확인한 뒤 다시 시도해 주세요.');
     }
   }
 }
@@ -10781,7 +10789,7 @@ $('todayStartBtn').onclick=()=>{
   AUTO.token++;
   forceReleaseWakeLock();forceReleaseWakeLock();let due=dueWordsAll();if(due.length){openDay(due[0].newDay,'forget');return}let next=Array.from({length:currentCfg().days},(_,i)=>i+1).find(d=>dayProgress(d).learned<dayProgress(d).total)||1;openDay(next,'learn')};
 
-// v5.3.268 · DAY 학습도 공통 Swipe 화면 전환 표준 사용
+// v5.3.272 · DAY 학습도 공통 Swipe 화면 전환 표준 사용
 {
  const cardEl=$('card');
  let dsx=0,dsy=0,dlock=false,ddir=0,dtracking=false;
@@ -11476,7 +11484,7 @@ function mvSentenceEntryAudit182(){
 window.mvSentenceEntryAudit182=mvSentenceEntryAudit182;
 
 /* ===== V5.3.189 · STANDARD APP INFO / UPDATE HISTORY ===== */
-const MV_APP_VERSION='5.3.268';
+const MV_APP_VERSION='5.3.272';
 
 function mvCloseInfoOverlay(){
   const overlay=document.getElementById('mvInfoOverlay');
@@ -12123,7 +12131,32 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
   }
   function myClassSentenceCards(lessonNo){
     const d=lessonData(lessonNo), out=[];let order=1;
-    const corrPatternMap=Number(lessonNo)===4?[[["clock out", "which is ~ for me"],["퇴근하다", "나에게는 ~한 편이다"]],[["usually clock out around ~"],["보통 ~쯤 퇴근하다"]],[["operate 24/7"],["24시간 연중무휴로 가동되다"]],[["As a ~", "take responsibility", "when something goes wrong"],["~로서", "책임지다", "문제가 생길 때"]],[["Even if ~", "be directly involved", "be responsible"],["비록 ~하더라도", "직접 관련되다", "책임이 있다"]],[["a better work-life balance than ~"],["~보다 더 나은 일과 삶의 균형"]],[["I'd like to ~", "sleep in", "for another hour"],["~하고 싶다", "늦잠 자다", "한 시간 더"]],[["If ~", "get a good evaluation", "significantly lower"],["만약 ~라면", "좋은 평가를 받다", "상당히 더 낮은"]],[["have a long way to go"],["아직 갈 길이 멀다"]],[["make me realize ~", "what I need to ~"],["~을 깨닫게 하다", "내가 무엇을 ~해야 하는지"]],[["have been trying to ~", "tone down ~"],["계속 ~하려고 노력해오다", "~의 톤을 낮추다"]],[["If possible", "tell someone to ~", "take the day off"],["가능하다면", "누군가에게 ~하라고 말하다", "하루 휴가를 내다"]]]:Number(lessonNo)===1?[[["feels like ~"], ["~처럼 느껴지다"]], [["One of my biggest goals is to ~"], ["가장 큰 목표 중 하나는 ~이다"]], [["make up my mind to ~"], ["~하기로 마음먹다"]], [["sign up for ~"], ["~에 등록하다"]], [["I've been ~ing for ..."], ["...동안 계속 ~하고 있다"]], [["still have a long way to go"], ["아직 갈 길이 멀다"]], [["have too much to drink"], ["술을 과하게 마시다"]], [["have three main functions"], ["세 가지 주요 기능이 있다"]], [["collect ~ from ..."], ["...에서 ~을 수집하다"]], [["much worse than ~"], ["~보다 훨씬 더 나쁘다/서툴다"]], [["Even though ~", "manage to ~", "get by in English"], ["비록 ~이지만", "어떻게든 ~해내다", "영어로 어떻게든 해나가다"]], [["Looking back, ...", "be proud of ~"], ["돌이켜보면", "~을 자랑스럽게 여기다"]]]:[[["go out for drinks"], ["술자리를 갖다"]], [["end up ~ing"], ["결국 ~하게 되다"]], [["social drinker"], ["사교적인 자리에서만 술을 마시는 사람"]], [["unless it's work-related"], ["업무 관련이 아니라면"]], [["quit ~ cold turkey"], ["~을 단번에 끊다"]], [["haven't ~ since then"], ["그 이후로 계속 ~하지 않았다"]], [["lead meetings confidently"], ["회의를 자신 있게 진행하다"]], [["rely on visual cues"], ["시각적 단서를 활용하다"]], [["in vivid detail"], ["아주 생생하고 자세하게"]], [["it's all a blur"], ["모든 것이 흐릿하게 기억나다"]], [["out of whack"], ["정상적이지 않은, 균형이 깨진"]], [["wake up around ~", "have trouble ~ing", "fall back asleep"], ["~시쯤 잠에서 깨다", "~하는 데 어려움을 겪다", "다시 잠들다"]], [["have a serious conflict with ~"], ["~와 심각한 갈등을 겪다"]], [["threaten to sue ~", "step in", "resolve the situation"], ["~을 고소하겠다고 하다", "개입하다", "상황을 해결하다"]]];
+    const corrPatternMap=(()=>{
+      const n=Number(lessonNo);
+      // Preserve the curated legacy maps only where they actually belong.
+      if(n===4)return [[["clock out", "which is ~ for me"],["퇴근하다", "나에게는 ~한 편이다"]],[["usually clock out around ~"],["보통 ~쯤 퇴근하다"]],[["operate 24/7"],["24시간 연중무휴로 가동되다"]],[["As a ~", "take responsibility", "when something goes wrong"],["~로서", "책임지다", "문제가 생길 때"]],[["Even if ~", "be directly involved", "be responsible"],["비록 ~하더라도", "직접 관련되다", "책임이 있다"]],[["a better work-life balance than ~"],["~보다 더 나은 일과 삶의 균형"]],[["I'd like to ~", "sleep in", "for another hour"],["~하고 싶다", "늦잠 자다", "한 시간 더"]],[["If ~", "get a good evaluation", "significantly lower"],["만약 ~라면", "좋은 평가를 받다", "상당히 더 낮은"]],[["have a long way to go"],["아직 갈 길이 멀다"]],[["make me realize ~", "what I need to ~"],["~을 깨닫게 하다", "내가 무엇을 ~해야 하는지"]],[["have been trying to ~", "tone down ~"],["계속 ~하려고 노력해오다", "~의 톤을 낮추다"]],[["If possible", "tell someone to ~", "take the day off"],["가능하다면", "누군가에게 ~하라고 말하다", "하루 휴가를 내다"]]];
+      if(n===1)return [[["feels like ~"], ["~처럼 느껴지다"]], [["One of my biggest goals is to ~"], ["가장 큰 목표 중 하나는 ~이다"]], [["make up my mind to ~"], ["~하기로 마음먹다"]], [["sign up for ~"], ["~에 등록하다"]], [["I've been ~ing for ..."], ["...동안 계속 ~하고 있다"]], [["still have a long way to go"], ["아직 갈 길이 멀다"]], [["have too much to drink"], ["술을 과하게 마시다"]], [["have three main functions"], ["세 가지 주요 기능이 있다"]], [["collect ~ from ..."], ["...에서 ~을 수집하다"]], [["much worse than ~"], ["~보다 훨씬 더 나쁘다/서툴다"]], [["Even though ~", "manage to ~", "get by in English"], ["비록 ~이지만", "어떻게든 ~해내다", "영어로 어떻게든 해나가다"]], [["Looking back, ...", "be proud of ~"], ["돌이켜보면", "~을 자랑스럽게 여기다"]]];
+      if(n===2)return [[["go out for drinks"], ["술자리를 갖다"]], [["end up ~ing"], ["결국 ~하게 되다"]], [["social drinker"], ["사교적인 자리에서만 술을 마시는 사람"]], [["unless it's work-related"], ["업무 관련이 아니라면"]], [["quit ~ cold turkey"], ["~을 단번에 끊다"]], [["haven't ~ since then"], ["그 이후로 계속 ~하지 않았다"]], [["lead meetings confidently"], ["회의를 자신 있게 진행하다"]], [["rely on visual cues"], ["시각적 단서를 활용하다"]], [["in vivid detail"], ["아주 생생하고 자세하게"]], [["it's all a blur"], ["모든 것이 흐릿하게 기억나다"]], [["out of whack"], ["정상적이지 않은, 균형이 깨진"]], [["wake up around ~", "have trouble ~ing", "fall back asleep"], ["~시쯤 잠에서 깨다", "~하는 데 어려움을 겪다", "다시 잠들다"]], [["have a serious conflict with ~"], ["~와 심각한 갈등을 겪다"]], [["threaten to sue ~", "step in", "resolve the situation"], ["~을 고소하겠다고 하다", "개입하다", "상황을 해결하다"]]];
+
+      // v5.3.272: lessons 3,5,6,7,8,9 derive patterns from THEIR OWN chunk data.
+      // Only patterns actually present in the sentence are shown.
+      const chunks=Array.isArray(d?.chunks)?d.chunks:[];
+      return (d?.corrections||[]).map(c=>{
+        const text=String(c?.en||'').toLowerCase();
+        const hits=[];
+        const kos=[];
+        chunks.forEach(ch=>{
+          const raw=String(ch?.pattern||'');
+          const norm=raw.replace(/~ing/gi,'').replace(/~|someone|something|A|B/gi,' ')
+            .replace(/[^A-Za-z0-9'\s-]/g,' ').replace(/\s+/g,' ').trim().toLowerCase();
+          const words=norm.split(' ').filter(x=>x.length>2);
+          if(words.length && words.every(word=>text.includes(word))){
+            hits.push(raw);kos.push(String(ch?.ko||''));
+          }
+        });
+        return [hits,kos];
+      });
+    })();
     const lesson1ChunkKo=["나는 영어를 진지하게 공부하기로 마음먹었다.", "나는 3년 넘게 영어를 공부해 오고 있다.", "나는 많이 향상됐지만 아직 갈 길이 멀다.", "내 가장 큰 목표 중 하나는 영어를 유창하게 말하는 것이다.", "돌이켜보면, 나는 도전했던 것이 다행이라고 생각한다.", "나는 엔지니어들과 어떻게든 의사소통해냈다.", "나는 결국 평소보다 술을 더 많이 마시게 되었다.", "나는 익숙한 주제에 대해서는 꽤 잘 말할 수 있다.", "나는 가끔 내 생각을 표현하는 데 어려움을 겪는다.", "나는 머릿속에서 한국어를 영어로 번역하는 경향이 있다.", "내 말은 내가 말하기 연습을 더 해야 한다는 것이다.", "쉽게 말하면, 우리 일은 장비 문제를 조기에 발견하는 것이다.", "핵심은 내가 이미 알고 있는 영어를 실제로 사용해야 한다는 것이다.", "나는 머릿속에서 한국어를 번역하는데, 그게 내 말하기를 느리게 만든다.", "나는 내 영어가 자연스럽게 들리는지 항상 판단할 수 있는 것은 아니다."];
     (d.corrections||[]).forEach((x,i)=>{
       const pm=corrPatternMap[i]||[[],[]];
@@ -12866,7 +12899,7 @@ function m536StopController(keepResume=false){
   m536SyncInfinityButtons();
 }
 
-/* ===== V5.3.268 · BACKGROUND PLAYBACK POSITION STANDARD =====
+/* ===== V5.3.272 · BACKGROUND PLAYBACK POSITION STANDARD =====
    Shared by MY / SORI / OPIC. A background transition may finish only the
    repetition already in progress; it never runs ahead into unrelated items.
    On return:
@@ -12906,7 +12939,7 @@ async function m536RunFull(startAt=0,startRep=0){
   m536StopLegacyPlaybackOnly();
   const list=m536BuildPlaylist(course);
   if(!list.length){
-    // v5.3.268: in overall repeat, empty favorite-only course = skip to next course.
+    // v5.3.272: in overall repeat, empty favorite-only course = skip to next course.
     if(window.MV_ALL_REPEAT_219?.active && typeof window.MV_COURSE_ONCE_COMPLETE_219==='function'){
       const done=window.MV_COURSE_ONCE_COMPLETE_219;
       window.MV_COURSE_ONCE_COMPLETE_219=null;
@@ -12980,7 +13013,7 @@ async function m536RunFull(startAt=0,startRep=0){
     });
     M536.cursor=next;
 
-    // v5.3.268: optional outer-orchestrator completion hook.
+    // v5.3.272: optional outer-orchestrator completion hook.
     // Dormant during normal MY/SORI/OPIC repeat, so individual repeat behavior is unchanged.
     if(next===0 && typeof window.MV_COURSE_ONCE_COMPLETE_219==='function'){
       const done=window.MV_COURSE_ONCE_COMPLETE_219;
@@ -12993,7 +13026,7 @@ async function m536RunFull(startAt=0,startRep=0){
       return;
     }
 
-    // v5.3.268: deterministic integrated controller - one playlist per course.
+    // v5.3.272: deterministic integrated controller - one playlist per course.
     if(window.MV_ALL_REPEAT_215?.active && window.MV_MIXED_COURSE_ONCE_215 && next===0){
       window.MV_MIXED_COURSE_ONCE_215=false;
       M536.busy=false;
@@ -13004,7 +13037,7 @@ async function m536RunFull(startAt=0,startRep=0){
       return;
     }
 
-    // Legacy v5.3.268 hook retained outside v215 sessions.
+    // Legacy v5.3.272 hook retained outside v215 sessions.
     if(window.MV_ALL_REPEAT_209?.active && window.MV_MIXED_COURSE_ONCE_209 && next===0){
       window.MV_MIXED_COURSE_ONCE_209=false;
       M536.busy=false;
@@ -13910,7 +13943,7 @@ function goMyClassTab(dir){
   let nextLesson=Number(myClassLessonNo)||1;
   const maxLesson=(typeof studyCourseLessonCount==='function'?studyCourseLessonCount(ACTIVE_STUDY_COURSE):Object.keys(studyCourseMeta?.(ACTIVE_STUDY_COURSE)||{}).length)||1;
 
-  // v5.3.268 shared swipe standard:
+  // v5.3.272 shared swipe standard:
   // first tab + right swipe => previous lesson's last tab
   // last tab + left swipe => next lesson's first tab
   if(ni<0){
@@ -14090,7 +14123,7 @@ function addHint(){
  h.innerHTML='↔ 탭 이동 · 맨 위에서 ↓ 이전 수업 · 맨 아래에서 ↑ 다음 수업도 같은 카드 Swipe';
  root.parentNode&&root.parentNode.insertBefore(h,root);
 }
-// v5.3.268 shared local-listen gesture unlock (MY/SORI/OPIC).
+// v5.3.272 shared local-listen gesture unlock (MY/SORI/OPIC).
 document.addEventListener('pointerdown',e=>{
  const b=e.target.closest?.('#myClassPage .myStudyBtn.primary');
  if(!b)return;
@@ -14798,7 +14831,7 @@ function installVisibleBuildBadge(){
   if(!badge){
     badge=document.createElement('div');
     badge.id='mvBuildBadge';
-    badge.textContent='v5.3.268';
+    badge.textContent='v5.3.272';
     badge.title='현재 실행 중인 MY VOCA 빌드';
     document.body.appendChild(badge);
   }
@@ -15380,7 +15413,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   }
 
 
-  /* ===== V5.3.268 · REPEAT PART SELECTION STANDARD ===== */
+  /* ===== V5.3.272 · REPEAT PART SELECTION STANDARD ===== */
   const STUDY_REPEAT_PARTS_206={
     day:{items:[['word','단어·뜻'],['example','예문'],['paraphrase','패러프레이즈'],['extra','추가 표현']],defaults:['word','example']},
     my:{items:[['corrections','핵심 교정'],['chunks','Chunk'],['speaking','말하기']],defaults:['corrections','chunks','speaking']},
@@ -15503,7 +15536,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   }
 
 
-  /* ===== V5.3.268 · CROSS-COURSE ALL REPEAT STANDARD ===== */
+  /* ===== V5.3.272 · CROSS-COURSE ALL REPEAT STANDARD ===== */
   const MV_ALL_REPEAT_209={
     active:false,
     order:['day','my','sori','opic'],
@@ -15634,7 +15667,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   window.allRepeatAdvance209=allRepeatAdvance209;
 
   function startAllRepeat209(explicitStartMode){
-    // v5.3.268: start from the exact mode the learner has clicked.
+    // v5.3.272: start from the exact mode the learner has clicked.
     // Do not infer a stale/default DAY state from a rebuilt DOM.
     const validModes=['day','my','sori','opic'];
     const startMode=validModes.includes(explicitStartMode)?explicitStartMode:currentHomeStudyMode();
@@ -15671,7 +15704,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   window.toggleAllRepeat214=toggleAllRepeat214;
 
 
-  /* ===== V5.3.268 · DETERMINISTIC CROSS-COURSE REPEAT CONTROLLER ===== */
+  /* ===== V5.3.272 · DETERMINISTIC CROSS-COURSE REPEAT CONTROLLER ===== */
   const MV_ALL_REPEAT_215={active:false,queue:[],index:0,current:'',cycle:0,advancing:false,token:0,snapshots:null};
   window.MV_ALL_REPEAT_215=MV_ALL_REPEAT_215;
 
@@ -15821,7 +15854,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   window.toggleAllRepeat215=toggleAllRepeat215;
 
 
-  /* ===== V5.3.268 · ISOLATED OUTER ALL-REPEAT ORCHESTRATOR =====
+  /* ===== V5.3.272 · ISOLATED OUTER ALL-REPEAT ORCHESTRATOR =====
      Normal DAY/MY/SORI/OPIC engines are not replaced. This layer only:
      1) reads saved selections, 2) calls the existing starter, 3) receives one completion callback.
   */
@@ -16039,7 +16072,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     window.MV_MIXED_COURSE_ONCE_209=false;
     window.MV_MIXED_COURSE_ONCE_215=false;
 
-    // v5.3.268: freeze favorite-only state for the whole overall-repeat session.
+    // v5.3.272: freeze favorite-only state for the whole overall-repeat session.
     // Course switches / hidden UI rebuilds must never fall back to "play all".
     s.favoriteOnlySnapshot={
       my:!!window.studyFavoriteOnly239?.('my'),
@@ -16498,7 +16531,7 @@ async function studySpeakSpeakingCard193(index,block=null){
   MY_CLASS_PLAY.paused=false;
   const focusEl=block||document.getElementById(`mySpeakBlock${index}`);
   if(focusEl)myClassFocus?.(focusEl);
-  // v5.3.268: unlock from the same tap, then let Samsung/content:// TTS settle
+  // v5.3.272: unlock from the same tap, then let Samsung/content:// TTS settle
   // BEFORE the first audible item (the question/cue) is queued.
   try{unlockTTSFromGesture?.()}catch(e){}
   try{if(window.speechSynthesis?.paused)window.speechSynthesis.resume()}catch(e){}
@@ -16519,7 +16552,7 @@ window.studySpeakSpeakingCard193=studySpeakSpeakingCard193;
 
 function mvSpeakingQuestionAudioAudit238(){
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     order:'question/cue -> answer',
     androidContentFix:'silent unlock settles before first audible question',
     shared:['my','sori','opic','full','infinite']
@@ -16530,7 +16563,7 @@ window.mvSpeakingQuestionAudioAudit238=mvSpeakingQuestionAudioAudit238;
 function mvSpeakingQuestionFirstAudit236(){
   const courses=['my','sori','opic'];
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     courses:courses,
     individualButton:'studySpeakSpeakingCard193',
     repeatEngine:'studySpeakQuestionThenAnswer193',
@@ -16658,7 +16691,7 @@ setTimeout(()=>{try{studyBindSpeakingPlayback193()}catch(e){}},0);
 
 
 <script id="v53197PatternGrammarSlotStandard">
-/* ===== V5.3.268 · PATTERN GRAMMAR-SLOT HIGHLIGHT STANDARD =====
+/* ===== V5.3.272 · PATTERN GRAMMAR-SLOT HIGHLIGHT STANDARD =====
    All courses use studyFindPatternHits(). Grammar labels such as S/V/O/C/A/B
    are placeholders only; actual sentence words are highlighted instead.
 */
@@ -16671,19 +16704,19 @@ function mvPatternGrammarSlotAudit197(){
     ['make someone think that ~','Seeing them makes me think that natural aging may be better.']
   ];
   const rows=cases.map(([pattern,text])=>({pattern,text,fixedParts:studyPatternFixedParts(pattern),hits:studyFindPatternHits(text,pattern)}));
-  return {version:'v5.3.268',rule:'S/V/O/C/A/B are grammar slots, never literal match tokens',passed:rows.every(r=>r.hits.length>0),rows};
+  return {version:'v5.3.272',rule:'S/V/O/C/A/B are grammar slots, never literal match tokens',passed:rows.every(r=>r.hits.length>0),rows};
 }
 window.mvPatternGrammarSlotAudit197=mvPatternGrammarSlotAudit197;
 </script>
 
 
 <script>
-/* ===== V5.3.268 · OPIC REGISTRY CARD AUDIT ===== */
+/* ===== V5.3.272 · OPIC REGISTRY CARD AUDIT ===== */
 window.mvOpicRegistryAudit202=function(){
   const meta=studyCourseMeta('opic')||{};
   const lessons=Object.keys(meta).map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     lessons,
     lessonCount:studyCourseLessonCount('opic'),
     cards:[...document.querySelectorAll('#homePage .opicClassSection .opicCourseCard')].map(c=>({id:c.id,lesson:Number(c.dataset.studyLesson),title:c.querySelector('.myClassTop b')?.textContent||''})),
@@ -16702,7 +16735,7 @@ window.mvAllRepeatAudit211=function(){
     try{selections[c]=studyCourseSelectedLessons(c)}catch(e){selections[c]=[]}
   }
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     currentMode:mode,
     queue:typeof allRepeatQueue209==='function'?allRepeatQueue209(mode):[],
     selections,
@@ -16722,7 +16755,7 @@ window.mvAllRepeatAudit212=function(){
     try{selected[c]=studyCourseSelectedLessons(c)}catch(e){selected[c]=[]}
   }
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     startMode:mode,
     active:!!window.MV_ALL_REPEAT_209?.active,
     current:window.MV_ALL_REPEAT_209?.current||'',
@@ -16742,7 +16775,7 @@ window.mvAllRepeatAudit213=function(){
   const selected={};
   try{selected.day=JSON.parse(localStorage.getItem(selectedDaysKey())||'[]')}catch(e){selected.day=[]}
   for(const c of ['my','sori','opic']){try{selected[c]=studyCourseSelectedLessons(c)}catch(e){selected[c]=[]}}
-  return {version:'v5.3.268',visibleMode:map[active?.id]||null,savedMode:localStorage.getItem('mv_homeStudyMode212'),
+  return {version:'v5.3.272',visibleMode:map[active?.id]||null,savedMode:localStorage.getItem('mv_homeStudyMode212'),
     queue:[...(window.MV_ALL_REPEAT_209?.queue||[])],current:window.MV_ALL_REPEAT_209?.current||'',
     active:!!window.MV_ALL_REPEAT_209?.active,selected,dayActive:typeof AUTO!=='undefined'?AUTO.active:null,
     dayPass:typeof AUTO!=='undefined'?AUTO.pass:null,dayRepeats:typeof AUTO!=='undefined'?AUTO.repeats:null};
@@ -16755,7 +16788,7 @@ window.mvAllRepeatAudit214=function(){
   const a=document.querySelector('#homeStudyModePanel .homeStudyModeBtn.active');
   const map={homeModeDay:'day',homeModeMy:'my',homeModeSori:'sori',homeModeOpic:'opic'};
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     visibleMode:map[a?.id]||null,
     enabled:!!document.getElementById('homeAllRepeat209')?.checked,
     active:!!window.MV_ALL_REPEAT_209?.active,
@@ -16786,7 +16819,7 @@ window.mvAllRepeatAudit214=function(){
 <script id="v532215AllRepeatAudit">
 window.mvAllRepeatAudit215=function(){
   const s=window.MV_ALL_REPEAT_215||{};
-  return {version:'v5.3.268',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],index:s.index||0,cycle:s.cycle||0,
+  return {version:'v5.3.272',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],index:s.index||0,cycle:s.cycle||0,
     advancing:!!s.advancing,snapshots:s.snapshots||null,dayActive:typeof AUTO!=='undefined'?AUTO.active:null,
     dayPass:typeof AUTO!=='undefined'?AUTO.pass:null,dayRepeats:typeof AUTO!=='undefined'?AUTO.repeats:null,
     m536Mode:typeof M536!=='undefined'?M536.mode:null,m536Course:typeof M536!=='undefined'?M536.course:null,
@@ -16810,7 +16843,7 @@ window.mvAllRepeatTrace216=function(event,extra={}){
 <script id="v532217DayAdvanceAudit">
 window.mvDayAdvanceAudit217=function(){
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     integrated:!!window.MV_ALL_REPEAT_215?.active,
     currentCourse:window.MV_ALL_REPEAT_215?.current||'',
     queue:[...(window.MV_ALL_REPEAT_215?.queue||[])],
@@ -16832,7 +16865,7 @@ window.mvDayAdvanceAudit217=function(){
 window.mvAllRepeatAudit219=function(){
   const s=window.MV_ALL_REPEAT_219||{};
   return {
-    version:'v5.3.268',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],
+    version:'v5.3.272',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],
     index:s.index??null,snapshot:s.snapshot||null,
     dayHook:typeof window.MV_DAY_ONCE_COMPLETE_219,
     courseHook:typeof window.MV_COURSE_ONCE_COMPLETE_219,
@@ -16871,7 +16904,7 @@ window.mvAllRepeatAudit219=function(){
 window.mvControllerAudit221=function(){
   const b=document.getElementById('homeAllRepeatStart210');
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     buttonText:b?.textContent||'',
     v209:!!window.MV_ALL_REPEAT_209?.active,
     v215:!!window.MV_ALL_REPEAT_215?.active,
@@ -16893,7 +16926,7 @@ window.mvControllerAudit221=function(){
 window.mvOverallIsolationAudit222=function(){
   const s=window.MV_ALL_REPEAT_219||{};
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],index:s.index??null,
     snapshot:s.snapshot||null,
     internalStart:!!window.MV_ALL_REPEAT_INTERNAL_START_222,
@@ -16911,7 +16944,7 @@ window.mvOverallIsolationAudit222=function(){
 
 
 <script id="v532239StudyFavoriteStandard">
-/* ===== V5.3.268 · CORRECTION / CHUNK / SPEAKING FAVORITE STANDARD ===== */
+/* ===== V5.3.272 · CORRECTION / CHUNK / SPEAKING FAVORITE STANDARD ===== */
 (function(){
 'use strict';
 const MV_STUDY_FAVORITES_KEY_239='mv_study_favorites_239';
@@ -17083,7 +17116,7 @@ document.addEventListener('click',(e)=>{
 
 window.mvStudyFavoriteAudit239=function(){
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     storage:MV_STUDY_FAVORITES_KEY_239,
     tabs:['corrections','chunks','speaking'],
     courses:['my','sori','opic'],
@@ -17103,7 +17136,7 @@ window.mvStudyFavoriteAudit239=function(){
 window.mvSori3VisibilityAudit241=function(){
   const card=document.getElementById('soriGroup3Card');
   const sec=document.querySelector('.soriClassSection');
-  return {version:'v5.3.268',cardExists:!!card,insideSori:!!card&&card.closest('.soriClassSection')===sec,
+  return {version:'v5.3.272',cardExists:!!card,insideSori:!!card&&card.closest('.soriClassSection')===sec,
     lesson:studyCardCourseLesson(card)?.lesson||0,lessonCount:studyCourseLessonCount('sori')};
 };
 </script>
@@ -17334,7 +17367,7 @@ window.mvSwipePage246={
   forceCleanup:()=>cleanup246()
 };
 window.mvSwipePageAudit246=()=>({
- version:'v5.3.268',
+ version:'v5.3.272',
  mode:'2D full-screen card drag',
  followsX:true,followsY:true,velocityAware:true,
  navigation:'once on touchend',
@@ -17348,7 +17381,7 @@ window.mvSwipePageAudit246=()=>({
 <script id="v532247VerticalTiltAudit">
 window.mvSwipeVerticalTiltAudit247=function(){
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     verticalTilt:'opposite by dy sign',
     upward:'rotateZ negative',
     downward:'rotateZ positive',
@@ -17362,7 +17395,7 @@ window.mvSwipeVerticalTiltAudit247=function(){
 <script id="v532248BidirectionalTiltAudit">
 window.mvSwipeBidirectionalTiltAudit248=function(){
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     leftSwipe:'vertical tilt flips by up/down',
     rightSwipe:'mirrored vertical tilt flips by up/down',
     mirroredByHorizontalDirection:true,
@@ -17376,7 +17409,7 @@ window.mvSwipeBidirectionalTiltAudit248=function(){
 <script id="v532249RightTiltVisualFixAudit">
 window.mvSwipeRightTiltVisualFix249=function(){
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     fix:'remove rotateY visual cancellation + quadrant transform-origin',
     leftSwipe:{up:'opposite angle',down:'opposite angle'},
     rightSwipe:{up:'mirrored angle',down:'mirrored angle'},
@@ -17390,7 +17423,7 @@ window.mvSwipeRightTiltVisualFix249=function(){
 <script id="v532250SwipeCommitAudit">
 window.mvSwipeCommitAudit250=function(){
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     completion:'2D distance + velocity',
     xThreshold:.10,
     diagonalThreshold:.18,
@@ -17406,7 +17439,7 @@ window.mvSwipeCommitAudit250=function(){
 <script id="v532251SwipeCommitSamsungAudit">
 window.mvSwipeCommitSamsungAudit251=function(){
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     samsungTouchCancel:'uses normal commit thresholds instead of forced cancel',
     destination:'resolved explicitly before render',
     expected:'corrections left swipe -> chunks',
@@ -17600,7 +17633,7 @@ window.mvVerticalLessonSwipe252={
   forceCleanup:()=>cleanup252()
 };
 window.mvVerticalLessonSwipeAudit252=()=>({
-  version:'v5.3.268',
+  version:'v5.3.272',
   topPullDown:'previous lesson same tab',
   bottomPushUp:'next lesson same tab',
   liveCard:true,
@@ -17616,7 +17649,7 @@ window.mvVerticalLessonSwipeAudit252=()=>({
 <script id="v532253SwipeCornerCleanupAudit">
 window.mvSwipeCornerCleanupAudit253=function(){
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     fix:'clean swipe-card corners and duplicate floating overlays',
     cardRadius:0,
     shadow:'reduced',
@@ -17750,7 +17783,7 @@ window.MV_SWIPE_STANDARD_254={
   active:()=>!!U,forceCleanup:()=>cleanup254()
 };
 window.mvSwipeStandardAudit254=()=>({
-  version:'v5.3.268',
+  version:'v5.3.272',
   standard:'full-screen snapshot + finger-follow + mirrored tilt + velocity commit',
   applied:['MY/SORI/OPIC tabs','MY/SORI/OPIC lesson edges','DAY learning cards','word quiz questions']
 });
@@ -17820,7 +17853,7 @@ async function autoTurn255(commit,dir=1){
   const rotZ=dir>0?-8:8;
   card.style.transformOrigin=dir>0?'right bottom':'left bottom';
 
-  // v5.3.268 · continuous human-speed page turn.
+  // v5.3.272 · continuous human-speed page turn.
   // No mid-point pause: one uninterrupted motion from start to finish.
   await new Promise(r=>setTimeout(r,110));
 
@@ -17846,7 +17879,7 @@ async function autoTurn255(commit,dir=1){
 
 window.mvAutoPlaybackPageTurn255=autoTurn255;
 window.mvAutoPlaybackPageTurnAudit255=()=>({
-  version:'v5.3.268',
+  version:'v5.3.272',
   use:'automatic full-playback tab/lesson screen changes',
   style:'same full-screen swipe-card standard',
   destinationStartsAtTop:true,
@@ -17885,7 +17918,7 @@ window.mvAutoDayPlaybackTurn255=async function(commit){
   const tx=-w*1.16,ty=-Math.min(h*.10,80);
   card.style.transformOrigin='right bottom';
 
-  // v5.3.268 · DAY uses the same uninterrupted page-turn timing.
+  // v5.3.272 · DAY uses the same uninterrupted page-turn timing.
   await new Promise(r=>setTimeout(r,110));
 
   const dur=700;
@@ -17909,7 +17942,7 @@ window.mvAutoDayPlaybackTurn255=async function(commit){
 <script id="v532256HumanAutoSwipeSpeedAudit">
 window.mvHumanAutoSwipeSpeedAudit256=function(){
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     automaticTurn:'human-like visible speed',
     preHoldMs:140,
     midSwipeMs:330,
@@ -18069,7 +18102,7 @@ if(typeof original==='function'){
 }
 window.mvPlaybackProgressSync259=sync259;
 window.mvPlaybackProgressAudit259=()=>({
-  version:'v5.3.268',
+  version:'v5.3.272',
   trigger:'canonical status paint',
   playbackEngineTouched:false,
   progress:'current card / total cards in current lesson+tab',
@@ -18082,8 +18115,8 @@ window.mvPlaybackProgressAudit259=()=>({
 <script id="v532261FavoriteProgressSafeAudit">
 window.mvFavoriteProgressSafeAudit261=function(){
   return {
-    version:'v5.3.268',
-    base:'v5.3.268 visible progress implementation',
+    version:'v5.3.272',
+    base:'v5.3.272 visible progress implementation',
     favoriteOnly:'counter uses filtered active playlist',
     normalPlayback:'v259 logic preserved',
     playbackEngineTouched:false
@@ -18095,11 +18128,11 @@ window.mvFavoriteProgressSafeAudit261=function(){
 <script id="v532262FavoriteDenominatorAudit">
 window.mvFavoriteDenominatorAudit262=function(){
  return {
-   version:'v5.3.268',
+   version:'v5.3.272',
    rule:'favorite-only 100% = actual filtered favorites in current lesson+tab',
    example:'3 favorites among 12 => 1/3, 2/3, 3/3',
    detection:['favorite-only setting','actual playlist smaller than full tab'],
-   base:'v5.3.268 / v5.3.259 visible progress path',
+   base:'v5.3.272 / v5.3.259 visible progress path',
    playbackEngineTouched:false
  };
 };
@@ -18115,7 +18148,7 @@ window.mvFavoriteExactCountAudit263=function(course=window.ACTIVE_STUDY_COURSE||
     favoriteIndices=rows.map((_,idx)=>idx).filter(idx=>!!window.studyFavoriteHas239?.(course,lesson,tab,idx));
   }catch(e){}
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     rule:'favorite denominator = exact favorite count in current lesson+tab',
     favoriteIndices,
     denominator:favoriteIndices.length,
@@ -18129,7 +18162,7 @@ window.mvFavoriteExactCountAudit263=function(course=window.ACTIVE_STUDY_COURSE||
 <script id="v532264ProgressLayoutAudit">
 window.mvProgressLayoutAudit264=function(){
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     change:'progress bar width reduced and right-aligned to protect status label',
     mobileWidthPx:112,
     maxWidthPx:154,
@@ -18145,7 +18178,7 @@ window.mvProgressLayoutAudit264=function(){
 window.mvOverallFavoriteSkipAudit265=function(){
   const s=window.MV_ALL_REPEAT_219||{};
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     rule:'overall repeat + favorite-only + zero favorites => skip course',
     neverFallbackToAll:true,
     favoriteOnlySnapshot:s.favoriteOnlySnapshot||null,
@@ -18170,7 +18203,7 @@ window.mvDayAutoAdvance266=function(commit){
     if(typeof window.mvAutoDayPlaybackTurn255==='function'){
       await window.mvAutoDayPlaybackTurn255(commit);
 
-      // v5.3.268 timing standard:
+      // v5.3.272 timing standard:
       // wait until the turned page is fully gone and the destination card is stable
       // before autoRead of the next word can begin.
       await new Promise(r=>setTimeout(r,220));
@@ -18185,7 +18218,7 @@ window.mvDayAutoAdvance266=function(commit){
 
 window.mvDayAutoPageTurnAudit266=function(){
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     rule:'every automatic DAY next-word / repeat-pass transition uses page turn',
     engine:'mvAutoDayPlaybackTurn255 human-speed visual',
     serialized:true,
@@ -18199,7 +18232,7 @@ window.mvDayAutoPageTurnAudit266=function(){
 <script id="v532267DayTurnPlaybackTimingAudit">
 window.mvDayTurnPlaybackTimingAudit267=function(){
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     rule:'next DAY word audio starts only after page turn fully completes',
     pageTurn:'human-speed two phase',
     postTurnSettleMs:220,
@@ -18214,7 +18247,7 @@ window.mvDayTurnPlaybackTimingAudit267=function(){
 <script id="v532268ContinuousPageTurnAudit">
 window.mvContinuousPageTurnAudit268=function(){
   return {
-    version:'v5.3.268',
+    version:'v5.3.272',
     fix:'remove mid-turn pause from automatic page transitions',
     generalAutoTurnMs:720,
     dayAutoTurnMs:700,
@@ -18223,6 +18256,232 @@ window.mvContinuousPageTurnAudit268=function(){
     motion:'single continuous transition',
     applies:['DAY automatic word changes','MY/SORI/OPIC automatic tab/lesson changes'],
     manualSwipe:'unchanged'
+  };
+};
+</script>
+
+
+<script id="v532269Sori3FirsthandPatternAudit">
+window.mvSori3FirsthandPatternAudit269=function(){
+  const d=window.SORI_GROUP_3||SORI_GROUP_3;
+  return {
+    version:'v5.3.272',
+    correctionAdded:d.corrections.some(x=>x.en==='I know firsthand how difficult it is to make friends.'),
+    chunkExpanded:d.chunks.some(x=>x.id==='day_chunk_12'&&/how difficult it can be to make new friends/.test(x.example||'')),
+    opicVariant:true
+  };
+};
+</script>
+
+
+<script id="v532270MySentencePatternIsolationAudit">
+window.mvMySentencePatternIsolationAudit270=function(){
+  const lesson7=MY_CLASS_LESSON_7;
+  const sentence=lesson7.corrections[0].en;
+  return {
+    version:'v5.3.272',
+    lesson7Sentence:sentence,
+    invalidLesson2Pattern:/go out for drinks/i.test(sentence)?'unexpected':'excluded',
+    lesson7OwnPatterns:['be swamped','work through lunch'],
+    rule:'MY sentence pattern hints must come from the active lesson and the current sentence'
+  };
+};
+</script>
+
+
+<script id="v532271OpicSentenceSpeakingSource">
+(function(){
+'use strict';
+
+function opicSentenceLessonCount271(){
+  try{return studyCourseLessonCount('opic')}catch(e){return 19}
+}
+function opicSentenceData271(n){
+  try{return studyCourseData('opic',Number(n)||1)||{}}catch(e){return {}}
+}
+function splitEn271(text){
+  try{return myClassSplitSentences(String(text||''))}catch(e){
+    return String(text||'').match(/[^.!?]+[.!?]+|[^.!?]+$/g)?.map(x=>x.trim()).filter(Boolean)||[];
+  }
+}
+function splitKo271(text){
+  try{return splitKo(String(text||''))}catch(e){
+    return String(text||'').split(/(?<=[.!?。！？])\s+/).map(x=>x.trim()).filter(Boolean);
+  }
+}
+function patternMatch271(text,pattern){
+  const t=String(text||'').toLowerCase();
+  const n=String(pattern||'').replace(/~ing/gi,'').replace(/~|someone|something|\bA\b|\bB\b|\.\.\./gi,' ')
+    .replace(/[^A-Za-z0-9'\s-]/g,' ').replace(/\s+/g,' ').trim().toLowerCase();
+  const words=n.split(' ').filter(x=>x.length>2);
+  if(!words.length)return false;
+  let pos=0;
+  for(const word of words){const k=t.indexOf(word,pos);if(k<0)return false;pos=k+word.length}
+  return true;
+}
+function patterns271(d,text){
+  const rows=[];
+  (d?.chunks||[]).forEach(x=>{
+    if(x?.pattern&&patternMatch271(text,x.pattern))rows.push([x.pattern,x.ko||'']);
+  });
+  return rows.filter((x,i,a)=>a.findIndex(y=>y[0]===x[0])===i);
+}
+window.opicSentenceCards271=function(lessonNo){
+  const n=Math.max(1,Math.min(opicSentenceLessonCount271(),Number(lessonNo)||1));
+  const d=opicSentenceData271(n),out=[];let order=1;
+  (d.corrections||[]).forEach((x,i)=>{
+    const pats=patterns271(d,x.en||'');
+    out.push({
+      isPracticeSentence:true,isOpicSentence:true,
+      practiceId:`OPIC_${n}_C_${i+1}`,sentenceStatsKey:`__opic__${n}_C_${i+1}`,
+      example:x.en||'',translation:x.ko||'',
+      practicePatterns:pats.map(x=>x[0]),practicePatternMeanings:pats.map(x=>x[1]),
+      targetWords:[],newDay:n,newNo:order++,word:`OPIC ${n} 핵심 교정 ${i+1}`
+    });
+  });
+  (d.chunks||[]).forEach((x,i)=>{
+    out.push({
+      isPracticeSentence:true,isOpicSentence:true,
+      practiceId:`OPIC_${n}_K_${i+1}`,sentenceStatsKey:`__opic__${n}_K_${i+1}`,
+      example:x.example||x.pattern||'',translation:x.exampleKo||x.ko||'',
+      practicePatterns:x.pattern?[x.pattern]:[],practicePatternMeanings:x.ko?[x.ko]:[],
+      targetWords:[],newDay:n,newNo:order++,word:`OPIC ${n} Chunk ${i+1}`
+    });
+  });
+  (d.speaking||[]).forEach((x,i)=>{
+    const ens=splitEn271(x.text||x.answer||x.en||''),kos=splitKo271(x.ko||x.answerKo||'');
+    ens.forEach((en,j)=>{
+      const pats=patterns271(d,en);
+      out.push({
+        isPracticeSentence:true,isOpicSentence:true,
+        practiceId:`OPIC_${n}_S_${i+1}_${j+1}`,sentenceStatsKey:`__opic__${n}_S_${i+1}_${j+1}`,
+        example:en,translation:kos[j]||x.ko||x.answerKo||'',
+        practicePatterns:pats.map(x=>x[0]),practicePatternMeanings:pats.map(x=>x[1]),
+        targetWords:[],newDay:n,newNo:order++,word:`OPIC ${n} 말하기 ${i+1}-${j+1}`
+      });
+    });
+  });
+  return out.filter(x=>x.example&&x.translation);
+};
+
+let opicLesson271=Math.max(1,Math.min(opicSentenceLessonCount271(),Number(localStorage.getItem('mv_opicSentenceLesson271')||1)));
+
+function addButton271(){
+  const sw=document.querySelector('#sentenceSourceBar .sentenceSourceSwitch');if(!sw)return;
+  sw.classList.remove('v534ThreeSources');sw.classList.add('standardFourSentenceSources');
+  if(!document.getElementById('sentenceSourceOpic')){
+    const b=document.createElement('button');
+    b.id='sentenceSourceOpic';b.className='sentenceSourceBtn';b.type='button';b.textContent='OPIC';
+    sw.appendChild(b);
+  }
+  const b=document.getElementById('sentenceSourceOpic');
+  if(b)b.onclick=()=>setSentenceSource('opic');
+}
+
+const prevBuild=buildQuizDeck;
+buildQuizDeck=function(){
+  if(quizMode==='sentence'&&sentenceSourceMode==='opic'){
+    quizAllWrongMode=false;
+    let pool=window.opicSentenceCards271(opicLesson271);
+    pool.forEach(q=>ensureSentenceStats(q));
+    if(quizFilterMode==='wrong')pool=pool.filter(isWeakSentence).sort((a,b)=>(ensureSentenceStats(b).sentenceWrong||0)-(ensureSentenceStats(a).sentenceWrong||0));
+    quizDeck=pool;quizIndex=0;quizSessionDone=false;quizSessionWrong=[];updateQuizFilterCount();return;
+  }
+  return prevBuild();
+};
+
+const prevCount=updateQuizFilterCount;
+updateQuizFilterCount=function(){
+  if(quizMode==='sentence'&&sentenceSourceMode==='opic'){
+    const base=window.opicSentenceCards271(opicLesson271),el=document.getElementById('quizFilterCount');
+    if(el)el.textContent=(quizFilterMode==='wrong'?base.filter(isWeakSentence).length:base.length)+'문장';
+    return;
+  }
+  return prevCount();
+};
+
+const prevLabel=sentenceSourceLabel;
+sentenceSourceLabel=function(){
+  if(sentenceSourceMode==='opic')return 'OPIC';
+  return prevLabel();
+};
+
+const prevSync=syncSentenceSourceUI;
+syncSentenceSourceUI=function(){
+  prevSync();addButton271();
+  document.getElementById('sentenceSourceOpic')?.classList.toggle('active',sentenceSourceMode==='opic');
+};
+
+const prevSet=setSentenceSource;
+setSentenceSource=function(mode){
+  if(mode!=='opic')return prevSet(mode);
+  stopDayLoop(true);
+  sentenceSourceMode='opic';quizFilterMode=(quizFilterMode==='wrong')?'wrong':'all';
+  localStorage.setItem(packKey('sentenceSourceMode'),'opic');localStorage.setItem(packKey('quizFilterMode'),quizFilterMode);
+  quizSelectedDay=opicLesson271;
+  clearQuizAutoNext();clearSentenceRecallTimer();stopSentenceRepeat(true);stopSpeech();quizAllWrongMode=false;
+  syncSentenceSourceUI();updateQuizDayNav();buildQuizDeck();quizAnswered=false;newq();
+};
+
+const prevNav=updateQuizDayNav;
+updateQuizDayNav=function(){
+  if(quizMode==='sentence'&&sentenceSourceMode==='opic'){
+    const btn=$('quizAllWrongBtn'),label=$('quizDayLabel');if(!btn||!label)return;
+    btn.disabled=true;btn.classList.remove('active');btn.textContent='OPIC 문장 학습';
+    const count=window.opicSentenceCards271(opicLesson271).length;
+    const meta=studyCourseMeta('opic')?.[opicLesson271]||{};
+    label.innerHTML=`<b>OPIC ${opicLesson271}</b><span>${count}문장 · ${meta.shortTitle||meta.title||''}</span>`;
+    $('quizPrevDay').disabled=opicLesson271<=1;
+    $('quizNextDay').disabled=opicLesson271>=opicSentenceLessonCount271();
+    updateQuizFilterCount();return;
+  }
+  return prevNav();
+};
+
+const prevDay=setQuizDay;
+setQuizDay=function(day){
+  if(quizMode==='sentence'&&sentenceSourceMode==='opic'){
+    stopSpeech();if('speechSynthesis' in window)window.speechSynthesis.cancel();
+    opicLesson271=Math.max(1,Math.min(opicSentenceLessonCount271(),Number(day)||1));
+    quizSelectedDay=opicLesson271;localStorage.setItem('mv_opicSentenceLesson271',String(opicLesson271));
+    updateQuizDayNav();buildQuizDeck();quizAnswered=false;newq();return;
+  }
+  return prevDay(day);
+};
+
+const prevQuestion=newSentenceRecallQuestion;
+newSentenceRecallQuestion=function(){
+  prevQuestion();
+  if(sentenceSourceMode==='opic'&&quizCurrent){
+    $('qw').innerHTML=`OPIC ${opicLesson271} 문장 <span class="myClassQuizBadge">${quizIndex+1}/${quizDeck.length}</span>`;
+    $('quizMeta').textContent=`OPIC ${opicLesson271} · 문장 말하기 · ${sentenceFilterLabel()} · ${quizIndex+1}/${quizDeck.length}`;
+  }
+};
+
+setTimeout(()=>{addButton271();syncSentenceSourceUI();},50);
+
+window.mvOpicSentenceSpeakingAudit271=function(){
+  return {
+    version:'v5.3.272',
+    source:'OPIC 1–19',
+    sourceButton:!!document.getElementById('sentenceSourceOpic'),
+    sentenceBuilder:typeof window.opicSentenceCards271==='function',
+    currentLesson:opicLesson271,
+    rule:'OPIC sentence speaking uses each OPIC lesson corrections/chunks/speaking data'
+  };
+};
+})();
+</script>
+
+
+<script id="v532272MicPermissionGuideAudit">
+window.mvMicPermissionGuideAudit272=function(){
+  return {
+    version:'v5.3.272',
+    deniedGuide:'설정 → 앱 → Chrome → 권한 → 마이크 → 앱 사용 중에만 허용',
+    contentProtocolGuide:true,
+    warmPermissionGuide:true,
+    rule:'permission errors must tell the user exactly where to fix them'
   };
 };
 </script>
