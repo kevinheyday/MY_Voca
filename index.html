@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.272</title>
+<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>MY VOCA v5.3.260</title>
 
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
@@ -2766,13 +2766,13 @@ html[data-mv-activity="sentence"] .quizModeSwitch{
 /* V5.3.189 · MY/SORI/OPIC correction Tip-pattern color standard */
 #myClassPage .myStudyEn .studyCoreChunkMark{color:#0f766e!important;background:#ccfbf1!important;font-weight:950!important;border-radius:5px;padding:0 2px;}
 
-/* v5.3.272 · Why + exact wrong-token highlight standard */
+/* v5.3.260 · Why + exact wrong-token highlight standard */
 .myStudyBadMark229{color:#8a2b06;background:#ffd86b;font-weight:900;border-radius:6px;padding:0 .12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 .myStudyWhy229{margin:8px 0 10px;padding:10px 12px;border-radius:12px;background:#eef7ff;border:1px solid #cfe8fb;color:#24516f;font-size:.92rem;font-weight:750;line-height:1.45}
 .myStudyRuleToken229{display:inline-block;padding:0 .22em;margin:0 .04em;border-radius:5px;background:rgba(255,216,107,.55);color:#7b3a08;font-weight:850}
 
 
-/* v5.3.272 · unified compact correction-reason box */
+/* v5.3.260 · unified compact correction-reason box */
 .myStudyReason230{
   margin:7px 0 9px;
   padding:8px 10px;
@@ -2798,17 +2798,17 @@ html[data-mv-activity="sentence"] .quizModeSwitch{
 }
 
 
-/* v5.3.272 · vertical edge lesson navigation standard */
+/* v5.3.260 · vertical edge lesson navigation standard */
 .myClassSwipeHint b{font-weight:850;color:#5b3bb5}
 
 
-/* v5.3.272 · prevent browser pull-to-refresh from hijacking lesson edge swipes */
+/* v5.3.260 · prevent browser pull-to-refresh from hijacking lesson edge swipes */
 #myClassPage{
   overscroll-behavior-y: contain;
 }
 
 
-/* v5.3.272 · hard guard for Android content:// pull-to-refresh */
+/* v5.3.260 · hard guard for Android content:// pull-to-refresh */
 html,body{
   overscroll-behavior-y:none;
 }
@@ -2832,7 +2832,7 @@ html,body{
 </style>
 
 <style id="v532239StudyFavoriteStyle">
-/* v5.3.272 · shared study favorite standard */
+/* v5.3.260 · shared study favorite standard */
 #myClassContent .myStudyCard,
 #myClassContent .mySpeakBlock{position:relative!important}
 #myClassContent .myStudyCard .myStudyNum,
@@ -2907,7 +2907,7 @@ html,body{
 
 
 <style id="v532246FreeDragPageStyle">
-/* v5.3.272 · 2D finger-follow page card */
+/* v5.3.260 · 2D finger-follow page card */
 .mvSwipeStage246{position:fixed;inset:0;z-index:9997;overflow:hidden;pointer-events:none;perspective:1400px;background:transparent}
 .mvSwipeCard246{
   position:absolute;inset:0;width:100vw;height:100vh;overflow:hidden;
@@ -2930,76 +2930,6 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
 .mvSwipeCard246.next::after{right:0}
 .mvSwipeCard246.prev::after{left:0}
 
-</style>
-
-
-<style id="v532258PlaybackProgressSafeStyle">
-/* v5.3.272 · non-invasive playback progress */
-.myClassPlaybackStatus{min-width:0}
-.myClassMiniStatus{
-  min-width:0;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
-  flex:1 1 auto;
-}
-.mvPlaybackProgress258{
-  display:none;
-  align-items:center;
-  justify-content:flex-end;
-  gap:5px;
-  flex:0 0 clamp(104px,29vw,154px);
-  width:clamp(104px,29vw,154px);
-  min-width:0;
-  margin-left:6px;
-}
-.mvPlaybackProgress258.on{display:flex}
-.mvPlaybackTrack258{
-  height:7px;
-  flex:1 1 auto;
-  min-width:48px;
-  border-radius:999px;
-  background:rgba(99,102,241,.20);
-  overflow:hidden;
-  box-shadow:inset 0 0 0 1px rgba(99,102,241,.08)
-}
-.mvPlaybackFill258{
-  display:block;height:100%;width:0;border-radius:inherit;
-  background:linear-gradient(90deg,#4f46e5,#7c3aed);
-  transition:width .32s ease
-}
-.mvPlaybackCount258{
-  font-size:10px;
-  font-weight:950;
-  color:#4338ca;
-  white-space:nowrap;
-  min-width:30px;
-  text-align:right
-}
-.myClassPlaybackStatus.mvProgress258On{
-  gap:6px;
-}
-.myClassPlaybackStatus.mvProgress258On .myClassMiniStatus{
-  flex:1 1 0;
-  min-width:0;
-}
-.myClassPlaybackStatus.mvProgress258On .myClassAutoChip{display:none!important}
-@media(max-width:520px){
-  .myClassPlaybackStatus.mvProgress258On{padding-left:9px;padding-right:9px;gap:5px}
-  .mvPlaybackProgress258{
-    flex-basis:112px;
-    width:112px;
-    margin-left:2px;
-    gap:4px
-  }
-  .mvPlaybackTrack258{min-width:62px;height:6px}
-  .mvPlaybackCount258{font-size:9px;min-width:28px}
-}
-@media(max-width:380px){
-  .mvPlaybackProgress258{flex-basis:102px;width:102px}
-  .mvPlaybackTrack258{min-width:54px}
-  .mvPlaybackCount258{font-size:9px;min-width:27px}
-}
 </style>
 
 </head><body>
@@ -3051,7 +2981,7 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
       <div>
         <div class="homeEyebrow" id="homeCourseEyebrow">MY VOCA UNIFIED COURSE · 69 DAYS</div>
         <h1 id="homeCourseTitle">MY VOCA</h1>
-        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.272</div>
+        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.260</div>
       </div>
       <div class="homeDayBadge"><b id="homeRegisteredDays">30</b><span>등록 Day</span></div>
     </section>
@@ -3103,7 +3033,7 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
         <div class="myClassTop"><b>MY 수업 · 수업 3</b><span class="myClassBadge">NEW · 8/18</span></div>
         <div class="myClassTitle">Hiring, FDC & Corporate Card</div>
         <div class="myClassDesc">8월 18일 실제 수업의 법인카드 에피소드, 사내 면접·FDC 질문, 채용 기준과 반복 발화 습관을 집중 학습합니다.</div>
-        <div class="myClassMeta"><span>✅ 핵심 교정 20</span><span>🧩 Chunk 14</span><span>🗣 말하기 3</span><span>⚠ 습관 6</span></div>
+        <div class="myClassMeta"><span>✅ 핵심 교정 20</span><span>🧩 Chunk 15</span><span>🗣 말하기 3</span><span>⚠ 습관 6</span></div>
       </div>
       <div class="myClassCard" id="myClassLesson4Card" role="button" tabindex="0" onclick="studyDirectOpenCourse('my',4)" style="margin-top:10px">
         <label class="myLessonSelectMini" onclick="event.stopPropagation()">
@@ -3165,6 +3095,27 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
         <div class="myClassTitle">Accurate Expressions & Structured Speaking</div>
         <div class="myClassDesc">9월 10일 실제 수업의 assure vs make sure, go through vs get through, second thoughts, PREP 답변 구조와 Chunk 정확도를 집중 학습합니다.</div>
         <div class="myClassMeta"><span>✅ 핵심 교정 12</span><span>🧩 Chunk 14</span><span>🗣 말하기 4</span><span>⚠ 습관 6</span></div>
+      </div>
+      <div class="myClassCard" id="myClassLesson10Card" role="button" tabindex="0" onclick="studyDirectOpenCourse('my',10)" style="margin-top:10px">
+        <label class="myLessonSelectMini" onclick="event.stopPropagation()">
+          <input class="myClassSelectCheck" type="checkbox" data-my-lesson="10" onclick="event.stopPropagation()" aria-label="수업 10 전체 반복 선택">
+          <span>선택</span>
+        </label>
+        <div class="myClassTop"><b>MY 수업 · 수업 10</b><span class="myClassBadge">NEW · 9/15</span></div>
+        <div class="myClassTitle">Natural Rhythm & Social Relationships</div>
+        <div class="myClassDesc">9월 15일 실제 수업의 이웃·공동체 대화와 과도한 강세 교정, 이미 아는 Chunk를 실제 대화에서 꺼내 쓰는 훈련을 집중 학습합니다.</div>
+        <div class="myClassMeta"><span>✅ 핵심 교정 12</span><span>🧩 Chunk 12</span><span>🗣 말하기 5</span><span>⚠ 습관 5</span></div>
+      </div>
+
+      <div class="myClassCard" id="myClassLesson11Card" role="button" tabindex="0" onclick="studyDirectOpenCourse('my',11)" style="margin-top:10px">
+        <label class="myLessonSelectMini" onclick="event.stopPropagation()">
+          <input class="myClassSelectCheck" type="checkbox" data-my-lesson="11" onclick="event.stopPropagation()" aria-label="수업 11 전체 반복 선택">
+          <span>선택</span>
+        </label>
+        <div class="myClassTop"><b>MY 수업 · 수업 11</b><span class="myClassBadge">NEW · 9/17</span></div>
+        <div class="myClassTitle">Professional English, Friendship & Precise Word Choice</div>
+        <div class="myClassDesc">9월 17일 실제 수업의 on behalf of, notice vs notify, fair-weather friend와 give-and-take 가치관 표현을 중심으로 정확한 Chunk와 짧은 문장 완성을 훈련합니다.</div>
+        <div class="myClassMeta"><span>✅ 핵심 교정 12</span><span>🧩 Chunk 14</span><span>🗣 말하기 5</span><span>⚠ 습관 6</span></div>
       </div>
     </section>
 
@@ -3250,7 +3201,7 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
     </div>
     <div class="myClassHabit"><b>이번 수업의 최우선 목표</b><p id="myClassGoal"><strong>쉬운 영어를 짧고 정확하게.</strong> 문장을 만들기 전에 So / you know로 시작하지 말고, 0.5~1초 쉬었다가 주어 + 동사부터 말합니다.</p></div>
     <div class="myClassTabs"><button class="myClassTab active" data-myclass-tab="corrections">✅ 핵심 교정</button><button class="myClassTab" data-myclass-tab="chunks">🧩 Chunk</button><button class="myClassTab" data-myclass-tab="speaking">🗣 말하기</button><button class="myClassTab" data-myclass-tab="habits">⚠ 습관</button></div>
-    <div id="myClassPlaybackStatus" class="myClassPlaybackStatus paused"><span class="myClassMiniStatus">MY 수업 자동 재생 준비</span><span class="mvPlaybackProgress258" aria-label="현재 탭 진행률"><span class="mvPlaybackTrack258"><span class="mvPlaybackFill258"></span></span><span class="mvPlaybackCount258">0/0</span></span><span class="myClassAutoChip">문장 단위</span></div>
+    <div id="myClassPlaybackStatus" class="myClassPlaybackStatus paused"><span class="myClassMiniStatus">MY 수업 자동 재생 준비</span><span class="myClassAutoChip">문장 단위</span></div>
     <div class="myClassStudyHint">DAY 학습처럼 영어 문장을 한 문장씩 읽고, 현재 카드로 자동 이동합니다. 하단 버튼에서 언제든 정지·재시작하거나 현재 학습 문장으로 바로 말하기 연습을 할 수 있습니다.</div>
     <div id="myClassContent"></div>
   </div>
@@ -3796,7 +3747,96 @@ const MY_CLASS_LESSON_6={"corrections":[{"ko":"혼자 해외여행을 하는 것
 const MY_CLASS_LESSON_7={"corrections":[{"ko":"오늘 회의가 다섯 개나 있었고 점심시간에도 일해야 해서 완전히 정신없이 바빴다.","en":"I was completely swamped today because I had five meetings and even had to work through lunch.","bad":"Today I was confident because I attended the five meetings.","tip":"be swamped = 일이 몰려 매우 바쁘다. work through lunch = 점심시간에도 쉬지 않고 일하다.","whyType":"표현","why":"`confident` → `completely swamped today` / be swamped = 일이 몰려 매우 바쁘다","badMarks":[{"start":12,"end":21}]},{"ko":"증상이 악화될 때까지 기다리기보다 증상을 느끼자마자 병원에 가는 게 낫다는 걸 알게 됐다.","en":"I've learned that it's better to see a doctor as soon as I notice symptoms rather than wait for them to get worse.","bad":"If my symptom is starting, then it is getting bigger and getting worse.","tip":"as soon as = ~하자마자. rather than = ~하기보다. get worse = 악화되다.","whyType":"표현","why":"`If my symptom is starting, then it is getting bigger and getting` → `I've learned that it's better to see a doctor as soon as I notice symptoms rather than wait for them to get` / as soon as = ~하자마자","badMarks":[{"start":0,"end":64}]},{"ko":"영어로 발표할 기회가 많지 않았기 때문에 영어 프레젠테이션에는 아직 익숙하지 않다.","en":"I'm not used to giving presentations in English because I haven't had many opportunities to do so.","bad":"It's not familiar with me.","tip":"be used to + ~ing = ~하는 데 익숙하다. 사람을 주어로 쓴다.","whyType":"단어","why":"`It's` → `I'm` / be used to + ~ing = ~하는 데 익숙하다","badMarks":[{"start":0,"end":4}]},{"ko":"오늘은 수면과 수면 부족의 영향에 대해 조사한 내용을 차례로 설명드리겠다.","en":"Today, I'd like to walk you through what I found about sleep and the effects of sleep deprivation.","bad":"Today, I'd like to share what I found about sleep and the effect of sleep deprivation.","tip":"walk someone through ~ = 절차·자료를 차례로 설명하다. 업무 발표에서 활용도가 높은 표현.","whyType":"표현","why":"`share` → `walk you through` / walk someone through ~ = 절차·자료를 차례로 설명하다","badMarks":[{"start":19,"end":24}]},{"ko":"이제 오른쪽 차트로 넘어가겠다. 이 차트는 수면 부족이 왜 위험할 수 있는지를 보여준다.","en":"Now, let's move on to the chart on the right, which shows why sleep deprivation can be dangerous.","bad":"And now let's move on to the chart on the right. And this chart, this table shows why sleep deprivation can be dangerous.","tip":"move on to ~ = 다음 항목으로 넘어가다. which shows ~로 반복을 줄여 연결한다.","whyType":"표현","why":"`And this chart, this table` → `which` / move on to ~ = 다음 항목으로 넘어가다","badMarks":[{"start":49,"end":75}]},{"ko":"이러한 결과를 바탕으로 직원들이 충분한 수면을 취하도록 권장하는 캠페인을 시작할 것을 제안하고 싶다.","en":"Based on these findings, I'd like to suggest launching a campaign to encourage employees to get enough sleep.","bad":"Finally, I'd like to suggest to starting some campaign.","tip":"suggest + ~ing. Based on these findings = 이러한 결과를 바탕으로. encourage someone to + 동사.","whyType":"표현","why":"`Finally` → `Based on these findings` / suggest + ~ing","badMarks":[{"start":0,"end":7}]},{"ko":"꾸준히 공부하고 있는데도 가끔 정체기에 도달해서 다음 단계로 넘어가지 못하는 느낌이 든다.","en":"Even though I've been studying consistently, I sometimes feel like I've hit a plateau and can't seem to break through to the next level.","bad":"I feel like I have stuck in some certain level and I cannot break the level.","tip":"hit a plateau = 정체기에 도달하다. break through to the next level = 벽을 깨고 다음 단계로 나아가다.","whyType":"표현","why":"`I have stuck in some certain` → `I've hit a plateau and can't seem to break through to the next` / hit a plateau = 정체기에 도달하다","badMarks":[{"start":12,"end":40}]},{"ko":"제 목표는 더 어려운 단어를 사용하는 것이 아니라 말할 때 적절한 Chunk와 Pattern을 자연스럽게 사용하는 것이다.","en":"My goal isn't to use more difficult words; it's to use the right chunks and patterns naturally when I speak.","bad":"It is difficult for me to use right chunk and right pattern, not a difficult word.","tip":"My goal isn't to A; it's to B = 목표를 선명하게 대비해 설명하는 구조.","whyType":"표현","why":"`It is difficult for me` → `My goal isn't`","badMarks":[{"start":0,"end":22}]},{"ko":"핵심은 혼자 연습하는 것과 실제 대화에서 사용할 수 있는 것 사이의 간극을 줄이는 것이다.","en":"The key is to bridge the gap between what I practice on my own and what I can actually use in real conversations.","bad":"I need to connect my app and our class.","tip":"bridge the gap between A and B = A와 B 사이의 간극을 메우다.","whyType":"표현","why":"`need to connect` → `practice on`","badMarks":[{"start":2,"end":17}]},{"ko":"앞으로는 배운 Chunk를 실제 대화에 의도적으로 활용하려고 한다.","en":"From now on, I'm going to intentionally incorporate the chunks I've learned into my conversations.","bad":"I have to intentionally use those chunks.","tip":"incorporate A into B = A를 B에 자연스럽게 포함·활용하다.","whyType":"표현","why":"`use those` → `incorporate the` / incorporate A into B = A를 B에 자연스럽게 포함·활용하다","badMarks":[{"start":24,"end":33}]},{"ko":"초보자였을 때보다 발전 속도가 느릴 수는 있지만, 그렇다고 발전이 멈춘 것은 아니다.","en":"My progress may be slower than it was when I was a beginner, but that doesn't mean I've stopped improving.","bad":"These days, I feel like my stair is so much longer.","tip":"That doesn't mean ~ = 그렇다고 ~라는 뜻은 아니다. plateau를 설명할 때 유용하다.","whyType":"표현","why":"`feel like my stair is so much longer` → `was a beginner but that doesn't mean I've stopped improving` / That doesn't mean ~ = 그렇다고 ~라는 뜻은 아니다","badMarks":[{"start":14,"end":50}]},{"ko":"최근 특히 토요일 영어 수업을 들을 때 제 듣기 실력이 상당히 향상되었다는 것을 느꼈다.","en":"Recently, I've noticed a significant improvement in my listening skills, especially when I attend my Saturday English class.","bad":"These days, actually my listening skill is much more improved.","tip":"notice a significant improvement in ~ = ~에서 상당한 향상을 체감하다.","whyType":"표현","why":"`skill is much more improved` → `skills especially when I attend my Saturday English class`","badMarks":[{"start":34,"end":61}]},{"ko":"아직 이루고 싶은 일이 너무 많아서 잠자는 데 많은 시간을 쓰면 가끔 죄책감이 든다.","en":"Sometimes I feel guilty about spending too much time sleeping because there are still so many things I want to accomplish.","bad":"If I waste my time like sleeping, then I feel sorry to my family.","tip":"feel guilty about + ~ing = ~하는 것에 죄책감을 느끼다. accomplish = 목표·일을 이루다.","whyType":"표현","why":"`my family` → `accomplish` / feel guilty about + ~ing = ~하는 것에 죄책감을 느끼다","badMarks":[{"start":55,"end":64}]},{"ko":"저는 여전히 계속 배우고 도전하고 싶은 강한 열망이 있고, 단지 나이가 든다는 이유로 그 열정을 잃고 싶지 않다.","en":"I still have a strong desire to keep learning and challenging myself, and I don't want to lose that passion just because I'm getting older.","bad":"I still have really big passion in my heart. If I stop my passion, it's not happy.","tip":"have a strong desire to ~ = ~하고 싶은 강한 열망이 있다. just because ~ = 단지 ~라는 이유로.","whyType":"표현","why":"`in my heart. If I stop my passion, it's not happy` → `just because I'm getting older`","badMarks":[{"start":32,"end":81}]},{"ko":"몇몇 친구들은 제가 속도를 늦추고 인생을 좀 더 즐겨야 한다고 생각하지만, 사람마다 자기 방식이 있는 거다.","en":"Some of my friends think I should slow down and enjoy life more, but to each his own.","bad":"Everyone has different preference, right?","tip":"to each his own = 사람마다 취향·방식이 다르니 서로 인정하자는 캐주얼한 표현.","whyType":"표현","why":"`Everyone has different preference, right` → `Some of my friends think I should slow down and enjoy life more but to each his own`","badMarks":[{"start":0,"end":40}]},{"ko":"잠자리에 들기 전에 강도 높게 운동하면 오히려 잠을 더 잘 자는 데 도움이 된다는 걸 알게 됐다.","en":"I've found that working out hard before bed actually helps me sleep better.","bad":"Working out hardly helped me sleep tight.","tip":"hard = 열심히/강하게. hardly = 거의 ~않다. working out hard가 맞다.","whyType":"단어","why":"`tight` → `better` / hard = 열심히/강하게","badMarks":[{"start":35,"end":40}]}],"chunks":[{"pattern":"be swamped","ko":"일이 몰려 정신없이 바쁘다","example":"I was completely swamped today.","exampleKo":"오늘은 일이 몰려 완전히 정신없이 바빴다."},{"pattern":"work through lunch","ko":"점심시간에도 쉬지 않고 일하다","example":"I had to work through lunch today.","exampleKo":"오늘은 점심시간에도 계속 일해야 했다."},{"pattern":"as soon as ~","ko":"~하자마자","example":"I see a doctor as soon as I notice symptoms.","exampleKo":"증상을 느끼자마자 병원에 간다."},{"pattern":"rather than ~","ko":"~하기보다, ~대신에","example":"I act early rather than wait for things to get worse.","exampleKo":"상황이 악화되기를 기다리기보다 일찍 조치한다."},{"pattern":"be used to ~ing","ko":"~하는 데 익숙하다","example":"I'm not used to giving presentations in English yet.","exampleKo":"아직 영어로 발표하는 데 익숙하지 않다."},{"pattern":"walk someone through ~","ko":"~을 차례로 설명해 주다","example":"Let me walk you through the key findings.","exampleKo":"핵심 결과를 차례로 설명드리겠습니다."},{"pattern":"move on to ~","ko":"다음 항목·주제로 넘어가다","example":"Now, let's move on to the chart on the right.","exampleKo":"이제 오른쪽 차트로 넘어가겠습니다."},{"pattern":"based on these findings","ko":"이러한 결과를 바탕으로","example":"Based on these findings, I would recommend a company-wide campaign.","exampleKo":"이러한 결과를 바탕으로 전사 캠페인을 제안하겠습니다."},{"pattern":"suggest ~ing","ko":"~할 것을 제안하다","example":"I suggest launching a sleep campaign.","exampleKo":"수면 캠페인을 시작할 것을 제안합니다."},{"pattern":"hit a plateau","ko":"발전의 정체기에 도달하다","example":"I feel like I've hit a plateau with my English.","exampleKo":"영어 실력이 정체기에 들어선 것 같다."},{"pattern":"break through to the next level","ko":"벽을 깨고 다음 단계로 나아가다","example":"I want to break through to the next level.","exampleKo":"정체를 깨고 다음 단계로 나아가고 싶다."},{"pattern":"bridge the gap between A and B","ko":"A와 B 사이의 간극을 메우다","example":"I need to bridge the gap between practice and real conversation.","exampleKo":"연습과 실제 대화 사이의 간극을 메워야 한다."},{"pattern":"incorporate A into B","ko":"A를 B에 포함·활용하다","example":"I try to incorporate new chunks into my conversations.","exampleKo":"새 Chunk를 실제 대화에 활용하려고 한다."},{"pattern":"notice a significant improvement in ~","ko":"~에서 상당한 향상을 체감하다","example":"I've noticed a significant improvement in my listening skills.","exampleKo":"듣기 실력이 상당히 향상된 것을 느꼈다."},{"pattern":"feel guilty about ~ing","ko":"~하는 것에 죄책감을 느끼다","example":"I sometimes feel guilty about spending too much time sleeping.","exampleKo":"잠자는 데 너무 많은 시간을 쓰면 가끔 죄책감이 든다."},{"pattern":"to each his own","ko":"사람마다 취향·방식이 다르다; 각자 자기 방식대로","example":"I prefer studying in my free time, but to each his own.","exampleKo":"나는 여가 시간에 공부하는 것을 선호하지만 사람마다 자기 방식이 있다."}],"speaking":[{"prompt":"Present the sleep charts in a professional way.","promptKo":"수면 차트를 회사에서 보고하듯 전문적으로 발표해 보세요.","text":"Today, I'd like to walk you through what I found about sleep and the effects of sleep deprivation. First, the chart on the left shows that the recommended amount of sleep decreases with age. Now, let's move on to the chart on the right, which highlights the health risks of not getting enough sleep. Based on these findings, I'd like to suggest launching a campaign to encourage employees to get enough sleep.","ko":"오늘은 수면과 수면 부족의 영향에 대해 조사한 내용을 차례로 설명드리겠습니다. 먼저 왼쪽 차트는 권장 수면 시간이 나이가 들수록 감소한다는 것을 보여줍니다. 이제 오른쪽 차트로 넘어가면 충분히 자지 못했을 때의 건강 위험을 보여줍니다. 이러한 결과를 바탕으로 직원들이 충분한 수면을 취하도록 권장하는 캠페인을 시작할 것을 제안하고 싶습니다."},{"prompt":"What does breaking your English plateau mean to you?","promptKo":"영어 정체기를 돌파한다는 것은 본인에게 어떤 의미인가요?","text":"Even though I've been studying consistently, I sometimes feel like I've hit a plateau. My goal isn't to use more difficult words; it's to use the right chunks and patterns naturally when I speak. I want to break through to the next level by turning what I know into language I can actually use in real time.","ko":"꾸준히 공부하고 있는데도 가끔 정체기에 도달한 느낌이 듭니다. 제 목표는 더 어려운 단어를 쓰는 것이 아니라 말할 때 적절한 Chunk와 Pattern을 자연스럽게 사용하는 것입니다. 알고 있는 것을 실제 순간에 사용할 수 있는 영어로 바꾸면서 다음 단계로 넘어가고 싶습니다."},{"prompt":"How are you going to turn the chunks in your app into active speaking skills?","promptKo":"앱에서 연습한 Chunk를 실제 말하기 능력으로 어떻게 연결할 건가요?","text":"The key is to bridge the gap between what I practice on my own and what I actually use in real conversations. From now on, I'm going to choose five important expressions before each class and intentionally incorporate them into the conversation. That way, I can strengthen the connection between practice and real-world speaking.","ko":"핵심은 혼자 연습하는 것과 실제 대화에서 사용하는 것 사이의 간극을 메우는 것입니다. 앞으로는 매 수업 전에 중요한 표현 다섯 개를 고르고 실제 대화에 의도적으로 활용할 생각입니다. 그렇게 하면 연습과 실제 말하기 사이의 연결을 더 강하게 만들 수 있습니다."},{"prompt":"Why do you keep studying and challenging yourself even when it costs you sleep?","promptKo":"잠을 줄이면서까지 계속 공부하고 도전하는 이유는 무엇인가요?","text":"Sometimes I feel guilty about spending too much time sleeping because there are still so many things I want to accomplish. I still have a strong desire to keep learning and challenging myself, and I don't want to lose that passion just because I'm getting older. Some people may prefer to slow down, but to each his own.","ko":"아직 이루고 싶은 일이 너무 많아서 잠자는 데 많은 시간을 쓰면 가끔 죄책감이 듭니다. 저는 여전히 계속 배우고 도전하고 싶은 강한 열망이 있고, 단지 나이가 든다는 이유로 그 열정을 잃고 싶지 않습니다. 어떤 사람들은 속도를 늦추는 것을 선호할 수 있지만 사람마다 자기 방식이 있습니다."}],"habits":[]};
 const MY_CLASS_LESSON_8={"corrections":[{"ko":"임원들에게 보고할 문서를 수정해야 했다.","en":"I needed to revise some documents for our executive directors.","bad":"I need to reform some documents to my executive directors.","tip":"문서를 고치다는 reform보다 revise. revise documents for someone으로 익힌다.","whyType":"단어","why":"`need` → `needed` / 문서를 고치다는 reform보다 revise","badMarks":[{"start":2,"end":6}]},{"ko":"다음 주에 부사장에게 발표해야 한다.","en":"Next week, I have to give a presentation to our Vice President.","bad":"Next week, I have to make a presentation to my Vice-President.","tip":"발표하다는 give a presentation.","whyType":"단어","why":"`make` → `give` / 발표하다는 give a presentation","badMarks":[{"start":21,"end":25}]},{"ko":"발표 자료를 취합하고 문서를 마무리해야 했다.","en":"I had to put together some materials and finalize the documents.","bad":"I had to get put together some materials to finalize the document.","tip":"put together materials = 자료를 취합하다. get은 필요 없다.","whyType":"전치사","why":"`to` → `and` / put together materials = 자료를 취합하다","badMarks":[{"start":41,"end":43}]},{"ko":"자료를 보다가 논리적으로 맞지 않는 부분을 발견했다.","en":"I found something that didn't seem logical while reviewing the materials.","bad":"I find out something not logical.","tip":"과거 사건은 found. didn't seem logical로 자연스럽게 말한다.","whyType":"표현","why":"`not` → `that didn't seem` / 과거 사건은 found","badMarks":[{"start":21,"end":24}]},{"ko":"그래서 팀원들에게 그 문제를 자세히 설명했다.","en":"So I walked my team members through the issue in detail.","bad":"I made some logic to walked them through detail.","tip":"walk someone through something = 차근차근 설명하다.","grammar":"동사형: `to walked → to walk`","badMarks":[{"start":18,"end":27}]},{"ko":"그래서 오늘 늦게 퇴근했다.","en":"That's why I got off work late today.","bad":"That is why I clock out late.","tip":"오늘 있었던 일은 과거시제로 말한다.","grammar":"시제: 과거 이야기 → 과거형"},{"ko":"나는 30년 넘게 거의 같은 체중을 유지해 왔다.","en":"I've maintained roughly the same weight for over 30 years.","bad":"I've been keeping my weight the same weight for over 30 years.","tip":"maintain the same weight로 중복을 줄인다.","whyType":"표현","why":"`been keeping my weight` → `maintained roughly` / maintain the same weight로 중복을 줄인다","badMarks":[{"start":5,"end":27}]},{"ko":"나는 꽤 엄격한 원칙을 지키는 편이다.","en":"I'm the kind of person who holds myself to pretty strict standards.","bad":"I'm kind of type of person who keep myself under some strict principle.","tip":"the kind of person who ~ / hold myself to strict standards.","grammar":"주어-동사: `person who keep → person who keeps`","badMarks":[{"start":20,"end":35}]},{"ko":"원어민의 읽기 속도를 따라가려고 했지만 숨이 찼다.","en":"I tried to keep up with their pace, but I was out of breath.","bad":"I tried to follow their speed. I was out of breat.","tip":"keep up with the pace / be out of breath.","whyType":"표현","why":"`follow` → `keep up with` / keep up with the pace / be out of breath","badMarks":[{"start":11,"end":17}]},{"ko":"속도에 더 집중해야 할까요?","en":"Should I focus more on speed?","bad":"Do I need to focus on speed?","tip":"조언을 구할 때 Should I ~?가 자연스럽다.","whyType":"단어","why":"`Do` → `Should` / 조언을 구할 때 Should I ~","badMarks":[{"start":0,"end":2}]},{"ko":"그 연사들은 말을 정말 잘한다고 느꼈다.","en":"I felt that those speakers really had a way with words.","bad":"I felt that those speakers had the way with words in public.","tip":"have a way with words = 말을 잘하다.","whyType":"단어","why":"`the` → `a` / have a way with words = 말을 잘하다","badMarks":[{"start":31,"end":34}]},{"ko":"아직 결정을 못 해서 좀 더 생각해 봐야 한다.","en":"I'm still on the fence, so I need to sleep on it.","bad":"I'm still sleep on it.","tip":"be on the fence + sleep on it을 함께 익힌다.","grammar":"동사형: `am sleep → need to sleep`"},{"ko":"나는 꿈을 신의 메시지라기보다는 잠재의식의 반영으로 본다.","en":"I see dreams more as a reflection of my subconscious than as a divine message.","bad":"I think dreams are my subconscious, not a divine message.","tip":"see A more as B than as C = A를 C라기보다는 B로 보다. 비교 대상이 모두 '어떤 것으로 보는지'이므로 as를 양쪽에 쓴다.","whyType":"표현","why":"`not` → `than as`","badMarks":[{"start":36,"end":39}]}],"chunks":[{"pattern":"revise a document","ko":"문서를 수정하다","example":"I needed to revise some documents for our executive directors.","exampleKo":"임원들에게 보고할 문서를 수정해야 했다."},{"pattern":"give a presentation to ~","ko":"~에게 발표하다","example":"I have to give a presentation to our Vice President next week.","exampleKo":"다음 주에 부사장에게 발표해야 한다."},{"pattern":"put together some materials","ko":"자료를 취합하다","example":"I had to put together some materials for the presentation.","exampleKo":"발표를 위해 자료를 취합해야 했다."},{"pattern":"walk someone through ~","ko":"~을 차근차근 설명해 주다","example":"Let me walk you through the issue in detail.","exampleKo":"그 문제를 자세히 설명드리겠습니다."},{"pattern":"maintain the same weight","ko":"같은 체중을 유지하다","example":"I've maintained roughly the same weight for over 30 years.","exampleKo":"30년 넘게 거의 같은 체중을 유지해 왔다."},{"pattern":"hold myself to high standards","ko":"스스로에게 높은 기준을 적용하다","example":"I tend to hold myself to high standards at work.","exampleKo":"나는 업무에서 스스로에게 높은 기준을 적용하는 편이다."},{"pattern":"keep up with the pace","ko":"속도·페이스를 따라가다","example":"I tried to keep up with the speaker's pace.","exampleKo":"연사의 속도를 따라가려고 했다."},{"pattern":"be out of breath","ko":"숨이 차다","example":"I was out of breath after reading the passage that fast.","exampleKo":"그 지문을 그렇게 빨리 읽고 나니 숨이 찼다."},{"pattern":"over-enunciate","ko":"지나치게 또박또박 발음하다","example":"I tend to over-enunciate when I try to speak clearly.","exampleKo":"명확하게 말하려고 할 때 지나치게 또박또박 발음하는 경향이 있다."},{"pattern":"have a way with words","ko":"말을 잘하다, 표현력이 좋다","example":"The speaker really has a way with words.","exampleKo":"그 연사는 정말 말을 잘한다."},{"pattern":"be on the fence","ko":"결정을 못 하고 망설이다","example":"I'm still on the fence about the trip.","exampleKo":"그 여행을 갈지 아직 고민 중이다."},{"pattern":"sleep on it","ko":"하룻밤 더 생각해 보다","example":"I haven't made up my mind yet, so I need to sleep on it.","exampleKo":"아직 결정하지 못해서 좀 더 생각해 봐야 한다."},{"pattern":"catch someone off guard","ko":"~을 갑작스럽게 당황시키다","example":"Her question caught me off guard.","exampleKo":"그녀의 질문에 갑자기 당황했다."},{"pattern":"have the audacity to ~","ko":"뻔뻔하게도 ~하다","example":"He had the audacity to blame someone else.","exampleKo":"그는 뻔뻔하게도 다른 사람을 탓했다."},{"pattern":"see A more as B than as C","ko":"A를 C라기보다는 B로 보다","example":"I see dreams more as a reflection of my subconscious than as a divine message.","exampleKo":"나는 꿈을 신의 메시지라기보다는 잠재의식의 반영으로 본다."}],"speaking":[{"prompt":"How do you maintain your weight and stay disciplined?","promptKo":"어떻게 체중을 유지하고 자기관리를 하나요?","text":"I've maintained roughly the same weight for over 30 years. During the week, I stick to a pretty strict routine, especially when it comes to breakfast and dinner. On weekends, though, I loosen up and enjoy good food with my family. I think the key is finding a balance that I can maintain over the long term.","ko":"저는 30년 넘게 거의 같은 체중을 유지해 왔습니다. 주중에는 특히 아침과 저녁 식사에 꽤 엄격한 루틴을 지킵니다. 하지만 주말에는 조금 여유를 갖고 가족과 맛있는 음식을 즐깁니다. 장기적으로 유지할 수 있는 균형을 찾는 것이 핵심이라고 생각합니다."},{"prompt":"Would you describe yourself as a Type A personality?","promptKo":"본인을 Type A 성격이라고 생각하나요?","text":"To some extent, yes. At work, I'm very goal-oriented and I tend to hold myself to high standards. Since I'm a team leader, I also feel responsible for keeping things organized and moving forward. In my personal life, however, I'm much more relaxed and sociable.","ko":"어느 정도는 그렇습니다. 업무에서는 목표 지향적이고 스스로에게 높은 기준을 적용하는 편입니다. 팀장이기 때문에 일을 체계적으로 유지하고 앞으로 나아가게 할 책임도 느낍니다. 하지만 개인 생활에서는 훨씬 더 편안하고 사교적인 편입니다."},{"prompt":"Do you believe dreams have deeper meanings?","promptKo":"꿈에 더 깊은 의미가 있다고 생각하나요?","text":"I don't necessarily think dreams predict the future, but I do think they sometimes reflect our emotional state. When I'm under a lot of stress or worried about something, I often dream about similar situations. So I see dreams more as a reflection of my subconscious than as a divine message.","ko":"꿈이 미래를 예측한다고 생각하지는 않지만, 때로는 우리의 감정 상태를 반영한다고 생각합니다. 스트레스를 많이 받거나 무언가를 걱정할 때 비슷한 상황의 꿈을 자주 꿉니다. 그래서 꿈을 신의 메시지라기보다 잠재의식의 반영으로 봅니다."},{"prompt":"What are you currently on the fence about?","promptKo":"현재 무엇을 두고 고민 중인가요?","text":"I'm currently on the fence about traveling to Canada with my wife later this year. I'd really like to go, but I may have an important presentation to our Vice President around that time. I haven't made up my mind yet, so I need to sleep on it.","ko":"올해 말 아내와 캐나다에 갈지를 두고 고민 중입니다. 정말 가고 싶지만 그 무렵 부사장에게 중요한 발표가 있을 수도 있습니다. 아직 결정하지 못해서 좀 더 생각해 봐야 합니다."}],"habits":[{"title":"Over-enunciation 줄이기","text":"모든 내용어를 강하게 발음하지 않는다. 한 문장에서 핵심 메시지 1~2개만 강조하고 나머지는 자연스럽게 연결한다."},{"title":"Pause를 줄이고 Chunk로 말하기","text":"단어마다 끊지 말고 의미 단위인 thought group을 한 호흡으로 말한다. 목표는 '한 Chunk = 한 호흡'이다."},{"title":"속도보다 Rhythm과 연결","text":"47초 자체가 목표가 아니다. 빠르게 읽는 훈련은 불필요한 강세와 과도한 또박또박 발음을 줄이기 위한 수단이다."},{"title":"동사+명사를 Collocation으로 꺼내기","text":"범용 동사를 즉석 조립하지 말고 give a presentation, revise a document, maintain my weight처럼 덩어리로 자동화한다."},{"title":"새 표현을 억지로 끼워 넣지 않기","text":"새 표현은 사용 횟수보다 문맥에 정확히 맞게 사용하는 것을 우선한다."},{"title":"긴 문장보다 짧고 정확하게","text":"즉석 발화에서 문장이 길어지면 시제와 구조가 흔들린다. 먼저 주어+동사로 핵심을 끝낸 뒤 다음 문장으로 세부 내용을 덧붙인다."}]};
 const MY_CLASS_LESSON_9={"corrections":[{"ko":"나는 골프에 소질이 없는 것 같다.","en":"I don't think I have a way with golf.","bad":"I think that I don't have them way with golf.","tip":"have a way with ~ = ~을 능숙하게 다루다, ~에 소질이 있다.","grammar":"표현: `them way → a way`"},{"ko":"시간이 지나면서 영어 실력이 향상됐다.","en":"As time went on, my English skills improved.","bad":"As time go on, my English skill has grow up.","tip":"as time went on + skills improved로 자연스럽게 연결한다.","grammar":"시제·동사: `go → went`, `grow up → improve`"},{"ko":"딸의 영어 실력이 빠르게 향상됐다.","en":"As time went on, her English skills improved rapidly.","bad":"As time ran on, her English skill was rapidly growing up.","tip":"grow up은 주로 사람이 성장할 때 쓰고, skill은 improve가 자연스럽다.","grammar":"동사: `skill was growing up → skills improved`"},{"ko":"아내에게 모든 것이 잘될 거라고 안심시켰다.","en":"I tried to assure my wife that everything would be okay.","bad":"I tried to make her to be assured.","tip":"assure + 사람 + that ~ = 사람에게 ~라고 안심시키다.","grammar":"동사형: `make her to be → assure her that`"},{"ko":"그런 상황에 크게 영향을 받지 않으려고 한다.","en":"I try to remain unaffected by those situations.","bad":"I tried to keep to be numb.","tip":"numb는 감정을 못 느끼는 강한 의미. unaffected는 영향을 받지 않는다는 뜻.","whyType":"단어","why":"`numb` → `unaffected` / 감정이 없는 것이 아니라 영향을 덜 받는 것","badMarks":[{"start":23,"end":27}]},{"ko":"그 꿈은 내 잠재의식의 반영일 수도 있다.","en":"Maybe the dream was a reflection of my subconscious.","bad":"Maybe my situation my subconscious refraction.","tip":"reflection of my subconscious = 내 잠재의식의 반영.","whyType":"단어","why":"`refraction` → `reflection`","badMarks":[{"start":37,"end":47}]},{"ko":"누구나 REM 수면 단계를 겪는다.","en":"Everyone goes through REM sleep.","bad":"Everyone goes through means they dream, right?","tip":"go through = 어떤 단계·경험을 겪다. REM을 겪는 것과 꿈을 기억하는 것은 별개다.","whyType":"표현","why":"`means they dream` → `REM sleep`","badMarks":[{"start":22,"end":38}]},{"ko":"기술에 의존해 영어 공부를 하지 않는 것에 대해 다시 생각해 봤다.","en":"I had second thoughts about relying on technology instead of studying English.","bad":"I had second thought about my thinking.","tip":"have second thoughts about ~ = ~을 다시 생각하다, 재고하다.","grammar":"복수: `second thought → second thoughts`"},{"ko":"환경 보호는 더 이상 선택이 아니라 필수다.","en":"Protecting the environment is no longer a choice but a necessity.","bad":"Protecting environment is no longer a choice but necessary.","tip":"no longer a choice but a necessity를 한 덩어리로 익힌다.","grammar":"관사·품사: `environment → the environment`, `necessary → a necessity`"},{"ko":"나는 영어로 딸과 대화하려고 노력한다.","en":"I try to interact with my daughter in English.","bad":"We tried interact with my daughter in English.","tip":"try to + 동사원형. interact with + 사람.","grammar":"동사형: `tried interact → try to interact`"},{"ko":"영어는 AI 시대에도 중요한 역할을 할 것이라고 생각한다.","en":"I think English will continue to play an important role even in the age of AI.","bad":"I think this why you play the important in your academy.","tip":"play an important role = 중요한 역할을 하다.","whyType":"표현","why":"`play the important` → `play an important role`","badMarks":[{"start":21,"end":39}]},{"ko":"나는 그 일에 영향을 받지 않으려고 한다.","en":"I won't let it affect my mental health.","bad":"I don't let it effect my mental health.","tip":"affect는 동사, effect는 주로 명사.","grammar":"단어·품사: `effect → affect`"}],"chunks":[{"pattern":"have a way with ~","ko":"~에 소질이 있다 / ~을 능숙하게 다루다","example":"I don’t think I have a way with golf.","exampleKo":"나는 골프에 소질이 있는 것 같지는 않다."},{"pattern":"as time goes on","ko":"시간이 지나면서","example":"As time goes on, I’m becoming more comfortable speaking English.","exampleKo":"시간이 지나면서 영어로 말하는 것이 더 편해지고 있다."},{"pattern":"assure someone that ~","ko":"~에게 ~라고 안심시키다","example":"I assured my wife that everything would be okay.","exampleKo":"아내에게 모든 것이 잘될 거라고 안심시켰다."},{"pattern":"make sure that ~","ko":"반드시 ~하도록 확인하다","example":"I’ll make sure that I finish my homework.","exampleKo":"숙제를 반드시 끝내도록 하겠다."},{"pattern":"go through ~","ko":"~을 겪다 / 경험하다","example":"Everyone goes through REM sleep.","exampleKo":"누구나 REM 수면 단계를 겪는다."},{"pattern":"get through ~","ko":"어려운 일을 견디고 극복하다","example":"We’ll get through this difficult period.","exampleKo":"우리는 이 어려운 시기를 극복할 것이다."},{"pattern":"be unaffected by ~","ko":"~에 영향을 받지 않다","example":"I try to remain unaffected by things I can’t control.","exampleKo":"내가 통제할 수 없는 일에는 영향을 받지 않으려고 한다."},{"pattern":"have second thoughts about ~","ko":"~을 다시 생각하다 / 재고하다","example":"I had second thoughts about relying too much on technology.","exampleKo":"기술에 너무 의존하는 것에 대해 다시 생각해 봤다."},{"pattern":"play an important role in ~","ko":"~에서 중요한 역할을 하다","example":"English will continue to play an important role in my career.","exampleKo":"영어는 내 커리어에서 계속 중요한 역할을 할 것이다."},{"pattern":"no longer a choice but a necessity","ko":"더 이상 선택이 아니라 필수","example":"Protecting the environment is no longer a choice but a necessity.","exampleKo":"환경 보호는 더 이상 선택이 아니라 필수다."},{"pattern":"be adamant that ~","ko":"~라고 완강하게 주장하다","example":"Some people are adamant that they never dream.","exampleKo":"어떤 사람들은 자신은 절대 꿈을 꾸지 않는다고 완강하게 주장한다."},{"pattern":"a reflection of my subconscious","ko":"내 잠재의식의 반영","example":"The dream may have been a reflection of my subconscious.","exampleKo":"그 꿈은 내 잠재의식의 반영이었을 수도 있다."},{"pattern":"PREP: Point → Reason → Example → Point","ko":"의견을 결론-이유-예시-결론으로 말하기","example":"I believe everyone dreams. The reason is that everyone goes through REM sleep. For example, many people simply don’t remember their dreams. That’s why I believe everyone dreams.","exampleKo":"누구나 꿈을 꾼다고 생각한다. 이유를 말하고 예시를 든 뒤 결론을 다시 말한다."},{"pattern":"in terms of ~","ko":"~의 측면에서 / ~에 관해서","example":"In terms of communication, AI makes things more convenient, but English is still a valuable skill.","exampleKo":"의사소통 측면에서 AI는 많은 것을 더 편리하게 해주지만, 영어는 여전히 가치 있는 능력이다."}],"speaking":[{"prompt":"Do you think everyone dreams? Why or why not?","promptKo":"모든 사람이 꿈을 꾼다고 생각하나요? 왜 그렇게 생각하나요?","text":"I believe everyone dreams. The reason is that everyone goes through REM sleep, which is closely associated with dreaming. For example, some people wake up without remembering anything even though they may have dreamed. That’s why I think most people dream but simply don’t remember their dreams.","ko":"모든 사람이 꿈을 꾼다고 생각합니다. 누구나 꿈과 밀접한 관련이 있는 REM 수면 단계를 겪기 때문입니다. 예를 들어 꿈을 꾸었더라도 아무것도 기억하지 못한 채 깨어나는 사람들이 있습니다. 그래서 대부분의 사람은 꿈을 꾸지만 단지 기억하지 못한다고 생각합니다."},{"prompt":"Do you think dreams reflect our subconscious?","promptKo":"꿈이 우리의 잠재의식을 반영한다고 생각하나요?","text":"Yes, to some extent. When I’m worried about work or dealing with a difficult situation, those concerns sometimes appear in my dreams. So I see dreams more as a reflection of my subconscious than as a prediction of the future.","ko":"어느 정도는 그렇다고 생각합니다. 업무를 걱정하거나 어려운 상황을 겪을 때 그런 걱정이 꿈에 나타나기도 합니다. 그래서 꿈을 미래의 예언이라기보다는 잠재의식의 반영으로 봅니다."},{"prompt":"How do you assure your family when they’re worried about something?","promptKo":"가족이 무언가를 걱정할 때 어떻게 안심시키나요?","text":"I usually listen to their concerns first. Then I assure them that we can deal with the situation together. I try not to make promises about things I can’t control, but I remind them that I’ll support them no matter what happens.","ko":"먼저 가족의 걱정을 들어줍니다. 그리고 그 상황을 함께 해결할 수 있다고 안심시킵니다. 제가 통제할 수 없는 일을 약속하지는 않지만 무슨 일이 있어도 지원하겠다고 말합니다."},{"prompt":"Is learning English still necessary in the age of AI and real-time translation?","promptKo":"AI와 실시간 통역 시대에도 영어 학습이 필요할까요?","text":"Yes, I think it is. AI can make communication much more convenient, but I don’t want to be overly reliant on technology. English still plays an important role in building relationships and communicating directly with people. For me, learning English is no longer just a hobby; it’s a valuable skill I want to keep developing.","ko":"그렇다고 생각합니다. AI는 의사소통을 훨씬 편리하게 만들 수 있지만 기술에 지나치게 의존하고 싶지는 않습니다. 영어는 관계를 만들고 사람들과 직접 소통하는 데 여전히 중요한 역할을 합니다. 저에게 영어 학습은 더 이상 단순한 취미가 아니라 계속 발전시키고 싶은 가치 있는 능력입니다."}],"habits":[{"title":"I think / you know로 출발하지 않기","text":"생각하면서 I think, you know, actually를 먼저 붙이는 습관이 반복된다. 0.5초 쉬고 핵심 주어+동사부터 말한다."},{"title":"Chunk는 “사용 조건”까지 익히기","text":"have a way with, numb, go through, second thoughts처럼 표현을 알고 있어도 문맥이 맞지 않으면 어색하다. 뜻뿐 아니라 언제 쓰는지까지 함께 익힌다."},{"title":"PREP로 답변 끝맺기","text":"Point → Reason → Example → Point. 설명이 길어진 뒤 결론이 사라지는 경향이 있으므로 마지막 P에서 핵심 의견을 다시 한 문장으로 말한다."},{"title":"긴 문장을 2~4개로 끊기","text":"REM·꿈처럼 정보가 많을수록 한 문장에 모두 넣으려다 시제와 구조가 무너진다. 한 문장에는 한 메시지만 담는다."},{"title":"시제와 동사형 먼저 안정화","text":"go/went, grow/improve, try to + V처럼 즉석 발화에서 기본 동사형 오류가 반복된다. 긴 표현보다 먼저 주어+시제+동사를 정확히 끝낸다."},{"title":"Over-enunciation 개선은 계속 유지","text":"이번 수업에서 이전보다 좋아졌다는 피드백이 있었다. 속도 자체보다 thought group 연결과 자연스러운 강세를 계속 유지한다."}]};
+
+const MY_CLASS_LESSON_10={"corrections":[
+{"ko":"내 형은 나보다 여덟 살 많다.","en":"My older brother is eight years older than me.","bad":"My elder brother is 8 years elder than me.","tip":"나이 비교에서는 older than이 가장 자연스럽다.","grammar":"비교급: `elder than → older than`"},
+{"ko":"부모님은 생계를 유지하느라 정말 바쁘셨다.","en":"My parents were really busy making ends meet.","bad":"They were really busy to make end meat.","tip":"make ends meet = 생계를 유지하다. busy + ~ing로 연결한다.","grammar":"표현·동사형: `busy to make end meat → busy making ends meet`"},
+{"ko":"그런 표현을 실제로 써볼 기회가 많지 않았다.","en":"I haven't had many chances to use expressions like that.","bad":"I don't have many experience to speak that kind of chunk.","tip":"실제 사용 기회는 chances to use가 자연스럽다.","grammar":"수량·표현: `many experience → many chances`"},
+{"ko":"우리는 이웃들과 별로 교류하지 않는다.","en":"We don't really interact with our neighbors.","bad":"We don't care neighbors.","tip":"care about은 관심을 가지다. 교류하다라는 뜻에는 interact with가 맞다.","whyType":"표현","why":"`care neighbors` → `interact with our neighbors`"},
+{"ko":"나는 심지어 옆집에 누가 사는지도 모른다.","en":"I don't even know who lives next door.","bad":"I don't know who living next door.","tip":"간접의문문도 who가 주어이므로 who lives가 필요하다.","grammar":"동사: `who living → who lives`"},
+{"ko":"우리는 그들과 별로 교류가 없다.","en":"We don't really have much interaction with them.","bad":"We don't have any connection.","tip":"이웃과의 일상적 교류에는 interaction이 더 정확하다.","whyType":"단어","why":"`connection` → `interaction`"},
+{"ko":"엘리베이터에서 우연히 마주치면 그냥 인사를 한다.","en":"When we run into each other in the elevator, we just say hello.","bad":"When we come across a run into each other in the elevator which is great.","tip":"사람을 우연히 마주치다 = run into someone. 표현 하나만 선택한다.","whyType":"표현","why":"`come across a run into` → `run into`"},
+{"ko":"이웃들과 어울릴 기회가 많지 않다.","en":"There aren't many opportunities to socialize with them.","bad":"There's no opportunity to socialize with them.","tip":"반복적으로 생길 수 있는 기회는 many opportunities가 자연스럽다.","grammar":"복수: `opportunity → opportunities`"},
+{"ko":"많은 직장인들은 늦게 귀가한다.","en":"Many office workers come home late.","bad":"Many company workers go back late.","tip":"자기 집으로 귀가하는 것은 come home이 자연스럽다.","whyType":"표현","why":"`go back late → come home late`"},
+{"ko":"주말에는 가족과 보내는 시간을 최대한 활용하고 싶어 한다.","en":"On weekends, they want to make the most of their time with their families.","bad":"On weekend, they want to spend make most of time with family.","tip":"make the most of + 시간 = 시간을 최대한 활용하다.","grammar":"표현: `spend make most of time → make the most of their time`"},
+{"ko":"시간이 지나면서 그들은 매우 친밀한 모임이 되었다.","en":"As time went on, they became a close-knit group.","bad":"As time went on, they were closely bunched.","tip":"사람들 사이의 긴밀한 유대는 a close-knit group이라고 한다.","whyType":"표현","why":"`closely bunched → a close-knit group`"},
+{"ko":"우리는 아직도 서로 연락하며 지낸다.","en":"We still keep in touch with each other.","bad":"We are still keep in touch with them.","tip":"keep이 본동사이므로 are를 넣지 않는다.","grammar":"동사: `are still keep → still keep`"}
+],"chunks":[
+{"pattern":"make ends meet","ko":"생계를 유지하다","example":"My parents worked hard to make ends meet.","exampleKo":"부모님은 생계를 유지하기 위해 열심히 일하셨다."},
+{"pattern":"make the most of ~","ko":"~을 최대한 활용하다","example":"I try to make the most of my weekends with my family.","exampleKo":"주말에는 가족과 보내는 시간을 최대한 활용하려고 한다."},
+{"pattern":"run into someone","ko":"~을 우연히 마주치다","example":"I sometimes run into my neighbors in the elevator.","exampleKo":"가끔 엘리베이터에서 이웃을 우연히 마주친다."},
+{"pattern":"keep in touch with ~","ko":"~와 계속 연락하다","example":"I still keep in touch with friends from my dormitory.","exampleKo":"기숙사 시절 친구들과 아직도 연락한다."},
+{"pattern":"get along with ~","ko":"~와 잘 지내다","example":"Getting along with other people can make life happier.","exampleKo":"다른 사람들과 잘 지내는 것은 삶을 더 행복하게 만들 수 있다."},
+{"pattern":"a close-knit group / community","ko":"유대가 긴밀한 집단 / 공동체","example":"My hometown used to be a close-knit community.","exampleKo":"내 고향은 예전에 유대가 긴밀한 공동체였다."},
+{"pattern":"an extension of our family","ko":"가족이나 다름없는 존재","example":"Our neighbors felt like an extension of our family.","exampleKo":"우리 이웃들은 가족이나 다름없는 존재처럼 느껴졌다."},
+{"pattern":"as time goes / went on","ko":"시간이 지나면서","example":"As time went on, they became close friends.","exampleKo":"시간이 지나면서 그들은 친한 친구가 되었다."},
+{"pattern":"news travels quickly","ko":"소식·소문이 빨리 퍼지다","example":"News travels quickly through a close-knit community.","exampleKo":"긴밀한 공동체에서는 소식이 빨리 퍼진다."},
+{"pattern":"play a part in ~","ko":"~에 영향을 미치다 / 역할을 하다","example":"Technology plays a part in the way we socialize.","exampleKo":"기술은 우리가 교류하는 방식에 영향을 미친다."},
+{"pattern":"bump into someone","ko":"~을 우연히 마주치다","example":"The chances of bumping into coworkers are quite low.","exampleKo":"직장 동료를 우연히 마주칠 가능성은 꽤 낮다."},
+{"pattern":"a neighborly thing to do","ko":"이웃으로서 할 법한 친절한 행동","example":"Helping an elderly neighbor is a neighborly thing to do.","exampleKo":"연세 든 이웃을 돕는 것은 이웃으로서 할 법한 친절한 행동이다."}
+],"speaking":[
+{"pattern":"I haven't had many chances to + V","prompt":"What English expression do you understand but rarely use?","promptKo":"알고 있지만 실제로 거의 사용하지 않는 영어 표현이 있나요?","text":"I haven't had many chances to use some of the chunks I've learned in real conversations. That's why I want to practice using them intentionally instead of falling back on easier expressions.","ko":"배운 Chunk 중 일부를 실제 대화에서 써볼 기회가 많지 않았습니다. 그래서 쉬운 표현으로 돌아가기보다 의도적으로 사용해 보고 싶습니다."},
+{"pattern":"When I run into ~, I usually ...","prompt":"What do you do when you meet your neighbors?","promptKo":"이웃을 마주치면 보통 어떻게 하나요?","text":"When I run into my neighbors in the elevator, I usually say hello. We don't really socialize, but I think exchanging a simple greeting makes the atmosphere friendlier.","ko":"엘리베이터에서 이웃을 마주치면 보통 인사를 합니다. 따로 어울리지는 않지만 간단한 인사만으로도 분위기가 더 친근해진다고 생각합니다."},
+{"pattern":"As time went on, ...","prompt":"Tell me about a relationship that became closer over time.","promptKo":"시간이 지나면서 더 가까워진 관계에 대해 말해 보세요.","text":"My wife met other parents through our children's school. As time went on, they became a close-knit group, and they still meet regularly and keep in touch with each other.","ko":"아내는 아이들 학교를 통해 다른 학부모들을 만났습니다. 시간이 지나면서 친밀한 모임이 되었고 지금도 정기적으로 만나며 연락합니다."},
+{"pattern":"One reason is that ...","prompt":"Why is it difficult to socialize with neighbors in modern cities?","promptKo":"현대 도시에서 이웃과 교류하기 어려운 이유는 무엇인가요?","text":"I think it's harder to socialize with neighbors these days. One reason is that many people leave for work early and come home late. On weekends, they also want to make the most of their time with their families.","ko":"요즘은 이웃과 교류하기가 더 어렵다고 생각합니다. 한 가지 이유는 많은 사람들이 일찍 출근하고 늦게 귀가하기 때문입니다. 주말에는 가족과 보내는 시간을 최대한 활용하고 싶어 하기도 합니다."},
+{"pattern":"A plays a part in B","prompt":"How has technology changed relationships between neighbors?","promptKo":"기술은 이웃 관계를 어떻게 변화시켰나요?","text":"Technology plays a part in the way we socialize with our neighbors. Online groups make communication convenient, but they also reduce the need to meet each other in person.","ko":"기술은 우리가 이웃과 교류하는 방식에 영향을 미칩니다. 온라인 모임은 소통을 편리하게 하지만 직접 만날 필요성도 줄입니다."}
+],"habits":[
+{"title":"강세를 크게 만들지 않기","text":"availability, benefiting, transportation처럼 긴 단어를 강조할 때 큰 파형을 만들지 않는다. 핵심 음절만 살짝 강조하고 전체 길이는 늘이지 않는다."},
+{"title":"평서문 끝 억양은 자연스럽게 ↓","text":"human history처럼 문장이 끝날 때 질문처럼 올리지 않는다. 마지막 thought group은 편안하게 내려 마무리한다."},
+{"title":"so / and then 연쇄 줄이기","text":"생각나는 내용을 so, and then으로 계속 붙이지 말고 한 문장에 한 메시지만 담아 3~4개의 완성문장으로 말한다."},
+{"title":"배운 Chunk를 답변마다 최소 1개 사용","text":"know firsthand how, deserve serious attention, can never excuse, take A out on B, be associated with처럼 이미 배운 표현을 새 답변에 의도적으로 넣어 active vocabulary로 만든다."},
+{"title":"Impressive보다 relaxed","text":"영어를 잘 들리게 하려고 모든 단어를 세게 발음하지 않는다. 짧고 완전한 문장 + 편안한 리듬을 우선한다."}
+]};
+
+
+const MY_CLASS_LESSON_11={"corrections":[
+{"ko":"어젯밤 선배 한 명과 친구를 만났다.","en":"Last night, I met one of my seniors and a friend.","bad":"Last night, I'm made one of my senior and my friend.","tip":"과거의 만남은 met. one of + 복수명사 구조를 쓴다.","grammar":"과거형·수: `made / senior → met / seniors`"},
+{"ko":"아직 숙취가 조금 남아 있다.","en":"I still have a bit of a hangover.","bad":"I still feel some hang off.","tip":"숙취는 a hangover. have a hangover가 가장 자연스럽다.","whyType":"표현","why":"`hang off → a hangover`"},
+{"ko":"나는 상사를 대신해서 그 회의에 참석했다.","en":"I attended the meeting on behalf of my boss.","bad":"I attended the meeting on his behave.","tip":"on behalf of + 사람 = ~을 대신하여. behave와 혼동하지 않는다.","grammar":"고정표현: `on his behave → on behalf of my boss`"},
+{"ko":"내일 부사장에게 중요한 발표를 해야 한다.","en":"Tomorrow, I have to give an important presentation to my vice president.","bad":"Tomorrow I have to presentation to my vice president.","tip":"presentation은 명사이므로 give a presentation처럼 동사가 필요하다.","grammar":"동사 결합: `have to presentation → have to give a presentation`"},
+{"ko":"그 발표는 올해 내 평가와 직접 연결되어 있다.","en":"The presentation is directly connected to my evaluation this year.","bad":"It connected my evaluation for this year.","tip":"be connected to + 명사 구조로 연결 관계를 표현한다.","grammar":"수동·전치사: `connected my evaluation → is connected to my evaluation`"},
+{"ko":"커뮤니티 센터에서 주민들에게 행사를 알렸다.","en":"The community center notified residents about the event.","bad":"The community center noticed members about the event.","tip":"notice = 알아차리다, notify someone about = 누구에게 알리다.","whyType":"단어","why":"`notice members → notify residents`"},
+{"ko":"아이들은 물건을 아주 저렴한 가격에 팔았다.","en":"The children sold their things at very reasonable prices.","bad":"They selled them very cheap, nearly reasonable price.","tip":"sell의 과거형은 sold. 가격은 at a reasonable price.","grammar":"불규칙 과거·전치사: `selled → sold`, `reasonable price → at reasonable prices`"},
+{"ko":"그들은 번 돈으로 원하는 것을 샀다.","en":"They used the money to buy something they wanted.","bad":"They used to buy something what they want.","tip":"used to는 과거 습관. 여기서는 used the money to buy가 맞다.","grammar":"구조: `used to buy → used the money to buy`"},
+{"ko":"힘든 시기에 사라지는 사람은 진정한 친구가 아니다.","en":"A fair-weather friend disappears when times get tough.","bad":"Those friends disappear under the difficult.","tip":"fair-weather friend는 좋을 때만 곁에 있는 친구. when times get tough가 자연스럽다.","whyType":"표현","why":"`under the difficult → when times get tough`"},
+{"ko":"그는 결국 좋을 때만 친구인 사람으로 드러났다.","en":"He turned out to be a fair-weather friend.","bad":"He turned out to be a fail weather friend.","tip":"turn out to be = 결국 ~인 것으로 드러나다.","whyType":"발음·표현","why":"`fail weather → fair-weather`"},
+{"ko":"나는 보답을 기대하지 않고 사람들을 돕고 싶다.","en":"I want to help people without expecting anything in return.","bad":"If I give some help, I think they must give back.","tip":"anything in return을 쓰면 대가를 기대하지 않는다는 뜻을 자연스럽게 표현할 수 있다.","whyType":"표현","why":"`they must give back → without expecting anything in return`"},
+{"ko":"나는 선의로 다른 사람을 돕는 사람이 되고 싶다.","en":"I want to help others out of the goodness of my heart.","bad":"I try to become person who help other people any time.","tip":"out of the goodness of one's heart = 순수한 선의로.","grammar":"관사·관계: `become person who help → become a person who helps`"}
+],"chunks":[
+{"pattern":"on behalf of ~","ko":"~을 대신하여 / ~을 대표하여","example":"I'm here on behalf of my boss, who couldn't make it today.","exampleKo":"오늘 참석하지 못한 상사를 대신해 제가 왔습니다."},
+{"pattern":"serve as a proxy for ~","ko":"~의 대리인 역할을 하다 / ~을 대신하다","example":"I served as a proxy for my boss at the meeting.","exampleKo":"나는 그 회의에서 상사를 대신하는 대리인 역할을 했다.","tip":"비교: on behalf of ~ = ~을 대신하여 / a proxy for ~ = ~을 대신하는 사람·대리인."},
+{"pattern":"give a presentation to ~","ko":"~에게 발표하다","example":"I have to give a presentation to my vice president tomorrow.","exampleKo":"내일 부사장에게 발표해야 한다."},
+{"pattern":"be connected to ~","ko":"~와 연결되어 있다","example":"The result is directly connected to my evaluation.","exampleKo":"그 결과는 내 평가와 직접 연결되어 있다."},
+{"pattern":"notify someone about ~","ko":"누구에게 ~을 알리다","example":"The community center notified residents about the event.","exampleKo":"커뮤니티 센터가 주민들에게 행사를 알렸다."},
+{"pattern":"notice + noun/clause","ko":"~을 알아차리다","example":"I noticed that many people make the same mistake.","exampleKo":"많은 사람들이 같은 실수를 한다는 것을 알아차렸다."},
+{"pattern":"a fair-weather friend","ko":"좋을 때만 곁에 있는 친구","example":"A true friend is not a fair-weather friend.","exampleKo":"진정한 친구는 좋을 때만 곁에 있는 친구가 아니다."},
+{"pattern":"when times get tough","ko":"상황이 어려워질 때","example":"You find out who your real friends are when times get tough.","exampleKo":"힘든 시기에 진짜 친구가 누구인지 알게 된다."},
+{"pattern":"turn out to be ~","ko":"결국 ~인 것으로 드러나다","example":"He turned out to be a very reliable friend.","exampleKo":"그는 결국 매우 믿을 만한 친구인 것으로 드러났다."},
+{"pattern":"a tightly knit community","ko":"유대가 매우 긴밀한 공동체","example":"They live in a tightly knit community.","exampleKo":"그들은 유대가 매우 긴밀한 공동체에 산다."},
+{"pattern":"out of the goodness of one's heart","ko":"순수한 선의로","example":"She helped me out of the goodness of her heart.","exampleKo":"그녀는 순수한 선의로 나를 도왔다."},
+{"pattern":"expect something in return","ko":"대가·보답을 기대하다","example":"I try not to expect anything in return when I help someone.","exampleKo":"누군가를 도울 때 보답을 기대하지 않으려고 한다."},
+{"pattern":"get the hang of ~","ko":"~의 요령을 익히다","example":"I'm starting to get the hang of speaking more naturally.","exampleKo":"좀 더 자연스럽게 말하는 요령을 익혀 가고 있다."},
+{"pattern":"by any chance","ko":"혹시 / 만에 하나","example":"By any chance, do you have any questions?","exampleKo":"혹시 질문 있으신가요?"},
+{"pattern":"can never excuse ~","ko":"~을 절대 정당화할 수 없다","example":"Stress can never excuse treating other people badly.","exampleKo":"스트레스가 다른 사람을 나쁘게 대하는 것을 절대 정당화할 수는 없다."}
+],"speaking":[
+{"prompt":"How would you explain why tomorrow's presentation is important?","pattern":"on behalf of ~ / be connected to ~","text":"Tomorrow, I have to give an important presentation to my vice president. I am presenting on behalf of my boss, and the result is directly connected to my evaluation this year. That's why I need to prepare carefully."},
+{"prompt":"What is the difference between notice and notify?","pattern":"notice ~ / notify someone about ~","text":"I use notice when I become aware of something. I use notify when I formally tell someone about something. For example, I noticed a mistake, but the community center notified residents about the event."},
+{"prompt":"What do you think makes someone a true friend?","pattern":"fair-weather friend / when times get tough","text":"A true friend stays with you when times get tough. A fair-weather friend may disappear when you have a problem. I think difficult situations often show us who our real friends are."},
+{"prompt":"Do you expect favors to be returned when you help someone?","pattern":"expect anything in return / out of the goodness of one's heart","text":"I try to help people without expecting anything in return. Ideally, I want to help others out of the goodness of my heart. If I expect every favor to be returned, I can easily become stressed or disappointed."},
+{"prompt":"By any chance, is there an expression from your previous lessons you can use here?","pattern":"by any chance / can never excuse ~","text":"By any chance, if a friend disappoints me, I try to understand the situation first. However, a difficult situation can never excuse repeatedly taking advantage of other people."}
+],"habits":[
+{"title":"and then 연쇄를 끊기","text":"이번 수업에서도 긴 설명에서 and then이 반복되며 문장 구조가 무너졌다. 한 문장을 끝낸 뒤 다음 문장을 새로 시작한다."},
+{"title":"명사 앞에 필요한 동사 먼저","text":"presentation 같은 명사를 바로 동사처럼 쓰지 않는다. give a presentation, hold a party, notify residents처럼 자주 쓰는 동사+명사 묶음으로 기억한다."},
+{"title":"불규칙 과거형 즉시 안정화","text":"sell → sold, meet → met처럼 기본 과거형 오류가 즉석 발화에서 다시 나타났다. 이야기 시작 전에 과거 시제를 먼저 고정한다."},
+{"title":"비슷한 단어를 정확히 구분","text":"notice/notify, behave/behalf처럼 소리가 비슷하거나 익숙한 단어로 대체하지 않는다. 문장째로 저장한다."},
+{"title":"배운 Chunk를 답변마다 1개 강제 사용","text":"can never excuse, by any chance 등 이전 표현을 알고도 실제 답변에서 사용하지 못했다. 말하기 문제마다 복습 Chunk를 최소 1개 넣는다."},
+{"title":"Give-and-take 설명은 짧고 명확하게","text":"추상적인 가치관을 설명할 때 문장이 길어진다. Point → Reason → Example의 3문장으로 먼저 완성한 뒤 세부 내용을 추가한다."}
+]};
+
+
 const MY_CLASS_META={
+  11:{title:"Sep 17 · Professional English, Friendship & Precise Word Choice",sub:"Real Class · On Behalf Of, Notice vs Notify & Active Chunks",goal:"<strong>긴 설명보다 정확한 동사+명사 Chunk로 짧게 완성합니다.</strong> 업무 발표·이웃·친구 관계를 말하면서 notice/notify, on behalf of, fair-weather friend 같은 표현을 실제 답변에서 바로 꺼내 씁니다."},
+  10:{title:"Sep 15 · Natural Rhythm & Social Relationships",sub:"Real Class · Relaxed Rhythm, Active Chunks & Community",goal:"<strong>잘 말하려고 힘을 주기보다 짧고 완전한 문장을 편안한 리듬으로 말합니다.</strong> 이미 아는 Chunk를 답변마다 의도적으로 사용해 passive vocabulary를 active vocabulary로 바꿉니다."},
   9:{title:"Sep 10 · Accurate Expressions & Structured Speaking",sub:"Real Class · PREP, Precise Chunks & Natural Delivery",goal:"<strong>아는 Chunk를 정확한 문맥에서 꺼내고 PREP로 답변을 완결합니다.</strong> I think / you know로 시작하는 습관을 줄이고, Point → Reason → Example → Point 구조로 짧고 정확하게 말합니다."},
   8:{title:"Sep 8 · Natural Rhythm, Personality & Dream Interpretation",sub:"Real Class · Rhythm, Collocations & Active Expressions",goal:"<strong>속도보다 자연스러운 리듬과 연결에 집중합니다.</strong> 과도한 또박또박 발음과 긴 pause를 줄이고, 업무·성격·꿈 관련 Chunk를 실제 대화에서 자연스럽게 꺼내 쓰는 훈련입니다."},
   7:{title:"Sep 3 · Breaking the Plateau & Business Presentation",sub:"Real Class · Signposting, Active Chunks & Plateau",goal:"<strong>연습한 Chunk를 실제 대화에서 의도적으로 꺼내 쓰는 훈련.</strong> 업무 발표 Signposting과 재사용성 높은 Chunk를 연결해 speaking plateau를 돌파합니다."},
@@ -3812,7 +3852,7 @@ let myClassLessonNo=1;
 function myClassData(){
   if(typeof studyCourseData==='function')return studyCourseData(ACTIVE_STUDY_COURSE,myClassLessonNo);
   const n=Number(myClassLessonNo);
-  return n===9?MY_CLASS_LESSON_9:n===8?MY_CLASS_LESSON_8:n===7?MY_CLASS_LESSON_7:n===6?MY_CLASS_LESSON_6:n===5?MY_CLASS_LESSON_5:n===4?MY_CLASS_LESSON_4:n===3?MY_CLASS_LESSON_3:n===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1;
+  return n===11?MY_CLASS_LESSON_11:n===10?MY_CLASS_LESSON_10:n===9?MY_CLASS_LESSON_9:n===8?MY_CLASS_LESSON_8:n===7?MY_CLASS_LESSON_7:n===6?MY_CLASS_LESSON_6:n===5?MY_CLASS_LESSON_5:n===4?MY_CLASS_LESSON_4:n===3?MY_CLASS_LESSON_3:n===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1;
 }
 function myClassUpdateHeader(){
   if(typeof studySyncCourseUI==='function'){studySyncCourseUI();return;}
@@ -3944,7 +3984,7 @@ async function myClassSpeakSequence(texts,{focusEl=null,statusPrefix='전체 듣
   if(!list.length)return;
 
   myClassStop(false);
-  // v5.3.272: Samsung/Android content:// TTS must be unlocked from the same tap path.
+  // v5.3.260: Samsung/Android content:// TTS must be unlocked from the same tap path.
   try{unlockTTSFromGesture?.()}catch(e){}
   const token=++MY_CLASS_PLAY.token;
   MY_CLASS_PLAY.active=true;
@@ -5668,7 +5708,7 @@ const OPIC_LESSON_18 = {"corrections":[{"ko":"저는 보통 출퇴근 시간에 
 const OPIC_LESSON_19 = {"corrections":[{"ko":"제가 가장 좋아하는 웹사이트는 Daum입니다.","en":"I would say my favorite website is Daum.","bad":"Well, my favorite website is Daum.","tip":"I would say를 넣으면 말하기가 자연스럽다.","whyType":"표현","why":"`Well` → `I would say` / I would say를 넣으면 말하기가 자연스럽다","badMarks":[{"start":0,"end":4}]},{"ko":"개인적으로 오랫동안 Daum을 사용해 왔습니다.","en":"Personally, I've been using Daum for a long time.","bad":"For the time being, I have been using Daum.","tip":"for the time being=당분간, for a long time=오랫동안.","whyType":"표현","why":"`For the time being, I have` → `Personally I've`","badMarks":[{"start":0,"end":26}]},{"ko":"Daum에서 오랫동안 같은 닉네임을 사용해 왔습니다.","en":"I've had the same nickname, “Baramdori,” on Daum for years.","bad":"I have a special, my nickname in Daum...","tip":"I've had + 기간.","grammar":"관사/소유격: `a + my` 함께 사용 불가"},{"ko":"매일 아침 가장 먼저 이메일을 확인합니다.","en":"Every morning, the first thing I do is check my email.","bad":"When I start the day, every day, first of all, I check my email...","tip":"the first thing I do is ~.","whyType":"표현","why":"`start the day, every day, first of all, I` → `do is` / the first thing I do is ~","badMarks":[{"start":7,"end":48}]},{"ko":"특히 금융 섹션을 자주 둘러봅니다.","en":"I usually browse different sections on Daum, especially the finance section.","bad":"Especially money section.","tip":"finance section.","whyType":"표현","why":"`money` → `the finance` / finance section","badMarks":[{"start":11,"end":16}]},{"ko":"미국·한국 주식시장과 세계 경제 동향을 확인합니다.","en":"I check updates on the U.S. and Korean stock markets, as well as global economic trends.","bad":"I check the American stock market ... even Koreans too.","tip":"stock markets / global economic trends.","whyType":"표현","why":"`American` → `U S and Korean` / stock markets / global economic trends","badMarks":[{"start":12,"end":20}]},{"ko":"다른 사람들의 이야기를 읽으면 제 삶을 돌아보게 될 때도 있습니다.","en":"Sometimes, other people's personal stories make me reflect on my own life.","bad":"Sometimes I reflect myself.","tip":"reflect on my own life.","whyType":"표현","why":"`myself` → `on my own life` / reflect on my own life","badMarks":[{"start":20,"end":26}]},{"ko":"시간을 때우고 싶을 때 웹툰이나 만화를 읽습니다.","en":"When I want to kill some time, I read webtoons or comics.","bad":"When I want to time killing...","tip":"kill some time.","whyType":"표현","why":"`killing` → `I read webtoons or comics` / kill some time","badMarks":[{"start":20,"end":27}]},{"ko":"만화를 읽으면 긴장을 풀고 스트레스를 해소하는 데 도움이 됩니다.","en":"Reading comics helps me unwind and relieve stress.","bad":"I can relieve my stress by some kind of comic.","tip":"unwind and relieve stress.","whyType":"표현","why":"`I can` → `Reading comics helps me unwind and` / unwind and relieve stress","badMarks":[{"start":0,"end":5}]},{"ko":"가끔 영상을 보다 보면 시간 가는 줄 모릅니다.","en":"I sometimes lose track of time while watching videos.","bad":"","tip":"lose track of time = 시간 가는 줄 모르다."}],"chunks":[{"pattern":"for a long time","ko":"오랫동안","example":"I've been using Daum for a long time.","exampleKo":"오랫동안 Daum을 사용해 왔습니다."},{"pattern":"The first thing I do is ~","ko":"가장 먼저 하는 일은 ~이다","example":"The first thing I do in the morning is check my email.","exampleKo":"아침에 가장 먼저 하는 일은 이메일 확인입니다."},{"pattern":"keep up with the latest ~","ko":"최신 ~을 계속 확인하다","example":"I keep up with the latest financial news.","exampleKo":"최신 금융 뉴스를 계속 확인합니다."},{"pattern":"reflect on one's own life","ko":"자신의 삶을 돌아보다","example":"Some stories make me reflect on my own life.","exampleKo":"어떤 이야기는 제 삶을 돌아보게 합니다."},{"pattern":"kill some time","ko":"시간을 때우다","example":"When I want to kill some time, I read webtoons.","exampleKo":"시간을 때우고 싶을 때 웹툰을 봅니다."},{"pattern":"unwind and relieve stress","ko":"긴장을 풀고 스트레스를 해소하다","example":"It's a great way to unwind and relieve stress.","exampleKo":"긴장을 풀고 스트레스를 해소하기 좋은 방법입니다."},{"pattern":"feel attached to ~","ko":"~에 애착을 느끼다","example":"I feel somewhat attached to Daum.","exampleKo":"Daum에 어느 정도 애착을 느낍니다."},{"pattern":"lose track of time while ~ing","ko":"~하다가 시간 가는 줄 모르다","example":"I sometimes lose track of time while watching videos.","exampleKo":"영상을 보다 보면 가끔 시간 가는 줄 모릅니다."}],"habits":[{"title":"① favorite 이유를 기능+감정으로","text":"정보·금융뉴스·이메일뿐 아니라 오랜 사용과 닉네임 때문에 애착이 있다는 점을 넣는다."},{"title":"② finance / stories / webtoons로 구체화","text":"사이트에서 실제로 하는 일을 세 갈래로 나눠 말한다."},{"title":"③ kill time vs lose track of time","text":"kill some time=시간을 때우다, lose track of time=시간 가는 줄 모르다를 구분한다."}],"speaking":[{"prompt":"What is your favorite website? Why do you like it, and what do you usually do there?","promptKo":"OPIC 질문에 맞춰 AL 수준으로 답해 보세요.","text":"Well, I would say my favorite website is Daum. I know most Koreans tend to use Naver these days, but personally, I’ve been using Daum for a very long time, so I’m really familiar with it.\n\nActually, I’ve even had the same nickname, “Baramdori,” on Daum for years, so I feel somewhat attached to the website.\n\nThe first thing I do in the morning is check my email. After that, I usually browse the finance section because I’m very interested in the economy and investing. I check updates on the U.S. and Korean stock markets, as well as the latest global economic trends.\n\nI also enjoy reading articles and personal stories posted by individual users. Sometimes, their stories make me reflect on my own life, which I find quite interesting.\n\nAnd when I just want to kill some time, I read webtoons or comics. They help me unwind and relieve stress.\n\nSo, for me, Daum is more than just a website. It’s a place where I can get useful information, keep up with financial news, and entertain myself at the same time. That’s why I still use it almost every day.","ko":"위 핵심 교정과 Chunk를 활용해 전체 답변의 흐름을 익히세요."}]};
 
 
-const SORI_GROUP_3 = {"corrections":[{"source":"① Daycare Should Mean Care","ko":"최근 보도들을 보면 정말 안심하고 아이를 맡길 수 있을지 의문이 듭니다.","chunkRefs":[{"id":"day_0_0","text":"make me wonder whether"},{"id":"day_0_1","text":"with peace of mind"}],"en":"Recent reports make me wonder whether I will truly be able to leave him there with peace of mind.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"아이들이 학대받는 사례가 뉴스에 너무 자주 등장하는 것 같습니다.","chunkRefs":[{"id":"day_1_0","text":"Cases of children being mistreated"},{"id":"day_1_1","text":"seem to appear"},{"id":"day_1_2","text":"far too often"}],"en":"Cases of children being mistreated seem to appear in the news far too often.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"인내심과 진심 어린 애정으로 아이들을 돌보는 헌신적인 교사들이 많다는 것을 압니다.","chunkRefs":[{"id":"day_2_0","text":"care for children"},{"id":"day_2_1","text":"with patience and genuine affection"}],"en":"I know there are many devoted teachers who care for children with patience and genuine affection.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"그렇지만 내 아이가 항상 그런 선생님을 만날 만큼 운이 좋으리라는 보장은 없습니다.","chunkRefs":[{"id":"day_3_0","text":"there is no guarantee that"},{"id":"day_3_1","text":"fortunate enough to meet"}],"en":"Still, there is no guarantee that my child will always be fortunate enough to meet such teachers.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"최근 어린이집에서 치아가 부러진 아이에 관한 이야기를 들었습니다.","chunkRefs":[{"id":"day_4_0","text":"heard about a child"},{"id":"day_4_1","text":"whose tooth was broken"}],"en":"Recently, I heard about a child whose tooth was broken at a daycare center.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"그 보도를 보니 정말 화가 치밀었습니다.","chunkRefs":[{"id":"day_5_0","text":"made my blood boil"}],"en":"Merely watching the report made my blood boil.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"그 아이의 부모가 어떤 일을 겪었을지 상상하기조차 어렵습니다.","chunkRefs":[{"id":"day_6_0","text":"could hardly imagine"},{"id":"day_6_1","text":"must have gone through"}],"en":"I could hardly imagine what the child's parents must have gone through.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"부모로서 저는 육아가 얼마나 힘들 수 있는지 직접 경험으로 압니다.","chunkRefs":[{"id":"day_7_0","text":"As a parent"},{"id":"day_7_1","text":"know firsthand how exhausting childcare can be"}],"en":"As a parent, I know firsthand how exhausting childcare can be.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"어린아이들은 끊임없는 관심과 인내심, 정서적 에너지를 필요로 합니다.","chunkRefs":[{"id":"day_8_0","text":"require constant attention"}],"en":"Young children require constant attention, patience, and emotional energy.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"어린이집 교사들은 낮은 보수와 엄청난 스트레스에 시달릴 수 있고, 그런 문제들은 진지하게 다뤄져야 합니다.","chunkRefs":[{"id":"day_9_0","text":"burdened with tremendous stress"},{"id":"day_9_1","text":"deserve serious attention"}],"en":"Daycare teachers may be underpaid and burdened with tremendous stress, and those problems deserve serious attention.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"하지만 어떤 어려움도 힘없는 아이들에게 분풀이하는 것을 정당화할 수는 없습니다.","chunkRefs":[{"id":"day_10_0","text":"can never excuse"},{"id":"day_10_1","text":"taking frustration out on"}],"en":"However, hardship can never excuse taking frustration out on defenseless children.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"아이들을 책임지는 어른들은 감정을 통제하고 아이들의 안전을 최우선으로 해야 합니다.","chunkRefs":[{"id":"day_11_0","text":"keep their emotions in check"},{"id":"day_11_1","text":"put the children's safety first"}],"en":"Adults responsible for children must keep their emotions in check and put the children's safety first.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"교사들만이 유일한 걱정거리는 아닙니다.","chunkRefs":[{"id":"day_12_0","text":"not the only concern"}],"en":"Teachers are not the only concern.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"일부 원장들은 어린이집 운영을 그저 사업 기회 정도로 여기는 듯합니다.","chunkRefs":[{"id":"day_13_0","text":"regard running a daycare center as"},{"id":"day_13_1","text":"little more than a business opportunity"}],"en":"Some directors appear to regard running a daycare center as little more than a business opportunity.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"그런 학대를 저지르거나 방치하는 사람은 보육 현장에서 영구적으로 배제되어야 합니다.","chunkRefs":[{"id":"day_14_0","text":"should be permanently removed from childcare"}],"en":"Anyone who abuses children or knowingly allows such abuse should be permanently removed from childcare.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"아이들은 항상 스스로 목소리를 낼 수 있는 것은 아니므로 어른과 기관이 그들을 옹호해야 합니다.","chunkRefs":[{"id":"day_15_0","text":"speak up for themselves"},{"id":"day_15_1","text":"stand up for them"}],"en":"Children cannot always speak up for themselves, so adults and institutions must stand up for them.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care · Pattern Expansion","ko":"나는 친구를 사귀는 것이 얼마나 어려운지 직접 경험해서 안다.","chunkRefs":[{"id":"day_16_0","text":"know firsthand how difficult it is to"},{"id":"day_16_1","text":"make friends"}],"en":"I know firsthand how difficult it is to make friends.","tip":"OPIC에서는 can be를 넣어 I know firsthand how difficult it can be to make new friends.로 확장하면 활용도가 높다."}],"chunks":[{"source":"① Daycare Should Mean Care","id":"day_chunk_0","pattern":"make + person + wonder whether ~","ko":"~인지 의문이 들게 하다","example":"Recent reports make me wonder whether the daycare is truly safe.","exampleKo":"최근 보도를 보면 그 어린이집이 정말 안전한지 의문이 든다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_1","pattern":"with peace of mind","ko":"안심하고 / 마음 놓고","example":"I want to leave my child there with peace of mind.","exampleKo":"나는 안심하고 아이를 그곳에 맡기고 싶다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_2","pattern":"cases of A being p.p.","ko":"A가 ~당하는 사례","example":"Cases of children being mistreated should never be ignored.","exampleKo":"아이들이 학대받는 사례는 절대 무시되어서는 안 된다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_3","pattern":"seem to + V","ko":"~인 것 같다","example":"These incidents seem to appear in the news too often.","exampleKo":"이런 사건들이 뉴스에 너무 자주 나오는 것 같다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_4","pattern":"far too + adjective/adverb","ko":"지나치게 너무 ~","example":"These cases happen far too often.","exampleKo":"이런 사례는 지나치게 자주 발생한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_5","pattern":"care for + person","ko":"~을 돌보다","example":"Good teachers care for children with patience.","exampleKo":"좋은 교사들은 인내심을 가지고 아이들을 돌본다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_6","pattern":"there is no guarantee that ~","ko":"~라는 보장은 없다","example":"There is no guarantee that every daycare provides the same quality of care.","exampleKo":"모든 어린이집이 같은 수준의 돌봄을 제공한다는 보장은 없다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_7","pattern":"be fortunate enough to + V","ko":"운 좋게도 ~하다","example":"We were fortunate enough to meet a caring teacher.","exampleKo":"우리는 운 좋게도 따뜻한 선생님을 만났다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_8","pattern":"a person whose + noun + V","ko":"~의 …가 ~한 사람","example":"I heard about a child whose tooth was broken at daycare.","exampleKo":"어린이집에서 치아가 부러진 아이 이야기를 들었다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_9","pattern":"make one's blood boil","ko":"몹시 화나게 하다","example":"The report made my blood boil.","exampleKo":"그 보도를 보고 정말 화가 치밀었다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_10","pattern":"can hardly imagine ~","ko":"~을 상상하기조차 어렵다","example":"I can hardly imagine how worried the parents were.","exampleKo":"부모가 얼마나 걱정했을지 상상하기조차 어렵다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_11","pattern":"must have + p.p.","ko":"분명 ~했을 것이다","example":"The parents must have gone through a terrible time.","exampleKo":"그 부모들은 분명 끔찍한 시간을 겪었을 것이다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_12","pattern":"know firsthand how + adjective + S + can be","ko":"직접 경험해서 S가 얼마나 ~할 수 있는지 알다","example":"I know firsthand how difficult it can be to make new friends.","exampleKo":"새로운 친구를 사귀는 게 얼마나 어려울 수 있는지 직접 경험해서 안다.","note":"핵심 구조: how difficult + 주어 + is → how difficult making friends is / 더 쉬운 구조: how difficult it is to + 동사 → how difficult it is to make friends / OPIC 활용: I know firsthand how difficult it can be to make new friends."},{"source":"① Daycare Should Mean Care","id":"day_chunk_13","pattern":"require + noun","ko":"~을 필요로 하다","example":"Young children require constant attention.","exampleKo":"어린아이들은 지속적인 관심을 필요로 한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_14","pattern":"be burdened with ~","ko":"~의 부담을 지다","example":"Many teachers are burdened with tremendous stress.","exampleKo":"많은 교사들이 엄청난 스트레스에 시달린다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_15","pattern":"deserve serious attention","ko":"진지하게 다뤄질 필요가 있다","example":"Those problems deserve serious attention.","exampleKo":"그 문제들은 진지하게 다뤄져야 한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_16","pattern":"can never excuse ~","ko":"~을 절대 정당화할 수 없다","example":"Stress can never excuse hurting a child.","exampleKo":"스트레스가 아이를 해치는 것을 정당화할 수 없다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_17","pattern":"take A out on B","ko":"A를 B에게 풀다","example":"Don't take your frustration out on other people.","exampleKo":"다른 사람에게 화풀이하지 마라."},{"source":"① Daycare Should Mean Care","id":"day_chunk_18","pattern":"keep A in check","ko":"A를 억제하고 통제하다","example":"Adults need to keep their emotions in check.","exampleKo":"어른들은 감정을 통제해야 한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_19","pattern":"put A first","ko":"A를 최우선으로 두다","example":"We must put children's safety first.","exampleKo":"우리는 아이들의 안전을 최우선으로 해야 한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_20","pattern":"regard A as B","ko":"A를 B로 여기다","example":"Some people regard childcare as just a business opportunity.","exampleKo":"일부 사람들은 보육을 그저 사업 기회로 여긴다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_21","pattern":"little more than ~","ko":"~에 지나지 않는","example":"They treat the center as little more than a business.","exampleKo":"그들은 그 시설을 사업에 지나지 않는 것으로 취급한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_22","pattern":"speak up for oneself","ko":"자기 자신을 위해 목소리를 내다","example":"Young children cannot always speak up for themselves.","exampleKo":"어린아이들은 항상 스스로 목소리를 낼 수 있는 것은 아니다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_23","pattern":"stand up for + person","ko":"~을 옹호하다","example":"Adults must stand up for children who cannot protect themselves.","exampleKo":"어른들은 스스로를 보호할 수 없는 아이들을 옹호해야 한다."}],"speaking":[{"source":"① Daycare Should Mean Care","pattern":"make + person + wonder whether ~","prompt":"What recent issue makes you wonder whether a service is truly safe?","promptKo":"","text":"Recent reports make me wonder whether some daycare centers are truly safe.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"there is no guarantee that ~","prompt":"What can parents never be completely sure about?","promptKo":"","text":"There is no guarantee that every child will always meet a caring teacher.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"know firsthand how ~","prompt":"What do you know firsthand from your own experience?","promptKo":"","text":"As a parent, I know firsthand how much attention young children need.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"take A out on B","prompt":"What should people avoid doing when they are under stress?","promptKo":"","text":"People should never take their frustration out on someone weaker than them.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"put A first","prompt":"What should a daycare put first?","promptKo":"","text":"A daycare must put children's safety and well-being first.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"regard A as B","prompt":"How should childcare be regarded?","promptKo":"","text":"We should regard childcare as a responsibility, not merely as a business opportunity.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"stand up for + person","prompt":"Who should stand up for children who cannot speak for themselves?","promptKo":"","text":"Adults and institutions must stand up for children who cannot protect themselves.","ko":""}],"habits":[{"title":"① 긴 문장은 의미 덩어리로","text":"make me wonder whether / with peace of mind처럼 Chunk 단위로 연결한다."},{"title":"② 감정 표현은 한 덩어리로","text":"made my blood boil / could hardly imagine / must have gone through를 끊지 않는다."},{"title":"③ 핵심어에 강세","text":"GUARANTEE / FORTUNATE / SERIOUS처럼 의미 핵심어에 강세를 둔다."},{"title":"④ 병렬 리듬","text":"constant attention, patience, and emotional energy를 일정한 리듬으로 말한다."},{"title":"⑤ A-B 패턴 대비","text":"take A out ON B / regard A AS B / put A FIRST의 핵심 부분을 분명히 한다."},{"title":"⑥ speak up / stand up 구분","text":"speak up for themselves는 스스로 목소리를 내는 것, stand up for them은 다른 사람이 옹호하는 것이다."}]};
+const SORI_GROUP_3 = {"corrections":[{"source":"① Daycare Should Mean Care","ko":"최근 보도들을 보면 정말 안심하고 아이를 맡길 수 있을지 의문이 듭니다.","chunkRefs":[{"id":"day_0_0","text":"make me wonder whether"},{"id":"day_0_1","text":"with peace of mind"}],"en":"Recent reports make me wonder whether I will truly be able to leave him there with peace of mind.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"아이들이 학대받는 사례가 뉴스에 너무 자주 등장하는 것 같습니다.","chunkRefs":[{"id":"day_1_0","text":"Cases of children being mistreated"},{"id":"day_1_1","text":"seem to appear"},{"id":"day_1_2","text":"far too often"}],"en":"Cases of children being mistreated seem to appear in the news far too often.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"인내심과 진심 어린 애정으로 아이들을 돌보는 헌신적인 교사들이 많다는 것을 압니다.","chunkRefs":[{"id":"day_2_0","text":"care for children"},{"id":"day_2_1","text":"with patience and genuine affection"}],"en":"I know there are many devoted teachers who care for children with patience and genuine affection.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"그렇지만 내 아이가 항상 그런 선생님을 만날 만큼 운이 좋으리라는 보장은 없습니다.","chunkRefs":[{"id":"day_3_0","text":"there is no guarantee that"},{"id":"day_3_1","text":"fortunate enough to meet"}],"en":"Still, there is no guarantee that my child will always be fortunate enough to meet such teachers.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"최근 어린이집에서 치아가 부러진 아이에 관한 이야기를 들었습니다.","chunkRefs":[{"id":"day_4_0","text":"heard about a child"},{"id":"day_4_1","text":"whose tooth was broken"}],"en":"Recently, I heard about a child whose tooth was broken at a daycare center.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"그 보도를 보니 정말 화가 치밀었습니다.","chunkRefs":[{"id":"day_5_0","text":"made my blood boil"}],"en":"Merely watching the report made my blood boil.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"그 아이의 부모가 어떤 일을 겪었을지 상상하기조차 어렵습니다.","chunkRefs":[{"id":"day_6_0","text":"could hardly imagine"},{"id":"day_6_1","text":"must have gone through"}],"en":"I could hardly imagine what the child's parents must have gone through.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"부모로서 저는 육아가 얼마나 힘들 수 있는지 직접 경험으로 압니다.","chunkRefs":[{"id":"day_7_0","text":"As a parent"},{"id":"day_7_1","text":"know firsthand how exhausting childcare can be"}],"en":"As a parent, I know firsthand how exhausting childcare can be.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"어린아이들은 끊임없는 관심과 인내심, 정서적 에너지를 필요로 합니다.","chunkRefs":[{"id":"day_8_0","text":"require constant attention"}],"en":"Young children require constant attention, patience, and emotional energy.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"어린이집 교사들은 낮은 보수와 엄청난 스트레스에 시달릴 수 있고, 그런 문제들은 진지하게 다뤄져야 합니다.","chunkRefs":[{"id":"day_9_0","text":"burdened with tremendous stress"},{"id":"day_9_1","text":"deserve serious attention"}],"en":"Daycare teachers may be underpaid and burdened with tremendous stress, and those problems deserve serious attention.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"하지만 어떤 어려움도 힘없는 아이들에게 분풀이하는 것을 정당화할 수는 없습니다.","chunkRefs":[{"id":"day_10_0","text":"can never excuse"},{"id":"day_10_1","text":"taking frustration out on"}],"en":"However, hardship can never excuse taking frustration out on defenseless children.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"아이들을 책임지는 어른들은 감정을 통제하고 아이들의 안전을 최우선으로 해야 합니다.","chunkRefs":[{"id":"day_11_0","text":"keep their emotions in check"},{"id":"day_11_1","text":"put the children's safety first"}],"en":"Adults responsible for children must keep their emotions in check and put the children's safety first.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"교사들만이 유일한 걱정거리는 아닙니다.","chunkRefs":[{"id":"day_12_0","text":"not the only concern"}],"en":"Teachers are not the only concern.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"일부 원장들은 어린이집 운영을 그저 사업 기회 정도로 여기는 듯합니다.","chunkRefs":[{"id":"day_13_0","text":"regard running a daycare center as"},{"id":"day_13_1","text":"little more than a business opportunity"}],"en":"Some directors appear to regard running a daycare center as little more than a business opportunity.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"그런 학대를 저지르거나 방치하는 사람은 보육 현장에서 영구적으로 배제되어야 합니다.","chunkRefs":[{"id":"day_14_0","text":"should be permanently removed from childcare"}],"en":"Anyone who abuses children or knowingly allows such abuse should be permanently removed from childcare.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."},{"source":"① Daycare Should Mean Care","ko":"아이들은 항상 스스로 목소리를 낼 수 있는 것은 아니므로 어른과 기관이 그들을 옹호해야 합니다.","chunkRefs":[{"id":"day_15_0","text":"speak up for themselves"},{"id":"day_15_1","text":"stand up for them"}],"en":"Children cannot always speak up for themselves, so adults and institutions must stand up for them.","tip":"표시된 Chunk를 의미 덩어리로 연결해 말한다."}],"chunks":[{"source":"① Daycare Should Mean Care","id":"day_chunk_0","pattern":"make + person + wonder whether ~","ko":"~인지 의문이 들게 하다","example":"Recent reports make me wonder whether the daycare is truly safe.","exampleKo":"최근 보도를 보면 그 어린이집이 정말 안전한지 의문이 든다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_1","pattern":"with peace of mind","ko":"안심하고 / 마음 놓고","example":"I want to leave my child there with peace of mind.","exampleKo":"나는 안심하고 아이를 그곳에 맡기고 싶다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_2","pattern":"cases of A being p.p.","ko":"A가 ~당하는 사례","example":"Cases of children being mistreated should never be ignored.","exampleKo":"아이들이 학대받는 사례는 절대 무시되어서는 안 된다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_3","pattern":"seem to + V","ko":"~인 것 같다","example":"These incidents seem to appear in the news too often.","exampleKo":"이런 사건들이 뉴스에 너무 자주 나오는 것 같다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_4","pattern":"far too + adjective/adverb","ko":"지나치게 너무 ~","example":"These cases happen far too often.","exampleKo":"이런 사례는 지나치게 자주 발생한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_5","pattern":"care for + person","ko":"~을 돌보다","example":"Good teachers care for children with patience.","exampleKo":"좋은 교사들은 인내심을 가지고 아이들을 돌본다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_6","pattern":"there is no guarantee that ~","ko":"~라는 보장은 없다","example":"There is no guarantee that every daycare provides the same quality of care.","exampleKo":"모든 어린이집이 같은 수준의 돌봄을 제공한다는 보장은 없다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_7","pattern":"be fortunate enough to + V","ko":"운 좋게도 ~하다","example":"We were fortunate enough to meet a caring teacher.","exampleKo":"우리는 운 좋게도 따뜻한 선생님을 만났다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_8","pattern":"a person whose + noun + V","ko":"~의 …가 ~한 사람","example":"I heard about a child whose tooth was broken at daycare.","exampleKo":"어린이집에서 치아가 부러진 아이 이야기를 들었다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_9","pattern":"make one's blood boil","ko":"몹시 화나게 하다","example":"The report made my blood boil.","exampleKo":"그 보도를 보고 정말 화가 치밀었다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_10","pattern":"can hardly imagine ~","ko":"~을 상상하기조차 어렵다","example":"I can hardly imagine how worried the parents were.","exampleKo":"부모가 얼마나 걱정했을지 상상하기조차 어렵다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_11","pattern":"must have + p.p.","ko":"분명 ~했을 것이다","example":"The parents must have gone through a terrible time.","exampleKo":"그 부모들은 분명 끔찍한 시간을 겪었을 것이다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_12","pattern":"know firsthand how ~","ko":"직접 경험해서 얼마나 ~한지 알다","example":"As a parent, I know firsthand how exhausting childcare can be.","exampleKo":"부모로서 나는 육아가 얼마나 힘든지 직접 안다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_13","pattern":"require + noun","ko":"~을 필요로 하다","example":"Young children require constant attention.","exampleKo":"어린아이들은 지속적인 관심을 필요로 한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_14","pattern":"be burdened with ~","ko":"~의 부담을 지다","example":"Many teachers are burdened with tremendous stress.","exampleKo":"많은 교사들이 엄청난 스트레스에 시달린다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_15","pattern":"deserve serious attention","ko":"진지하게 다뤄질 필요가 있다","example":"Those problems deserve serious attention.","exampleKo":"그 문제들은 진지하게 다뤄져야 한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_16","pattern":"can never excuse ~","ko":"~을 절대 정당화할 수 없다","example":"Stress can never excuse hurting a child.","exampleKo":"스트레스가 아이를 해치는 것을 정당화할 수 없다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_17","pattern":"take A out on B","ko":"A를 B에게 풀다","example":"Don't take your frustration out on other people.","exampleKo":"다른 사람에게 화풀이하지 마라."},{"source":"① Daycare Should Mean Care","id":"day_chunk_18","pattern":"keep A in check","ko":"A를 억제하고 통제하다","example":"Adults need to keep their emotions in check.","exampleKo":"어른들은 감정을 통제해야 한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_19","pattern":"put A first","ko":"A를 최우선으로 두다","example":"We must put children's safety first.","exampleKo":"우리는 아이들의 안전을 최우선으로 해야 한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_20","pattern":"regard A as B","ko":"A를 B로 여기다","example":"Some people regard childcare as just a business opportunity.","exampleKo":"일부 사람들은 보육을 그저 사업 기회로 여긴다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_21","pattern":"little more than ~","ko":"~에 지나지 않는","example":"They treat the center as little more than a business.","exampleKo":"그들은 그 시설을 사업에 지나지 않는 것으로 취급한다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_22","pattern":"speak up for oneself","ko":"자기 자신을 위해 목소리를 내다","example":"Young children cannot always speak up for themselves.","exampleKo":"어린아이들은 항상 스스로 목소리를 낼 수 있는 것은 아니다."},{"source":"① Daycare Should Mean Care","id":"day_chunk_23","pattern":"stand up for + person","ko":"~을 옹호하다","example":"Adults must stand up for children who cannot protect themselves.","exampleKo":"어른들은 스스로를 보호할 수 없는 아이들을 옹호해야 한다."}],"speaking":[{"source":"① Daycare Should Mean Care","pattern":"make + person + wonder whether ~","prompt":"What recent issue makes you wonder whether a service is truly safe?","promptKo":"","text":"Recent reports make me wonder whether some daycare centers are truly safe.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"there is no guarantee that ~","prompt":"What can parents never be completely sure about?","promptKo":"","text":"There is no guarantee that every child will always meet a caring teacher.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"know firsthand how ~","prompt":"What do you know firsthand from your own experience?","promptKo":"","text":"As a parent, I know firsthand how much attention young children need.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"take A out on B","prompt":"What should people avoid doing when they are under stress?","promptKo":"","text":"People should never take their frustration out on someone weaker than them.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"put A first","prompt":"What should a daycare put first?","promptKo":"","text":"A daycare must put children's safety and well-being first.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"regard A as B","prompt":"How should childcare be regarded?","promptKo":"","text":"We should regard childcare as a responsibility, not merely as a business opportunity.","ko":""},{"source":"① Daycare Should Mean Care","pattern":"stand up for + person","prompt":"Who should stand up for children who cannot speak for themselves?","promptKo":"","text":"Adults and institutions must stand up for children who cannot protect themselves.","ko":""}],"habits":[{"title":"① 긴 문장은 의미 덩어리로","text":"make me wonder whether / with peace of mind처럼 Chunk 단위로 연결한다."},{"title":"② 감정 표현은 한 덩어리로","text":"made my blood boil / could hardly imagine / must have gone through를 끊지 않는다."},{"title":"③ 핵심어에 강세","text":"GUARANTEE / FORTUNATE / SERIOUS처럼 의미 핵심어에 강세를 둔다."},{"title":"④ 병렬 리듬","text":"constant attention, patience, and emotional energy를 일정한 리듬으로 말한다."},{"title":"⑤ A-B 패턴 대비","text":"take A out ON B / regard A AS B / put A FIRST의 핵심 부분을 분명히 한다."},{"title":"⑥ speak up / stand up 구분","text":"speak up for themselves는 스스로 목소리를 내는 것, stand up for them은 다른 사람이 옹호하는 것이다."}]};
 
 const STUDY_COURSES = {
   my:{
@@ -5679,7 +5719,7 @@ const STUDY_COURSES = {
     studyOrder:['corrections','chunks','speaking','habits'],
     speakingMode:'free',
     meta:()=>MY_CLASS_META,
-    data:(n)=>Number(n)===9?MY_CLASS_LESSON_9:(Number(n)===8?MY_CLASS_LESSON_8:(Number(n)===7?MY_CLASS_LESSON_7:(Number(n)===6?MY_CLASS_LESSON_6:(Number(n)===5?MY_CLASS_LESSON_5:(Number(n)===4?MY_CLASS_LESSON_4:(Number(n)===3?MY_CLASS_LESSON_3:(Number(n)===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1))))))),
+    data:(n)=>Number(n)===11?MY_CLASS_LESSON_11:Number(n)===10?MY_CLASS_LESSON_10:Number(n)===9?MY_CLASS_LESSON_9:(Number(n)===8?MY_CLASS_LESSON_8:(Number(n)===7?MY_CLASS_LESSON_7:(Number(n)===6?MY_CLASS_LESSON_6:(Number(n)===5?MY_CLASS_LESSON_5:(Number(n)===4?MY_CLASS_LESSON_4:(Number(n)===3?MY_CLASS_LESSON_3:(Number(n)===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1))))))),
     tabs:{corrections:'✅ 핵심 교정',chunks:'🧩 Chunk',speaking:'🗣 말하기',habits:'⚠ 습관'},
     singular:{corrections:'핵심 교정',chunks:'Chunk',speaking:'말하기',habits:'습관'}
   },
@@ -6676,7 +6716,7 @@ async function readPracticeStoryList(cards,renderVersion){
       if(!alive())return false;
       await speakOne(item.example||item.word,.84,'en-US');
       if(!alive())return false;
-      await new Promise(r=>setTimeout(r,170));
+      await new Promise(r=>setTimeout(r,220));
     }
     await new Promise(r=>setTimeout(r,320));
   }
@@ -7009,18 +7049,8 @@ function finishSelectedRepeatAndContinue(w){
   if(!AUTO.active)return;
   const st=stats[w.word];st.studyCount=(st.studyCount||0)+1;st.lastSeen=Date.now();save();
   learningPlaybackPaused=false;updateLearningPlaybackButton();
-  if(i<deck.length-1){
-    const next=()=>{i++;render(true);};
-    if(typeof window.mvDayAutoAdvance266==='function')window.mvDayAutoAdvance266(next);
-    else next();
-    return;
-  }
-  if(AUTO.pass<AUTO.repeats){
-    const restart=()=>{AUTO.pass++;i=0;render(true);};
-    if(typeof window.mvDayAutoAdvance266==='function')window.mvDayAutoAdvance266(restart);
-    else restart();
-    return;
-  }
+  if(i<deck.length-1){i++;render(true);return;}
+  if(AUTO.pass<AUTO.repeats){AUTO.pass++;i=0;render(true);return;}
   stopSpeech();clearSelectedProgress();AUTO.active=false;forceReleaseWakeLock();clearExactReadingFocus();updateAutoBadge();$('bar').style.width='100%';
   if(typeof window.MV_DAY_ONCE_COMPLETE_219==='function'){
     const done=window.MV_DAY_ONCE_COMPLETE_219;
@@ -7652,7 +7682,7 @@ async function autoReadAndAdvance(w,renderVersion=__renderVersion){
   const completed=await autoRead(w,renderVersion);
   if(!completed)return;
 
-  // v5.3.272: integrated repeat owns navigation after a card has been fully read.
+  // v5.3.260: integrated repeat owns navigation after a card has been fully read.
   // The legacy renderVersion/__renderedCardKey guard can change during the long
   // DAY reading sequence on Android even though the same card is still current.
   // That produced the exact symptom: status says "전체 읽기 완료" but playback stops.
@@ -7669,13 +7699,13 @@ async function autoReadAndAdvance(w,renderVersion=__renderVersion){
 
     if(i<deck.length-1){
       const next=()=>{i++;render(true);};
-      if(typeof window.mvDayAutoAdvance266==='function')await window.mvDayAutoAdvance266(next);
+      if(typeof window.mvAutoDayPlaybackTurn255==='function')await window.mvAutoDayPlaybackTurn255(next);
       else next();
       return;
     }
     if(AUTO.pass<AUTO.repeats){
       const restart=()=>{AUTO.pass++;i=0;render(true);};
-      if(typeof window.mvDayAutoAdvance266==='function')await window.mvDayAutoAdvance266(restart);
+      if(typeof window.mvAutoDayPlaybackTurn255==='function')await window.mvAutoDayPlaybackTurn255(restart);
       else restart();
       return;
     }
@@ -7708,18 +7738,8 @@ async function autoReadAndAdvance(w,renderVersion=__renderVersion){
   if(!AUTO.active||autoToken!==AUTO.token)return;
   if(renderVersion!==__renderVersion||cardKey(cur())!==expectedKey||__renderedCardKey!==expectedKey)return;
 
-  if(i<deck.length-1){
-    const next=()=>{i++;render(true);};
-    if(typeof window.mvDayAutoAdvance266==='function')await window.mvDayAutoAdvance266(next);
-    else next();
-    return;
-  }
-  if(AUTO.pass<AUTO.repeats){
-    const restart=()=>{AUTO.pass++;i=0;render(true);};
-    if(typeof window.mvDayAutoAdvance266==='function')await window.mvDayAutoAdvance266(restart);
-    else restart();
-    return;
-  }
+  if(i<deck.length-1){i++;render(true);return}
+  if(AUTO.pass<AUTO.repeats){AUTO.pass++;i=0;render(true);return}
 
   stopSpeech();clearSelectedProgress();AUTO.active=false; forceReleaseWakeLock();clearExactReadingFocus();updateAutoBadge();$('bar').style.width='100%';
   if(window.MV_ALL_REPEAT_219?.active){
@@ -9152,17 +9172,11 @@ function sentenceRecordingReleasePreparedMic(){
   sentenceRecordingPreparedAt=0;
 }
 
-let mvMicWarmDeniedShown272=false;
 function sentenceRecordingWarmMic(){
   // 3단계 진입 시 마이크를 미리 준비한다.
   // 이미 권한이 있으면 버튼 누르기 전에 스트림이 준비되어 거의 즉시 녹음 가능.
   if(!sentenceRecordingAvailable())return;
-  sentenceRecordingPrepareMic().catch(e=>{
-    if(e&&e.name==='NotAllowedError'&&!mvMicWarmDeniedShown272){
-      mvMicWarmDeniedShown272=true;
-      sentenceRecordingToast('마이크 권한 필요 · 설정 → 앱 → Chrome → 권한 → 마이크 → 앱 사용 중에만 허용');
-    }
-  });
+  sentenceRecordingPrepareMic().catch(()=>{});
 }
 
 function sentenceRecordingStopWave(){
@@ -9611,11 +9625,9 @@ async function sentenceRecordingStart(q){
     sentenceRecordingRecorder=null;
 
     if(e&&e.name==='NotAllowedError'){
-      sentenceRecordingToast('마이크 권한이 꺼져 있습니다. 휴대폰 설정 → 앱 → Chrome → 권한 → 마이크 → 앱 사용 중에만 허용로 변경한 뒤 다시 눌러 주세요.');
-    }else if(location.protocol==='content:' || !window.isSecureContext){
-      sentenceRecordingToast('현재 파일(content://)에서는 마이크 사용이 제한될 수 있습니다. 먼저 Chrome 마이크 권한을 허용하고, 계속 안 되면 앱을 HTTPS 주소에서 실행해 주세요.');
+      sentenceRecordingToast('마이크 사용 권한을 허용해 주세요.');
     }else{
-      sentenceRecordingToast('마이크를 시작할 수 없습니다. 휴대폰 설정 → 앱 → Chrome → 권한 → 마이크를 확인한 뒤 다시 시도해 주세요.');
+      sentenceRecordingToast('마이크를 시작할 수 없습니다.');
     }
   }
 }
@@ -10789,19 +10801,28 @@ $('todayStartBtn').onclick=()=>{
   AUTO.token++;
   forceReleaseWakeLock();forceReleaseWakeLock();let due=dueWordsAll();if(due.length){openDay(due[0].newDay,'forget');return}let next=Array.from({length:currentCfg().days},(_,i)=>i+1).find(d=>dayProgress(d).learned<dayProgress(d).total)||1;openDay(next,'learn')};
 
-// v5.3.272 · DAY 학습도 공통 Swipe 화면 전환 표준 사용
+// v5.3.260 · DAY 학습도 공통 Swipe 화면 전환 표준 사용
 {
  const cardEl=$('card');
  let dsx=0,dsy=0,dlock=false,ddir=0,dtracking=false;
- const canDay=(dir)=>dir>0?(i<deck.length-1):(i>0);
+ const dayExists260=(day)=>day>=1&&day<=currentCfg().days&&ALL_WORDS.some(w=>Number(w.newDay)===Number(day));
+ const canDay=(dir)=>dir>0?(i<deck.length-1||dayExists260(currentDay+1)):(i>0||dayExists260(currentDay-1));
  const commitDay=(dir)=>{
    // Swipe is navigation only. It must never change 알고 있어요/몰라요 statistics.
    stopSpeech();AUTO.token++;saveSelectedProgress();
    if(dir>0){
      if(i<deck.length-1){i++;render();return true}
+     if(dayExists260(currentDay+1)){
+       openDay(currentDay+1,'learn');
+       i=0;render();saveSelectedProgress();window.scrollTo(0,0);return true;
+     }
      return false;
    }else{
      if(i>0){i--;render();return true}
+     if(dayExists260(currentDay-1)){
+       openDay(currentDay-1,'learn');
+       i=Math.max(0,deck.length-1);render();saveSelectedProgress();window.scrollTo(0,0);return true;
+     }
      return false;
    }
  };
@@ -11484,7 +11505,7 @@ function mvSentenceEntryAudit182(){
 window.mvSentenceEntryAudit182=mvSentenceEntryAudit182;
 
 /* ===== V5.3.189 · STANDARD APP INFO / UPDATE HISTORY ===== */
-const MV_APP_VERSION='5.3.272';
+const MV_APP_VERSION='5.3.260';
 
 function mvCloseInfoOverlay(){
   const overlay=document.getElementById('mvInfoOverlay');
@@ -11922,7 +11943,7 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
   };
   window.stopV534MyClassLoop=function(){V534.myLoopToken++;};
   const lessonCount=()=>Object.keys(MY_CLASS_META||{}).map(Number).filter(Number.isFinite).length||2;
-  const lessonData=(n)=>{n=Number(n);return n===9?MY_CLASS_LESSON_9:n===8?MY_CLASS_LESSON_8:n===7?MY_CLASS_LESSON_7:n===6?MY_CLASS_LESSON_6:n===5?MY_CLASS_LESSON_5:n===4?MY_CLASS_LESSON_4:n===3?MY_CLASS_LESSON_3:n===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1;};
+  const lessonData=(n)=>{n=Number(n);return n===11?MY_CLASS_LESSON_11:n===10?MY_CLASS_LESSON_10:n===9?MY_CLASS_LESSON_9:n===8?MY_CLASS_LESSON_8:n===7?MY_CLASS_LESSON_7:n===6?MY_CLASS_LESSON_6:n===5?MY_CLASS_LESSON_5:n===4?MY_CLASS_LESSON_4:n===3?MY_CLASS_LESSON_3:n===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1;};
 
   function initHomeModeSwitch(){
     const daySection=document.querySelector('#homePage .daySection');
@@ -12131,32 +12152,7 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
   }
   function myClassSentenceCards(lessonNo){
     const d=lessonData(lessonNo), out=[];let order=1;
-    const corrPatternMap=(()=>{
-      const n=Number(lessonNo);
-      // Preserve the curated legacy maps only where they actually belong.
-      if(n===4)return [[["clock out", "which is ~ for me"],["퇴근하다", "나에게는 ~한 편이다"]],[["usually clock out around ~"],["보통 ~쯤 퇴근하다"]],[["operate 24/7"],["24시간 연중무휴로 가동되다"]],[["As a ~", "take responsibility", "when something goes wrong"],["~로서", "책임지다", "문제가 생길 때"]],[["Even if ~", "be directly involved", "be responsible"],["비록 ~하더라도", "직접 관련되다", "책임이 있다"]],[["a better work-life balance than ~"],["~보다 더 나은 일과 삶의 균형"]],[["I'd like to ~", "sleep in", "for another hour"],["~하고 싶다", "늦잠 자다", "한 시간 더"]],[["If ~", "get a good evaluation", "significantly lower"],["만약 ~라면", "좋은 평가를 받다", "상당히 더 낮은"]],[["have a long way to go"],["아직 갈 길이 멀다"]],[["make me realize ~", "what I need to ~"],["~을 깨닫게 하다", "내가 무엇을 ~해야 하는지"]],[["have been trying to ~", "tone down ~"],["계속 ~하려고 노력해오다", "~의 톤을 낮추다"]],[["If possible", "tell someone to ~", "take the day off"],["가능하다면", "누군가에게 ~하라고 말하다", "하루 휴가를 내다"]]];
-      if(n===1)return [[["feels like ~"], ["~처럼 느껴지다"]], [["One of my biggest goals is to ~"], ["가장 큰 목표 중 하나는 ~이다"]], [["make up my mind to ~"], ["~하기로 마음먹다"]], [["sign up for ~"], ["~에 등록하다"]], [["I've been ~ing for ..."], ["...동안 계속 ~하고 있다"]], [["still have a long way to go"], ["아직 갈 길이 멀다"]], [["have too much to drink"], ["술을 과하게 마시다"]], [["have three main functions"], ["세 가지 주요 기능이 있다"]], [["collect ~ from ..."], ["...에서 ~을 수집하다"]], [["much worse than ~"], ["~보다 훨씬 더 나쁘다/서툴다"]], [["Even though ~", "manage to ~", "get by in English"], ["비록 ~이지만", "어떻게든 ~해내다", "영어로 어떻게든 해나가다"]], [["Looking back, ...", "be proud of ~"], ["돌이켜보면", "~을 자랑스럽게 여기다"]]];
-      if(n===2)return [[["go out for drinks"], ["술자리를 갖다"]], [["end up ~ing"], ["결국 ~하게 되다"]], [["social drinker"], ["사교적인 자리에서만 술을 마시는 사람"]], [["unless it's work-related"], ["업무 관련이 아니라면"]], [["quit ~ cold turkey"], ["~을 단번에 끊다"]], [["haven't ~ since then"], ["그 이후로 계속 ~하지 않았다"]], [["lead meetings confidently"], ["회의를 자신 있게 진행하다"]], [["rely on visual cues"], ["시각적 단서를 활용하다"]], [["in vivid detail"], ["아주 생생하고 자세하게"]], [["it's all a blur"], ["모든 것이 흐릿하게 기억나다"]], [["out of whack"], ["정상적이지 않은, 균형이 깨진"]], [["wake up around ~", "have trouble ~ing", "fall back asleep"], ["~시쯤 잠에서 깨다", "~하는 데 어려움을 겪다", "다시 잠들다"]], [["have a serious conflict with ~"], ["~와 심각한 갈등을 겪다"]], [["threaten to sue ~", "step in", "resolve the situation"], ["~을 고소하겠다고 하다", "개입하다", "상황을 해결하다"]]];
-
-      // v5.3.272: lessons 3,5,6,7,8,9 derive patterns from THEIR OWN chunk data.
-      // Only patterns actually present in the sentence are shown.
-      const chunks=Array.isArray(d?.chunks)?d.chunks:[];
-      return (d?.corrections||[]).map(c=>{
-        const text=String(c?.en||'').toLowerCase();
-        const hits=[];
-        const kos=[];
-        chunks.forEach(ch=>{
-          const raw=String(ch?.pattern||'');
-          const norm=raw.replace(/~ing/gi,'').replace(/~|someone|something|A|B/gi,' ')
-            .replace(/[^A-Za-z0-9'\s-]/g,' ').replace(/\s+/g,' ').trim().toLowerCase();
-          const words=norm.split(' ').filter(x=>x.length>2);
-          if(words.length && words.every(word=>text.includes(word))){
-            hits.push(raw);kos.push(String(ch?.ko||''));
-          }
-        });
-        return [hits,kos];
-      });
-    })();
+    const corrPatternMap=Number(lessonNo)===4?[[["clock out", "which is ~ for me"],["퇴근하다", "나에게는 ~한 편이다"]],[["usually clock out around ~"],["보통 ~쯤 퇴근하다"]],[["operate 24/7"],["24시간 연중무휴로 가동되다"]],[["As a ~", "take responsibility", "when something goes wrong"],["~로서", "책임지다", "문제가 생길 때"]],[["Even if ~", "be directly involved", "be responsible"],["비록 ~하더라도", "직접 관련되다", "책임이 있다"]],[["a better work-life balance than ~"],["~보다 더 나은 일과 삶의 균형"]],[["I'd like to ~", "sleep in", "for another hour"],["~하고 싶다", "늦잠 자다", "한 시간 더"]],[["If ~", "get a good evaluation", "significantly lower"],["만약 ~라면", "좋은 평가를 받다", "상당히 더 낮은"]],[["have a long way to go"],["아직 갈 길이 멀다"]],[["make me realize ~", "what I need to ~"],["~을 깨닫게 하다", "내가 무엇을 ~해야 하는지"]],[["have been trying to ~", "tone down ~"],["계속 ~하려고 노력해오다", "~의 톤을 낮추다"]],[["If possible", "tell someone to ~", "take the day off"],["가능하다면", "누군가에게 ~하라고 말하다", "하루 휴가를 내다"]]]:Number(lessonNo)===1?[[["feels like ~"], ["~처럼 느껴지다"]], [["One of my biggest goals is to ~"], ["가장 큰 목표 중 하나는 ~이다"]], [["make up my mind to ~"], ["~하기로 마음먹다"]], [["sign up for ~"], ["~에 등록하다"]], [["I've been ~ing for ..."], ["...동안 계속 ~하고 있다"]], [["still have a long way to go"], ["아직 갈 길이 멀다"]], [["have too much to drink"], ["술을 과하게 마시다"]], [["have three main functions"], ["세 가지 주요 기능이 있다"]], [["collect ~ from ..."], ["...에서 ~을 수집하다"]], [["much worse than ~"], ["~보다 훨씬 더 나쁘다/서툴다"]], [["Even though ~", "manage to ~", "get by in English"], ["비록 ~이지만", "어떻게든 ~해내다", "영어로 어떻게든 해나가다"]], [["Looking back, ...", "be proud of ~"], ["돌이켜보면", "~을 자랑스럽게 여기다"]]]:[[["go out for drinks"], ["술자리를 갖다"]], [["end up ~ing"], ["결국 ~하게 되다"]], [["social drinker"], ["사교적인 자리에서만 술을 마시는 사람"]], [["unless it's work-related"], ["업무 관련이 아니라면"]], [["quit ~ cold turkey"], ["~을 단번에 끊다"]], [["haven't ~ since then"], ["그 이후로 계속 ~하지 않았다"]], [["lead meetings confidently"], ["회의를 자신 있게 진행하다"]], [["rely on visual cues"], ["시각적 단서를 활용하다"]], [["in vivid detail"], ["아주 생생하고 자세하게"]], [["it's all a blur"], ["모든 것이 흐릿하게 기억나다"]], [["out of whack"], ["정상적이지 않은, 균형이 깨진"]], [["wake up around ~", "have trouble ~ing", "fall back asleep"], ["~시쯤 잠에서 깨다", "~하는 데 어려움을 겪다", "다시 잠들다"]], [["have a serious conflict with ~"], ["~와 심각한 갈등을 겪다"]], [["threaten to sue ~", "step in", "resolve the situation"], ["~을 고소하겠다고 하다", "개입하다", "상황을 해결하다"]]];
     const lesson1ChunkKo=["나는 영어를 진지하게 공부하기로 마음먹었다.", "나는 3년 넘게 영어를 공부해 오고 있다.", "나는 많이 향상됐지만 아직 갈 길이 멀다.", "내 가장 큰 목표 중 하나는 영어를 유창하게 말하는 것이다.", "돌이켜보면, 나는 도전했던 것이 다행이라고 생각한다.", "나는 엔지니어들과 어떻게든 의사소통해냈다.", "나는 결국 평소보다 술을 더 많이 마시게 되었다.", "나는 익숙한 주제에 대해서는 꽤 잘 말할 수 있다.", "나는 가끔 내 생각을 표현하는 데 어려움을 겪는다.", "나는 머릿속에서 한국어를 영어로 번역하는 경향이 있다.", "내 말은 내가 말하기 연습을 더 해야 한다는 것이다.", "쉽게 말하면, 우리 일은 장비 문제를 조기에 발견하는 것이다.", "핵심은 내가 이미 알고 있는 영어를 실제로 사용해야 한다는 것이다.", "나는 머릿속에서 한국어를 번역하는데, 그게 내 말하기를 느리게 만든다.", "나는 내 영어가 자연스럽게 들리는지 항상 판단할 수 있는 것은 아니다."];
     (d.corrections||[]).forEach((x,i)=>{
       const pm=corrPatternMap[i]||[[],[]];
@@ -12324,7 +12320,7 @@ function saveSelected(a){
 }
 V535.selected=getSelected();
 
-function dataFor(n){const x=Number(n);return x===9?MY_CLASS_LESSON_9:x===8?MY_CLASS_LESSON_8:x===7?MY_CLASS_LESSON_7:x===6?MY_CLASS_LESSON_6:x===5?MY_CLASS_LESSON_5:x===4?MY_CLASS_LESSON_4:x===3?MY_CLASS_LESSON_3:x===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1;}
+function dataFor(n){const x=Number(n);return x===11?MY_CLASS_LESSON_11:x===10?MY_CLASS_LESSON_10:x===9?MY_CLASS_LESSON_9:x===8?MY_CLASS_LESSON_8:x===7?MY_CLASS_LESSON_7:x===6?MY_CLASS_LESSON_6:x===5?MY_CLASS_LESSON_5:x===4?MY_CLASS_LESSON_4:x===3?MY_CLASS_LESSON_3:x===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1;}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
 function normPattern(p){
   return String(p||'').replace(/[.…]/g,' ').replace(/~ing/gi,'').replace(/~|someone|something|\.\.\./gi,' ')
@@ -12705,7 +12701,7 @@ function m536Lessons(course=m536ActiveCourse()){
 function m536Data(n,course=m536ActiveCourse()){
   if(typeof studyCourseData==='function')return studyCourseData(course,n);
   const x=Number(n);
-  return x===9?MY_CLASS_LESSON_9:x===8?MY_CLASS_LESSON_8:x===7?MY_CLASS_LESSON_7:x===6?MY_CLASS_LESSON_6:x===5?MY_CLASS_LESSON_5:x===4?MY_CLASS_LESSON_4:x===3?MY_CLASS_LESSON_3:x===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1;
+  return x===11?MY_CLASS_LESSON_11:x===10?MY_CLASS_LESSON_10:x===9?MY_CLASS_LESSON_9:x===8?MY_CLASS_LESSON_8:x===7?MY_CLASS_LESSON_7:x===6?MY_CLASS_LESSON_6:x===5?MY_CLASS_LESSON_5:x===4?MY_CLASS_LESSON_4:x===3?MY_CLASS_LESSON_3:x===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1;
 }
 function m536Label(tab){const course=m536ActiveCourse();return typeof studyCourseTabLabel==='function'?studyCourseTabLabel(course,tab):(tab==='corrections'?'핵심 교정':tab==='chunks'?'Chunk':'말하기')}
 function m536ItemCourse(x){
@@ -12899,7 +12895,7 @@ function m536StopController(keepResume=false){
   m536SyncInfinityButtons();
 }
 
-/* ===== V5.3.272 · BACKGROUND PLAYBACK POSITION STANDARD =====
+/* ===== V5.3.260 · BACKGROUND PLAYBACK POSITION STANDARD =====
    Shared by MY / SORI / OPIC. A background transition may finish only the
    repetition already in progress; it never runs ahead into unrelated items.
    On return:
@@ -12939,16 +12935,9 @@ async function m536RunFull(startAt=0,startRep=0){
   m536StopLegacyPlaybackOnly();
   const list=m536BuildPlaylist(course);
   if(!list.length){
-    // v5.3.272: in overall repeat, empty favorite-only course = skip to next course.
-    if(window.MV_ALL_REPEAT_219?.active && typeof window.MV_COURSE_ONCE_COMPLETE_219==='function'){
-      const done=window.MV_COURSE_ONCE_COMPLETE_219;
-      window.MV_COURSE_ONCE_COMPLETE_219=null;
-      setTimeout(()=>done(course),80);
-      return false;
-    }
     const courseName=(typeof studyCourseConfig==='function'?studyCourseConfig(ACTIVE_STUDY_COURSE)?.title:null)||'학습';
     alert(`반복할 ${courseName} 콘텐츠가 없습니다.`);
-    return false;
+    return;
   }
 
   M536.playlist=list;
@@ -13013,7 +13002,7 @@ async function m536RunFull(startAt=0,startRep=0){
     });
     M536.cursor=next;
 
-    // v5.3.272: optional outer-orchestrator completion hook.
+    // v5.3.260: optional outer-orchestrator completion hook.
     // Dormant during normal MY/SORI/OPIC repeat, so individual repeat behavior is unchanged.
     if(next===0 && typeof window.MV_COURSE_ONCE_COMPLETE_219==='function'){
       const done=window.MV_COURSE_ONCE_COMPLETE_219;
@@ -13026,7 +13015,7 @@ async function m536RunFull(startAt=0,startRep=0){
       return;
     }
 
-    // v5.3.272: deterministic integrated controller - one playlist per course.
+    // v5.3.260: deterministic integrated controller - one playlist per course.
     if(window.MV_ALL_REPEAT_215?.active && window.MV_MIXED_COURSE_ONCE_215 && next===0){
       window.MV_MIXED_COURSE_ONCE_215=false;
       M536.busy=false;
@@ -13037,7 +13026,7 @@ async function m536RunFull(startAt=0,startRep=0){
       return;
     }
 
-    // Legacy v5.3.272 hook retained outside v215 sessions.
+    // Legacy v5.3.260 hook retained outside v215 sessions.
     if(window.MV_ALL_REPEAT_209?.active && window.MV_MIXED_COURSE_ONCE_209 && next===0){
       window.MV_MIXED_COURSE_ONCE_209=false;
       M536.busy=false;
@@ -13943,7 +13932,7 @@ function goMyClassTab(dir){
   let nextLesson=Number(myClassLessonNo)||1;
   const maxLesson=(typeof studyCourseLessonCount==='function'?studyCourseLessonCount(ACTIVE_STUDY_COURSE):Object.keys(studyCourseMeta?.(ACTIVE_STUDY_COURSE)||{}).length)||1;
 
-  // v5.3.272 shared swipe standard:
+  // v5.3.260 shared swipe standard:
   // first tab + right swipe => previous lesson's last tab
   // last tab + left swipe => next lesson's first tab
   if(ni<0){
@@ -14123,7 +14112,7 @@ function addHint(){
  h.innerHTML='↔ 탭 이동 · 맨 위에서 ↓ 이전 수업 · 맨 아래에서 ↑ 다음 수업도 같은 카드 Swipe';
  root.parentNode&&root.parentNode.insertBefore(h,root);
 }
-// v5.3.272 shared local-listen gesture unlock (MY/SORI/OPIC).
+// v5.3.260 shared local-listen gesture unlock (MY/SORI/OPIC).
 document.addEventListener('pointerdown',e=>{
  const b=e.target.closest?.('#myClassPage .myStudyBtn.primary');
  if(!b)return;
@@ -14262,7 +14251,7 @@ function legend(text,lesson){
 function decorate(){
  if(String(ACTIVE_STUDY_COURSE||'my')!=='my')return; // V5.3.189: MY-only decorator must never overwrite SORI/OPIC speaking data
  if(typeof myClassTab==='undefined'||myClassTab!=='speaking')return;
- const lesson=Number(myClassLessonNo||1),data=lesson===9?MY_CLASS_LESSON_9:lesson===8?MY_CLASS_LESSON_8:lesson===7?MY_CLASS_LESSON_7:lesson===6?MY_CLASS_LESSON_6:lesson===5?MY_CLASS_LESSON_5:lesson===4?MY_CLASS_LESSON_4:lesson===3?MY_CLASS_LESSON_3:lesson===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1;
+ const lesson=Number(myClassLessonNo||1),data=lesson===11?MY_CLASS_LESSON_11:lesson===10?MY_CLASS_LESSON_10:lesson===9?MY_CLASS_LESSON_9:lesson===8?MY_CLASS_LESSON_8:lesson===7?MY_CLASS_LESSON_7:lesson===6?MY_CLASS_LESSON_6:lesson===5?MY_CLASS_LESSON_5:lesson===4?MY_CLASS_LESSON_4:lesson===3?MY_CLASS_LESSON_3:lesson===2?MY_CLASS_LESSON_2:MY_CLASS_LESSON_1;
  (data.speaking||[]).forEach((x,i)=>{
   const block=document.getElementById(`mySpeakBlock${i}`),textEl=document.getElementById(`myspeak${i}`);if(!block||!textEl)return;
   const parts=myClassSplitSentences(x.text||'');
@@ -14831,7 +14820,7 @@ function installVisibleBuildBadge(){
   if(!badge){
     badge=document.createElement('div');
     badge.id='mvBuildBadge';
-    badge.textContent='v5.3.272';
+    badge.textContent='v5.3.260';
     badge.title='현재 실행 중인 MY VOCA 빌드';
     document.body.appendChild(badge);
   }
@@ -15413,7 +15402,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   }
 
 
-  /* ===== V5.3.272 · REPEAT PART SELECTION STANDARD ===== */
+  /* ===== V5.3.260 · REPEAT PART SELECTION STANDARD ===== */
   const STUDY_REPEAT_PARTS_206={
     day:{items:[['word','단어·뜻'],['example','예문'],['paraphrase','패러프레이즈'],['extra','추가 표현']],defaults:['word','example']},
     my:{items:[['corrections','핵심 교정'],['chunks','Chunk'],['speaking','말하기']],defaults:['corrections','chunks','speaking']},
@@ -15536,7 +15525,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   }
 
 
-  /* ===== V5.3.272 · CROSS-COURSE ALL REPEAT STANDARD ===== */
+  /* ===== V5.3.260 · CROSS-COURSE ALL REPEAT STANDARD ===== */
   const MV_ALL_REPEAT_209={
     active:false,
     order:['day','my','sori','opic'],
@@ -15667,7 +15656,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   window.allRepeatAdvance209=allRepeatAdvance209;
 
   function startAllRepeat209(explicitStartMode){
-    // v5.3.272: start from the exact mode the learner has clicked.
+    // v5.3.260: start from the exact mode the learner has clicked.
     // Do not infer a stale/default DAY state from a rebuilt DOM.
     const validModes=['day','my','sori','opic'];
     const startMode=validModes.includes(explicitStartMode)?explicitStartMode:currentHomeStudyMode();
@@ -15704,7 +15693,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   window.toggleAllRepeat214=toggleAllRepeat214;
 
 
-  /* ===== V5.3.272 · DETERMINISTIC CROSS-COURSE REPEAT CONTROLLER ===== */
+  /* ===== V5.3.260 · DETERMINISTIC CROSS-COURSE REPEAT CONTROLLER ===== */
   const MV_ALL_REPEAT_215={active:false,queue:[],index:0,current:'',cycle:0,advancing:false,token:0,snapshots:null};
   window.MV_ALL_REPEAT_215=MV_ALL_REPEAT_215;
 
@@ -15854,7 +15843,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   window.toggleAllRepeat215=toggleAllRepeat215;
 
 
-  /* ===== V5.3.272 · ISOLATED OUTER ALL-REPEAT ORCHESTRATOR =====
+  /* ===== V5.3.260 · ISOLATED OUTER ALL-REPEAT ORCHESTRATOR =====
      Normal DAY/MY/SORI/OPIC engines are not replaced. This layer only:
      1) reads saved selections, 2) calls the existing starter, 3) receives one completion callback.
   */
@@ -16004,40 +15993,10 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
       return false;
     }
 
-    // Restore the favorite-only choice captured when 전체 반복 began.
-    // This prevents a hidden course UI from silently reverting to full playback.
-    const favoriteOnly=!!MV_ALL_REPEAT_219.favoriteOnlySnapshot?.[course];
-    if(['my','sori','opic'].includes(course)){
-      try{window.studyFavoriteSetOnly239?.(course,favoriteOnly)}catch(e){}
-    }
-
-    // If this course is in favorite-only mode, inspect the EXACT playlist
-    // before starting. Zero favorites means SKIP this course, never play all.
-    if(favoriteOnly){
-      let favoriteList=[];
-      try{
-        applySnapshotToVisibleChecks222(course);
-        restoreSnapshot219(course);
-        favoriteList=typeof window.m536BuildPlaylist==='function'
-          ? window.m536BuildPlaylist(course)
-          : [];
-      }catch(e){favoriteList=[]}
-
-      if(!favoriteList.length){
-        window.MV_COURSE_ONCE_COMPLETE_219=null;
-        setTimeout(complete,80);
-        return false;
-      }
-    }
-
     setTimeout(()=>{
       if(!s.active||token!==s.token||s.current!==course)return;
       try{
-        const started=startIndividualCourseForOverall222(course);
-        if(started===false){
-          window.MV_COURSE_ONCE_COMPLETE_219=null;
-          setTimeout(complete,80);
-        }
+        startIndividualCourseForOverall222(course);
       }catch(err){
         window.MV_ALL_REPEAT_LAST_ERROR_222=String(err?.stack||err);
         window.MV_COURSE_ONCE_COMPLETE_219=null;
@@ -16071,14 +16030,6 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     try{MV_ALL_REPEAT_215.active=false;MV_ALL_REPEAT_215.queue=[]}catch(e){}
     window.MV_MIXED_COURSE_ONCE_209=false;
     window.MV_MIXED_COURSE_ONCE_215=false;
-
-    // v5.3.272: freeze favorite-only state for the whole overall-repeat session.
-    // Course switches / hidden UI rebuilds must never fall back to "play all".
-    s.favoriteOnlySnapshot={
-      my:!!window.studyFavoriteOnly239?.('my'),
-      sori:!!window.studyFavoriteOnly239?.('sori'),
-      opic:!!window.studyFavoriteOnly239?.('opic')
-    };
 
     s.active=true;s.snapshot=snap;s.queue=q;s.index=0;s.current='';s.token++;
     runAllRepeatCourse219(q[0],s.token);
@@ -16123,10 +16074,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     if(typeof window.studyFavoriteOnly239==='function' && window.studyFavoriteOnly239(mode)){
       const favoriteList=(typeof window.m536BuildPlaylist==='function'?window.m536BuildPlaylist(mode):[]);
       if(!favoriteList.length){
-        // During 전체 반복 this is a normal skip condition, not an error.
-        if(!window.MV_ALL_REPEAT_INTERNAL_START_222){
-          alert('선택한 수업과 반복 항목에 즐겨찾기로 표시된 콘텐츠가 없습니다.');
-        }
+        alert('선택한 수업과 반복 항목에 즐겨찾기로 표시된 콘텐츠가 없습니다.');
         return false;
       }
     }
@@ -16531,7 +16479,7 @@ async function studySpeakSpeakingCard193(index,block=null){
   MY_CLASS_PLAY.paused=false;
   const focusEl=block||document.getElementById(`mySpeakBlock${index}`);
   if(focusEl)myClassFocus?.(focusEl);
-  // v5.3.272: unlock from the same tap, then let Samsung/content:// TTS settle
+  // v5.3.260: unlock from the same tap, then let Samsung/content:// TTS settle
   // BEFORE the first audible item (the question/cue) is queued.
   try{unlockTTSFromGesture?.()}catch(e){}
   try{if(window.speechSynthesis?.paused)window.speechSynthesis.resume()}catch(e){}
@@ -16552,7 +16500,7 @@ window.studySpeakSpeakingCard193=studySpeakSpeakingCard193;
 
 function mvSpeakingQuestionAudioAudit238(){
   return {
-    version:'v5.3.272',
+    version:'v5.3.260',
     order:'question/cue -> answer',
     androidContentFix:'silent unlock settles before first audible question',
     shared:['my','sori','opic','full','infinite']
@@ -16563,7 +16511,7 @@ window.mvSpeakingQuestionAudioAudit238=mvSpeakingQuestionAudioAudit238;
 function mvSpeakingQuestionFirstAudit236(){
   const courses=['my','sori','opic'];
   return {
-    version:'v5.3.272',
+    version:'v5.3.260',
     courses:courses,
     individualButton:'studySpeakSpeakingCard193',
     repeatEngine:'studySpeakQuestionThenAnswer193',
@@ -16691,7 +16639,7 @@ setTimeout(()=>{try{studyBindSpeakingPlayback193()}catch(e){}},0);
 
 
 <script id="v53197PatternGrammarSlotStandard">
-/* ===== V5.3.272 · PATTERN GRAMMAR-SLOT HIGHLIGHT STANDARD =====
+/* ===== V5.3.260 · PATTERN GRAMMAR-SLOT HIGHLIGHT STANDARD =====
    All courses use studyFindPatternHits(). Grammar labels such as S/V/O/C/A/B
    are placeholders only; actual sentence words are highlighted instead.
 */
@@ -16704,19 +16652,19 @@ function mvPatternGrammarSlotAudit197(){
     ['make someone think that ~','Seeing them makes me think that natural aging may be better.']
   ];
   const rows=cases.map(([pattern,text])=>({pattern,text,fixedParts:studyPatternFixedParts(pattern),hits:studyFindPatternHits(text,pattern)}));
-  return {version:'v5.3.272',rule:'S/V/O/C/A/B are grammar slots, never literal match tokens',passed:rows.every(r=>r.hits.length>0),rows};
+  return {version:'v5.3.260',rule:'S/V/O/C/A/B are grammar slots, never literal match tokens',passed:rows.every(r=>r.hits.length>0),rows};
 }
 window.mvPatternGrammarSlotAudit197=mvPatternGrammarSlotAudit197;
 </script>
 
 
 <script>
-/* ===== V5.3.272 · OPIC REGISTRY CARD AUDIT ===== */
+/* ===== V5.3.260 · OPIC REGISTRY CARD AUDIT ===== */
 window.mvOpicRegistryAudit202=function(){
   const meta=studyCourseMeta('opic')||{};
   const lessons=Object.keys(meta).map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
   return {
-    version:'v5.3.272',
+    version:'v5.3.260',
     lessons,
     lessonCount:studyCourseLessonCount('opic'),
     cards:[...document.querySelectorAll('#homePage .opicClassSection .opicCourseCard')].map(c=>({id:c.id,lesson:Number(c.dataset.studyLesson),title:c.querySelector('.myClassTop b')?.textContent||''})),
@@ -16735,7 +16683,7 @@ window.mvAllRepeatAudit211=function(){
     try{selections[c]=studyCourseSelectedLessons(c)}catch(e){selections[c]=[]}
   }
   return {
-    version:'v5.3.272',
+    version:'v5.3.260',
     currentMode:mode,
     queue:typeof allRepeatQueue209==='function'?allRepeatQueue209(mode):[],
     selections,
@@ -16755,7 +16703,7 @@ window.mvAllRepeatAudit212=function(){
     try{selected[c]=studyCourseSelectedLessons(c)}catch(e){selected[c]=[]}
   }
   return {
-    version:'v5.3.272',
+    version:'v5.3.260',
     startMode:mode,
     active:!!window.MV_ALL_REPEAT_209?.active,
     current:window.MV_ALL_REPEAT_209?.current||'',
@@ -16775,7 +16723,7 @@ window.mvAllRepeatAudit213=function(){
   const selected={};
   try{selected.day=JSON.parse(localStorage.getItem(selectedDaysKey())||'[]')}catch(e){selected.day=[]}
   for(const c of ['my','sori','opic']){try{selected[c]=studyCourseSelectedLessons(c)}catch(e){selected[c]=[]}}
-  return {version:'v5.3.272',visibleMode:map[active?.id]||null,savedMode:localStorage.getItem('mv_homeStudyMode212'),
+  return {version:'v5.3.260',visibleMode:map[active?.id]||null,savedMode:localStorage.getItem('mv_homeStudyMode212'),
     queue:[...(window.MV_ALL_REPEAT_209?.queue||[])],current:window.MV_ALL_REPEAT_209?.current||'',
     active:!!window.MV_ALL_REPEAT_209?.active,selected,dayActive:typeof AUTO!=='undefined'?AUTO.active:null,
     dayPass:typeof AUTO!=='undefined'?AUTO.pass:null,dayRepeats:typeof AUTO!=='undefined'?AUTO.repeats:null};
@@ -16788,7 +16736,7 @@ window.mvAllRepeatAudit214=function(){
   const a=document.querySelector('#homeStudyModePanel .homeStudyModeBtn.active');
   const map={homeModeDay:'day',homeModeMy:'my',homeModeSori:'sori',homeModeOpic:'opic'};
   return {
-    version:'v5.3.272',
+    version:'v5.3.260',
     visibleMode:map[a?.id]||null,
     enabled:!!document.getElementById('homeAllRepeat209')?.checked,
     active:!!window.MV_ALL_REPEAT_209?.active,
@@ -16819,7 +16767,7 @@ window.mvAllRepeatAudit214=function(){
 <script id="v532215AllRepeatAudit">
 window.mvAllRepeatAudit215=function(){
   const s=window.MV_ALL_REPEAT_215||{};
-  return {version:'v5.3.272',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],index:s.index||0,cycle:s.cycle||0,
+  return {version:'v5.3.260',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],index:s.index||0,cycle:s.cycle||0,
     advancing:!!s.advancing,snapshots:s.snapshots||null,dayActive:typeof AUTO!=='undefined'?AUTO.active:null,
     dayPass:typeof AUTO!=='undefined'?AUTO.pass:null,dayRepeats:typeof AUTO!=='undefined'?AUTO.repeats:null,
     m536Mode:typeof M536!=='undefined'?M536.mode:null,m536Course:typeof M536!=='undefined'?M536.course:null,
@@ -16843,7 +16791,7 @@ window.mvAllRepeatTrace216=function(event,extra={}){
 <script id="v532217DayAdvanceAudit">
 window.mvDayAdvanceAudit217=function(){
   return {
-    version:'v5.3.272',
+    version:'v5.3.260',
     integrated:!!window.MV_ALL_REPEAT_215?.active,
     currentCourse:window.MV_ALL_REPEAT_215?.current||'',
     queue:[...(window.MV_ALL_REPEAT_215?.queue||[])],
@@ -16865,7 +16813,7 @@ window.mvDayAdvanceAudit217=function(){
 window.mvAllRepeatAudit219=function(){
   const s=window.MV_ALL_REPEAT_219||{};
   return {
-    version:'v5.3.272',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],
+    version:'v5.3.260',active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],
     index:s.index??null,snapshot:s.snapshot||null,
     dayHook:typeof window.MV_DAY_ONCE_COMPLETE_219,
     courseHook:typeof window.MV_COURSE_ONCE_COMPLETE_219,
@@ -16904,7 +16852,7 @@ window.mvAllRepeatAudit219=function(){
 window.mvControllerAudit221=function(){
   const b=document.getElementById('homeAllRepeatStart210');
   return {
-    version:'v5.3.272',
+    version:'v5.3.260',
     buttonText:b?.textContent||'',
     v209:!!window.MV_ALL_REPEAT_209?.active,
     v215:!!window.MV_ALL_REPEAT_215?.active,
@@ -16926,7 +16874,7 @@ window.mvControllerAudit221=function(){
 window.mvOverallIsolationAudit222=function(){
   const s=window.MV_ALL_REPEAT_219||{};
   return {
-    version:'v5.3.272',
+    version:'v5.3.260',
     active:!!s.active,current:s.current||'',queue:[...(s.queue||[])],index:s.index??null,
     snapshot:s.snapshot||null,
     internalStart:!!window.MV_ALL_REPEAT_INTERNAL_START_222,
@@ -16944,7 +16892,7 @@ window.mvOverallIsolationAudit222=function(){
 
 
 <script id="v532239StudyFavoriteStandard">
-/* ===== V5.3.272 · CORRECTION / CHUNK / SPEAKING FAVORITE STANDARD ===== */
+/* ===== V5.3.260 · CORRECTION / CHUNK / SPEAKING FAVORITE STANDARD ===== */
 (function(){
 'use strict';
 const MV_STUDY_FAVORITES_KEY_239='mv_study_favorites_239';
@@ -17116,7 +17064,7 @@ document.addEventListener('click',(e)=>{
 
 window.mvStudyFavoriteAudit239=function(){
   return {
-    version:'v5.3.272',
+    version:'v5.3.260',
     storage:MV_STUDY_FAVORITES_KEY_239,
     tabs:['corrections','chunks','speaking'],
     courses:['my','sori','opic'],
@@ -17136,7 +17084,7 @@ window.mvStudyFavoriteAudit239=function(){
 window.mvSori3VisibilityAudit241=function(){
   const card=document.getElementById('soriGroup3Card');
   const sec=document.querySelector('.soriClassSection');
-  return {version:'v5.3.272',cardExists:!!card,insideSori:!!card&&card.closest('.soriClassSection')===sec,
+  return {version:'v5.3.260',cardExists:!!card,insideSori:!!card&&card.closest('.soriClassSection')===sec,
     lesson:studyCardCourseLesson(card)?.lesson||0,lessonCount:studyCourseLessonCount('sori')};
 };
 </script>
@@ -17367,7 +17315,7 @@ window.mvSwipePage246={
   forceCleanup:()=>cleanup246()
 };
 window.mvSwipePageAudit246=()=>({
- version:'v5.3.272',
+ version:'v5.3.260',
  mode:'2D full-screen card drag',
  followsX:true,followsY:true,velocityAware:true,
  navigation:'once on touchend',
@@ -17381,7 +17329,7 @@ window.mvSwipePageAudit246=()=>({
 <script id="v532247VerticalTiltAudit">
 window.mvSwipeVerticalTiltAudit247=function(){
   return {
-    version:'v5.3.272',
+    version:'v5.3.260',
     verticalTilt:'opposite by dy sign',
     upward:'rotateZ negative',
     downward:'rotateZ positive',
@@ -17395,7 +17343,7 @@ window.mvSwipeVerticalTiltAudit247=function(){
 <script id="v532248BidirectionalTiltAudit">
 window.mvSwipeBidirectionalTiltAudit248=function(){
   return {
-    version:'v5.3.272',
+    version:'v5.3.260',
     leftSwipe:'vertical tilt flips by up/down',
     rightSwipe:'mirrored vertical tilt flips by up/down',
     mirroredByHorizontalDirection:true,
@@ -17409,7 +17357,7 @@ window.mvSwipeBidirectionalTiltAudit248=function(){
 <script id="v532249RightTiltVisualFixAudit">
 window.mvSwipeRightTiltVisualFix249=function(){
   return {
-    version:'v5.3.272',
+    version:'v5.3.260',
     fix:'remove rotateY visual cancellation + quadrant transform-origin',
     leftSwipe:{up:'opposite angle',down:'opposite angle'},
     rightSwipe:{up:'mirrored angle',down:'mirrored angle'},
@@ -17423,7 +17371,7 @@ window.mvSwipeRightTiltVisualFix249=function(){
 <script id="v532250SwipeCommitAudit">
 window.mvSwipeCommitAudit250=function(){
   return {
-    version:'v5.3.272',
+    version:'v5.3.260',
     completion:'2D distance + velocity',
     xThreshold:.10,
     diagonalThreshold:.18,
@@ -17439,7 +17387,7 @@ window.mvSwipeCommitAudit250=function(){
 <script id="v532251SwipeCommitSamsungAudit">
 window.mvSwipeCommitSamsungAudit251=function(){
   return {
-    version:'v5.3.272',
+    version:'v5.3.260',
     samsungTouchCancel:'uses normal commit thresholds instead of forced cancel',
     destination:'resolved explicitly before render',
     expected:'corrections left swipe -> chunks',
@@ -17633,7 +17581,7 @@ window.mvVerticalLessonSwipe252={
   forceCleanup:()=>cleanup252()
 };
 window.mvVerticalLessonSwipeAudit252=()=>({
-  version:'v5.3.272',
+  version:'v5.3.260',
   topPullDown:'previous lesson same tab',
   bottomPushUp:'next lesson same tab',
   liveCard:true,
@@ -17649,7 +17597,7 @@ window.mvVerticalLessonSwipeAudit252=()=>({
 <script id="v532253SwipeCornerCleanupAudit">
 window.mvSwipeCornerCleanupAudit253=function(){
   return {
-    version:'v5.3.272',
+    version:'v5.3.260',
     fix:'clean swipe-card corners and duplicate floating overlays',
     cardRadius:0,
     shadow:'reduced',
@@ -17783,7 +17731,7 @@ window.MV_SWIPE_STANDARD_254={
   active:()=>!!U,forceCleanup:()=>cleanup254()
 };
 window.mvSwipeStandardAudit254=()=>({
-  version:'v5.3.272',
+  version:'v5.3.260',
   standard:'full-screen snapshot + finger-follow + mirrored tilt + velocity commit',
   applied:['MY/SORI/OPIC tabs','MY/SORI/OPIC lesson edges','DAY learning cards','word quiz questions']
 });
@@ -17853,21 +17801,32 @@ async function autoTurn255(commit,dir=1){
   const rotZ=dir>0?-8:8;
   card.style.transformOrigin=dir>0?'right bottom':'left bottom';
 
-  // v5.3.272 · continuous human-speed page turn.
-  // No mid-point pause: one uninterrupted motion from start to finish.
-  await new Promise(r=>setTimeout(r,110));
+  // Human-like page turn: brief grab -> visible mid-swipe -> finish.
+  await new Promise(r=>setTimeout(r,140));
 
   await new Promise(resolve=>{
-    const dur=720;
-    card.style.transition=`transform ${dur}ms cubic-bezier(.20,.62,.18,1),opacity ${dur}ms cubic-bezier(.55,.05,.70,.35),filter ${dur}ms ease-out`;
-    shade.style.transition=`opacity ${dur}ms ease-out`;
+    const phase1=330;
+    card.style.transition=`transform ${phase1}ms cubic-bezier(.22,.64,.20,1),filter ${phase1}ms ease-out`;
+    shade.style.transition=`opacity ${phase1}ms ease-out`;
+    requestAnimationFrame(()=>{
+      card.style.transform=`translate3d(${targetX*.48}px,${targetY*.45}px,0) rotateZ(${rotZ*.58}deg) scale(.992)`;
+      card.style.filter='brightness(.965)';
+      shade.style.opacity='.08';
+    });
+    setTimeout(resolve,phase1+25);
+  });
+
+  await new Promise(resolve=>{
+    const phase2=390;
+    card.style.transition=`transform ${phase2}ms cubic-bezier(.18,.78,.16,1),opacity ${phase2}ms ease-out,filter ${phase2}ms ease-out`;
+    shade.style.transition=`opacity ${phase2}ms ease-out`;
     requestAnimationFrame(()=>{
       card.style.transform=`translate3d(${targetX}px,${targetY}px,0) rotateZ(${rotZ}deg) scale(.98)`;
       card.style.opacity='0';
       card.style.filter='brightness(.91)';
       shade.style.opacity='0';
     });
-    setTimeout(resolve,dur+40);
+    setTimeout(resolve,phase2+35);
   });
 
   try{stage.remove()}catch(e){}
@@ -17879,7 +17838,7 @@ async function autoTurn255(commit,dir=1){
 
 window.mvAutoPlaybackPageTurn255=autoTurn255;
 window.mvAutoPlaybackPageTurnAudit255=()=>({
-  version:'v5.3.272',
+  version:'v5.3.260',
   use:'automatic full-playback tab/lesson screen changes',
   style:'same full-screen swipe-card standard',
   destinationStartsAtTop:true,
@@ -17918,22 +17877,24 @@ window.mvAutoDayPlaybackTurn255=async function(commit){
   const tx=-w*1.16,ty=-Math.min(h*.10,80);
   card.style.transformOrigin='right bottom';
 
-  // v5.3.272 · DAY uses the same uninterrupted page-turn timing.
-  await new Promise(r=>setTimeout(r,110));
+  await new Promise(r=>setTimeout(r,140));
 
-  const dur=700;
-  card.style.transition=`transform ${dur}ms cubic-bezier(.20,.62,.18,1),opacity ${dur}ms cubic-bezier(.55,.05,.70,.35),filter ${dur}ms ease-out`;
+  const p1=320;
+  card.style.transition=`transform ${p1}ms cubic-bezier(.22,.64,.20,1),filter ${p1}ms ease-out`;
+  requestAnimationFrame(()=>{
+    card.style.transform=`translate3d(${tx*.48}px,${ty*.45}px,0) rotateZ(-4.6deg) scale(.992)`;
+    card.style.filter='brightness(.965)';
+  });
+  await new Promise(r=>setTimeout(r,p1+25));
+
+  const p2=380;
+  card.style.transition=`transform ${p2}ms cubic-bezier(.18,.78,.16,1),opacity ${p2}ms ease-out,filter ${p2}ms ease-out`;
   requestAnimationFrame(()=>{
     card.style.transform=`translate3d(${tx}px,${ty}px,0) rotateZ(-8deg) scale(.98)`;
-    card.style.opacity='0';
-    card.style.filter='brightness(.91)';
+    card.style.opacity='0';card.style.filter='brightness(.91)';
   });
-  await new Promise(r=>setTimeout(r,dur+40));
-  stage.remove();
-  document.body.classList.remove('mvSwipeActive246');
-
-  // Ensure the destination frame has actually painted before resolving.
-  await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+  await new Promise(r=>setTimeout(r,p2+35));
+  stage.remove();document.body.classList.remove('mvSwipeActive246');
   return true;
 };
 </script>
@@ -17942,7 +17903,7 @@ window.mvAutoDayPlaybackTurn255=async function(commit){
 <script id="v532256HumanAutoSwipeSpeedAudit">
 window.mvHumanAutoSwipeSpeedAudit256=function(){
   return {
-    version:'v5.3.272',
+    version:'v5.3.260',
     automaticTurn:'human-like visible speed',
     preHoldMs:140,
     midSwipeMs:330,
@@ -17953,537 +17914,21 @@ window.mvHumanAutoSwipeSpeedAudit256=function(){
 };
 </script>
 
-
-<script id="v532259PlaybackProgressStatusDriven">
-(function(){
-'use strict';
-
-function parts259(){
-  const status=document.getElementById('myClassPlaybackStatus');
-  return {
-    status,
-    box:status?.querySelector('.mvPlaybackProgress258'),
-    fill:status?.querySelector('.mvPlaybackFill258'),
-    count:status?.querySelector('.mvPlaybackCount258')
-  };
-}
-function hide259(){
-  const {status,box,fill,count}=parts259();
-  box?.classList.remove('on');
-  status?.classList.remove('mvProgress258On');
-  if(fill)fill.style.width='0%';
-  if(count)count.textContent='0/0';
-}
-function total259(tab,lesson,course){
-  try{
-    const d=studyCourseData?.(course,lesson);
-    const a=d?.[tab];
-    if(Array.isArray(a)&&a.length)return a.length;
-  }catch(e){}
-  // DOM fallback: current rendered cards.
-  const map={corrections:'.myStudyCard[data-study-tab="corrections"],.myCorrectionCard',
-             chunks:'.myStudyCard[data-study-tab="chunks"],.myChunkCard',
-             speaking:'.myStudyCard[data-study-tab="speaking"],.mySpeakBlock'};
-  try{
-    const n=document.querySelectorAll(map[tab]||'.myStudyCard').length;
-    if(n)return n;
-  }catch(e){}
-  return 0;
-}
-function sync259(text,playing){
-  try{
-    if(!playing){hide259();return}
-    const {status,box,fill,count}=parts259();
-    if(!status||!box||!fill||!count)return;
-
-    const s=String(text||'');
-    let tab='';
-    if(/핵심\s*교정|Correction/i.test(s))tab='corrections';
-    else if(/Chunk/i.test(s))tab='chunks';
-    else if(/말하기|Speaking/i.test(s))tab='speaking';
-    else {hide259();return}
-
-    // Status examples: "전체 반복 · 수업 1 · 핵심 교정 10 · 문장 2/2"
-    // or "Chunk · 5/12 · 1/2". Prefer the card number immediately after tab label.
-    let current=0;
-    const patterns=tab==='corrections'
-      ? [/핵심\s*교정\s*(\d+)/i,/Correction\s*(\d+)/i]
-      : tab==='chunks'
-      ? [/Chunk\s*(\d+)/i]
-      : [/말하기\s*(\d+)/i,/Speaking\s*(\d+)/i];
-    for(const rx of patterns){const m=s.match(rx);if(m){current=Number(m[1])||0;break}}
-
-    const lessonMatch=s.match(/수업\s*(\d+)/);
-    const lesson=lessonMatch?Number(lessonMatch[1]):Number(window.myClassLessonNo||1);
-    const course=String(window.ACTIVE_STUDY_COURSE||window.M536?.course||'my');
-    let total=total259(tab,lesson,course);
-
-    const playlist=Array.isArray(window.M536?.playlist)?window.M536.playlist:[];
-    const samePlaylist=playlist.filter(x=>
-      Number(x.lesson)===lesson &&
-      String(x.tab||'')===tab &&
-      String(x.course||course)===course
-    );
-    const configuredFavoriteOnly=!!window.studyFavoriteOnly239?.(course);
-    const favoriteCheck=document.querySelector('[data-favorite-only-239="1"]');
-    const favoriteCheckOn=!!favoriteCheck?.checked;
-    const favoriteStartLabel=/즐겨찾기\s*집중\s*반복/.test(String(document.getElementById('sharedStudyStart')?.textContent||''));
-    const favoriteOnly=configuredFavoriteOnly || favoriteCheckOn || favoriteStartLabel;
-
-    // Favorite-only STANDARD:
-    // Never infer the denominator from the full tab or from original card numbering.
-    // Count the actual ★ favorite indices in THIS lesson + THIS tab.
-    // Example: favorites are original cards 2, 7, 11 among 12 =>
-    // progress MUST be 1/3, 2/3, 3/3 (not 2/12, 7/12, 11/12).
-    let favoriteIndices=[];
-    if(favoriteOnly){
-      try{
-        const d=window.studyCourseData?.(course,lesson)||{};
-        const rows=Array.isArray(d?.[tab])?d[tab]:[];
-        favoriteIndices=rows.map((_,idx)=>idx).filter(idx=>
-          !!window.studyFavoriteHas239?.(course,lesson,tab,idx)
-        );
-      }catch(e){favoriteIndices=[]}
-    }
-
-    if(favoriteOnly && favoriteIndices.length){
-      total=favoriteIndices.length;
-
-      // Resolve the actual original card index currently being played.
-      const item=playlist[Number(window.M536?.cursor)||0];
-      let originalIndex=-1;
-      if(item && Number(item.lesson)===lesson && String(item.tab||'')===tab){
-        originalIndex=Number(item.index);
-      }
-      if(!Number.isFinite(originalIndex)||originalIndex<0){
-        // Status label is 1-based original card number, e.g. "핵심 교정 11".
-        originalIndex=Math.max(0,(Number(current)||1)-1);
-      }
-
-      const favoritePos=favoriteIndices.indexOf(originalIndex);
-      if(favoritePos>=0)current=favoritePos+1;
-      else{
-        // Last-resort fallback: match the closest favorite position without
-        // ever using the original 1..N card number as the displayed numerator.
-        const prior=favoriteIndices.filter(idx=>idx<=originalIndex).length;
-        current=Math.max(1,Math.min(total,prior||1));
-      }
-    }else{
-      // Original v259 fallback for normal playback.
-      if(!total && samePlaylist.length)total=samePlaylist.length;
-      if(!current && samePlaylist.length){
-        const item=playlist[Number(window.M536?.cursor)||0];
-        if(item && Number(item.lesson)===lesson && String(item.tab||'')===tab){
-          const key=typeof window.m536ItemKey==='function'?window.m536ItemKey(item):null;
-          const idx=samePlaylist.findIndex(x=>key&&window.m536ItemKey(x)===key);
-          current=idx>=0?idx+1:(Number(item.index)||0)+1;
-          if(!total)total=samePlaylist.length;
-        }
-      }
-    }
-
-    if(!total||!current){hide259();return}
-    current=Math.max(1,Math.min(total,current));
-    fill.style.width=(current/total*100)+'%';
-    count.textContent=`${current}/${total}`;
-    box.classList.add('on');
-    status.classList.add('mvProgress258On');
-  }catch(e){hide259()}
-}
-
-const original=window.myClassSetStatus;
-if(typeof original==='function'){
-  window.myClassSetStatus=function(text,playing=false){
-    const result=original.apply(this,arguments);
-    // UI-only: update after canonical status paint; never changes playback state.
-    try{sync259(text,playing)}catch(e){}
-    return result;
-  };
-}
-window.mvPlaybackProgressSync259=sync259;
-window.mvPlaybackProgressAudit259=()=>({
-  version:'v5.3.272',
-  trigger:'canonical status paint',
-  playbackEngineTouched:false,
-  progress:'current card / total cards in current lesson+tab',
-  scope:['MY','SORI','OPIC']
-});
-})();
+<script id="v532257MyLesson10Audit">
+window.mvMyLesson10Audit257=()=>({version:'v5.3.260',lesson:10,date:'9/15',corrections:12,chunks:12,speaking:5,habits:5,title:'Natural Rhythm & Social Relationships'});
 </script>
 
-
-<script id="v532261FavoriteProgressSafeAudit">
-window.mvFavoriteProgressSafeAudit261=function(){
-  return {
-    version:'v5.3.272',
-    base:'v5.3.272 visible progress implementation',
-    favoriteOnly:'counter uses filtered active playlist',
-    normalPlayback:'v259 logic preserved',
-    playbackEngineTouched:false
-  };
+<script id="v532258MyClassSep17Audit">
+window.mvMyClassSep17Audit258=function(){
+ const d=MY_CLASS_LESSON_11;
+ return {version:'v5.3.260',lesson:11,title:MY_CLASS_META[11]?.title,
+ corrections:d.corrections.length,chunks:d.chunks.length,speaking:d.speaking.length,habits:d.habits.length,
+ card:!!document.getElementById('myClassLesson11Card'),
+ keyFocus:['on behalf of','notice vs notify','fair-weather friend','active review chunks']};
 };
 </script>
 
-
-<script id="v532262FavoriteDenominatorAudit">
-window.mvFavoriteDenominatorAudit262=function(){
- return {
-   version:'v5.3.272',
-   rule:'favorite-only 100% = actual filtered favorites in current lesson+tab',
-   example:'3 favorites among 12 => 1/3, 2/3, 3/3',
-   detection:['favorite-only setting','actual playlist smaller than full tab'],
-   base:'v5.3.272 / v5.3.259 visible progress path',
-   playbackEngineTouched:false
- };
-};
+<script id="v532260DayCrossSwipeAudit">
+window.mvDayCrossSwipeAudit260=()=>({version:'v5.3.260',lastLeft:'next DAY first word',firstRight:'previous DAY last word',stats:'navigation only',proxyChunk:true});
 </script>
-
-
-<script id="v532263FavoriteExactCountAudit">
-window.mvFavoriteExactCountAudit263=function(course=window.ACTIVE_STUDY_COURSE||'my',lesson=window.myClassLessonNo||1,tab=window.myClassTab||'corrections'){
-  let favoriteIndices=[];
-  try{
-    const d=window.studyCourseData?.(course,lesson)||{};
-    const rows=Array.isArray(d?.[tab])?d[tab]:[];
-    favoriteIndices=rows.map((_,idx)=>idx).filter(idx=>!!window.studyFavoriteHas239?.(course,lesson,tab,idx));
-  }catch(e){}
-  return {
-    version:'v5.3.272',
-    rule:'favorite denominator = exact favorite count in current lesson+tab',
-    favoriteIndices,
-    denominator:favoriteIndices.length,
-    example:'original cards 2,7,11 => progress 1/3,2/3,3/3',
-    playbackEngineTouched:false
-  };
-};
-</script>
-
-
-<script id="v532264ProgressLayoutAudit">
-window.mvProgressLayoutAudit264=function(){
-  return {
-    version:'v5.3.272',
-    change:'progress bar width reduced and right-aligned to protect status label',
-    mobileWidthPx:112,
-    maxWidthPx:154,
-    countAlwaysVisible:true,
-    countingLogicChanged:false,
-    playbackEngineTouched:false
-  };
-};
-</script>
-
-
-<script id="v532265OverallFavoriteSkipAudit">
-window.mvOverallFavoriteSkipAudit265=function(){
-  const s=window.MV_ALL_REPEAT_219||{};
-  return {
-    version:'v5.3.272',
-    rule:'overall repeat + favorite-only + zero favorites => skip course',
-    neverFallbackToAll:true,
-    favoriteOnlySnapshot:s.favoriteOnlySnapshot||null,
-    engineEmptyPlaylistGuard:true,
-    individualRepeatBehavior:'unchanged'
-  };
-};
-</script>
-
-
-<script id="v532266DayAutoPageTurnStandard">
-(function(){
-'use strict';
-let chain=Promise.resolve();
-
-window.mvDayAutoAdvance266=function(commit){
-  if(typeof commit!=='function')return Promise.resolve(false);
-
-  // Serialize automatic DAY transitions so a second card can never cut off
-  // the page-turn animation that is already visible.
-  chain=chain.catch(()=>{}).then(async()=>{
-    if(typeof window.mvAutoDayPlaybackTurn255==='function'){
-      await window.mvAutoDayPlaybackTurn255(commit);
-
-      // v5.3.272 timing standard:
-      // wait until the turned page is fully gone and the destination card is stable
-      // before autoRead of the next word can begin.
-      await new Promise(r=>setTimeout(r,220));
-      return true;
-    }
-    commit();
-    await new Promise(r=>setTimeout(r,120));
-    return true;
-  });
-  return chain;
-};
-
-window.mvDayAutoPageTurnAudit266=function(){
-  return {
-    version:'v5.3.272',
-    rule:'every automatic DAY next-word / repeat-pass transition uses page turn',
-    engine:'mvAutoDayPlaybackTurn255 human-speed visual',
-    serialized:true,
-    manualSwipe:'unchanged'
-  };
-};
-})();
-</script>
-
-
-<script id="v532267DayTurnPlaybackTimingAudit">
-window.mvDayTurnPlaybackTimingAudit267=function(){
-  return {
-    version:'v5.3.272',
-    rule:'next DAY word audio starts only after page turn fully completes',
-    pageTurn:'human-speed two phase',
-    postTurnSettleMs:220,
-    finalPaintFrames:2,
-    fallbackSettleMs:120,
-    scope:['DAY automatic full playback','DAY repeat-pass restart']
-  };
-};
-</script>
-
-
-<script id="v532268ContinuousPageTurnAudit">
-window.mvContinuousPageTurnAudit268=function(){
-  return {
-    version:'v5.3.272',
-    fix:'remove mid-turn pause from automatic page transitions',
-    generalAutoTurnMs:720,
-    dayAutoTurnMs:700,
-    preHoldMs:110,
-    dayPostTurnAudioSettleMs:170,
-    motion:'single continuous transition',
-    applies:['DAY automatic word changes','MY/SORI/OPIC automatic tab/lesson changes'],
-    manualSwipe:'unchanged'
-  };
-};
-</script>
-
-
-<script id="v532269Sori3FirsthandPatternAudit">
-window.mvSori3FirsthandPatternAudit269=function(){
-  const d=window.SORI_GROUP_3||SORI_GROUP_3;
-  return {
-    version:'v5.3.272',
-    correctionAdded:d.corrections.some(x=>x.en==='I know firsthand how difficult it is to make friends.'),
-    chunkExpanded:d.chunks.some(x=>x.id==='day_chunk_12'&&/how difficult it can be to make new friends/.test(x.example||'')),
-    opicVariant:true
-  };
-};
-</script>
-
-
-<script id="v532270MySentencePatternIsolationAudit">
-window.mvMySentencePatternIsolationAudit270=function(){
-  const lesson7=MY_CLASS_LESSON_7;
-  const sentence=lesson7.corrections[0].en;
-  return {
-    version:'v5.3.272',
-    lesson7Sentence:sentence,
-    invalidLesson2Pattern:/go out for drinks/i.test(sentence)?'unexpected':'excluded',
-    lesson7OwnPatterns:['be swamped','work through lunch'],
-    rule:'MY sentence pattern hints must come from the active lesson and the current sentence'
-  };
-};
-</script>
-
-
-<script id="v532271OpicSentenceSpeakingSource">
-(function(){
-'use strict';
-
-function opicSentenceLessonCount271(){
-  try{return studyCourseLessonCount('opic')}catch(e){return 19}
-}
-function opicSentenceData271(n){
-  try{return studyCourseData('opic',Number(n)||1)||{}}catch(e){return {}}
-}
-function splitEn271(text){
-  try{return myClassSplitSentences(String(text||''))}catch(e){
-    return String(text||'').match(/[^.!?]+[.!?]+|[^.!?]+$/g)?.map(x=>x.trim()).filter(Boolean)||[];
-  }
-}
-function splitKo271(text){
-  try{return splitKo(String(text||''))}catch(e){
-    return String(text||'').split(/(?<=[.!?。！？])\s+/).map(x=>x.trim()).filter(Boolean);
-  }
-}
-function patternMatch271(text,pattern){
-  const t=String(text||'').toLowerCase();
-  const n=String(pattern||'').replace(/~ing/gi,'').replace(/~|someone|something|\bA\b|\bB\b|\.\.\./gi,' ')
-    .replace(/[^A-Za-z0-9'\s-]/g,' ').replace(/\s+/g,' ').trim().toLowerCase();
-  const words=n.split(' ').filter(x=>x.length>2);
-  if(!words.length)return false;
-  let pos=0;
-  for(const word of words){const k=t.indexOf(word,pos);if(k<0)return false;pos=k+word.length}
-  return true;
-}
-function patterns271(d,text){
-  const rows=[];
-  (d?.chunks||[]).forEach(x=>{
-    if(x?.pattern&&patternMatch271(text,x.pattern))rows.push([x.pattern,x.ko||'']);
-  });
-  return rows.filter((x,i,a)=>a.findIndex(y=>y[0]===x[0])===i);
-}
-window.opicSentenceCards271=function(lessonNo){
-  const n=Math.max(1,Math.min(opicSentenceLessonCount271(),Number(lessonNo)||1));
-  const d=opicSentenceData271(n),out=[];let order=1;
-  (d.corrections||[]).forEach((x,i)=>{
-    const pats=patterns271(d,x.en||'');
-    out.push({
-      isPracticeSentence:true,isOpicSentence:true,
-      practiceId:`OPIC_${n}_C_${i+1}`,sentenceStatsKey:`__opic__${n}_C_${i+1}`,
-      example:x.en||'',translation:x.ko||'',
-      practicePatterns:pats.map(x=>x[0]),practicePatternMeanings:pats.map(x=>x[1]),
-      targetWords:[],newDay:n,newNo:order++,word:`OPIC ${n} 핵심 교정 ${i+1}`
-    });
-  });
-  (d.chunks||[]).forEach((x,i)=>{
-    out.push({
-      isPracticeSentence:true,isOpicSentence:true,
-      practiceId:`OPIC_${n}_K_${i+1}`,sentenceStatsKey:`__opic__${n}_K_${i+1}`,
-      example:x.example||x.pattern||'',translation:x.exampleKo||x.ko||'',
-      practicePatterns:x.pattern?[x.pattern]:[],practicePatternMeanings:x.ko?[x.ko]:[],
-      targetWords:[],newDay:n,newNo:order++,word:`OPIC ${n} Chunk ${i+1}`
-    });
-  });
-  (d.speaking||[]).forEach((x,i)=>{
-    const ens=splitEn271(x.text||x.answer||x.en||''),kos=splitKo271(x.ko||x.answerKo||'');
-    ens.forEach((en,j)=>{
-      const pats=patterns271(d,en);
-      out.push({
-        isPracticeSentence:true,isOpicSentence:true,
-        practiceId:`OPIC_${n}_S_${i+1}_${j+1}`,sentenceStatsKey:`__opic__${n}_S_${i+1}_${j+1}`,
-        example:en,translation:kos[j]||x.ko||x.answerKo||'',
-        practicePatterns:pats.map(x=>x[0]),practicePatternMeanings:pats.map(x=>x[1]),
-        targetWords:[],newDay:n,newNo:order++,word:`OPIC ${n} 말하기 ${i+1}-${j+1}`
-      });
-    });
-  });
-  return out.filter(x=>x.example&&x.translation);
-};
-
-let opicLesson271=Math.max(1,Math.min(opicSentenceLessonCount271(),Number(localStorage.getItem('mv_opicSentenceLesson271')||1)));
-
-function addButton271(){
-  const sw=document.querySelector('#sentenceSourceBar .sentenceSourceSwitch');if(!sw)return;
-  sw.classList.remove('v534ThreeSources');sw.classList.add('standardFourSentenceSources');
-  if(!document.getElementById('sentenceSourceOpic')){
-    const b=document.createElement('button');
-    b.id='sentenceSourceOpic';b.className='sentenceSourceBtn';b.type='button';b.textContent='OPIC';
-    sw.appendChild(b);
-  }
-  const b=document.getElementById('sentenceSourceOpic');
-  if(b)b.onclick=()=>setSentenceSource('opic');
-}
-
-const prevBuild=buildQuizDeck;
-buildQuizDeck=function(){
-  if(quizMode==='sentence'&&sentenceSourceMode==='opic'){
-    quizAllWrongMode=false;
-    let pool=window.opicSentenceCards271(opicLesson271);
-    pool.forEach(q=>ensureSentenceStats(q));
-    if(quizFilterMode==='wrong')pool=pool.filter(isWeakSentence).sort((a,b)=>(ensureSentenceStats(b).sentenceWrong||0)-(ensureSentenceStats(a).sentenceWrong||0));
-    quizDeck=pool;quizIndex=0;quizSessionDone=false;quizSessionWrong=[];updateQuizFilterCount();return;
-  }
-  return prevBuild();
-};
-
-const prevCount=updateQuizFilterCount;
-updateQuizFilterCount=function(){
-  if(quizMode==='sentence'&&sentenceSourceMode==='opic'){
-    const base=window.opicSentenceCards271(opicLesson271),el=document.getElementById('quizFilterCount');
-    if(el)el.textContent=(quizFilterMode==='wrong'?base.filter(isWeakSentence).length:base.length)+'문장';
-    return;
-  }
-  return prevCount();
-};
-
-const prevLabel=sentenceSourceLabel;
-sentenceSourceLabel=function(){
-  if(sentenceSourceMode==='opic')return 'OPIC';
-  return prevLabel();
-};
-
-const prevSync=syncSentenceSourceUI;
-syncSentenceSourceUI=function(){
-  prevSync();addButton271();
-  document.getElementById('sentenceSourceOpic')?.classList.toggle('active',sentenceSourceMode==='opic');
-};
-
-const prevSet=setSentenceSource;
-setSentenceSource=function(mode){
-  if(mode!=='opic')return prevSet(mode);
-  stopDayLoop(true);
-  sentenceSourceMode='opic';quizFilterMode=(quizFilterMode==='wrong')?'wrong':'all';
-  localStorage.setItem(packKey('sentenceSourceMode'),'opic');localStorage.setItem(packKey('quizFilterMode'),quizFilterMode);
-  quizSelectedDay=opicLesson271;
-  clearQuizAutoNext();clearSentenceRecallTimer();stopSentenceRepeat(true);stopSpeech();quizAllWrongMode=false;
-  syncSentenceSourceUI();updateQuizDayNav();buildQuizDeck();quizAnswered=false;newq();
-};
-
-const prevNav=updateQuizDayNav;
-updateQuizDayNav=function(){
-  if(quizMode==='sentence'&&sentenceSourceMode==='opic'){
-    const btn=$('quizAllWrongBtn'),label=$('quizDayLabel');if(!btn||!label)return;
-    btn.disabled=true;btn.classList.remove('active');btn.textContent='OPIC 문장 학습';
-    const count=window.opicSentenceCards271(opicLesson271).length;
-    const meta=studyCourseMeta('opic')?.[opicLesson271]||{};
-    label.innerHTML=`<b>OPIC ${opicLesson271}</b><span>${count}문장 · ${meta.shortTitle||meta.title||''}</span>`;
-    $('quizPrevDay').disabled=opicLesson271<=1;
-    $('quizNextDay').disabled=opicLesson271>=opicSentenceLessonCount271();
-    updateQuizFilterCount();return;
-  }
-  return prevNav();
-};
-
-const prevDay=setQuizDay;
-setQuizDay=function(day){
-  if(quizMode==='sentence'&&sentenceSourceMode==='opic'){
-    stopSpeech();if('speechSynthesis' in window)window.speechSynthesis.cancel();
-    opicLesson271=Math.max(1,Math.min(opicSentenceLessonCount271(),Number(day)||1));
-    quizSelectedDay=opicLesson271;localStorage.setItem('mv_opicSentenceLesson271',String(opicLesson271));
-    updateQuizDayNav();buildQuizDeck();quizAnswered=false;newq();return;
-  }
-  return prevDay(day);
-};
-
-const prevQuestion=newSentenceRecallQuestion;
-newSentenceRecallQuestion=function(){
-  prevQuestion();
-  if(sentenceSourceMode==='opic'&&quizCurrent){
-    $('qw').innerHTML=`OPIC ${opicLesson271} 문장 <span class="myClassQuizBadge">${quizIndex+1}/${quizDeck.length}</span>`;
-    $('quizMeta').textContent=`OPIC ${opicLesson271} · 문장 말하기 · ${sentenceFilterLabel()} · ${quizIndex+1}/${quizDeck.length}`;
-  }
-};
-
-setTimeout(()=>{addButton271();syncSentenceSourceUI();},50);
-
-window.mvOpicSentenceSpeakingAudit271=function(){
-  return {
-    version:'v5.3.272',
-    source:'OPIC 1–19',
-    sourceButton:!!document.getElementById('sentenceSourceOpic'),
-    sentenceBuilder:typeof window.opicSentenceCards271==='function',
-    currentLesson:opicLesson271,
-    rule:'OPIC sentence speaking uses each OPIC lesson corrections/chunks/speaking data'
-  };
-};
-})();
-</script>
-
-
-<script id="v532272MicPermissionGuideAudit">
-window.mvMicPermissionGuideAudit272=function(){
-  return {
-    version:'v5.3.272',
-    deniedGuide:'설정 → 앱 → Chrome → 권한 → 마이크 → 앱 사용 중에만 허용',
-    contentProtocolGuide:true,
-    warmPermissionGuide:true,
-    rule:'permission errors must tell the user exactly where to fix them'
-  };
-};
-</script>
-
 </body></html>
