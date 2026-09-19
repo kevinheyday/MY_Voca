@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>MY VOCA v5.3.283</title>
+<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>MY VOCA v5.3.284</title>
 
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1663,7 +1663,7 @@ body.practiceReadingMode #morePanel{
 }
 
 
-/* ===== V5.3.283 · MP3 저장 + 녹음 파일명 편집 ===== */
+/* ===== V5.3.284 · MP3 저장 + 녹음 파일명 편집 ===== */
 .voicePracticeFileActions,
 .sentenceRecorderFileActions{
   display:grid;
@@ -3139,7 +3139,7 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
       <div>
         <div class="homeEyebrow" id="homeCourseEyebrow">MY VOCA UNIFIED COURSE · 69 DAYS</div>
         <h1 id="homeCourseTitle">MY VOCA</h1>
-        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.283</div>
+        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.284</div>
       </div>
       <div class="homeDayBadge"><b id="homeRegisteredDays">30</b><span>등록 Day</span></div>
     </section>
@@ -9672,7 +9672,7 @@ function sentenceRecordingToast(msg){
   el.textContent=msg;el.classList.add('show');
   clearTimeout(el._timer);el._timer=setTimeout(()=>el.classList.remove('show'),2200);
 }
-// ===== V5.3.283 · 공통 MP3 저장 컨트롤러 =====
+// ===== V5.3.284 · 공통 MP3 저장 컨트롤러 =====
 let sentenceRecordingSaveContext=null;
 let sentenceRecordingMp3Loader=null;
 
@@ -9730,7 +9730,7 @@ function sentenceRecordingEnsureSaveDialog(){
     <label class="recordingSaveLabel" for="recordingSaveFilename">파일 이름</label>
     <div class="recordingSaveInputWrap"><input id="recordingSaveFilename" class="recordingSaveInput" type="text" inputmode="text" enterkeyhint="done" autocomplete="off" autocapitalize="off" spellcheck="false"><button id="recordingSaveClear" class="recordingSaveClear" type="button" aria-label="파일명 지우기">×</button></div>
     <div class="recordingSaveHelp">.mp3는 자동으로 추가됩니다.</div>
-    <div class="recordingSaveLocation">📁 저장 위치: 휴대폰의 기본 다운로드 폴더</div>
+    <div id="recordingSaveLocation" class="recordingSaveLocation">📁 저장 위치: Download / my_voca_record</div>
     <div id="recordingSaveStatus" class="recordingSaveStatus" aria-live="polite"></div>
     <div class="recordingSaveActions"><button id="recordingSaveCancel" class="recordingSaveAction recordingSaveCancel" type="button">취소</button><button id="recordingSaveConfirm" class="recordingSaveAction recordingSaveConfirm" type="button">저장</button></div>
   </div>`;
@@ -9764,6 +9764,7 @@ function sentenceRecordingOpenSaveDialog(q){
   if(save){save.disabled=false;save.textContent='저장'}
   root.classList.remove('hidden');
   document.body.classList.add('recordingSaveOpen');
+  sentenceRecordingRefreshSaveLocation();
   // 사용자 탭 직후 직접 focus/select: Android에서 파일명 화면과 키보드를 함께 띄운다.
   try{input.focus({preventScroll:false});input.setSelectionRange(0,input.value.length)}catch(e){try{input.focus();input.select()}catch(_){} }
   requestAnimationFrame(()=>{try{input.focus();input.setSelectionRange(0,input.value.length)}catch(e){}});
@@ -9849,6 +9850,110 @@ function sentenceRecordingDownloadBlob(blob,filename){
   a.click();
   setTimeout(()=>{try{a.remove()}catch(e){};try{URL.revokeObjectURL(url)}catch(e){}},1600);
 }
+
+// ===== V5.3.284 · Download/my_voca_record best-effort folder writer =====
+// Browser security does not allow a web page to silently create arbitrary folders.
+// On browsers that expose showDirectoryPicker(), the user grants Download-folder access once;
+// MY VOCA then creates/reuses the my_voca_record child folder. Other browsers fall back to normal download.
+const SENTENCE_RECORDING_FOLDER_NAME='my_voca_record';
+const SENTENCE_RECORDING_FS_DB='my_voca_record_fs_v1';
+const SENTENCE_RECORDING_FS_STORE='handles';
+const SENTENCE_RECORDING_FS_KEY='downloadsParent';
+let sentenceRecordingFolderHandleMemory=null;
+
+function sentenceRecordingIsIOS(){
+  const ua=String(navigator.userAgent||'');
+  return /iPad|iPhone|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+}
+function sentenceRecordingFolderApiAvailable(){
+  return !!(window.isSecureContext&&typeof window.showDirectoryPicker==='function');
+}
+function sentenceRecordingOpenFsDb(){
+  return new Promise((resolve,reject)=>{
+    if(!window.indexedDB){reject(new Error('INDEXEDDB_UNAVAILABLE'));return}
+    const req=indexedDB.open(SENTENCE_RECORDING_FS_DB,1);
+    req.onupgradeneeded=()=>{
+      const db=req.result;
+      if(!db.objectStoreNames.contains(SENTENCE_RECORDING_FS_STORE))db.createObjectStore(SENTENCE_RECORDING_FS_STORE);
+    };
+    req.onsuccess=()=>resolve(req.result);
+    req.onerror=()=>reject(req.error||new Error('INDEXEDDB_OPEN_FAILED'));
+  });
+}
+async function sentenceRecordingLoadStoredFolderHandle(){
+  if(sentenceRecordingFolderHandleMemory)return sentenceRecordingFolderHandleMemory;
+  try{
+    const db=await sentenceRecordingOpenFsDb();
+    const handle=await new Promise((resolve,reject)=>{
+      const tx=db.transaction(SENTENCE_RECORDING_FS_STORE,'readonly');
+      const req=tx.objectStore(SENTENCE_RECORDING_FS_STORE).get(SENTENCE_RECORDING_FS_KEY);
+      req.onsuccess=()=>resolve(req.result||null);
+      req.onerror=()=>reject(req.error||new Error('INDEXEDDB_READ_FAILED'));
+    });
+    try{db.close()}catch(e){}
+    if(handle)sentenceRecordingFolderHandleMemory=handle;
+    return handle||null;
+  }catch(e){return null}
+}
+async function sentenceRecordingStoreFolderHandle(handle){
+  sentenceRecordingFolderHandleMemory=handle||null;
+  if(!handle)return;
+  try{
+    const db=await sentenceRecordingOpenFsDb();
+    await new Promise((resolve,reject)=>{
+      const tx=db.transaction(SENTENCE_RECORDING_FS_STORE,'readwrite');
+      tx.objectStore(SENTENCE_RECORDING_FS_STORE).put(handle,SENTENCE_RECORDING_FS_KEY);
+      tx.oncomplete=()=>resolve();
+      tx.onerror=()=>reject(tx.error||new Error('INDEXEDDB_WRITE_FAILED'));
+      tx.onabort=()=>reject(tx.error||new Error('INDEXEDDB_WRITE_ABORTED'));
+    });
+    try{db.close()}catch(e){}
+  }catch(e){}
+}
+async function sentenceRecordingEnsureDownloadsParentHandle(){
+  if(!sentenceRecordingFolderApiAvailable())return null;
+  let handle=await sentenceRecordingLoadStoredFolderHandle();
+  if(handle){
+    try{
+      let perm=await handle.queryPermission?.({mode:'readwrite'});
+      if(perm!=='granted')perm=await handle.requestPermission?.({mode:'readwrite'});
+      if(perm==='granted')return handle;
+    }catch(e){}
+    handle=null;
+  }
+  // Must run from the user's Save tap because browsers require transient user activation.
+  try{
+    handle=await window.showDirectoryPicker({id:'my-voca-record-downloads',mode:'readwrite',startIn:'downloads'});
+    if(handle)await sentenceRecordingStoreFolderHandle(handle);
+    return handle||null;
+  }catch(e){
+    if(e?.name==='AbortError')throw new Error('FOLDER_PICKER_CANCELLED');
+    throw e;
+  }
+}
+async function sentenceRecordingWriteToRecordFolder(parentHandle,blob,filename){
+  if(!parentHandle)throw new Error('NO_FOLDER_HANDLE');
+  const dir=await parentHandle.getDirectoryHandle(SENTENCE_RECORDING_FOLDER_NAME,{create:true});
+  const file=await dir.getFileHandle(filename,{create:true});
+  const writable=await file.createWritable();
+  try{await writable.write(blob)}finally{await writable.close()}
+}
+async function sentenceRecordingPrepareSaveTarget(){
+  if(!sentenceRecordingFolderApiAvailable())return {mode:'download',parent:null};
+  const parent=await sentenceRecordingEnsureDownloadsParentHandle();
+  return parent?{mode:'folder',parent}:{mode:'download',parent:null};
+}
+function sentenceRecordingRefreshSaveLocation(){
+  const el=document.getElementById('recordingSaveLocation');
+  if(!el)return;
+  if(sentenceRecordingFolderApiAvailable()){
+    el.textContent='📁 저장 위치: Download / my_voca_record · 첫 저장 시 Download 폴더 접근 허용';
+  }else if(sentenceRecordingIsIOS()){
+    el.textContent='📁 iPhone/iPad: Safari 기본 다운로드 · my_voca_record 자동 생성은 지원되지 않음';
+  }else{
+    el.textContent='📁 저장 위치: 브라우저 기본 다운로드 · 폴더 자동 생성 미지원 환경';
+  }
+}
 async function sentenceRecordingConfirmSave(){
   const root=document.getElementById('recordingSaveBackdrop');
   if(!root||root.classList.contains('hidden'))return;
@@ -9861,17 +9966,35 @@ async function sentenceRecordingConfirmSave(){
   if(save){save.disabled=true;save.textContent='MP3 변환 중…'}
   if(status)status.textContent='MP3 파일을 만들고 있습니다.';
   try{
+    // Folder permission/picker must be requested immediately from this Save tap, before MP3 encoding awaits.
+    if(status)status.textContent=sentenceRecordingFolderApiAvailable()?'저장 폴더를 확인하고 있습니다.':'MP3 파일을 만들고 있습니다.';
+    const target=await sentenceRecordingPrepareSaveTarget();
+    if(status)status.textContent='MP3 파일을 만들고 있습니다.';
     const mp3=await sentenceRecordingToMp3(sentenceRecordingBlob);
-    sentenceRecordingDownloadBlob(mp3,`${clean}.mp3`);
-    sentenceRecordingCloseSaveDialog();
-    sentenceRecordingToast(`✅ ${clean}.mp3 저장을 시작했습니다.`);
+    const filename=`${clean}.mp3`;
+    if(target.mode==='folder'&&target.parent){
+      if(status)status.textContent='Download / my_voca_record에 저장하고 있습니다.';
+      await sentenceRecordingWriteToRecordFolder(target.parent,mp3,filename);
+      sentenceRecordingCloseSaveDialog();
+      sentenceRecordingToast(`✅ my_voca_record / ${filename} 저장 완료`);
+    }else{
+      sentenceRecordingDownloadBlob(mp3,filename);
+      sentenceRecordingCloseSaveDialog();
+      if(sentenceRecordingIsIOS())sentenceRecordingToast(`✅ ${filename} 다운로드 시작 · iPhone에서는 Files 앱에서 폴더를 이동해 주세요.`);
+      else sentenceRecordingToast(`✅ ${filename} 기본 다운로드 폴더에 저장을 시작했습니다.`);
+    }
   }catch(e){
     if(save){save.disabled=false;save.textContent='다시 시도'}
-    if(status)status.textContent='MP3 변환에 실패했습니다.';
-    if(String(e?.message||e).includes('MP3_ENCODER')){
+    const msg=String(e?.message||e);
+    if(msg.includes('FOLDER_PICKER_CANCELLED')){
+      if(status)status.textContent='폴더 선택이 취소되었습니다.';
+      sentenceRecordingToast('Download 폴더를 선택하면 my_voca_record 폴더를 만들어 저장합니다.');
+    }else if(msg.includes('MP3_ENCODER')){
+      if(status)status.textContent='MP3 변환에 실패했습니다.';
       sentenceRecordingToast('MP3 변환 모듈을 불러오지 못했습니다. 인터넷 연결을 확인한 뒤 다시 저장해 주세요.');
     }else{
-      sentenceRecordingToast('MP3 파일을 만들 수 없습니다. 다시 녹음한 뒤 시도해 주세요.');
+      if(status)status.textContent='파일 저장에 실패했습니다.';
+      sentenceRecordingToast('MP3 파일을 저장할 수 없습니다. 저장 권한 또는 브라우저 설정을 확인해 주세요.');
     }
   }
 }
@@ -15314,7 +15437,7 @@ function installVisibleBuildBadge(){
   if(!badge){
     badge=document.createElement('div');
     badge.id='mvBuildBadge';
-    badge.textContent='v5.3.283';
+    badge.textContent='v5.3.284';
     badge.title='현재 실행 중인 MY VOCA 빌드';
     document.body.appendChild(badge);
   }
@@ -19688,7 +19811,7 @@ setTimeout(refreshSpeakingKo280,0);
 
 
 <script id="v532282UnifiedPlaybackSessionStandard">
-/* ===== V5.3.283 · MP3 RECORDING SAVE UI =====
+/* ===== V5.3.284 · MP3 RECORDING SAVE UI =====
    - Free voice recording: replaces compare-sequence button with Listen + MP3 Save.
    - MP3 Save is disabled until a recording exists.
    - Save opens an editable filename sheet and focuses the input so the mobile keyboard opens.
@@ -19711,7 +19834,7 @@ setTimeout(refreshSpeakingKo280,0);
 const COURSE_NAMES_281={day:'DAY VOCA',my:'MY 수업',sori:'소리영어',opic:'OPIC'};
 const VALID_281=['day','my','sori','opic'];
 const MV281=window.MV_PLAYBACK_STANDARD_281={
-  version:'5.3.283',
+  version:'5.3.284',
   kind:'idle',              // idle | course | overall | single
   scope:null,               // day | my | sori | opic
   status:'idle',            // idle | playing | paused
@@ -20234,7 +20357,7 @@ document.addEventListener('visibilitychange',()=>{
 
 window.mvPlaybackSessionAudit281=function(){
   return {
-    version:'5.3.283',
+    version:'5.3.284',
     rule:{home:'pause+checkpoint',sameCommand:'resume',differentCommand:'clear+fresh',courseStartIndependentFromOverall:true,directLesson:'one lesson / one cycle'},
     session:{kind:MV281.kind,scope:MV281.scope,status:MV281.status,lesson:MV281.lesson,reason:MV281.reason},
     outerActive:!!window.MV_ALL_REPEAT_219?.active,
@@ -20247,7 +20370,7 @@ window.mvPlaybackSessionAudit281=function(){
 window.mvPlaybackSessionAudit282=function(){
   const visibleMode=mv281Mode();
   return {
-    version:'5.3.283',
+    version:'5.3.284',
     rule:{
       home:'pause + checkpoint; HOME label resets to normal start',
       sameModeTopStart:'resume saved checkpoint',
@@ -20262,8 +20385,8 @@ window.mvPlaybackSessionAudit282=function(){
 };
 
 setTimeout(()=>{
-  document.querySelectorAll('.appVersion').forEach(x=>x.textContent='MY VOCA v5.3.283');
-  const badge=document.getElementById('mvBuildBadge');if(badge)badge.textContent='v5.3.283';
+  document.querySelectorAll('.appVersion').forEach(x=>x.textContent='MY VOCA v5.3.284');
+  const badge=document.getElementById('mvBuildBadge');if(badge)badge.textContent='v5.3.284';
   mv281SyncUI();
 },0);
 })();
