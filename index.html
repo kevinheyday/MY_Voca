@@ -1,7 +1,7 @@
 <!doctype html><html lang="ko"><head>
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>MY VOCA v5.3.284</title>
+<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>MY VOCA v5.3.291</title>
 
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
@@ -1663,7 +1663,7 @@ body.practiceReadingMode #morePanel{
 }
 
 
-/* ===== V5.3.284 · MP3 저장 + 녹음 파일명 편집 ===== */
+/* ===== V5.3.285 · MP3 저장 + 녹음 파일명 편집 ===== */
 .voicePracticeFileActions,
 .sentenceRecorderFileActions{
   display:grid;
@@ -2973,8 +2973,8 @@ html,body{
   white-space:nowrap!important;
 }
 #sharedStudyRepeatParts206 .studyFavoriteOnly239 input{
-  width:16px!important;
-  height:16px!important;
+  width:18px!important;
+  height:18px!important;
   margin:0!important;
   accent-color:#e0a400!important;
 }
@@ -3090,6 +3090,132 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
 }
 </style>
 
+
+<style id="v53286CompactCourseHomeCards">
+/* ===== V5.3.286 · SORI/OPIC HOME COMPACT CARD STANDARD =====
+   Goal: DAY-like scanability without sacrificing lesson identity.
+   - 2-column compact grid
+   - strong lesson number + short readable subtitle
+   - selection checkbox stays one-tap, label text is visually suppressed
+   - long descriptions/script strips are hidden only on HOME
+*/
+#homePage .soriClassSection,
+#homePage .opicClassSection{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px!important;
+  align-items:stretch;
+}
+#homePage .soriClassSection>.sectionHead,
+#homePage .soriClassSection>.studyCourseInfo,
+#homePage .opicClassSection>.sectionHead,
+#homePage .opicClassSection>.studyCourseInfo,
+#homePage .opicClassSection>.opicReadyCard{
+  grid-column:1/-1;
+}
+#homePage .soriClassSection .soriCourseCard,
+#homePage .opicClassSection .opicCourseCard{
+  margin:0!important;
+  min-width:0!important;
+  min-height:104px!important;
+  padding:10px 10px 9px!important;
+  border-radius:14px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  box-shadow:0 3px 10px rgba(15,23,42,.05)!important;
+}
+#homePage .soriClassSection .soriCourseCard .myClassTop,
+#homePage .opicClassSection .opicCourseCard .myClassTop{
+  min-height:20px!important;
+  padding-right:38px!important;
+  gap:4px!important;
+}
+#homePage .soriClassSection .soriCourseCard .myClassTop b,
+#homePage .opicClassSection .opicCourseCard .myClassTop b{
+  font-size:12.5px!important;
+  line-height:1.15!important;
+  font-weight:950!important;
+  min-width:0!important;
+}
+#homePage .soriClassSection .soriCourseCard .myClassBadge,
+#homePage .opicClassSection .opicCourseCard .myClassBadge{
+  display:none!important;
+}
+#homePage .soriClassSection .soriCourseCard .myClassTitle,
+#homePage .opicClassSection .opicCourseCard .myClassTitle{
+  margin-top:5px!important;
+  padding-right:0!important;
+  min-height:30px!important;
+  color:#344054!important;
+  font-size:11.5px!important;
+  line-height:1.28!important;
+  font-weight:850!important;
+  white-space:normal!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  display:-webkit-box!important;
+  -webkit-box-orient:vertical!important;
+  -webkit-line-clamp:2!important;
+}
+#homePage .soriClassSection .soriCourseCard .soriLessonStrip,
+#homePage .soriClassSection .soriCourseCard .myClassDesc,
+#homePage .opicClassSection .opicCourseCard .myClassDesc{
+  display:none!important;
+}
+#homePage .soriClassSection .soriCourseCard .myClassMeta,
+#homePage .opicClassSection .opicCourseCard .myClassMeta{
+  margin-top:auto!important;
+  padding-top:6px!important;
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:3px 5px!important;
+  font-size:8.8px!important;
+  line-height:1.12!important;
+  color:#667085!important;
+}
+#homePage .soriClassSection .soriCourseCard .myClassMeta span,
+#homePage .opicClassSection .opicCourseCard .myClassMeta span{
+  min-width:0!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+#homePage .soriClassSection .soriCourseCard .studySelectMini,
+#homePage .opicClassSection .opicCourseCard .studySelectMini{
+  right:7px!important;
+  top:7px!important;
+  width:32px!important;
+  height:32px!important;
+  box-sizing:border-box!important;
+  justify-content:center!important;
+  padding:3px!important;
+  border-radius:8px!important;
+}
+#homePage .soriClassSection .soriCourseCard .studySelectMini span,
+#homePage .opicClassSection .opicCourseCard .studySelectMini span{
+  display:none!important;
+}
+#homePage .soriClassSection .soriCourseCard .studySelectMini .studySelectCheck,
+#homePage .opicClassSection .opicCourseCard .studySelectMini .studySelectCheck{
+  width:16px!important;
+  height:16px!important;
+}
+#homePage .soriClassSection .soriCourseCard.myClassChecked,
+#homePage .opicClassSection .opicCourseCard.myClassChecked{
+  outline:2px solid rgba(124,58,237,.32)!important;
+  outline-offset:-2px!important;
+}
+@media(max-width:360px){
+  #homePage .soriClassSection,
+  #homePage .opicClassSection{gap:6px!important}
+  #homePage .soriClassSection .soriCourseCard,
+  #homePage .opicClassSection .opicCourseCard{padding:9px 8px 8px!important;min-height:100px!important}
+  #homePage .soriClassSection .soriCourseCard .myClassTitle,
+  #homePage .opicClassSection .opicCourseCard .myClassTitle{font-size:10.8px!important}
+  #homePage .soriClassSection .soriCourseCard .myClassMeta,
+  #homePage .opicClassSection .opicCourseCard .myClassMeta{font-size:8.2px!important}
+}
+</style>
 </head><body>
 
 <button id="drawerMenuButton" class="drawerMenuButton" type="button" aria-label="메뉴 열기" aria-expanded="false">☰</button>
@@ -3139,7 +3265,7 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
       <div>
         <div class="homeEyebrow" id="homeCourseEyebrow">MY VOCA UNIFIED COURSE · 69 DAYS</div>
         <h1 id="homeCourseTitle">MY VOCA</h1>
-        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.284</div>
+        <p id="homeCourseDesc">TOEFL 1,680 Words + OPIC AL 268 Words & Expressions</p><div class="appVersion">MY VOCA v5.3.286</div>
       </div>
       <div class="homeDayBadge"><b id="homeRegisteredDays">30</b><span>등록 Day</span></div>
     </section>
@@ -3293,7 +3419,7 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
       <div class="sectionHead"><div><b>🎧 소리영어</b><span class="sectionSub">토요일 수업 스크립트를 한 박스에 누적하고 Chunk → 핵심 문장 → 말하기 → 소리 Point로 반복 복습합니다.</span></div></div>
       <div class="studyCourseInfo">공통 학습 엔진 · MY 수업과 동일한 재생/집중반복/하이라이트/문장 말하기 포맷</div>
       <div class="myClassCard soriCourseCard" id="soriGroup1Card" role="button" tabindex="0" onclick="studyDirectOpenCourse('sori',1)">
-        <div class="myClassTop"><b>소리영어 · 통합 복습 1</b><span class="myClassBadge">3 SCRIPTS</span></div>
+        <div class="myClassTop"><b>소리영어 · 수업 1</b><span class="myClassBadge">3 SCRIPTS</span></div>
         <div class="myClassTitle">Drinking Culture · To Tip or Skip? · Dumplin' Day 1</div>
         <div class="soriLessonStrip">
           <span>① 8/29 Drinking Culture</span>
@@ -3304,7 +3430,7 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
         <div class="myClassMeta"><span>⭐ 핵심 문장 24</span><span>🧩 Chunk 27</span><span>🗣 말하기 12</span><span>🎧 소리 Point 9</span></div>
       </div>
       <div class="myClassCard soriCourseCard" id="soriGroup2Card" data-study-course="sori" data-study-lesson="2" role="button" tabindex="0" onclick="studyDirectOpenCourse('sori',2)">
-        <div class="myClassTop"><b>소리영어 · 통합 복습 2</b><span class="myClassBadge">3 SCRIPTS</span></div>
+        <div class="myClassTop"><b>소리영어 · 수업 2</b><span class="myClassBadge">3 SCRIPTS</span></div>
         <div class="myClassTitle">Dumplin' Day #2 · To Fill or Not to Fill · The Ring Rescue</div>
         <div class="soriLessonStrip">
           <span>① Dumplin' Day #2</span><span>② To Fill or Not to Fill</span><span>③ The Ring Rescue</span>
@@ -3323,7 +3449,7 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
 </section>
 
     <section class="opicClassSection" style="display:none">
-      <div class="sectionHead"><div><b>🎤 OPIC</b><span class="sectionSub">MY 수업·소리영어와 같은 공통 학습 엔진으로 확장됩니다.</span></div></div>
+      <div class="sectionHead"><div><b>🎤 OPIC</b><span class="sectionSub">OPIC 번호별 질문을 핵심 교정 → Chunk → 말하기 순서로 학습합니다.</span></div></div>
       <div class="opicReadyCard">
         <b>OPIC 표준 포맷 준비 완료</b>
         <p>핵심 답변 → Chunk → 말하기 → AL Point 구조로 콘텐츠만 추가하면 동일한 퀴즈·문장 말하기·반복재생 기능을 사용할 수 있습니다.</p>
@@ -3334,7 +3460,7 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
 <div id="myClassPage" class="myClassPage hidden">
   <div class="myClassShell">
     <div class="myClassHeader">
-      <div class="myClassHeaderRow"><button id="myClassBack" class="myClassBack" aria-label="홈으로">⌂</button><div class="myClassHeaderTitle"><b id="myClassHeaderMain">MY 수업 · 수업 1</b><span id="myClassHeaderSub">First English Class · Native Speaking Reset</span></div></div>
+      <div class="myClassHeaderRow"><button id="myClassBack" class="myClassBack" aria-label="홈으로">⌂</button><div class="myClassHeaderTitle"><b id="myClassHeaderMain">MY 수업 · 수업 1 / 9</b><span id="myClassHeaderSub">First English Class · Native Speaking Reset</span></div></div>
     </div>
     <div class="myClassHabit"><b>이번 수업의 최우선 목표</b><p id="myClassGoal"><strong>쉬운 영어를 짧고 정확하게.</strong> 문장을 만들기 전에 So / you know로 시작하지 말고, 0.5~1초 쉬었다가 주어 + 동사부터 말합니다.</p></div>
     <div class="myClassTabs"><button class="myClassTab active" data-myclass-tab="corrections">✅ 핵심 교정</button><button class="myClassTab" data-myclass-tab="chunks">🧩 Chunk</button><button class="myClassTab" data-myclass-tab="speaking">🗣 말하기</button><button class="myClassTab" data-myclass-tab="habits">⚠ 습관</button></div>
@@ -5936,7 +6062,13 @@ function studySyncCourseUI(){
   const a=document.getElementById('myClassHeaderMain');
   const b=document.getElementById('myClassHeaderSub');
   const g=document.getElementById('myClassGoal');
-  if(a)a.textContent=ACTIVE_STUDY_COURSE==='my'?`MY 수업 · 수업 ${myClassLessonNo}`:`${c.icon} ${c.title}`;
+  if(a){
+    const total=studyCourseLessonCount(ACTIVE_STUDY_COURSE);
+    if(ACTIVE_STUDY_COURSE==='my')a.textContent=`MY 수업 · 수업 ${myClassLessonNo} / ${total}`;
+    else if(ACTIVE_STUDY_COURSE==='sori')a.textContent=`${c.icon} 소리영어 · 수업 ${myClassLessonNo} / ${total}`;
+    else if(ACTIVE_STUDY_COURSE==='opic')a.textContent=`${c.icon} OPIC ${myClassLessonNo} / ${total}`;
+    else a.textContent=`${c.icon} ${c.title}`;
+  }
   if(b)b.textContent=meta.title||'';
   if(g)g.innerHTML=meta.goal||'';
 
@@ -9672,7 +9804,7 @@ function sentenceRecordingToast(msg){
   el.textContent=msg;el.classList.add('show');
   clearTimeout(el._timer);el._timer=setTimeout(()=>el.classList.remove('show'),2200);
 }
-// ===== V5.3.284 · 공통 MP3 저장 컨트롤러 =====
+// ===== V5.3.285 · 공통 MP3 저장 컨트롤러 =====
 let sentenceRecordingSaveContext=null;
 let sentenceRecordingMp3Loader=null;
 
@@ -9851,7 +9983,7 @@ function sentenceRecordingDownloadBlob(blob,filename){
   setTimeout(()=>{try{a.remove()}catch(e){};try{URL.revokeObjectURL(url)}catch(e){}},1600);
 }
 
-// ===== V5.3.284 · Download/my_voca_record best-effort folder writer =====
+// ===== V5.3.285 · Download/my_voca_record best-effort folder writer =====
 // Browser security does not allow a web page to silently create arbitrary folders.
 // On browsers that expose showDirectoryPicker(), the user grants Download-folder access once;
 // MY VOCA then creates/reuses the my_voca_record child folder. Other browsers fall back to normal download.
@@ -12063,7 +12195,7 @@ function mvSentenceEntryAudit182(){
 window.mvSentenceEntryAudit182=mvSentenceEntryAudit182;
 
 /* ===== V5.3.189 · STANDARD APP INFO / UPDATE HISTORY ===== */
-const MV_APP_VERSION='5.3.279';
+const MV_APP_VERSION='5.3.289';
 
 function mvCloseInfoOverlay(){
   const overlay=document.getElementById('mvInfoOverlay');
@@ -15437,7 +15569,7 @@ function installVisibleBuildBadge(){
   if(!badge){
     badge=document.createElement('div');
     badge.id='mvBuildBadge';
-    badge.textContent='v5.3.284';
+    badge.textContent='v5.3.286';
     badge.title='현재 실행 중인 MY VOCA 빌드';
     document.body.appendChild(badge);
   }
@@ -15617,7 +15749,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
           ?'실제 수업에서 나온 내 교정 문장과 Chunk를 반복합니다.'
           :m==='sori'
             ?'토요일 소리영어 3개 스크립트를 한 박스에서 Chunk → 핵심 문장 → 말하기 → 소리 Point로 복습합니다.'
-            :'OPIC 콘텐츠는 다음 단계에서 추가합니다. 학습 엔진은 이미 MY 수업·소리영어와 같은 표준 구조를 사용하도록 준비했습니다.';
+            :'OPIC 번호별 질문을 핵심 교정 → Chunk → 말하기 순서로 학습합니다.';
     }
   };
 
@@ -15711,7 +15843,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     if(quizMode==='sentence'&&sentenceSourceMode==='sori'){
       const btn=$('quizAllWrongBtn'),label=$('quizDayLabel');
       if(btn){btn.disabled=true;btn.classList.remove('active');btn.textContent='소리영어 문장 학습';}
-      if(label)label.innerHTML=`<b>소리영어 · 통합 복습 1</b><span>${studyCourseSentenceCards('sori',1).length}문장 · 3 Scripts</span>`;
+      if(label)label.innerHTML=`<b>소리영어 · 수업 1</b><span>${studyCourseSentenceCards('sori',1).length}문장 · 3 Scripts</span>`;
       $('quizPrevDay').disabled=true;
       $('quizNextDay').disabled=true;
       updateQuizFilterCount();
@@ -15884,7 +16016,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     const selected=readJson(STUDY_SELECT_KEYS.sori,[1,2]).map(Number);
     document.querySelectorAll('#homePage .soriClassSection .soriCourseCard').forEach((card,i)=>{
       const lesson=Number(card.dataset.studyLesson)||i+1;
-      const c=ensureStandardCourseCheckbox(card,'sori',lesson,`소리영어 통합 복습 ${lesson}`);
+      const c=ensureStandardCourseCheckbox(card,'sori',lesson,`소리영어 수업 ${lesson}`);
       if(!c)return;
       c.checked=selected.includes(lesson);
       card.classList.toggle('myClassChecked',c.checked);
@@ -15939,10 +16071,12 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
       card.setAttribute('tabindex','0');
       card.setAttribute('onclick',`studyDirectOpenCourse('opic',${n})`);
       const projectTitle=n===1?'KPI/AX 재무효과 평가 프로젝트':n===2?'AI 기반 FDC 시스템 프로젝트':(meta[n]?.shortTitle||`OPIC 프로젝트 ${n}`);
+      card.setAttribute('aria-label',`OPIC ${n}. ${projectTitle}`);
+      card.dataset.fullTitle=meta[n]?.title||'';
       card.innerHTML=`
-        <div class="myClassTop"><b>OPIC ${n} — ${projectTitle}</b><span class="myClassBadge">AL</span></div>
-        <div class="myClassTitle">${meta[n]?.title||''}</div>
-        <div class="myClassMeta"><span>✅ 핵심 교정 ${(d.corrections||[]).length}</span><span>🧩 Chunk ${(d.chunks||[]).length}</span><span>🗣 말하기 ${(d.speaking||[]).length}</span><span>⚠ 습관 ${(d.habits||[]).length}</span></div>`;
+        <div class="myClassTop"><b>OPIC ${n}</b><span class="myClassBadge">AL</span></div>
+        <div class="myClassTitle">${projectTitle}</div>
+        <div class="myClassMeta"><span>✅ 교정 ${(d.corrections||[]).length}</span><span>🧩 Chunk ${(d.chunks||[]).length}</span><span>🗣 말하기 ${(d.speaking||[]).length}</span><span>⚠ 습관 ${(d.habits||[]).length}</span></div>`;
       sec.appendChild(card);
       const c=ensureStandardCourseCheckbox(card,'opic',n,`OPIC ${n}`);
       if(c){
@@ -18193,6 +18327,19 @@ function move252(x,y){
   return true;
 }
 
+function bottomNow252(){
+  const apply=()=>{
+    const h=Math.max(document.body.scrollHeight,document.documentElement.scrollHeight);
+    const vh=window.innerHeight||document.documentElement.clientHeight||0;
+    const y=Math.max(0,h-vh);
+    try{window.scrollTo({top:y,left:0,behavior:'auto'})}catch(e){window.scrollTo(0,y)}
+    try{document.documentElement.scrollTop=y;document.body.scrollTop=y}catch(e){}
+  };
+  // renderMyClass can change page height over the next frame; settle twice.
+  requestAnimationFrame(()=>{apply();requestAnimationFrame(apply)});
+  setTimeout(apply,80);
+}
+
 function commit252(dir){
   const course=ACTIVE_STUDY_COURSE||'my';
   const max=Math.max(1,Number(studyCourseLessonCount?.(course))||1);
@@ -18209,7 +18356,11 @@ function commit252(dir){
     b=>b.classList.toggle('active',b.dataset.myclassTab===myClassTab)
   );
   myClassSetStatus?.(dir>0?'다음 수업 · 같은 학습':'이전 수업 · 같은 학습',false);
-  topNow252();
+  // Continuous vertical reading standard:
+  // bottom + swipe up -> next lesson at TOP
+  // top + swipe down -> previous lesson at BOTTOM
+  if(dir>0)topNow252();
+  else bottomNow252();
   return true;
 }
 
@@ -18263,7 +18414,11 @@ function end252(cancel){
     s.card.style.filter='brightness(.90)';
     s.shade.style.opacity='0';
   });
-  setTimeout(()=>{cleanup252(s);topNow252()},dur+50);
+  setTimeout(()=>{
+    cleanup252(s);
+    if(s.dir>0)topNow252();
+    else bottomNow252();
+  },dur+50);
   return true;
 }
 
@@ -18278,8 +18433,8 @@ window.mvVerticalLessonSwipe252={
 };
 window.mvVerticalLessonSwipeAudit252=()=>({
   version:'v5.3.275',
-  topPullDown:'previous lesson same tab',
-  bottomPushUp:'next lesson same tab',
+  topPullDown:'previous lesson same tab, destination bottom',
+  bottomPushUp:'next lesson same tab, destination top',
   liveCard:true,
   xFreedom:true,
   velocityAware:true,
@@ -19661,9 +19816,9 @@ document.addEventListener('touchstart',e=>{
   const ctx=context278(e.target);if(!ctx)return;
   const t=e.touches[0];
   G={ctx,sx:t.clientX,sy:t.clientY,locked:false,dir:0};
-  // Own the start at document-capture level so legacy per-screen swipe handlers
-  // cannot race with the shared standard. This does not prevent a normal tap.
-  e.stopPropagation();
+  // Do NOT stop propagation on touchstart. The course screen's shared vertical
+  // boundary handler needs the same start point for bottom-up / top-down lesson
+  // swipes. Horizontal ownership is taken only after direction lock in touchmove.
 },{capture:true,passive:true});
 
 document.addEventListener('touchmove',e=>{
@@ -19811,7 +19966,7 @@ setTimeout(refreshSpeakingKo280,0);
 
 
 <script id="v532282UnifiedPlaybackSessionStandard">
-/* ===== V5.3.284 · MP3 RECORDING SAVE UI =====
+/* ===== V5.3.285 · MP3 RECORDING SAVE UI =====
    - Free voice recording: replaces compare-sequence button with Listen + MP3 Save.
    - MP3 Save is disabled until a recording exists.
    - Save opens an editable filename sheet and focuses the input so the mobile keyboard opens.
@@ -20385,11 +20540,705 @@ window.mvPlaybackSessionAudit282=function(){
 };
 
 setTimeout(()=>{
-  document.querySelectorAll('.appVersion').forEach(x=>x.textContent='MY VOCA v5.3.284');
-  const badge=document.getElementById('mvBuildBadge');if(badge)badge.textContent='v5.3.284';
+  document.querySelectorAll('.appVersion').forEach(x=>x.textContent='MY VOCA v5.3.286');
+  const badge=document.getElementById('mvBuildBadge');if(badge)badge.textContent='v5.3.286';
   mv281SyncUI();
 },0);
 })();
 
 </script>
+
+<script id="v532285VerticalBoundarySwipeFixAudit">
+window.mvVerticalBoundarySwipeFixAudit285=function(){
+  const source=String(document.documentElement.innerHTML||'');
+  return {
+    version:'v5.3.286',
+    scope:['my','sori','opic'],
+    verticalTouchstartReceivesEvent:!source.includes('cannot race with the shared standard. This does not prevent a normal tap.'),
+    nextFromBottom:'swipe up -> next lesson top',
+    previousFromTop:'swipe down -> previous lesson bottom',
+    horizontalSwipeStillOwnedAfterDirectionLock:true
+  };
+};
+</script>
+
+<script id="v53286CoursePositionAndCompactCards">
+(function(){
+  'use strict';
+  function normalize286(){
+    document.querySelectorAll('#homePage .soriClassSection .soriCourseCard').forEach((card,i)=>{
+      const n=Number(card.dataset.studyLesson)||i+1;
+      const b=card.querySelector('.myClassTop b');
+      if(b)b.textContent=`소리영어 · 수업 ${n}`;
+      card.setAttribute('aria-label',`소리영어 수업 ${n}`);
+    });
+    document.querySelectorAll('#homePage .opicClassSection .opicCourseCard').forEach((card,i)=>{
+      const n=Number(card.dataset.studyLesson)||i+1;
+      const meta=typeof studyCourseMeta==='function'?(studyCourseMeta('opic')||{}):{};
+      const short=meta[n]?.shortTitle||card.querySelector('.myClassTitle')?.textContent||`OPIC ${n}`;
+      const top=card.querySelector('.myClassTop b');
+      const title=card.querySelector('.myClassTitle');
+      if(top)top.textContent=`OPIC ${n}`;
+      if(title)title.textContent=short;
+      card.setAttribute('aria-label',`OPIC ${n}. ${short}`);
+    });
+  }
+  window.mvNormalizeCourseCards286=normalize286;
+  const oldStamp=window.studyStampCourseCards;
+  if(typeof oldStamp==='function'&&!oldStamp.__v286){
+    const wrapped=function(){const r=oldStamp.apply(this,arguments);try{normalize286()}catch(e){}return r;};
+    wrapped.__v286=true;
+    window.studyStampCourseCards=wrapped;
+    try{studyStampCourseCards=wrapped}catch(e){}
+  }
+  setTimeout(normalize286,220);
+  setTimeout(normalize286,700);
+})();
+</script>
+
+
+<style id="v532288SwipeLifetimeFixStyle">
+/* v5.3.288 · swipe snapshot lifetime:
+   keep the live card visible for the entire finger-down gesture and its release animation;
+   remove only stale/orphaned snapshots after the gesture is truly finished. */
+.mvSwipeStage246.mvGhost288{display:none!important;visibility:hidden!important;opacity:0!important}
+</style>
+<script id="v532288SwipeLifetimeFix">
+(function(){
+'use strict';
+if(window.__MV_SWIPE_LIFETIME_FIX_288__)return;
+window.__MV_SWIPE_LIFETIME_FIX_288__=true;
+
+const STAGE='.mvSwipeStage246';
+let cleanupTimer288=0;
+let autoSwipeDepth288=0;
+
+function manualSwipeActive288(){
+  try{
+    if(window.MV_SWIPE_STANDARD_254?.active?.())return true;
+    if(window.mvVerticalLessonSwipe252?.active?.())return true;
+  }catch(e){}
+  return false;
+}
+function swipeProtected288(){
+  return manualSwipeActive288() || autoSwipeDepth288>0;
+}
+
+/* IMPORTANT: normal cleanup never removes a live gesture snapshot.
+   force=true is reserved for starting a NEW gesture or actually leaving the page. */
+function removeStages288(force=false){
+  if(!force && swipeProtected288())return false;
+  try{
+    document.querySelectorAll(STAGE).forEach(stage=>{
+      try{stage.classList.add('mvGhost288')}catch(e){}
+      try{stage.remove()}catch(e){try{stage.parentNode&&stage.parentNode.removeChild(stage)}catch(_) {}}
+    });
+  }catch(e){}
+  try{
+    if(!document.querySelector(STAGE))document.body.classList.remove('mvSwipeActive246');
+  }catch(e){}
+  return true;
+}
+window.mvRemoveSwipeGhosts287=(force)=>removeStages288(!!force);
+window.mvRemoveSwipeGhosts288=(force)=>removeStages288(!!force);
+
+function scheduleCleanup288(delay,force=false){
+  clearTimeout(cleanupTimer288);
+  cleanupTimer288=setTimeout(()=>removeStages288(force),Math.max(0,Number(delay)||0));
+}
+function multiCleanup288(){
+  /* Long enough for the 150–340ms release animation + cleanup margin.
+     If the engine still reports active, removeStages288 simply waits. */
+  scheduleCleanup288(460,false);
+  setTimeout(()=>removeStages288(false),950);
+  setTimeout(()=>removeStages288(false),1800);
+}
+
+/* The old root-local horizontal engine must stay disabled so one finger gesture
+   can create only one page-turn snapshot. Vertical lesson boundary remains separate. */
+try{
+  const legacy=window.mvSwipePage246;
+  if(legacy&&!legacy.__disabled288){
+    try{legacy.forceCleanup&&legacy.forceCleanup()}catch(e){}
+    legacy.begin=function(){return false};
+    legacy.move=function(){return false};
+    legacy.end=function(){return false};
+    legacy.finalPoint=function(){};
+    legacy.active=function(){return false};
+    legacy.forceCleanup=function(){removeStages288(true)};
+    legacy.__disabled287=true;
+    legacy.__disabled288=true;
+  }
+}catch(e){}
+
+/* Horizontal finger-follow swipe.
+   Clean stale layers BEFORE begin. Once begin succeeds, never clean while active(). */
+try{
+  const s=window.MV_SWIPE_STANDARD_254;
+  if(s&&!s.__lifetimePatched288){
+    const oldBegin=s.begin,oldEnd=s.end,oldForce=s.forceCleanup;
+    s.begin=function(opts){
+      try{oldForce&&oldForce.call(s)}catch(e){}
+      removeStages288(true);
+      return oldBegin?oldBegin.call(s,opts):false;
+    };
+    s.end=function(cancel){
+      try{return oldEnd?oldEnd.call(s,cancel):false}
+      finally{multiCleanup288()}
+    };
+    s.forceCleanup=function(){
+      try{oldForce&&oldForce.call(s)}finally{removeStages288(true)}
+    };
+    s.__lifetimePatched288=true;
+  }
+}catch(e){}
+
+/* Vertical lesson boundary uses the same lifetime rule. */
+try{
+  const v=window.mvVerticalLessonSwipe252;
+  if(v&&!v.__lifetimePatched288){
+    const oldBegin=v.begin,oldEnd=v.end,oldForce=v.forceCleanup;
+    v.begin=function(dir,x,y){
+      try{oldForce&&oldForce.call(v)}catch(e){}
+      removeStages288(true);
+      return oldBegin?oldBegin.call(v,dir,x,y):false;
+    };
+    v.end=function(cancel){
+      try{return oldEnd?oldEnd.call(v,cancel):false}
+      finally{multiCleanup288()}
+    };
+    v.forceCleanup=function(){
+      try{oldForce&&oldForce.call(v)}finally{removeStages288(true)}
+    };
+    v.__lifetimePatched288=true;
+  }
+}catch(e){}
+
+/* Automatic page turns also render the destination underneath the snapshot.
+   protect the snapshot for the full async animation, otherwise renderMyClass()
+   would erase it at the first frame. */
+try{
+  const oldAuto=window.mvAutoPlaybackPageTurn255;
+  if(oldAuto&&!oldAuto.__lifetimePatched288){
+    const wrapped=async function(commit,dir){
+      removeStages288(true);
+      autoSwipeDepth288++;
+      try{return await oldAuto(commit,dir)}
+      finally{autoSwipeDepth288=Math.max(0,autoSwipeDepth288-1);multiCleanup288()}
+    };
+    wrapped.__lifetimePatched288=true;
+    window.mvAutoPlaybackPageTurn255=wrapped;
+  }
+}catch(e){}
+try{
+  const oldDay=window.mvAutoDayPlaybackTurn255;
+  if(oldDay&&!oldDay.__lifetimePatched288){
+    const wrapped=async function(commit){
+      removeStages288(true);
+      autoSwipeDepth288++;
+      try{return await oldDay(commit)}
+      finally{autoSwipeDepth288=Math.max(0,autoSwipeDepth288-1);multiCleanup288()}
+    };
+    wrapped.__lifetimePatched288=true;
+    window.mvAutoDayPlaybackTurn255=wrapped;
+  }
+}catch(e){}
+
+/* A real destination render is a good stale-layer cleanup point ONLY when no live
+   gesture/automatic page turn owns the snapshot. This is the v5.3.287 regression fix. */
+try{
+  const oldRender=window.renderMyClass;
+  if(oldRender&&!oldRender.__lifetimePatched288){
+    const wrapped=function(){
+      removeStages288(false);
+      const out=oldRender.apply(this,arguments);
+      setTimeout(()=>removeStages288(false),0);
+      setTimeout(()=>removeStages288(false),520);
+      return out;
+    };
+    wrapped.__lifetimePatched288=true;
+    window.renderMyClass=wrapped;
+  }
+}catch(e){}
+
+/* touchend/cancel starts delayed cleanup; never remove synchronously on finger-up.
+   This preserves the visible release/throw animation. */
+['touchend','touchcancel','pointerup','pointercancel'].forEach(type=>{
+  window.addEventListener(type,()=>multiCleanup288(),{capture:false,passive:true});
+});
+window.addEventListener('blur',()=>scheduleCleanup288(700,false),{passive:true});
+window.addEventListener('pagehide',()=>removeStages288(true),{passive:true});
+window.addEventListener('pageshow',()=>scheduleCleanup288(0,false),{passive:true});
+window.addEventListener('orientationchange',()=>scheduleCleanup288(180,true),{passive:true});
+document.addEventListener('visibilitychange',()=>{
+  if(document.visibilityState!=='visible')removeStages288(true);
+  else scheduleCleanup288(0,false);
+},{passive:true});
+
+/* Last-resort orphan watchdog. A user may hold a swipe for a long time, so the
+   watchdog MUST NOT delete a snapshot while either swipe engine is active. */
+try{
+  const observer=new MutationObserver(muts=>{
+    for(const m of muts){
+      for(const n of m.addedNodes||[]){
+        if(n&&n.nodeType===1&&n.matches&&n.matches(STAGE)){
+          n.dataset.mvStageBorn288=String(Date.now());
+          const check=()=>{
+            try{
+              if(!n.isConnected)return;
+              if(swipeProtected288()){
+                setTimeout(check,1800);
+                return;
+              }
+              if(Date.now()-Number(n.dataset.mvStageBorn288||0)>=5000){
+                n.classList.add('mvGhost288');n.remove();
+                if(!document.querySelector(STAGE))document.body.classList.remove('mvSwipeActive246');
+              }
+            }catch(e){}
+          };
+          setTimeout(check,5200);
+        }
+      }
+    }
+  });
+  observer.observe(document.body,{childList:true});
+}catch(e){}
+
+setTimeout(()=>{
+  removeStages288(true);
+  try{document.querySelectorAll('.appVersion').forEach(x=>x.textContent='MY VOCA v5.3.288')}catch(e){}
+  try{const badge=document.getElementById('mvBuildBadge');if(badge)badge.textContent='v5.3.288'}catch(e){}
+  try{const fixed=document.querySelector('.versionTag,.versionBadge,.buildBadge');if(fixed)fixed.textContent='v5.3.288'}catch(e){}
+},0);
+
+window.mvSwipeLifetimeAudit288=function(){
+  return {
+    version:'v5.3.288',
+    rule:'live snapshot remains visible from direction-lock through finger release animation',
+    manualActive:manualSwipeActive288(),
+    autoSwipeDepth:autoSwipeDepth288,
+    protected:swipeProtected288(),
+    visibleSwipeStages:document.querySelectorAll(STAGE).length,
+    horizontalOwner:'MV_SWIPE_STANDARD_254',
+    verticalOwner:'mvVerticalLessonSwipe252',
+    cleanup:'stale only while idle; forced only on new gesture/page leave/orientation',
+    watchdog:'never removes while finger/auto swipe is active'
+  };
+};
+})();
+</script>
+
+
+
+<script id="v532289PlaybackBrowsePauseStandard">
+/* v5.3.289 · playback/manual-navigation standard
+   - A manual MY/SORI/OPIC tab/lesson swipe never changes the active playback scope.
+   - If playback is running, a committed manual navigation PAUSES and checkpoints it.
+   - The learner may browse any tab/lesson freely while paused.
+   - Bottom Continue returns to the saved playback screen and resumes the same playlist.
+   - UI wording stays generic: playing = '일시정지', paused = '계속'. No tab-specific '핵심 교정 계속/Chunk 계속'.
+*/
+(function(){
+'use strict';
+if(window.__MV_PLAYBACK_BROWSE_PAUSE_289__)return;
+window.__MV_PLAYBACK_BROWSE_PAUSE_289__=true;
+
+const SESSION=window.MV_PLAYBACK_STANDARD_281||window.MV_PLAYBACK_SESSION_281||null;
+const SINGLE=window.MV_SINGLE_LESSON_281||null;
+const page=()=>document.getElementById('myClassPage');
+const pageVisible=()=>{const p=page();return !!p&&!p.classList.contains('hidden')};
+
+function currentScreen289(){
+  try{return {course:String(ACTIVE_STUDY_COURSE||M536?.course||'my'),lesson:Number(myClassLessonNo)||1,tab:String(myClassTab||'corrections')}}catch(e){return null}
+}
+function captureCheckpoint289(){
+  try{
+    const bg=window.MV_BG_PLAYBACK_207||{};
+    return {
+      // This function is called while M536 is actively playing, so use the live
+      // controller directly. M536_TOGGLE_STATE is intentionally private to the
+      // older controller IIFE and must not be referenced from this patch.
+      mode:(M536.mode==='full'||M536.mode==='infinite')?M536.mode:'idle',
+      course:String(M536.course||ACTIVE_STUDY_COURSE||'my'),
+      cursor:Math.max(0,Number(M536.cursor)||0),
+      rep:Math.max(0,Number(bg.rep)||0),
+      itemDone:!!bg.itemDone,
+      nextCursor:Math.max(0,Number(bg.nextCursor)||0),
+      itemKey:String(bg.itemKey||''),
+      infiniteItem:M536.infiniteItem?{...M536.infiniteItem}:null
+    };
+  }catch(e){return null}
+}
+function isPlaying289(){
+  try{return typeof m536IsPlaying==='function'&&m536IsPlaying()}catch(e){return false}
+}
+function pauseForBrowse289(reason='manual-browse'){
+  if(!pageVisible()||!isPlaying289())return false;
+
+  const outer=!!window.MV_ALL_REPEAT_219?.active;
+  const kind=outer?'overall':(SESSION?.kind==='single'?'single':'course');
+  const scope=String(M536.course||ACTIVE_STUDY_COURSE||SESSION?.scope||'my');
+  const lesson=kind==='single'?(Number(SESSION?.lesson)||Number(myClassLessonNo)||1):null;
+  const cp=captureCheckpoint289();
+  const screen=currentScreen289();
+
+  try{m536PauseGlobal()}catch(e){return false}
+
+  if(SESSION){
+    SESSION.kind=kind;
+    SESSION.scope=scope;
+    SESSION.status='paused';
+    SESSION.lesson=lesson;
+    SESSION.screen=screen;
+    SESSION.m536Checkpoint=cp;
+    SESSION.reason=reason;
+  }
+  if(kind==='single'&&SINGLE){
+    SINGLE.active=true;SINGLE.course=scope;SINGLE.lesson=Number(lesson)||1;
+  }
+
+  // Status is intentionally generic. The action button remains '▶ 계속', because
+  // pressing it resumes the saved playback; it never adopts a tab-specific label.
+  try{myClassSetStatus?.('⏸ 일시정지 · 화면 탐색 중',false)}catch(e){}
+  try{myClassSyncButtons?.()}catch(e){}
+  return true;
+}
+window.mvPausePlaybackForBrowse289=pauseForBrowse289;
+
+/* Shared stop interception for COMMITTED manual swipes.
+   The swipe commit functions in older blocks call stopAllMyClassPlayback(true).
+   While a course swipe engine is actively committing, convert that hard stop into
+   pause+checkpoint instead. Outside that exact context the original hard stop is untouched. */
+const originalStop289=window.stopAllMyClassPlayback;
+function manualCourseSwipeActive289(){
+  if(!pageVisible())return false;
+  try{
+    return !!(window.MV_SWIPE_STANDARD_254?.active?.()||window.mvVerticalLessonSwipe252?.active?.());
+  }catch(e){return false}
+}
+function stopAllMyClassPlayback289(clearCurrent=true){
+  if(manualCourseSwipeActive289()&&isPlaying289()){
+    pauseForBrowse289('manual-swipe-pause');
+    return;
+  }
+  return originalStop289?originalStop289(clearCurrent):undefined;
+}
+window.stopAllMyClassPlayback=stopAllMyClassPlayback289;
+try{stopAllMyClassPlayback=stopAllMyClassPlayback289}catch(e){}
+
+/* Manual tab taps use the same rule as swipe. Capture phase replaces legacy
+   handlers that used to hard-stop and clear the session. */
+document.addEventListener('click',e=>{
+  const tab=e.target?.closest?.('.myClassTab');
+  if(!tab||!pageVisible())return;
+  const next=String(tab.dataset.myclassTab||'');
+  if(!next||next===String(myClassTab||''))return;
+
+  e.preventDefault();
+  e.stopPropagation();
+  e.stopImmediatePropagation();
+
+  const paused=pauseForBrowse289('manual-tab-pause');
+  myClassTab=next;
+  try{renderMyClass?.();studySyncCourseUI?.()}catch(err){console.warn('[v5.3.289] tab render',err)}
+  document.querySelectorAll('.myClassTab').forEach(b=>b.classList.toggle('active',b.dataset.myclassTab===myClassTab));
+  try{window.scrollTo({top:0,left:0,behavior:'auto'})}catch(err){window.scrollTo(0,0)}
+  try{myClassSetStatus?.(paused?'⏸ 일시정지 · 화면 탐색 중':'화면 전환',false)}catch(err){}
+  try{myClassSyncButtons?.()}catch(err){}
+},true);
+
+/* After a committed swipe, older commit code writes '재생 정지'. Restore the
+   pause wording on the next frame without changing the destination screen. */
+function refreshPausedBrowseUI289(){
+  if(!SESSION||SESSION.status!=='paused'||!pageVisible())return;
+  if(isPlaying289())return;
+  try{myClassSetStatus?.('⏸ 일시정지 · 화면 탐색 중',false)}catch(e){}
+  try{myClassSyncButtons?.()}catch(e){}
+}
+['touchend','pointerup'].forEach(type=>window.addEventListener(type,()=>{
+  setTimeout(refreshPausedBrowseUI289,0);
+  setTimeout(refreshPausedBrowseUI289,420);
+},{passive:true}));
+
+/* Keep generic bottom wording. We deliberately do NOT show '핵심 교정 계속',
+   'Chunk 계속', etc. The current action alone determines the label. */
+const priorSync289=window.myClassSyncButtons;
+function syncButtons289(){
+  try{priorSync289?.()}catch(e){}
+  const b=document.getElementById('myClassPlayPause');if(!b)return;
+  const playing=isPlaying289();
+  if(playing)b.innerHTML='⏸<br>일시정지';
+  else if(SESSION?.status==='paused'&&['course','overall','single'].includes(String(SESSION.kind||'')))b.innerHTML='▶<br>계속';
+  else if(SESSION?.direct)b.innerHTML='▶<br>이 수업 시작';
+  else b.innerHTML='▶<br>전체 시작';
+  b.setAttribute('aria-pressed',playing?'true':'false');
+}
+window.myClassSyncButtons=syncButtons289;
+try{myClassSyncButtons=syncButtons289}catch(e){}
+
+if(SESSION)SESSION.version='5.3.289';
+setTimeout(()=>{
+  try{document.querySelectorAll('.appVersion').forEach(x=>x.textContent='MY VOCA v5.3.289')}catch(e){}
+  try{const badge=document.getElementById('mvBuildBadge');if(badge)badge.textContent='v5.3.289'}catch(e){}
+  try{document.querySelectorAll('.versionTag,.versionBadge,.buildBadge').forEach(x=>x.textContent='v5.3.289')}catch(e){}
+  refreshPausedBrowseUI289();
+},0);
+
+window.mvPlaybackBrowsePauseAudit289=function(){
+  return {
+    version:'v5.3.289',
+    rule:'manual tab/lesson navigation pauses and checkpoints; Continue returns to saved playback screen',
+    session:SESSION?{kind:SESSION.kind,scope:SESSION.scope,status:SESSION.status,lesson:SESSION.lesson,reason:SESSION.reason,screen:SESSION.screen}:null,
+    currentScreen:currentScreen289(),
+    playing:isPlaying289(),
+    swipeActive:manualCourseSwipeActive289(),
+    button:document.getElementById('myClassPlayPause')?.innerText||'',
+    wording:'playing=일시정지, paused=계속; no tab-specific continue label'
+  };
+};
+})();
+</script>
+
+
+<style id="v53290CompactCourseCardRestore">
+/* v5.3.290 · restore the v5.3.286 compact HOME course-card standard.
+   This block is intentionally last so later feature patches cannot enlarge SORI/OPIC cards. */
+body #homePage .soriClassSection,
+body #homePage .opicClassSection{
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:8px!important;
+  align-items:stretch!important;
+}
+/* v5.3.291: compact layout must never override the active HOME mode.
+   setHomeStudyMode controls visibility; only the active SORI/OPIC section becomes a grid. */
+body #homePage .soriClassSection[data-mv-mode-visible="1"],
+body #homePage .opicClassSection[data-mv-mode-visible="1"]{display:grid!important}
+body #homePage .soriClassSection[data-mv-mode-visible="0"],
+body #homePage .opicClassSection[data-mv-mode-visible="0"]{display:none!important}
+body #homePage .soriClassSection>.sectionHead,
+body #homePage .soriClassSection>.studyCourseInfo,
+body #homePage .opicClassSection>.sectionHead,
+body #homePage .opicClassSection>.studyCourseInfo,
+body #homePage .opicClassSection>.opicReadyCard{
+  grid-column:1/-1!important;
+}
+body #homePage .soriClassSection .soriCourseCard,
+body #homePage .opicClassSection .opicCourseCard{
+  display:flex!important;
+  flex-direction:column!important;
+  width:auto!important;
+  min-width:0!important;
+  min-height:100px!important;
+  max-height:116px!important;
+  margin:0!important;
+  padding:9px 9px 8px!important;
+  border-radius:14px!important;
+  overflow:hidden!important;
+  box-sizing:border-box!important;
+  box-shadow:0 3px 10px rgba(15,23,42,.05)!important;
+}
+body #homePage .soriClassSection .soriCourseCard .myClassTop,
+body #homePage .opicClassSection .opicCourseCard .myClassTop{
+  min-height:19px!important;
+  padding-right:35px!important;
+  gap:3px!important;
+}
+body #homePage .soriClassSection .soriCourseCard .myClassTop b,
+body #homePage .opicClassSection .opicCourseCard .myClassTop b{
+  font-size:12px!important;
+  line-height:1.12!important;
+  font-weight:950!important;
+  min-width:0!important;
+}
+body #homePage .soriClassSection .soriCourseCard .myClassBadge,
+body #homePage .opicClassSection .opicCourseCard .myClassBadge,
+body #homePage .soriClassSection .soriCourseCard .soriLessonStrip,
+body #homePage .soriClassSection .soriCourseCard .myClassDesc,
+body #homePage .opicClassSection .opicCourseCard .myClassDesc{
+  display:none!important;
+}
+body #homePage .soriClassSection .soriCourseCard .myClassTitle,
+body #homePage .opicClassSection .opicCourseCard .myClassTitle{
+  margin-top:4px!important;
+  min-height:28px!important;
+  padding:0!important;
+  font-size:10.8px!important;
+  line-height:1.25!important;
+  font-weight:850!important;
+  color:#344054!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  display:-webkit-box!important;
+  -webkit-box-orient:vertical!important;
+  -webkit-line-clamp:2!important;
+}
+body #homePage .soriClassSection .soriCourseCard .myClassMeta,
+body #homePage .opicClassSection .opicCourseCard .myClassMeta{
+  margin-top:auto!important;
+  padding-top:4px!important;
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:2px 4px!important;
+  font-size:8px!important;
+  line-height:1.08!important;
+  color:#667085!important;
+}
+body #homePage .soriClassSection .soriCourseCard .myClassMeta span,
+body #homePage .opicClassSection .opicCourseCard .myClassMeta span{
+  min-width:0!important;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+body #homePage .soriClassSection .soriCourseCard .studySelectMini,
+body #homePage .opicClassSection .opicCourseCard .studySelectMini{
+  position:absolute!important;
+  right:6px!important;
+  top:6px!important;
+  width:30px!important;
+  height:30px!important;
+  padding:2px!important;
+  border-radius:8px!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+}
+body #homePage .soriClassSection .soriCourseCard .studySelectMini span,
+body #homePage .opicClassSection .opicCourseCard .studySelectMini span{display:none!important}
+body #homePage .soriClassSection .soriCourseCard .studySelectMini input,
+body #homePage .opicClassSection .opicCourseCard .studySelectMini input{
+  width:16px!important;height:16px!important;margin:0!important;
+}
+@media(max-width:360px){
+  body #homePage .soriClassSection,
+  body #homePage .opicClassSection{gap:6px!important}
+  body #homePage .soriClassSection .soriCourseCard,
+  body #homePage .opicClassSection .opicCourseCard{
+    min-height:96px!important;max-height:110px!important;padding:8px 7px 7px!important;
+  }
+  body #homePage .soriClassSection .soriCourseCard .myClassTitle,
+  body #homePage .opicClassSection .opicCourseCard .myClassTitle{font-size:10.2px!important}
+}
+</style>
+<script id="v53290CompactCourseCardRestoreRuntime">
+(function(){
+'use strict';
+if(window.__MV_COMPACT_COURSE_290__)return;
+window.__MV_COMPACT_COURSE_290__=true;
+function normalize290(){
+  try{window.mvNormalizeCourseCards286?.()}catch(e){}
+  document.querySelectorAll('#homePage .soriClassSection .soriCourseCard').forEach((card,i)=>{
+    const n=Number(card.dataset.studyLesson)||i+1;
+    const b=card.querySelector('.myClassTop b');
+    if(b)b.textContent=`소리영어 · 수업 ${n}`;
+  });
+  document.querySelectorAll('#homePage .opicClassSection .opicCourseCard').forEach((card,i)=>{
+    const n=Number(card.dataset.studyLesson)||i+1;
+    const b=card.querySelector('.myClassTop b');
+    if(b)b.textContent=`OPIC ${n}`;
+  });
+}
+const obs=new MutationObserver(()=>requestAnimationFrame(normalize290));
+const home=document.getElementById('homePage');
+if(home)obs.observe(home,{childList:true,subtree:true});
+setTimeout(normalize290,0);setTimeout(normalize290,250);setTimeout(normalize290,900);
+setTimeout(()=>{
+  try{document.querySelectorAll('.appVersion').forEach(x=>x.textContent='MY VOCA v5.3.290')}catch(e){}
+  try{const b=document.getElementById('mvBuildBadge');if(b)b.textContent='v5.3.290'}catch(e){}
+  try{document.querySelectorAll('.versionTag,.versionBadge,.buildBadge').forEach(x=>x.textContent='v5.3.290')}catch(e){}
+},0);
+window.mvCompactCourseAudit290=()=>({
+  version:'v5.3.290',
+  soriCards:document.querySelectorAll('#homePage .soriClassSection .soriCourseCard').length,
+  opicCards:document.querySelectorAll('#homePage .opicClassSection .opicCourseCard').length,
+  columns:getComputedStyle(document.querySelector('#homePage .opicClassSection')||document.body).gridTemplateColumns||''
+});
+})();
+</script>
+
+
+<script id="v53291HomeModeExclusiveVisibilityFix">
+(function(){
+'use strict';
+if(window.__MV_HOME_MODE_EXCLUSIVE_291__)return;
+window.__MV_HOME_MODE_EXCLUSIVE_291__=true;
+const valid291=['day','my','sori','opic'];
+function mode291(){
+  try{
+    const a=document.querySelector('#homeStudyModePanel .homeStudyModeBtn.active');
+    const map={homeModeDay:'day',homeModeMy:'my',homeModeSori:'sori',homeModeOpic:'opic'};
+    const m=map[a?.id]||window.MV_HOME_MODE_212||localStorage.getItem('mv_homeStudyMode212')||'day';
+    return valid291.includes(m)?m:'day';
+  }catch(e){return 'day'}
+}
+function apply291(mode){
+  const m=valid291.includes(mode)?mode:mode291();
+  const day=document.querySelector('#homePage .daySection');
+  const my=document.querySelector('#homePage .myClassSection');
+  const sori=document.querySelector('#homePage .soriClassSection');
+  const opic=document.querySelector('#homePage .opicClassSection');
+  // One mode only.  DAY/MY use their native layout; compact SORI/OPIC use grid only when active.
+  if(day)day.style.setProperty('display',m==='day'?'':'none',m==='day'?'':'important');
+  if(my)my.style.setProperty('display',m==='my'?'':'none',m==='my'?'':'important');
+  if(sori){sori.dataset.mvModeVisible=m==='sori'?'1':'0';sori.style.setProperty('display',m==='sori'?'grid':'none','important');}
+  if(opic){opic.dataset.mvModeVisible=m==='opic'?'1':'0';opic.style.setProperty('display',m==='opic'?'grid':'none','important');}
+  [['homeModeDay','day'],['homeModeMy','my'],['homeModeSori','sori'],['homeModeOpic','opic']].forEach(([id,k])=>{
+    document.getElementById(id)?.classList.toggle('active',m===k);
+  });
+  window.MV_HOME_MODE_212=m;
+  try{localStorage.setItem('mv_homeStudyMode212',m)}catch(e){}
+  return m;
+}
+window.mvApplyExclusiveHomeMode291=apply291;
+const base=window.setHomeStudyMode;
+if(typeof base==='function'&&!base.__v291){
+  const wrapped=function(mode){
+    const r=base.apply(this,arguments);
+    apply291(mode);
+    requestAnimationFrame(()=>apply291(mode));
+    return r;
+  };
+  wrapped.__v291=true;
+  window.setHomeStudyMode=wrapped;
+  try{setHomeStudyMode=wrapped}catch(e){}
+}
+// Some older render/normalization patches rebuild HOME cards. Re-assert visibility after such DOM changes.
+let queued291=false;
+const home291=document.getElementById('homePage');
+if(home291){
+  new MutationObserver(()=>{
+    if(queued291)return;queued291=true;
+    requestAnimationFrame(()=>{queued291=false;apply291(mode291())});
+  }).observe(home291,{childList:true,subtree:true});
+}
+document.addEventListener('click',(e)=>{
+  const b=e.target?.closest?.('#homeModeDay,#homeModeMy,#homeModeSori,#homeModeOpic');
+  if(!b)return;
+  const map={homeModeDay:'day',homeModeMy:'my',homeModeSori:'sori',homeModeOpic:'opic'};
+  setTimeout(()=>apply291(map[b.id]||mode291()),0);
+},true);
+setTimeout(()=>apply291(mode291()),0);
+setTimeout(()=>apply291(mode291()),250);
+setTimeout(()=>apply291(mode291()),900);
+setTimeout(()=>{
+  try{document.querySelectorAll('.appVersion').forEach(x=>x.textContent='MY VOCA v5.3.291')}catch(e){}
+  try{const b=document.getElementById('mvBuildBadge');if(b)b.textContent='v5.3.291'}catch(e){}
+  try{document.querySelectorAll('.versionTag,.versionBadge,.buildBadge').forEach(x=>x.textContent='v5.3.291')}catch(e){}
+},0);
+window.mvHomeModeExclusiveAudit291=()=>({
+  version:'v5.3.291',mode:mode291(),
+  visible:{
+    day:getComputedStyle(document.querySelector('#homePage .daySection')||document.body).display,
+    my:getComputedStyle(document.querySelector('#homePage .myClassSection')||document.body).display,
+    sori:getComputedStyle(document.querySelector('#homePage .soriClassSection')||document.body).display,
+    opic:getComputedStyle(document.querySelector('#homePage .opicClassSection')||document.body).display
+  },
+  rule:'HOME shows exactly one selected learning mode; compact SORI/OPIC remain 2-column only when active'
+});
+})();
+</script>
+
 </body></html>
