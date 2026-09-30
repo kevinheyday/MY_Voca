@@ -1,9 +1,9 @@
 <!doctype html><html lang="ko"><head>
-<!-- SAYWARD V5.4.18 · MY12 as...as repair patterns -->
+<!-- SAYWARD V5.4.19 · persistent playback resume + CONFIG reset -->
 
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.18</title>
+<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.19</title>
 
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
@@ -3672,6 +3672,13 @@ Config의 <b>Day Loop 문장당 반복 횟수</b>에서 1회 / 2회 / 3회 / 5�
 <b>추천 학습 순서</b><br>
 한글 문장을 먼저 보고 영어 문장을 떠올린 뒤, 아래의 50% 가린 영어 문장으로 확인하고 정답 음성을 들으세요. 한글과 영어 모두 학습 단어는 파랑, 학습 패턴은 분홍, 추가 패턴은 보라색으로 표시됩니다. 한글 패턴은 ~ 또는 ... 자리에 들어가는 내용 전체를 칠하지 않고, 실제로 재사용되는 고정 문형 부분만 색칠합니다. 2단계와 Day Loop의 빈칸도 같은 색 규칙을 사용하며, 어느 항목에도 속하지 않는 일반 빈칸은 검정 테두리로 표시됩니다. 그다음, 막히는 문장은 <b>Sentence N ∞</b>로 집중 반복하세요. 필요할 때만 <b>문장 보기</b>로 정답을 확인하고 다시 숨기면 Recall 연습을 계속할 수 있습니다.
 </div></details>
+    <section class="configSection" id="playbackPositionConfigSection">
+      <div class="configSectionTitle">▶ 재생 위치</div>
+      <div class="configRow">
+        <div class="configCopy"><b>재생 위치 리셋</b><span>DAY VOCA · MY 수업 · 소리영어 · OPIC · FRIENDS에 저장된 전체 재생 위치를 모두 처음으로 되돌립니다.</span></div>
+        <button id="cfgPlaybackPositionReset" class="homeConfigBtn" type="button">재생 위치 리셋</button>
+      </div>
+    </section>
     <div class="configActions"><button id="configResetBtn" class="configAction configReset" type="button">기본값 복원</button><button id="configSaveBtn" class="configAction configSave" type="button">설정 저장</button></div>
     <div class="configNotice">설정은 서버 계정이 아니라 현재 휴대폰의 브라우저 저장소(localStorage)에 저장됩니다. 따라서 서로 다른 휴대폰에서는 각자 다른 설정을 사용할 수 있습니다.</div>
   </div>
@@ -12135,14 +12142,14 @@ function restoreConfigReturnState(){
   }
   requestAnimationFrame(()=>window.scrollTo({top:Number(state.scrollY)||0,behavior:'auto'}));
 }
-function showConfigSavedToast(){
+function showConfigSavedToast(message='설정이 저장되었습니다 ✓'){
   let toast=document.getElementById('configSavedToast');
   if(!toast){
     toast=document.createElement('div');toast.id='configSavedToast';
     toast.style.cssText='position:fixed;left:50%;bottom:82px;transform:translateX(-50%);z-index:99999;background:#111827;color:#fff;padding:10px 16px;border-radius:999px;font-size:13px;font-weight:900;box-shadow:0 8px 24px rgba(15,23,42,.22);opacity:0;transition:opacity .18s ease;pointer-events:none;white-space:nowrap';
     document.body.appendChild(toast);
   }
-  toast.textContent='설정이 저장되었습니다 ✓';toast.style.opacity='1';
+  toast.textContent=message;toast.style.opacity='1';
   clearTimeout(window.__configSavedToastTimer);
   window.__configSavedToastTimer=setTimeout(()=>{toast.style.opacity='0'},1200);
 }
@@ -12156,6 +12163,11 @@ if($('configBackBtn'))$('configBackBtn').onclick=closeConfiguration;
 if($('usageBackBtn'))$('usageBackBtn').onclick=closeUsagePage;
 if($('configSaveBtn'))$('configSaveBtn').onclick=()=>{saveAppSettings({speechRate:parseFloat($('cfgSpeechRate').value),exampleRepeat:parseInt($('cfgExampleRepeat').value),patternRepeat:parseInt($('cfgPatternRepeat').value),collocationRepeat:parseInt($('cfgCollocationRepeat').value),synonymRepeat:parseInt($('cfgSynonymRepeat').value),recallDelay:parseInt($('cfgRecallDelay').value),sentenceRepeat:parseInt($('cfgSentenceRepeat').value),dayLoopSentenceRepeat:parseInt($('cfgDayLoopSentenceRepeat').value),sentenceContinuous:$('cfgSentenceContinuous').checked,sentencePause:parseInt($('cfgSentencePause').value),wordReadRepeat:parseInt($('cfgWordReadRepeat').value),continuousStudyRepeat:parseInt($('cfgContinuousStudyRepeat').value),quizWordRepeat:parseInt($('cfgQuizWordRepeat').value),quizAutoNext:$('cfgQuizAutoNext').checked,myClassAutoPlay:$('cfgMyClassAutoPlay')?.checked!==false,myClassSentenceRepeat:parseInt($('cfgMyClassSentenceRepeat')?.value||'2'),myClassPause:parseInt($('cfgMyClassPause')?.value||'700')});restoreConfigReturnState();showConfigSavedToast()};
 if($('configResetBtn'))$('configResetBtn').onclick=()=>{appSettings={...APP_SETTINGS_DEFAULTS};localStorage.setItem(APP_SETTINGS_KEY,JSON.stringify(appSettings));setSpeechRate(appSettings.speechRate);fillConfigurationForm();syncContinuousStudyRepeatControl();refreshHomeConfigSummary()};
+if($('cfgPlaybackPositionReset'))$('cfgPlaybackPositionReset').onclick=()=>{
+  if(!confirm('저장된 전체 재생 위치를 모두 처음으로 되돌릴까요?\n학습 선택과 다른 설정은 유지됩니다.'))return;
+  try{window.mv419ResetAllPlaybackPositions?.()}catch(e){try{clearSelectedProgress?.()}catch(x){}}
+  showConfigSavedToast('재생 위치를 처음으로 초기화했습니다 ✓');
+};
 
 refreshHomeConfigSummary();
 
@@ -12545,7 +12557,7 @@ function mvSentenceEntryAudit182(){
 window.mvSentenceEntryAudit182=mvSentenceEntryAudit182;
 
 /* ===== V5.3.189 · STANDARD APP INFO / UPDATE HISTORY ===== */
-const MV_APP_VERSION='5.4.18';
+const MV_APP_VERSION='5.4.19';
 
 function mvCloseInfoOverlay(){
   const overlay=document.getElementById('mvInfoOverlay');
@@ -12574,6 +12586,14 @@ function mvOpenUpdateHistory(){
     `MY ENGLISH v${MV_APP_VERSION}`,
     `
       <div class="mvInfoVersionCard"><b>v${MV_APP_VERSION}</b><span>현재 설치 버전</span></div>
+      <section class="mvInfoSection">
+        <h3>v5.4.19</h3>
+        <ul>
+          <li>전체 선택 재생을 중간에 멈추면 학습별 마지막 재생 위치를 자동 저장하고, 다음 전체 재생에서 해당 위치부터 이어서 시작합니다.</li>
+          <li>DAY VOCA · MY 수업 · 소리영어 · OPIC · FRIENDS의 재생 위치를 서로 독립적으로 저장합니다. 선택 항목이나 반복 범위가 바뀌면 새 범위는 처음부터 시작합니다.</li>
+          <li>Config에 재생 위치 리셋 버튼을 추가했습니다. 리셋하면 저장된 전체 재생 위치가 모두 처음으로 돌아갑니다.</li>
+        </ul>
+      </section>
       <section class="mvInfoSection">
         <h3>v5.4.18</h3>
         <ul>
@@ -14100,6 +14120,7 @@ async function m536RunFull(startAt=0,startRep=0){
   while(token===M536.token && hardEpoch===MY_CLASS_HARD_STOP_EPOCH && M536.mode==='full'){
     const item=M536.playlist[M536.cursor];
     if(!item)return;
+    try{window.mv419TrackRunningItem?.(course,M536.cursor,item)}catch(e){}
     const el=await m536RenderItemForFull255(item);
     if(token!==M536.token || hardEpoch!==MY_CLASS_HARD_STOP_EPOCH || M536.mode!=='full')return;
     const cfg=loadAppSettings();
@@ -20494,6 +20515,96 @@ function mv281CaptureM536(){
     };
   }catch(e){return null}
 }
+/* ===== V5.4.19 · PERSISTENT PLAYBACK POSITION STANDARD =====
+   UI is unchanged. Only the playback start cursor is persisted.
+   - DAY uses the existing mv_selected_auto_progress_v1 payload.
+   - MY / SORI / OPIC / FRIENDS use one shared resume store.
+   - Course selection/repeat-range changes invalidate that course checkpoint naturally
+     through selectionKey matching.
+   - A checkpoint is item-level: resuming restarts the saved sentence/item from its beginning.
+*/
+const MV_PLAYBACK_RESUME_KEY_419='sayward_playback_resume_v1';
+function mv419ResumeStore(){
+  try{const x=JSON.parse(localStorage.getItem(MV_PLAYBACK_RESUME_KEY_419)||'{}');return x&&typeof x==='object'?x:{}}catch(e){return {}}
+}
+function mv419WriteResumeStore(store){
+  try{localStorage.setItem(MV_PLAYBACK_RESUME_KEY_419,JSON.stringify(store||{}))}catch(e){}
+}
+function mv419ResumeId(kind,scope,lesson=null){
+  return kind==='single'?`single:${scope}:${Number(lesson)||1}`:`course:${scope}`;
+}
+function mv419NormalizeCheckpoint(cp,scope){
+  if(!cp)return null;
+  let cursor=Math.max(0,Number(cp.cursor)||0);
+  if(cp.itemDone)cursor=Math.max(0,Number(cp.nextCursor)||0);
+  return {
+    mode:'full',course:String(scope||cp.course||'my'),cursor,rep:0,
+    itemDone:false,nextCursor:cursor,itemKey:cp.itemDone?'':String(cp.itemKey||''),infiniteItem:null
+  };
+}
+function mv419SaveResume(kind,scope,lesson=null,cp=null,screen=null){
+  if(!['course','single'].includes(String(kind||'')))return false;
+  const c=String(scope||'');if(!['my','sori','opic','friends'].includes(c))return false;
+  const normalized=mv419NormalizeCheckpoint(cp,c);if(!normalized)return false;
+  const store=mv419ResumeStore();
+  const id=mv419ResumeId(kind,c,lesson);
+  store[id]={
+    version:1,kind,c,lesson:kind==='single'?(Number(lesson)||1):null,
+    selectionKey:kind==='course'?mv281SelectionKey(c):'',
+    checkpoint:normalized,
+    screen:screen?{course:c,lesson:Number(screen.lesson)||1,tab:String(screen.tab||'corrections')}:null,
+    savedAt:Date.now()
+  };
+  mv419WriteResumeStore(store);return true;
+}
+function mv419LoadResume(kind,scope,lesson=null){
+  const c=String(scope||'');
+  const row=mv419ResumeStore()[mv419ResumeId(kind,c,lesson)];
+  if(!row||row.kind!==kind||row.c!==c)return null;
+  if(kind==='course'&&row.selectionKey!==mv281SelectionKey(c))return null;
+  if(kind==='single'&&Number(row.lesson)!==(Number(lesson)||1))return null;
+  return row;
+}
+function mv419ClearResume(kind,scope,lesson=null){
+  const store=mv419ResumeStore();delete store[mv419ResumeId(kind,String(scope||''),lesson)];mv419WriteResumeStore(store);
+}
+function mv419SaveActiveResume(){
+  try{
+    const kind=MV281.kind==='single'?'single':(MV281.kind==='course'?'course':null);
+    if(!kind)return false;
+    const scope=String(M536?.course||MV281.scope||ACTIVE_STUDY_COURSE||'my');
+    if(!['my','sori','opic','friends'].includes(scope))return false;
+    const cp=mv281CaptureM536();
+    const screen=mv281Screen();
+    return mv419SaveResume(kind,scope,kind==='single'?(MV281.lesson||myClassLessonNo):null,cp,screen);
+  }catch(e){return false}
+}
+function mv419TrackRunningItem(course,cursor,item){
+  try{
+    if(M536.mode!=='full')return;
+    const kind=MV281.kind==='single'?'single':(MV281.kind==='course'?'course':null);
+    if(!kind)return;
+    const c=String(course||M536.course||ACTIVE_STUDY_COURSE||'my');
+    const cp={mode:'full',course:c,cursor:Math.max(0,Number(cursor)||0),rep:0,itemDone:false,nextCursor:Math.max(0,Number(cursor)||0),itemKey:item?m536ItemKey(item):'',infiniteItem:null};
+    const screen=item?{course:c,lesson:Number(item.lesson)||1,tab:String(item.tab||'corrections')}:mv281Screen();
+    mv419SaveResume(kind,c,kind==='single'?(MV281.lesson||item?.lesson||myClassLessonNo):null,cp,screen);
+  }catch(e){}
+}
+function mv419ResetAllPlaybackPositions(){
+  try{localStorage.removeItem(MV_PLAYBACK_RESUME_KEY_419)}catch(e){}
+  try{clearSelectedProgress?.()}catch(e){try{localStorage.removeItem('mv_selected_auto_progress_v1')}catch(x){}}
+  try{mv281AbortSession?.('playback-position-reset')}catch(e){}
+  try{mv281ResetM536Resume?.()}catch(e){}
+  try{learningPlaybackPaused=true;updateLearningPlaybackButton?.()}catch(e){}
+  return true;
+}
+window.mv419SaveResume=mv419SaveResume;
+window.mv419LoadResume=mv419LoadResume;
+window.mv419ClearResume=mv419ClearResume;
+window.mv419SaveActiveResume=mv419SaveActiveResume;
+window.mv419TrackRunningItem=mv419TrackRunningItem;
+window.mv419ResetAllPlaybackPositions=mv419ResetAllPlaybackPositions;
+
 function mv281ResetM536Resume(){
   try{
     M536_TOGGLE_STATE.pausedMode='idle';
@@ -20522,7 +20633,7 @@ function mv281AbortSession(reason='new-command'){
   try{stopAllMyClassPlayback?.(true)}catch(e){}
   try{stopSpeech?.()}catch(e){}
   try{window.speechSynthesis?.cancel()}catch(e){}
-  try{clearSelectedProgress?.()}catch(e){}
+  // v5.4.19: playback positions are independent by learning scope; only Config reset or normal completion clears them.
   mv281ResetM536Resume();
   SINGLE281.active=false;SINGLE281.course=null;SINGLE281.lesson=null;
   MV281.kind='idle';MV281.scope=null;MV281.status='idle';MV281.lesson=null;
@@ -20598,6 +20709,7 @@ function mv281PauseM536(kind,scope,lesson=null){
   MV281.kind=kind;MV281.scope=scope;MV281.status='paused';MV281.lesson=lesson;MV281.screen=screen;MV281.m536Checkpoint=cp;
   if(kind==='course')MV281.selectionKey=mv281SelectionKey(scope);
   if(kind==='single'){SINGLE281.active=true;SINGLE281.course=scope;SINGLE281.lesson=Number(lesson)||Number(screen?.lesson)||1}
+  try{mv419SaveResume(kind,scope,kind==='single'?(lesson||screen?.lesson):null,cp,screen)}catch(e){}
   try{myClassSyncButtons?.()}catch(e){}
 }
 
@@ -20659,11 +20771,17 @@ function mv281StartFreshCourse(mode){
   if(!selected.length){alert(mode==='day'?'학습할 Day를 하나 이상 선택해 주세요.':`${COURSE_NAMES_281[mode]||'학습'} 항목을 하나 이상 선택해 주세요.`);return false}
   MV281.kind='course';MV281.scope=mode;MV281.status='playing';MV281.selectionKey=mv281SelectionKey(mode);MV281.reason='fresh-course';
   if(mode==='day'){
-    try{clearSelectedProgress?.()}catch(e){}
+    // startSelectedAutoLearning already validates selection/order/studyMode and resumes its saved card.
     try{startSelectedAutoLearning();return true}catch(e){MV281.status='idle';return false}
   }
   try{
-    ACTIVE_STUDY_COURSE=mode;
+    ACTIVE_STUDY_COURSE=mode;M536.course=mode;
+    const saved=mv419LoadResume('course',mode);
+    if(saved?.checkpoint){
+      MV281.reason='persistent-resume-course';
+      MV281.screen=saved.screen||null;MV281.m536Checkpoint=saved.checkpoint;
+      return mv281ResumeM536(mode,saved.checkpoint,saved.screen);
+    }
     window.m536StartCourse?.(mode);
     return true;
   }catch(e){MV281.status='idle';return false}
@@ -20729,6 +20847,8 @@ function mv281StartOverall(){
 window.mv281StartOverall=mv281StartOverall;
 
 function mv281SingleDone(course){
+  const completedLesson=Number(MV281.lesson||SINGLE281.lesson||myClassLessonNo)||1;
+  try{mv419ClearResume('single',String(course||MV281.scope||'my'),completedLesson)}catch(e){}
   SINGLE281.active=false;SINGLE281.course=null;SINGLE281.lesson=null;
   MV281.kind='idle';MV281.scope=null;MV281.status='idle';MV281.lesson=null;MV281.selectionKey='';MV281.m536Checkpoint=null;MV281.reason='single-complete';
   try{M536_TOGGLE_STATE.pausedMode='idle';M536_TOGGLE_STATE.pausedInfiniteItem=null}catch(e){}
@@ -20752,7 +20872,15 @@ function mv281StartSingle(course,lesson){
     myClassUpdateHeader?.();renderMyClass?.();
     MV281.screen=mv281Screen();
     mv281ArmSingleDone(direct.course);
-    m536RunFull(0,0);
+    const saved=mv419LoadResume('single',direct.course,direct.lesson);
+    if(saved?.checkpoint){
+      MV281.reason='persistent-resume-single';
+      MV281.screen=saved.screen||MV281.screen;MV281.m536Checkpoint=saved.checkpoint;
+      const at=mv281ResolveResumeCursor(saved.checkpoint,direct.course);
+      m536RunFull(at.cursor,0);
+    }else{
+      m536RunFull(0,0);
+    }
     myClassSyncButtons?.();
     return true;
   }catch(e){mv281SingleDone(direct.course);return false}
@@ -20807,6 +20935,7 @@ function mv281ToggleM536(){
     MV281.kind=kind;MV281.scope=scope;MV281.status='paused';MV281.lesson=lesson;MV281.screen=screen;MV281.m536Checkpoint=cp;
     if(kind==='course')MV281.selectionKey=mv281SelectionKey(scope);
     if(kind==='single'){SINGLE281.active=true;SINGLE281.course=scope;SINGLE281.lesson=Number(lesson)||1}
+    try{mv419SaveResume(kind,scope,kind==='single'?lesson:null,cp,screen)}catch(e){}
     MV281.reason='bottom-pause';
     myClassSyncButtons?.();return true;
   }
@@ -20923,14 +21052,18 @@ document.addEventListener('click',(e)=>{
 // If Android/background logic pauses M536, reflect that in the same session state.
 document.addEventListener('visibilitychange',()=>{
   if(document.visibilityState!=='hidden')return;
+  try{if(MV281.status==='playing'&&MV281.scope!=='day')mv419SaveActiveResume()}catch(e){}
   setTimeout(()=>{
     try{
       if(MV281.status==='playing'&&MV281.scope!=='day'&&M536.mode==='idle'&&String(M536_TOGGLE_STATE.pausedMode||'idle')!=='idle'){
         MV281.status='paused';MV281.screen=mv281Screen();MV281.m536Checkpoint=mv281CaptureM536();MV281.reason='background-pause';
+        mv419SaveResume(MV281.kind==='single'?'single':'course',MV281.scope,MV281.kind==='single'?MV281.lesson:null,MV281.m536Checkpoint,MV281.screen);
       }
     }catch(e){}
   },0);
 });
+window.addEventListener('pagehide',()=>{try{if(MV281.status==='playing'&&MV281.scope!=='day')mv419SaveActiveResume()}catch(e){}});
+window.addEventListener('beforeunload',()=>{try{if(MV281.status==='playing'&&MV281.scope!=='day')mv419SaveActiveResume()}catch(e){}});
 
 window.mvPlaybackSessionAudit281=function(){
   return {
@@ -21907,7 +22040,7 @@ function bindHomeSwipe(){
 }
 
 function boot(){
-  try{document.title='SAYWARD v5.4.18'}catch(e){}
+  try{document.title='SAYWARD v5.4.19'}catch(e){}
   try{ensureMyClassHomeCards()}catch(e){console.warn('[SAYWARD] MY card auto-heal',e)}
   setHomeVisibleClass();bindLauncher();bindOverallProxy();buildDaySettings();placeTodayCard();bindHomeSwipe();
   placeTodayCard();
@@ -21927,7 +22060,7 @@ window.mvCleanAudit540=function(){
   const h=home(),bar=document.getElementById('sharedStudySelectBar');
   const cards=[...document.querySelectorAll('#homePage .myClassSection .myClassCard')].slice(0,4);
   return {
-    version:'v5.4.18',mode:currentMode(),hero:!!document.getElementById('cleanHeroMenuHit'),launcher:document.querySelectorAll('.cleanModeCard').length,
+    version:'v5.4.19',mode:currentMode(),hero:!!document.getElementById('cleanHeroMenuHit'),launcher:document.querySelectorAll('.cleanModeCard').length,
     sharedBar:!!bar,daySettings:!!document.getElementById('cleanDaySettings'),legacyModePanelVisible:!!document.getElementById('homeStudyModePanel')&&getComputedStyle(document.getElementById('homeStudyModePanel')).display!=='none',
     visibleSections:{day:getComputedStyle(document.querySelector('#homePage .daySection')||document.body).display,my:getComputedStyle(document.querySelector('#homePage .myClassSection')||document.body).display,sori:getComputedStyle(document.querySelector('#homePage .soriClassSection')||document.body).display,opic:getComputedStyle(document.querySelector('#homePage .opicClassSection')||document.body).display},
     myCards:cards.map(c=>({w:Math.round(c.getBoundingClientRect().width),h:Math.round(c.getBoundingClientRect().height)})),
@@ -22094,7 +22227,7 @@ window.mvCleanAudit540=function(){
      Do not append V13/V14 patch blocks. Edit that master block in place only. -->
 <style id="saywardHomeCleanMaster">
 /* ======================================================================
-   SAYWARD HOME CLEAN MASTER — v5.4.18
+   SAYWARD HOME CLEAN MASTER — v5.4.19
    One authoritative home-style block. Do NOT append version patches below.
    Future home UI edits must modify this block in place.
    ====================================================================== */
@@ -22113,7 +22246,7 @@ window.mvCleanAudit540=function(){
 #cleanHeroMenuHit,#cleanHeroSearchHit{position:absolute!important;top:0!important;height:100%!important;width:18%!important;border:0!important;background:transparent!important;padding:0!important;z-index:8!important;cursor:pointer!important;-webkit-tap-highlight-color:transparent!important}
 #cleanHeroMenuHit{left:0!important} #cleanHeroSearchHit{right:0!important}
 #homePage .homeHero::before{
-  content:"v5.4.18"!important;position:absolute!important;right:13.7%!important;top:10px!important;z-index:6!important;
+  content:"v5.4.19"!important;position:absolute!important;right:13.7%!important;top:10px!important;z-index:6!important;
   min-width:54px!important;padding:2px 8px 3px!important;box-sizing:border-box!important;text-align:center!important;
   border:1.5px solid rgba(255,255,255,.92)!important;border-radius:999px!important;background:rgba(77,62,202,.96)!important;
   color:#fff!important;font-size:9px!important;line-height:1.1!important;font-weight:950!important;letter-spacing:.1px!important;
