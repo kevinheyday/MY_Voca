@@ -1,9 +1,9 @@
 <!doctype html><html lang="ko"><head>
-<!-- SAYWARD V5.4.16 · FRIENDS S01E01 Grab a Spoon scene update -->
+<!-- SAYWARD V5.4.17 · MY recent course cards visible + auto-heal -->
 
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.16</title>
+<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.17</title>
 
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
@@ -3429,6 +3429,28 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
         <div class="myClassDesc">9월 22일 발표 훈련. Introduction → PREP → 왼쪽 차트 → 오른쪽 그래프 → 두 자료의 의미 해석 → 결론까지 자연스럽게 연결하는 발표용 영어를 집중 학습합니다.</div>
         <div class="myClassMeta"><span>✅ 핵심 문장 12</span><span>🧩 Chunk 16</span><span>🗣 말하기 3</span><span>⚠ 습관 6</span></div>
       </div>
+
+      <div class="myClassCard" id="myClassLesson11Card" role="button" tabindex="0" onclick="studyDirectOpenCourse('my',11)" style="margin-top:10px">
+        <label class="myLessonSelectMini" onclick="event.stopPropagation()">
+          <input class="myClassSelectCheck" type="checkbox" data-my-lesson="11" onclick="event.stopPropagation()" aria-label="수업 11 전체 반복 선택">
+          <span>선택</span>
+        </label>
+        <div class="myClassTop"><b>MY 수업 · 수업 11</b><span class="myClassBadge">NEW · 9/28</span></div>
+        <div class="myClassTitle">Life Story, Past Experience & Active Chunks</div>
+        <div class="myClassDesc">9월 28일 실제 수업의 장거리 운전·어린 시절 역할·진학과 경력·인생 회고 표현을 Chunk 중심으로 복습합니다.</div>
+        <div class="myClassMeta"><span>✅ 핵심 교정 21</span><span>🧩 Chunk 22</span><span>🗣 말하기 4</span><span>⚠ 습관 5</span></div>
+      </div>
+
+      <div class="myClassCard" id="myClassLesson12Card" role="button" tabindex="0" onclick="studyDirectOpenCourse('my',12)" style="margin-top:10px">
+        <label class="myLessonSelectMini" onclick="event.stopPropagation()">
+          <input class="myClassSelectCheck" type="checkbox" data-my-lesson="12" onclick="event.stopPropagation()" aria-label="수업 12 전체 반복 선택">
+          <span>선택</span>
+        </label>
+        <div class="myClassTop"><b>MY 수업 · 수업 12</b><span class="myClassBadge">NEW · 9/8–17</span></div>
+        <div class="myClassTitle">Teacher Patterns & Missing Chunks</div>
+        <div class="myClassDesc">9/8·9/10·9/15·9/17 수업에서 선생님이 강조했지만 SAYWARD에 빠져 있던 핵심 표현만 중복 없이 보강합니다.</div>
+        <div class="myClassMeta"><span>✅ 핵심 교정 17</span><span>🧩 Chunk 17</span><span>🗣 말하기 4</span><span>⚠ 습관 5</span></div>
+      </div>
     </section>
 
     <section class="daySection">
@@ -4089,6 +4111,45 @@ const MY_CLASS_META={
   2:{title:'Native Patterns · Meeting & Sleep',goal:'<strong>이번 수업은 억양·Chunk·회의 진행 영어에 집중합니다.</strong> 단어마다 억양을 올렸다 내리지 말고 thought group을 Staircase처럼 말하며, 배운 표현을 한글 상황에서 2초 안에 꺼내는 연습을 합니다.'}
 };
 const MY_CLASS_LESSONS={1:MY_CLASS_LESSON_1,2:MY_CLASS_LESSON_2,3:MY_CLASS_LESSON_3,4:MY_CLASS_LESSON_4,5:MY_CLASS_LESSON_5,6:MY_CLASS_LESSON_6,7:MY_CLASS_LESSON_7,8:MY_CLASS_LESSON_8,9:MY_CLASS_LESSON_9,10:MY_CLASS_LESSON_10,11:MY_CLASS_LESSON_11,12:MY_CLASS_LESSON_12};
+
+/* v5.4.17 · MY course card auto-heal
+   Single common rule: if a lesson exists in MY_CLASS_LESSONS but its HOME card is missing,
+   create the card from MY_CLASS_META and lesson counts. This prevents future data/card drift. */
+function ensureMyClassHomeCards(){
+  const section=document.querySelector('#homePage .myClassSection');
+  if(!section||typeof MY_CLASS_LESSONS!=='object')return;
+  const badgeMap={11:'9/28',12:'9/8–17'};
+  const titleMap={11:'Life Story, Past Experience & Active Chunks',12:'Teacher Patterns & Missing Chunks'};
+  const descMap={
+    11:'9월 28일 실제 수업의 장거리 운전·어린 시절 역할·진학과 경력·인생 회고 표현을 Chunk 중심으로 복습합니다.',
+    12:'9/8·9/10·9/15·9/17 수업에서 선생님이 강조했지만 SAYWARD에 빠져 있던 핵심 표현만 중복 없이 보강합니다.'
+  };
+  Object.keys(MY_CLASS_LESSONS).map(Number).filter(Number.isFinite).sort((a,b)=>a-b).forEach(n=>{
+    if(section.querySelector('#myClassLesson'+n+'Card'))return;
+    const d=MY_CLASS_LESSONS[n]||{},m=MY_CLASS_META?.[n]||{};
+    const card=document.createElement('div');
+    card.className='myClassCard'; card.id='myClassLesson'+n+'Card';
+    card.setAttribute('role','button');card.setAttribute('tabindex','0');card.style.marginTop='10px';
+    card.dataset.studyCourse='my';card.dataset.studyLesson=String(n);
+    card.addEventListener('click',()=>studyDirectOpenCourse('my',n));
+    const corrections=Array.isArray(d.corrections)?d.corrections.length:0;
+    const chunks=Array.isArray(d.chunks)?d.chunks.length:0;
+    const speaking=Array.isArray(d.speaking)?d.speaking.length:0;
+    const habits=Array.isArray(d.habits)?d.habits.length:0;
+    const safeTitle=titleMap[n]||String(m.title||('MY 수업 '+n)).replace(/^Sep\s*[^·]*·\s*/,'');
+    const safeDesc=descMap[n]||String(m.sub||'MY 수업 복습');
+    const badge=badgeMap[n]||'';
+    card.innerHTML='<label class="myLessonSelectMini" onclick="event.stopPropagation()">'+
+      '<input class="myClassSelectCheck" type="checkbox" data-my-lesson="'+n+'" onclick="event.stopPropagation()" aria-label="수업 '+n+' 전체 반복 선택"><span>선택</span></label>'+
+      '<div class="myClassTop"><b>MY 수업 · 수업 '+n+'</b><span class="myClassBadge">NEW'+(badge?' · '+badge:'')+'</span></div>'+
+      '<div class="myClassTitle"></div><div class="myClassDesc"></div><div class="myClassMeta">'+
+      '<span>✅ 핵심 교정 '+corrections+'</span><span>🧩 Chunk '+chunks+'</span><span>🗣 말하기 '+speaking+'</span>'+(habits?'<span>⚠ 습관 '+habits+'</span>':'')+'</div>';
+    card.querySelector('.myClassTitle').textContent=safeTitle;
+    card.querySelector('.myClassDesc').textContent=safeDesc;
+    section.appendChild(card);
+  });
+}
+
 function myClassLessonData(n){return MY_CLASS_LESSONS[Number(n)]||MY_CLASS_LESSON_1;}
 let ACTIVE_STUDY_COURSE='my';
 let myClassLessonNo=1;
@@ -4850,7 +4911,7 @@ function studyPatternStandardAudit313(){
       });
     }
   });
-  return {version:'5.4.16',rule:'explicit surface > automatic exact surface > fallback pattern',total:rows.length,withPattern:rows.filter(x=>x.linkCount>0).length,withoutPattern:rows.filter(x=>x.linkCount===0),rows};
+  return {version:'5.4.17',rule:'explicit surface > automatic exact surface > fallback pattern',total:rows.length,withPattern:rows.filter(x=>x.linkCount>0).length,withoutPattern:rows.filter(x=>x.linkCount===0),rows};
 }
 window.studyPatternStandardAudit313=studyPatternStandardAudit313;
 
@@ -12484,7 +12545,7 @@ function mvSentenceEntryAudit182(){
 window.mvSentenceEntryAudit182=mvSentenceEntryAudit182;
 
 /* ===== V5.3.189 · STANDARD APP INFO / UPDATE HISTORY ===== */
-const MV_APP_VERSION='5.4.16';
+const MV_APP_VERSION='5.4.17';
 
 function mvCloseInfoOverlay(){
   const overlay=document.getElementById('mvInfoOverlay');
@@ -12513,6 +12574,14 @@ function mvOpenUpdateHistory(){
     `MY ENGLISH v${MV_APP_VERSION}`,
     `
       <div class="mvInfoVersionCard"><b>v${MV_APP_VERSION}</b><span>현재 설치 버전</span></div>
+      <section class="mvInfoSection">
+        <h3>v5.4.17</h3>
+        <ul>
+          <li>HOME의 MY 수업 카드가 수업 10까지만 고정돼 있던 문제를 수정하여 수업 11·12 카드를 표시합니다.</li>
+          <li>MY_CLASS_LESSONS에 데이터가 있는데 HOME 카드가 빠진 경우 자동으로 생성하는 공통 auto-heal 로직을 추가했습니다.</li>
+          <li>기존 MY 수업 데이터, FRIENDS S01E01, 공통 재생·반복·Swipe·하이라이트 로직은 유지했습니다.</li>
+        </ul>
+      </section>
       <section class="mvInfoSection">
         <h3>v5.4.16</h3>
         <ul>
@@ -21831,7 +21900,8 @@ function bindHomeSwipe(){
 }
 
 function boot(){
-  try{document.title='SAYWARD v5.4.16'}catch(e){}
+  try{document.title='SAYWARD v5.4.17'}catch(e){}
+  try{ensureMyClassHomeCards()}catch(e){console.warn('[SAYWARD] MY card auto-heal',e)}
   setHomeVisibleClass();bindLauncher();bindOverallProxy();buildDaySettings();placeTodayCard();bindHomeSwipe();
   placeTodayCard();
   const saved=currentMode();
@@ -21850,7 +21920,7 @@ window.mvCleanAudit540=function(){
   const h=home(),bar=document.getElementById('sharedStudySelectBar');
   const cards=[...document.querySelectorAll('#homePage .myClassSection .myClassCard')].slice(0,4);
   return {
-    version:'v5.4.16',mode:currentMode(),hero:!!document.getElementById('cleanHeroMenuHit'),launcher:document.querySelectorAll('.cleanModeCard').length,
+    version:'v5.4.17',mode:currentMode(),hero:!!document.getElementById('cleanHeroMenuHit'),launcher:document.querySelectorAll('.cleanModeCard').length,
     sharedBar:!!bar,daySettings:!!document.getElementById('cleanDaySettings'),legacyModePanelVisible:!!document.getElementById('homeStudyModePanel')&&getComputedStyle(document.getElementById('homeStudyModePanel')).display!=='none',
     visibleSections:{day:getComputedStyle(document.querySelector('#homePage .daySection')||document.body).display,my:getComputedStyle(document.querySelector('#homePage .myClassSection')||document.body).display,sori:getComputedStyle(document.querySelector('#homePage .soriClassSection')||document.body).display,opic:getComputedStyle(document.querySelector('#homePage .opicClassSection')||document.body).display},
     myCards:cards.map(c=>({w:Math.round(c.getBoundingClientRect().width),h:Math.round(c.getBoundingClientRect().height)})),
@@ -22017,7 +22087,7 @@ window.mvCleanAudit540=function(){
      Do not append V13/V14 patch blocks. Edit that master block in place only. -->
 <style id="saywardHomeCleanMaster">
 /* ======================================================================
-   SAYWARD HOME CLEAN MASTER — v5.4.16
+   SAYWARD HOME CLEAN MASTER — v5.4.17
    One authoritative home-style block. Do NOT append version patches below.
    Future home UI edits must modify this block in place.
    ====================================================================== */
@@ -22036,7 +22106,7 @@ window.mvCleanAudit540=function(){
 #cleanHeroMenuHit,#cleanHeroSearchHit{position:absolute!important;top:0!important;height:100%!important;width:18%!important;border:0!important;background:transparent!important;padding:0!important;z-index:8!important;cursor:pointer!important;-webkit-tap-highlight-color:transparent!important}
 #cleanHeroMenuHit{left:0!important} #cleanHeroSearchHit{right:0!important}
 #homePage .homeHero::before{
-  content:"v5.4.16"!important;position:absolute!important;right:13.7%!important;top:10px!important;z-index:6!important;
+  content:"v5.4.17"!important;position:absolute!important;right:13.7%!important;top:10px!important;z-index:6!important;
   min-width:54px!important;padding:2px 8px 3px!important;box-sizing:border-box!important;text-align:center!important;
   border:1.5px solid rgba(255,255,255,.92)!important;border-radius:999px!important;background:rgba(77,62,202,.96)!important;
   color:#fff!important;font-size:9px!important;line-height:1.1!important;font-weight:950!important;letter-spacing:.1px!important;
