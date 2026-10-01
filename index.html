@@ -1,9 +1,9 @@
 <!doctype html><html lang="ko"><head>
-<!-- SAYWARD V5.4.27 · MY Lesson 20 not as ~ as it used to be -->
+<!-- SAYWARD V5.4.29 · MY Lesson 20 not as ~ as it used to be -->
 
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.27</title>
+<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.29</title>
 
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
@@ -3297,6 +3297,7 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
     <button class="cleanModeCard" type="button" data-clean-mode-button="my" aria-label="MY 수업"><span class="swModeIcon"><svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="g2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#4b5ddf"/><stop offset="1" stop-color="#8f6cff"/></linearGradient></defs><path d="M5 24 32 10l27 14-27 14z" fill="url(#g2)"/><path d="M15 31v10c7 8 27 8 34 0V31L32 40z" fill="#5968e8"/><path d="M56 26v16" stroke="#6f5cf5" stroke-width="3" stroke-linecap="round"/><circle cx="56" cy="45" r="3" fill="#8b67ff"/></svg></span><span class="swModeCopy"><b>MY 수업</b><small>나에게 맞춘 수업을 이어가요.</small></span></button>
     <button class="cleanModeCard" type="button" data-clean-mode-button="sori" aria-label="소리 영어"><span class="swModeIcon"><svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="g3" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2dd7ff"/><stop offset="1" stop-color="#6a5cff"/></linearGradient></defs><path d="M13 33a19 19 0 0 1 38 0" fill="none" stroke="url(#g3)" stroke-width="7" stroke-linecap="round"/><rect x="8" y="31" width="11" height="21" rx="5" fill="#5a67ef"/><rect x="45" y="31" width="11" height="21" rx="5" fill="#5a67ef"/><path d="M51 47c-3 7-8 9-15 9" fill="none" stroke="#45c7ff" stroke-width="3" stroke-linecap="round"/><circle cx="33" cy="56" r="3" fill="#45c7ff"/></svg></span><span class="swModeCopy"><b>소리 영어</b><small>듣고 따라 말하며 익혀요.</small></span></button>
     <button class="cleanModeCard" type="button" data-clean-mode-button="opic" aria-label="OPIC"><span class="swModeIcon"><svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="g4" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8b62ff"/><stop offset="1" stop-color="#e06ad9"/></linearGradient></defs><rect x="14" y="10" width="36" height="44" rx="7" fill="url(#g4)"/><rect x="21" y="17" width="22" height="5" rx="2.5" fill="#fff" opacity=".95"/><circle cx="24" cy="31" r="3" fill="#fff"/><path d="M30 31h12M30 39h12M24 39h1" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="m21 46 3 3 6-7" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="swModeCopy"><b>OPIC</b><small>실전처럼 더 자신 있게.</small></span></button>
+    <button class="cleanModeCard" type="button" data-clean-mode-button="friends" aria-label="FRIENDS"><span class="swModeIcon"><svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="g5" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ff8a65"/><stop offset="1" stop-color="#7c5cff"/></linearGradient></defs><rect x="8" y="13" width="48" height="36" rx="8" fill="url(#g5)"/><path d="M27 23l15 8-15 8z" fill="#fff"/><path d="M22 55h20" stroke="#7c5cff" stroke-width="4" stroke-linecap="round"/><path d="M32 49v6" stroke="#7c5cff" stroke-width="4" stroke-linecap="round"/></svg></span><span class="swModeCopy"><b>FRIENDS</b><small>에피소드별 회화를 익혀요.</small></span></button>
   </div>
   <div class="cleanOverallCard">
     <input id="cleanOverallRepeat" type="checkbox" hidden aria-hidden="true">
@@ -3533,6 +3534,11 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
         <b>OPIC 표준 포맷 준비 완료</b>
         <p>핵심 답변 → Chunk → 말하기 → AL Point 구조로 콘텐츠만 추가하면 동일한 퀴즈·문장 말하기·반복재생 기능을 사용할 수 있습니다.</p>
       </div>
+    </section>
+
+    <section class="friendsClassSection" style="display:none">
+      <div class="sectionHead"><div><b>🎬 FRIENDS</b><span class="sectionSub">에피소드별 핵심 Chunk · 대사 · 말하기 · 소리 Point를 반복 학습합니다.</span></div></div>
+      <div class="studyCourseInfo">공통 학습 엔진 · MY 수업과 동일한 선택/반복/하이라이트/문장 말하기 포맷</div>
     </section>
 
 
@@ -5480,7 +5486,8 @@ function mvSelectionCheckboxAudit186(){
     day:describe('day',[...document.querySelectorAll('#dayGrid .daySelectCheck:not(:disabled)')]),
     my:describe('my',[...document.querySelectorAll('#homePage .myClassSection .myClassSelectCheck')]),
     sori:describe('sori',[...document.querySelectorAll('#homePage .soriClassSection .studySelectCheck[data-study-mode="sori"]')]),
-    opic:describe('opic',[...document.querySelectorAll('#homePage .opicClassSection .studySelectCheck[data-study-mode="opic"]')])
+    opic:describe('opic',[...document.querySelectorAll('#homePage .opicClassSection .studySelectCheck[data-study-mode="opic"]')]),
+    friends:describe('friends',[...document.querySelectorAll('#homePage .friendsClassSection .studySelectCheck[data-study-mode="friends"]')])
   };
 }
 window.mvSelectionCheckboxAudit186=mvSelectionCheckboxAudit186;
@@ -6213,7 +6220,8 @@ const FRIENDS_GROUP_1={
     {source:'FRIENDS S01E01 · Phoebe · Ended Up',ko:'그래서 결국 이 알비노 남자랑 살게 됐는데, 포트 오소리티 밖에서 차 유리창 닦는 사람이었어.',en:'And I ended up living with this albino guy who was, like, cleaning windshields outside Port Authority.',chunkRefs:[{id:'fr1_end_up',text:'ended up living'}],tip:'⭐⭐⭐ end up + -ing = 계획한 것이 아니라 상황이 흘러 결국 ~하게 되다. end up 뒤에는 to부정사가 아니라 -ing를 쓴다.'},
     {source:'FRIENDS S01E01 · Phoebe · Ended Up',ko:'근데 그 사람도 자살했어. 그리고 나서 아로마테라피를 알게 됐어.',en:'And then he killed himself. And then I found aromatherapy.',tip:'And then ~을 반복해 사건을 빠르게 이어가는 이야기 흐름.'},
     {source:'FRIENDS S01E01 · Phoebe · Ended Up',ko:'그러니까 믿어줘, 나 네 기분 딱 알아.',en:'So believe me, I know exactly how you feel.',tip:'I know exactly how you feel. = 네 기분이 어떤지 정확히 알아. 공감할 때 쓰는 표현.'},
-    {source:'FRIENDS S01E01 · Phoebe · Ended Up',ko:'네가 찾는 말은 ‘아무튼’이야…',en:'The word you\'re looking for is "Anyway"...',tip:'The word you\'re looking for is ~ = 네가 찾는 단어는 ~야. Ross가 Phoebe의 무거운 이야기를 끊으며 농담하는 장면.'}
+    {source:'FRIENDS S01E01 · Phoebe · Ended Up',ko:'네가 찾는 말은 ‘아무튼’이야…',en:'The word you\'re looking for is "Anyway"...',tip:'The word you\'re looking for is ~ = 네가 찾는 단어는 ~야. Ross가 Phoebe의 무거운 이야기를 끊으며 농담하는 장면.'},
+    {source:'FRIENDS S01E01 · Ross · Stuck at Work',ko:'안녕. 늦어서 미안해. 일 때문에 못 빠져나왔어.',en:"Hi. Sorry I'm late. I got stuck at work.",chunkRefs:[{id:'fr1_stuck_at_work',text:'stuck at work'}],tip:'⭐⭐⭐ stuck at work = 일 때문에 꼼짝 못하다 / 일이 생겨 빠져나오지 못하다. 단순히 working late보다 불가피하게 일에 묶인 느낌이 강하다.'}
   ],
   chunks:[
     {id:'fr1_got_to',source:'FRIENDS S01E01',pattern:"There's got to be ~",ko:'분명 ~가 있을 거야 / ~임에 틀림없어',example:"There's got to be a reason why he did that.",exampleKo:'그가 그렇게 한 데에는 분명 이유가 있을 거야.'},
@@ -6255,7 +6263,10 @@ const FRIENDS_GROUP_1={
     {id:'fr1_on_your_own',source:'FRIENDS S01E01 · Phoebe',pattern:'on your own',ko:'혼자서 / 독립적으로 / 스스로',example:"It's hard being on your own for the first time.",exampleKo:'처음으로 혼자 살아가는 건 힘들어.',note:'⭐⭐⭐ by yourself와 비슷하지만 생활·책임을 스스로 감당한다는 독립적인 뉘앙스가 자연스럽게 들어갈 수 있다.'},
     {id:'fr1_stepdad_vocab',source:'FRIENDS S01E01 · Today\'s Words',pattern:'stepdad',ko:'의붓아버지 / 새아빠',example:'My stepdad moved in when I was eight.',exampleKo:'새아빠가 내가 여덟 살 때 우리 집에 왔어.',note:'사용자 제공 발음 메모: stepdad ≈ 스텝대드.'},
     {id:'fr1_albino_vocab',source:'FRIENDS S01E01 · Today\'s Words',pattern:'albino',ko:'알비노 / 선천적으로 색소가 없는 사람',example:'He had never met an albino before.',exampleKo:'걔는 알비노를 한 번도 본 적이 없었어.',note:'사용자 제공 발음 메모: albino ≈ 앨바이노, 두 번째 음절에 강세.'},
-    {id:'fr1_aromatherapy_vocab',source:'FRIENDS S01E01 · Today\'s Words',pattern:'aromatherapy',ko:'아로마테라피 / 향기 요법',example:'She uses aromatherapy to help her sleep.',exampleKo:'걔는 잠을 잘 자려고 아로마테라피를 써.',note:'사용자 제공 발음 메모: aromatherapy ≈ 어로우머쎄러피.'}
+    {id:'fr1_aromatherapy_vocab',source:'FRIENDS S01E01 · Today\'s Words',pattern:'aromatherapy',ko:'아로마테라피 / 향기 요법',example:'She uses aromatherapy to help her sleep.',exampleKo:'걔는 잠을 잘 자려고 아로마테라피를 써.',note:'사용자 제공 발음 메모: aromatherapy ≈ 어로우머쎄러피.'},
+    {id:'fr1_stuck_at_work',source:'FRIENDS S01E01 · Ross',pattern:'be / get stuck at work',ko:'일 때문에 묶여 있다 / 일이 생겨 못 빠져나오다',example:"Sorry I'm late — I got stuck at work.",exampleKo:'늦어서 미안 — 일이 생겨서 못 빠져나왔어.',note:'⭐⭐⭐ stuck은 “꼼짝 못 하는” 상태. I\'m working late는 단순히 야근 중이라는 사실이고, I\'m stuck at work는 자발적이지 않게 일에 발목 잡힌 느낌을 강조한다. be stuck in traffic / be stuck in a meeting처럼 확장 가능.'},
+    {id:'fr1_familiar_with',source:'FRIENDS S01E01 · Pattern',pattern:'be familiar with ~',ko:'~에 익숙하다 / ~을 잘 알고 있다',example:"I'm familiar with the process.",exampleKo:'나는 그 절차에 익숙해.',note:'familiar 뒤에는 with를 쓴다. 사람·절차·장소·개념 등에 익숙하거나 잘 알고 있을 때 자연스럽게 쓴다.'},
+    {id:'fr1_how_could_i_forget',source:'FRIENDS S01E01 · Pattern',pattern:'How could I forget?',ko:'어떻게 잊을 수 있겠어? / 당연히 기억하지',example:'How could I forget?',exampleKo:'어떻게 잊을 수 있겠어?',note:'직역 질문이 아니라 반어적 반응으로 “그걸 내가 어떻게 잊겠어, 당연히 기억하지”라는 뜻으로 쓴다.'}
   ],
   speaking:[
     {source:'FRIENDS S01E01',pattern:"There's got to be ~",prompt:'상대가 그렇게 행동한 데에는 분명 이유가 있다고 말해 보세요.',promptKo:'There\'s got to be를 사용하세요.',text:"There's got to be a reason why he acted that way.",ko:'그가 그렇게 행동한 데에는 분명 이유가 있을 거야.'},
@@ -6279,7 +6290,10 @@ const FRIENDS_GROUP_1={
     {source:'FRIENDS S01E01 · Grab a Spoon',pattern:'Ever since + past event',prompt:'그 일이 있은 이후로 계속 달라졌다고 말해 보세요.',promptKo:'Ever since를 사용하세요.',text:'Ever since that day, I have looked at things differently.',ko:'그날 이후로 나는 상황을 다르게 보기 시작했어.'},
     {source:'FRIENDS S01E01 · Phoebe',pattern:'end up + -ing',prompt:'막차를 놓쳐서 결국 택시를 타게 됐다고 말해 보세요.',promptKo:'end up + -ing를 사용하세요.',text:'We missed the last train and ended up taking a taxi.',ko:'막차를 놓쳐서 결국 택시를 타게 됐어.'},
     {source:'FRIENDS S01E01 · Phoebe',pattern:'give someone a break',prompt:'실수한 동료를 너무 몰아붙이지 말라고 편을 들어주세요.',promptKo:'give someone a break를 사용하세요.',text:'Give him a break. He is still learning.',ko:'좀 봐줘. 아직 배우는 중이잖아.'},
-    {source:'FRIENDS S01E01 · Phoebe',pattern:'on your own',prompt:'처음으로 혼자 사는 것이 쉽지 않았다고 말해 보세요.',promptKo:'on your own을 사용하세요.',text:'It was not easy living on my own for the first time.',ko:'처음으로 혼자 사는 건 쉽지 않았어.'}
+    {source:'FRIENDS S01E01 · Phoebe',pattern:'on your own',prompt:'처음으로 혼자 사는 것이 쉽지 않았다고 말해 보세요.',promptKo:'on your own을 사용하세요.',text:'It was not easy living on my own for the first time.',ko:'처음으로 혼자 사는 건 쉽지 않았어.'},
+    {source:'FRIENDS S01E01 · Ross',pattern:'get stuck at work',prompt:'늦은 이유가 일이 생겨서 못 빠져나왔기 때문이라고 말해 보세요.',promptKo:'got stuck at work를 사용하세요.',text:"Sorry I'm late. I got stuck at work.",ko:'늦어서 미안해. 일 때문에 못 빠져나왔어.'},
+    {source:'FRIENDS S01E01 · Pattern',pattern:'be familiar with ~',prompt:'어떤 절차에 익숙하다고 말해 보세요.',promptKo:'familiar with를 사용하세요.',text:"I'm familiar with the process.",ko:'나는 그 절차에 익숙해.'},
+    {source:'FRIENDS S01E01 · Pattern',pattern:'How could I forget?',prompt:'상대가 기억하냐고 물었을 때 당연히 기억한다고 반어적으로 답해 보세요.',promptKo:'How could I forget?을 사용하세요.',text:'How could I forget?',ko:'어떻게 잊을 수 있겠어?'}
   ],
   habits:[
     {title:"There's got to be ~",text:"there's got to be를 단어별로 끊지 말고 하나의 덩어리처럼 말한다. got to는 빠른 회화에서 약하게 연결된다."},
@@ -6303,7 +6317,11 @@ const FRIENDS_GROUP_1={
     {title:'on your own → 독립적으로',text:'⭐⭐⭐ It\'s hard being on your own for the first time.에서 being-on-your-own을 하나의 의미 덩어리로 듣는다. 단순히 물리적으로 혼자라는 뜻을 넘어 스스로 생활하고 책임지는 느낌이 있다.'},
     {title:'ended up living → 엔디덥 리빙',text:'⭐⭐⭐ ended up은 빠르게 연결되며 “엔디덥”처럼 들릴 수 있다. ended up living을 통째로 반복해서 end up + -ing 구조를 자동화한다.'},
     {title:'end up 뒤에는 -ing',text:'I ended up to live처럼 to부정사를 붙이지 않는다. I ended up living / taking / staying처럼 동사-ing를 쓴다.'},
-    {title:'Phoebe 장면 핵심 리스닝',text:'“Give her a break. It\'s hard being on your own for the first time.”를 한 문장 흐름으로 반복하고, give her a break와 on your own 두 Chunk를 귀로 먼저 잡는다.'}
+    {title:'Phoebe 장면 핵심 리스닝',text:'“Give her a break. It\'s hard being on your own for the first time.”를 한 문장 흐름으로 반복하고, give her a break와 on your own 두 Chunk를 귀로 먼저 잡는다.'},
+    {title:'stuck at work → 스터캣워크',text:'⭐⭐⭐ stuck at work를 단어별로 끊지 말고 stuck-at-work를 한 덩어리로 듣는다. 빠르게 말하면 stuck과 at이 연결되어 “스터캣워크”처럼 들릴 수 있다.'},
+    {title:'stuck = stick 아님',text:'I am stick at work라고 하지 않는다. 상태를 나타낼 때 stuck을 쓴다: I\'m stuck at work / I got stuck at the office.'},
+    {title:'familiar with → with까지 한 덩어리',text:'familiar만 외우지 말고 familiar with + 대상 전체를 Chunk로 익힌다.'},
+    {title:'How could I forget? → 반어적 반응',text:'실제로 기억을 못 한다는 질문이 아니라 “그걸 내가 어떻게 잊겠어?”라는 뜻으로, 상대의 질문에 당연히 기억한다고 답할 때 쓴다.'}
   ]
 };
 window.FRIENDS_GROUP_1=FRIENDS_GROUP_1;
@@ -6567,6 +6585,13 @@ function studyStampCourseCards(){
     opic.dataset.studyLesson=String(Number(opic.dataset.studyLesson)||i+1);
     opic.setAttribute('role','button');
     opic.setAttribute('tabindex','0');
+  });
+
+  document.querySelectorAll('#homePage .friendsClassSection .friendsCourseCard').forEach((card,i)=>{
+    card.dataset.studyCourse='friends';
+    card.dataset.studyLesson=String(Number(card.dataset.studyLesson)||i+1);
+    card.setAttribute('role','button');
+    card.setAttribute('tabindex','0');
   });
 }
 window.studyStampCourseCards=studyStampCourseCards;
@@ -12448,12 +12473,12 @@ function mvSetActivityContext(context){
 window.mvSetActivityContext=mvSetActivityContext;
 
 function mvOpenStudyMode(mode){
-  const m=['day','my','sori','opic'].includes(mode)?mode:'day';
+  const m=['day','my','sori','opic','friends'].includes(mode)?mode:'day';
   mvSetActivityContext('learn');
   try{goHome()}catch(e){document.getElementById('homePage')?.classList.remove('hidden')}
   setTimeout(()=>{
     try{setHomeStudyMode(m)}catch(e){}
-    const sel=m==='day'?'.daySection':m==='my'?'.myClassSection':m==='sori'?'.soriClassSection':'.opicClassSection';
+    const sel=m==='day'?'.daySection':m==='my'?'.myClassSection':m==='sori'?'.soriClassSection':m==='opic'?'.opicClassSection':'.friendsClassSection';
     document.querySelector(`#homePage ${sel}`)?.scrollIntoView({behavior:'smooth',block:'start'});
   },40);
 }
@@ -12588,7 +12613,7 @@ function mvSentenceEntryAudit182(){
 window.mvSentenceEntryAudit182=mvSentenceEntryAudit182;
 
 /* ===== V5.3.189 · STANDARD APP INFO / UPDATE HISTORY ===== */
-const MV_APP_VERSION='5.4.27';
+const MV_APP_VERSION='5.4.29';
 
 function mvCloseInfoOverlay(){
   const overlay=document.getElementById('mvInfoOverlay');
@@ -12618,7 +12643,7 @@ function mvOpenUpdateHistory(){
     `
       <div class="mvInfoVersionCard"><b>v${MV_APP_VERSION}</b><span>현재 설치 버전</span></div>
       <section class="mvInfoSection">
-        <h3>v5.4.27</h3>
+        <h3>v5.4.29</h3>
         <ul><li>MY 수업 13에 Based on everything I've heard so far, ... Chunk를 추가했습니다.</li>
           <li>MY 수업 13을 추가했습니다: not as ~ as it used to be 패턴을 현재와 과거 비교 문장으로 반복 훈련합니다.</li>
           <li>it used to be / I used to be처럼 비교 대상에 따라 꼬리 주어를 맞추는 훈련을 추가했습니다.</li>
@@ -12886,7 +12911,7 @@ document.addEventListener('keydown',(e)=>{
     if(action==='studyMy'){mvOpenStudyMode('my');return}
     if(action==='studySori'){mvOpenStudyMode('sori');return}
     if(action==='studyOpic'){mvOpenStudyMode('opic');return}
-    if(action==='studyFriends'){studyDirectOpenCourse('friends',1);return}
+    if(action==='studyFriends'){mvOpenStudyMode('friends');return}
     if(action==='quiz'){mvOpenQuizActivity(currentDay||1);return}
     if(action==='sentenceSpeaking'){mvOpenSentenceSpeakingActivity(currentDay||1);return}
     if(action==='voicePractice'){mvOpenVoiceRecordingActivity();return}
@@ -16133,6 +16158,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
         <button id="homeModeMy" class="homeStudyModeBtn" type="button">🎯 MY 수업</button>
         <button id="homeModeSori" class="homeStudyModeBtn" type="button">🎧 소리영어</button>
         <button id="homeModeOpic" class="homeStudyModeBtn" type="button">🎤 OPIC</button>
+        <button id="homeModeFriends" class="homeStudyModeBtn" type="button">🎬 FRIENDS</button>
       </div>
       <div id="homeStudyModeHelp" class="homeStudyModeHelp">DAY VOCA / MY 수업 / 소리영어 / OPIC은 공통 학습 구조를 사용합니다.</div>`;
 
@@ -16140,11 +16166,12 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     document.getElementById('homeModeMy').onclick=()=>setHomeStudyMode('my');
     document.getElementById('homeModeSori').onclick=()=>setHomeStudyMode('sori');
     document.getElementById('homeModeOpic').onclick=()=>setHomeStudyMode('opic');
+    document.getElementById('homeModeFriends').onclick=()=>setHomeStudyMode('friends');
     // Restore the last mode explicitly; do not let a rebuild silently reset the
     // integrated-repeat start point to DAY.
     try{
       const savedMode=localStorage.getItem('mv_homeStudyMode212');
-      if(['day','my','sori','opic'].includes(savedMode)){
+      if(['day','my','sori','opic','friends'].includes(savedMode)){
         window.MV_HOME_MODE_212=savedMode;
         setTimeout(()=>window.setHomeStudyMode?.(savedMode),0);
       }
@@ -16178,7 +16205,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
       allRepeatStart.onclick=()=>{
         if(!allRepeat?.checked && !window.MV_ALL_REPEAT_219?.active)return;
         const activeBtn=document.querySelector('#homeStudyModePanel .homeStudyModeBtn.active');
-        const modeMap={homeModeDay:'day',homeModeMy:'my',homeModeSori:'sori',homeModeOpic:'opic'};
+        const modeMap={homeModeDay:'day',homeModeMy:'my',homeModeSori:'sori',homeModeOpic:'opic',homeModeFriends:'friends'};
         const startMode=modeMap[activeBtn?.id]
           ||window.MV_HOME_MODE_212
           ||localStorage.getItem('mv_homeStudyMode212')
@@ -16195,13 +16222,15 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     const modePanel=document.getElementById('homeStudyModePanel');
     const misplacedSori=document.querySelector('.soriClassSection');
     const misplacedOpic=document.querySelector('.opicClassSection');
+    const misplacedFriends=document.querySelector('.friendsClassSection');
     if(homeRoot && modePanel){
       const sharedBar=document.getElementById('sharedStudySelectBar');
       const anchor=sharedBar||modePanel;
       if(misplacedSori && misplacedSori.parentElement!==homeRoot) anchor.insertAdjacentElement('afterend',misplacedSori);
       if(misplacedOpic && misplacedOpic.parentElement!==homeRoot) (misplacedSori||anchor).insertAdjacentElement('afterend',misplacedOpic);
+      if(misplacedFriends && misplacedFriends.parentElement!==homeRoot) (misplacedOpic||misplacedSori||anchor).insertAdjacentElement('afterend',misplacedFriends);
     }
-    const valid=['day','my','sori','opic'];
+    const valid=['day','my','sori','opic','friends'];
     const m=valid.includes(mode)?mode:'day';
     window.MV_HOME_MODE_212=m;
     try{localStorage.setItem('mv_homeStudyMode212',m)}catch(e){}
@@ -16209,13 +16238,15 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     const mySection=document.querySelector('#homePage .myClassSection');
     const soriSection=document.querySelector('#homePage .soriClassSection');
     const opicSection=document.querySelector('#homePage .opicClassSection');
+    const friendsSection=document.querySelector('#homePage .friendsClassSection');
 
     if(daySection)daySection.style.display=m==='day'?'':'none';
     if(mySection)mySection.style.display=m==='my'?'':'none';
     if(soriSection)soriSection.style.display=m==='sori'?'':'none';
     if(opicSection)opicSection.style.display=m==='opic'?'':'none';
+    if(friendsSection)friendsSection.style.display=m==='friends'?'':'none';
 
-    [['homeModeDay','day'],['homeModeMy','my'],['homeModeSori','sori'],['homeModeOpic','opic']]
+    [['homeModeDay','day'],['homeModeMy','my'],['homeModeSori','sori'],['homeModeOpic','opic'],['homeModeFriends','friends']]
       .forEach(([id,key])=>document.getElementById(id)?.classList.toggle('active',m===key));
 
     const help=document.getElementById('homeStudyModeHelp');
@@ -16226,7 +16257,9 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
           ?'실제 수업에서 나온 내 교정 문장과 Chunk를 반복합니다.'
           :m==='sori'
             ?'토요일 소리영어 3개 스크립트를 한 박스에서 Chunk → 핵심 문장 → 말하기 → 소리 Point로 복습합니다.'
-            :'OPIC 번호별 질문을 핵심 교정 → Chunk → 말하기 순서로 학습합니다.';
+            :m==='opic'
+              ?'OPIC 번호별 질문을 핵심 교정 → Chunk → 말하기 순서로 학습합니다.'
+              :'FRIENDS를 에피소드별 카드로 선택해 Chunk → 핵심 문장 → 말하기 → 소리 Point 순서로 학습합니다.';
     }
   };
 
@@ -16243,7 +16276,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     setHomeStudyMode(
       ACTIVE_STUDY_COURSE==='sori'?'sori':
       ACTIVE_STUDY_COURSE==='opic'?'opic':
-      ACTIVE_STUDY_COURSE==='friends'?(window.MV_HOME_MODE_212||'day'):'my'
+      ACTIVE_STUDY_COURSE==='friends'?'friends':'my'
     );
     window.scrollTo(0,0);
   }
@@ -16410,7 +16443,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     if(active?.id==='homeModeSori')return 'sori';
     if(active?.id==='homeModeOpic')return 'opic';
     if(active?.id==='homeModeDay')return 'day';
-    const valid=['day','my','sori','opic'];
+    const valid=['day','my','sori','opic','friends'];
     const live=String(window.MV_HOME_MODE_212||'');
     if(valid.includes(live))return live;
     try{const saved=localStorage.getItem('mv_homeStudyMode212');if(valid.includes(saved))return saved}catch(e){}
@@ -16446,8 +16479,10 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     // Standard order: mode selector -> common controls -> mode cards/content.
     const soriSection=document.querySelector('#homePage .soriClassSection');
     const opicSection=document.querySelector('#homePage .opicClassSection');
+    const friendsSection=document.querySelector('#homePage .friendsClassSection');
     if(soriSection)bar.insertAdjacentElement('afterend',soriSection);
     if(opicSection)(soriSection||bar).insertAdjacentElement('afterend',opicSection);
+    if(friendsSection)(opicSection||soriSection||bar).insertAdjacentElement('afterend',friendsSection);
 
     document.getElementById('sharedStudySelectAll').onclick=()=>studySelectionSelectAll(currentHomeStudyMode());
     document.getElementById('sharedStudyClearAll').onclick=()=>studySelectionClearAll(currentHomeStudyMode());
@@ -16573,6 +16608,62 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     studyStampCourseCards();
   }
 
+
+  function ensureFriendsCards(){
+    const sec=document.querySelector('#homePage .friendsClassSection');
+    if(!sec)return;
+    const meta=studyCourseMeta('friends')||{};
+    const lessons=Object.keys(meta).map(Number).filter(Number.isFinite).sort((a,b)=>a-b);
+    const selected=readJson(STUDY_SELECT_KEYS.friends,lessons).map(Number).filter(n=>lessons.includes(n));
+
+    const existing=[...sec.querySelectorAll('.friendsCourseCard')];
+    const existingLessons=existing.map(x=>Number(x.dataset.studyLesson)).filter(Number.isFinite).sort((a,b)=>a-b);
+    const ready=existing.length===lessons.length && lessons.every((n,i)=>existingLessons[i]===n);
+
+    if(!ready){
+      sec.querySelectorAll('.friendsCourseCard').forEach(x=>x.remove());
+      lessons.forEach(n=>{
+        const d=studyCourseData('friends',n)||{corrections:[],chunks:[],speaking:[],habits:[]};
+        const m=meta[n]||{};
+        const card=document.createElement('div');
+        card.id=`friendsEpisode${n}Card`;
+        card.className='myClassCard friendsCourseCard';
+        card.dataset.studyCourse='friends';
+        card.dataset.studyLesson=String(n);
+        card.setAttribute('role','button');
+        card.setAttribute('tabindex','0');
+        card.setAttribute('onclick',`studyDirectOpenCourse('friends',${n})`);
+
+        const ep=`S01E${String(n).padStart(2,'0')}`;
+        const shortTitle=String(m.title||ep).replace(/^S\d+E\d+\s*·\s*/,'')||ep;
+        const goalText=String(m.goal||'').replace(/<[^>]+>/g,' ').replace(/\s+/g,' ').trim();
+
+        card.innerHTML=`
+          <div class="myClassTop"><b>FRIENDS · ${ep}</b><span class="myClassBadge">EPISODE</span></div>
+          <div class="myClassTitle"></div>
+          <div class="myClassDesc"></div>
+          <div class="myClassMeta">
+            <span>🧩 Chunk ${(d.chunks||[]).length}</span>
+            <span>⭐ 핵심 문장 ${(d.corrections||[]).length}</span>
+            <span>🗣 말하기 ${(d.speaking||[]).length}</span>
+            <span>🎧 소리 Point ${(d.habits||[]).length}</span>
+          </div>`;
+        card.querySelector('.myClassTitle').textContent=shortTitle;
+        card.querySelector('.myClassDesc').textContent=goalText||'에피소드 핵심 표현을 반복 학습합니다.';
+        sec.appendChild(card);
+      });
+    }
+
+    sec.querySelectorAll('.friendsCourseCard').forEach((card,i)=>{
+      const n=Number(card.dataset.studyLesson)||lessons[i]||i+1;
+      const c=ensureStandardCourseCheckbox(card,'friends',n,`FRIENDS S01E${String(n).padStart(2,'0')}`);
+      if(!c)return;
+      c.checked=selected.includes(n);
+      card.classList.toggle('myClassChecked',c.checked);
+    });
+    studyStampCourseCards();
+  }
+
   function dayChecks(){
     return [...document.querySelectorAll('#dayGrid .daySelectCheck:not(:disabled)')];
   }
@@ -16585,12 +16676,16 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   function opicChecks(){
     return [...document.querySelectorAll('#homePage .opicClassSection .studySelectCheck[data-study-mode="opic"]')];
   }
+  function friendsChecks(){
+    return [...document.querySelectorAll('#homePage .friendsClassSection .studySelectCheck[data-study-mode="friends"]')];
+  }
 
   function modeChecks(mode){
     if(mode==='day')return dayChecks();
     if(mode==='my')return myChecks();
     if(mode==='sori')return soriChecks();
     if(mode==='opic')return opicChecks();
+    if(mode==='friends')return friendsChecks();
     return [];
   }
 
@@ -16650,6 +16745,11 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
       hint:'OPIC 학습 세트는 Chunk → 핵심 답변 → 말하기 순서로, MY 수업과 동일한 공통 엔진을 사용합니다.',
       start:'선택 항목 반복 학습'
     };
+    if(mode==='friends')return {
+      title:'🎬 FRIENDS 에피소드 선택 학습',
+      hint:'체크한 에피소드를 순서대로 Chunk → 핵심 문장 → 말하기 → 소리 Point로 반복합니다.',
+      start:'선택 에피소드 반복 학습'
+    };
     return {
       title:'📚 DAY VOCA 선택 학습',
       hint:'체크한 Day를 현재 DAY 학습 범위·반복 설정으로 연속 학습합니다.',
@@ -16700,6 +16800,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     normalizeMyCheckboxes();
     ensureSoriCheckbox();
     convertOpicPlaceholderToStandardCard();
+    ensureFriendsCards();
 
     const copy=modeCopy(mode);
     const bar=document.getElementById('sharedStudySelectBar');
@@ -16755,7 +16856,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
 
   function studyHandleIndividualSelection186(check){
     const mode=studySelectionModeFromCheck186(check);
-    if(!['day','my','sori','opic'].includes(mode))return false;
+    if(!['day','my','sori','opic','friends'].includes(mode))return false;
 
     // V5.3.276 common rule: checking a study item must never navigate or move the viewport.
     // Keep the same rule for MY / SORI / OPIC / FRIENDS (and DAY) so future modes do not diverge.
@@ -16781,12 +16882,12 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     window.__mvSelectionCapture186=true;
     document.addEventListener('change',(e)=>{
       const check=e.target?.closest?.(
-        '#dayGrid .daySelectCheck, #homePage .myClassSection .myClassSelectCheck, #homePage .soriClassSection .studySelectCheck, #homePage .opicClassSection .studySelectCheck'
+        '#dayGrid .daySelectCheck, #homePage .myClassSection .myClassSelectCheck, #homePage .soriClassSection .studySelectCheck, #homePage .opicClassSection .studySelectCheck, #homePage .friendsClassSection .studySelectCheck'
       );
       if(!check||check.disabled)return;
 
       const mode=studySelectionModeFromCheck186(check);
-      if(!['day','my','sori','opic'].includes(mode))return;
+      if(!['day','my','sori','opic','friends'].includes(mode))return;
 
       // Prevent old screen-specific onchange handlers from running after the
       // standardized handler and rewriting other checkbox states.
@@ -16799,7 +16900,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   /* ===== V5.3.275 · CROSS-COURSE ALL REPEAT STANDARD ===== */
   const MV_ALL_REPEAT_209={
     active:false,
-    order:['day','my','sori','opic'],
+    order:['day','my','sori','opic','friends'],
     queue:[],
     index:0,
     cycle:0,
@@ -16929,7 +17030,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   function startAllRepeat209(explicitStartMode){
     // v5.3.275: start from the exact mode the learner has clicked.
     // Do not infer a stale/default DAY state from a rebuilt DOM.
-    const validModes=['day','my','sori','opic'];
+    const validModes=['day','my','sori','opic','friends'];
     const startMode=validModes.includes(explicitStartMode)?explicitStartMode:currentHomeStudyMode();
     try{persistModeSelection(startMode)}catch(e){}
     const q=allRepeatQueue209(startMode);
@@ -16970,7 +17071,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
 
   function allRepeatVisibleMode215(){
     const a=document.querySelector('#homeStudyModePanel .homeStudyModeBtn.active');
-    const map={homeModeDay:'day',homeModeMy:'my',homeModeSori:'sori',homeModeOpic:'opic'};
+    const map={homeModeDay:'day',homeModeMy:'my',homeModeSori:'sori',homeModeOpic:'opic',homeModeFriends:'friends'};
     return map[a?.id]||window.MV_HOME_MODE_212||'day';
   }
   function allRepeatReadArray215(key,fallback=[]){
@@ -16990,7 +17091,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     try{writeJson(STUDY_SELECT_KEYS.opic,s.opic||[])}catch(e){}
   }
   function allRepeatQueue215(startMode,s){
-    const base=['day','my','sori','opic'];
+    const base=['day','my','sori','opic','friends'];
     const has={day:!!s.day?.length,my:!!s.my?.length,sori:!!s.sori?.length,opic:!!s.opic?.length};
     let k=base.indexOf(startMode);if(k<0)k=0;
     return [...base.slice(k),...base.slice(0,k)].filter(c=>has[c]);
@@ -17090,7 +17191,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
 
   function startAllRepeat215(explicitStartMode){
     if(MV_ALL_REPEAT_215.active)return false;
-    const startMode=['day','my','sori','opic'].includes(explicitStartMode)?explicitStartMode:allRepeatVisibleMode215();
+    const startMode=['day','my','sori','opic','friends'].includes(explicitStartMode)?explicitStartMode:allRepeatVisibleMode215();
     try{persistModeSelection(startMode)}catch(e){}
     const snap=allRepeatSnapshot215();
     allRepeatPersistSnapshots215(snap);
@@ -17311,7 +17412,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
 
   function visibleMode219(){
     const a=document.querySelector('#homeStudyModePanel .homeStudyModeBtn.active');
-    const map={homeModeDay:'day',homeModeMy:'my',homeModeSori:'sori',homeModeOpic:'opic'};
+    const map={homeModeDay:'day',homeModeMy:'my',homeModeSori:'sori',homeModeOpic:'opic',homeModeFriends:'friends'};
     return map[a?.id]||window.MV_HOME_MODE_212||'day';
   }
 
@@ -17358,8 +17459,8 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
       toggleAllRepeat219(mode);
       return;
     }
-    if(mode!=='friends')persistModeSelection(mode);
-    const count=mode==='friends'?studyCourseSelectedLessons('friends').length:selectedCount(mode);
+    persistModeSelection(mode);
+    const count=selectedCount(mode);
     if(!count){
       alert(mode==='day'?'학습할 Day를 하나 이상 선택해 주세요.':`${modeCopy(mode).title.replace(/^.\s*/,'')} 항목을 하나 이상 선택해 주세요.`);
       return;
@@ -17442,6 +17543,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
     normalizeMyCheckboxes();
     ensureSoriCheckbox();
     convertOpicPlaceholderToStandardCard();
+    ensureFriendsCards();
 
     // If SORI has never been configured, default its single current box ON.
     if(localStorage.getItem(STUDY_SELECT_KEYS.sori)===null)writeJson(STUDY_SELECT_KEYS.sori,[1]);
@@ -18033,7 +18135,7 @@ window.mvAllRepeatAudit212=function(){
 
 <script id="v532213AllRepeatAudit">
 window.mvAllRepeatAudit213=function(){
-  const map={homeModeDay:'day',homeModeMy:'my',homeModeSori:'sori',homeModeOpic:'opic'};
+  const map={homeModeDay:'day',homeModeMy:'my',homeModeSori:'sori',homeModeOpic:'opic',homeModeFriends:'friends'};
   const active=document.querySelector('#homeStudyModePanel .homeStudyModeBtn.active');
   const selected={};
   try{selected.day=JSON.parse(localStorage.getItem(selectedDaysKey())||'[]')}catch(e){selected.day=[]}
@@ -18049,7 +18151,7 @@ window.mvAllRepeatAudit213=function(){
 <script id="v532214AllRepeatAudit">
 window.mvAllRepeatAudit214=function(){
   const a=document.querySelector('#homeStudyModePanel .homeStudyModeBtn.active');
-  const map={homeModeDay:'day',homeModeMy:'my',homeModeSori:'sori',homeModeOpic:'opic'};
+  const map={homeModeDay:'day',homeModeMy:'my',homeModeSori:'sori',homeModeOpic:'opic',homeModeFriends:'friends'};
   return {
     version:'v5.3.275',
     visibleMode:map[a?.id]||null,
@@ -21092,7 +21194,7 @@ document.addEventListener('click',(e)=>{
 
 // Mode switches only change what is visible. They do NOT clear a checkpoint.
 document.addEventListener('click',(e)=>{
-  if(e.target?.closest?.('#homeModeDay,#homeModeMy,#homeModeSori,#homeModeOpic'))setTimeout(mv281SyncUI,0);
+  if(e.target?.closest?.('#homeModeDay,#homeModeMy,#homeModeSori,#homeModeOpic,#homeModeFriends'))setTimeout(mv281SyncUI,0);
 },false);
 
 // If Android/background logic pauses M536, reflect that in the same session state.
@@ -21871,13 +21973,19 @@ body.mv540HomeVisible #drawerMenuButton{opacity:0!important;visibility:hidden!im
 
 /* Exactly one home course section is visible. */
 #homePage[data-clean-mode="day"] .daySection{display:block!important}
-#homePage[data-clean-mode="day"] .myClassSection,#homePage[data-clean-mode="day"] .soriClassSection,#homePage[data-clean-mode="day"] .opicClassSection{display:none!important}
+#homePage[data-clean-mode="day"] .myClassSection,#homePage[data-clean-mode="day"] .soriClassSection,#homePage[data-clean-mode="day"] .opicClassSection,#homePage[data-clean-mode="day"] .friendsClassSection{display:none!important}
 #homePage[data-clean-mode="my"] .myClassSection{display:grid!important}
-#homePage[data-clean-mode="my"] .daySection,#homePage[data-clean-mode="my"] .soriClassSection,#homePage[data-clean-mode="my"] .opicClassSection{display:none!important}
+#homePage[data-clean-mode="my"] .daySection,#homePage[data-clean-mode="my"] .soriClassSection,#homePage[data-clean-mode="my"] .opicClassSection,#homePage[data-clean-mode="my"] .friendsClassSection{display:none!important}
 #homePage[data-clean-mode="sori"] .soriClassSection{display:grid!important}
-#homePage[data-clean-mode="sori"] .daySection,#homePage[data-clean-mode="sori"] .myClassSection,#homePage[data-clean-mode="sori"] .opicClassSection{display:none!important}
+#homePage[data-clean-mode="sori"] .daySection,#homePage[data-clean-mode="sori"] .myClassSection,#homePage[data-clean-mode="sori"] .opicClassSection,#homePage[data-clean-mode="sori"] .friendsClassSection{display:none!important}
 #homePage[data-clean-mode="opic"] .opicClassSection{display:grid!important}
-#homePage[data-clean-mode="opic"] .daySection,#homePage[data-clean-mode="opic"] .myClassSection,#homePage[data-clean-mode="opic"] .soriClassSection{display:none!important}
+#homePage[data-clean-mode="opic"] .daySection,#homePage[data-clean-mode="opic"] .myClassSection,#homePage[data-clean-mode="opic"] .soriClassSection,#homePage[data-clean-mode="opic"] .friendsClassSection{display:none!important}
+#homePage[data-clean-mode="friends"] .friendsClassSection{display:grid!important}
+#homePage[data-clean-mode="friends"] .daySection,#homePage[data-clean-mode="friends"] .myClassSection,#homePage[data-clean-mode="friends"] .soriClassSection,#homePage[data-clean-mode="friends"] .opicClassSection{display:none!important}
+
+#homePage .friendsClassSection{margin-top:14px!important;margin-bottom:16px!important}
+#homePage .friendsClassSection .friendsCourseCard{cursor:pointer!important;touch-action:manipulation}
+#homePage .friendsClassSection .friendsCourseCard:active{transform:scale(.995)}
 
 /* Review card belongs only to DAY mode and is positioned inside the DAY section. */
 #homePage:not([data-clean-mode="day"]) .todayCard{display:none!important}
@@ -21901,20 +22009,20 @@ body.mv540HomeVisible #drawerMenuButton{opacity:0!important;visibility:hidden!im
 .cleanDayField select{width:100%!important;min-width:0!important;height:48px!important;border:1px solid #d9dee8!important;border-radius:15px!important;background:#fff!important;color:#344054!important;padding:0 36px 0 12px!important;font-size:13px!important;font-weight:900!important;box-sizing:border-box!important}
 
 /* Frozen compact MY/SORI/OPIC/FRIENDS home cards. This is the single size contract. */
-#homePage .myClassSection,#homePage .soriClassSection,#homePage .opicClassSection{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;align-items:stretch!important}
+#homePage .myClassSection,#homePage .soriClassSection,#homePage .opicClassSection,#homePage .friendsClassSection{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;align-items:stretch!important}
 #homePage .myClassSection>.sectionHead,#homePage .myClassSection>.v534MyControls,#homePage .myClassSection>.studyCourseInfo,
 #homePage .soriClassSection>.sectionHead,#homePage .soriClassSection>.studyCourseInfo,
-#homePage .opicClassSection>.sectionHead,#homePage .opicClassSection>.studyCourseInfo,#homePage .opicClassSection>.opicReadyCard{grid-column:1/-1!important}
-#homePage .myClassSection .myClassCard,#homePage .soriClassSection .soriCourseCard,#homePage .opicClassSection .opicCourseCard{
+#homePage .opicClassSection>.sectionHead,#homePage .opicClassSection>.studyCourseInfo,#homePage .opicClassSection>.opicReadyCard,#homePage .friendsClassSection>.sectionHead,#homePage .friendsClassSection>.studyCourseInfo{grid-column:1/-1!important}
+#homePage .myClassSection .myClassCard,#homePage .soriClassSection .soriCourseCard,#homePage .opicClassSection .opicCourseCard,#homePage .friendsClassSection .friendsCourseCard{
   position:relative!important;display:flex!important;flex-direction:column!important;width:100%!important;min-width:0!important;height:108px!important;min-height:108px!important;max-height:108px!important;margin:0!important;padding:9px 9px 8px!important;border-radius:14px!important;overflow:hidden!important;box-sizing:border-box!important;box-shadow:0 3px 10px rgba(15,23,42,.05)!important
 }
-#homePage .myClassSection .myClassTop,#homePage .soriClassSection .myClassTop,#homePage .opicClassSection .myClassTop{height:19px!important;min-height:19px!important;margin:0!important;padding:0 34px 0 0!important;display:flex!important;align-items:center!important;gap:3px!important;overflow:hidden!important}
-#homePage .myClassSection .myClassTop b,#homePage .soriClassSection .myClassTop b,#homePage .opicClassSection .myClassTop b{font-size:11.5px!important;line-height:1.1!important;font-weight:950!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
-#homePage .myClassSection .myClassBadge,#homePage .soriClassSection .myClassBadge,#homePage .opicClassSection .myClassBadge,#homePage .soriClassSection .soriLessonStrip{display:none!important}
-#homePage .myClassSection .myClassTitle,#homePage .soriClassSection .myClassTitle,#homePage .opicClassSection .myClassTitle{margin:4px 0 0!important;height:29px!important;min-height:29px!important;max-height:29px!important;font-size:10.4px!important;line-height:1.25!important;font-weight:850!important;color:#344054!important;overflow:hidden!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important}
-#homePage .myClassSection .myClassDesc,#homePage .soriClassSection .myClassDesc,#homePage .opicClassSection .myClassDesc{display:none!important}
-#homePage .myClassSection .myClassMeta,#homePage .soriClassSection .myClassMeta,#homePage .opicClassSection .myClassMeta{margin:auto 0 0!important;padding-top:4px!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:2px 4px!important;overflow:hidden!important}
-#homePage .myClassSection .myClassMeta>span,#homePage .soriClassSection .myClassMeta>span,#homePage .opicClassSection .myClassMeta>span{font-size:8.1px!important;line-height:1.1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#homePage .myClassSection .myClassTop,#homePage .soriClassSection .myClassTop,#homePage .opicClassSection .myClassTop,#homePage .friendsClassSection .myClassTop{height:19px!important;min-height:19px!important;margin:0!important;padding:0 34px 0 0!important;display:flex!important;align-items:center!important;gap:3px!important;overflow:hidden!important}
+#homePage .myClassSection .myClassTop b,#homePage .soriClassSection .myClassTop b,#homePage .opicClassSection .myClassTop b,#homePage .friendsClassSection .myClassTop b{font-size:11.5px!important;line-height:1.1!important;font-weight:950!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#homePage .myClassSection .myClassBadge,#homePage .soriClassSection .myClassBadge,#homePage .opicClassSection .myClassBadge,#homePage .friendsClassSection .myClassBadge,#homePage .soriClassSection .soriLessonStrip{display:none!important}
+#homePage .myClassSection .myClassTitle,#homePage .soriClassSection .myClassTitle,#homePage .opicClassSection .myClassTitle,#homePage .friendsClassSection .myClassTitle{margin:4px 0 0!important;height:29px!important;min-height:29px!important;max-height:29px!important;font-size:10.4px!important;line-height:1.25!important;font-weight:850!important;color:#344054!important;overflow:hidden!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important}
+#homePage .myClassSection .myClassDesc,#homePage .soriClassSection .myClassDesc,#homePage .opicClassSection .myClassDesc,#homePage .friendsClassSection .myClassDesc{display:none!important}
+#homePage .myClassSection .myClassMeta,#homePage .soriClassSection .myClassMeta,#homePage .opicClassSection .myClassMeta,#homePage .friendsClassSection .myClassMeta{margin:auto 0 0!important;padding-top:4px!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:2px 4px!important;overflow:hidden!important}
+#homePage .myClassSection .myClassMeta>span,#homePage .soriClassSection .myClassMeta>span,#homePage .opicClassSection .myClassMeta>span,#homePage .friendsClassSection .myClassMeta>span{font-size:8.1px!important;line-height:1.1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
 #homePage .myLessonSelectMini,#homePage .studySelectMini{position:absolute!important;right:6px!important;top:6px!important;width:30px!important;height:30px!important;padding:2px!important;border-radius:8px!important;display:flex!important;align-items:center!important;justify-content:center!important;z-index:3!important}
 #homePage .myLessonSelectMini span,#homePage .studySelectMini span{display:none!important}
 #homePage .myLessonSelectMini input,#homePage .studySelectMini input{width:16px!important;height:16px!important;margin:0!important}
@@ -21936,7 +22044,7 @@ body.mv540HomeVisible #drawerMenuButton{opacity:0!important;visibility:hidden!im
   #todayStartBtn{min-width:144px!important;height:48px!important;font-size:12px!important;padding:0 14px!important}
   .cleanDaySettings{padding:12px;border-radius:20px} .cleanDaySettingsGrid{gap:8px}
   .cleanDayField select{height:45px!important;font-size:11.5px!important;padding-left:10px!important}
-  #homePage .myClassSection .myClassCard,#homePage .soriClassSection .soriCourseCard,#homePage .opicClassSection .opicCourseCard{height:104px!important;min-height:104px!important;max-height:104px!important;padding:8px 7px 7px!important}
+  #homePage .myClassSection .myClassCard,#homePage .soriClassSection .soriCourseCard,#homePage .opicClassSection .opicCourseCard,#homePage .friendsClassSection .friendsCourseCard{height:104px!important;min-height:104px!important;max-height:104px!important;padding:8px 7px 7px!important}
 }
 </style>
 
@@ -21945,8 +22053,8 @@ body.mv540HomeVisible #drawerMenuButton{opacity:0!important;visibility:hidden!im
 'use strict';
 if(window.__MV540_CLEAN_HOME__) return;
 window.__MV540_CLEAN_HOME__=true;
-const MODES=['day','my','sori','opic'];
-const scrollByMode={day:0,my:0,sori:0,opic:0};
+const MODES=['day','my','sori','opic','friends'];
+const scrollByMode={day:0,my:0,sori:0,opic:0,friends:0};
 const home=()=>document.getElementById('homePage');
 function homeVisible(){const h=home();return !!h&&!h.classList.contains('hidden')&&getComputedStyle(h).display!=='none'}
 function validMode(m){return MODES.includes(m)?m:'day'}
@@ -22086,7 +22194,7 @@ function bindHomeSwipe(){
 }
 
 function boot(){
-  try{document.title='SAYWARD v5.4.27'}catch(e){}
+  try{document.title='SAYWARD v5.4.29'}catch(e){}
   try{ensureMyClassHomeCards()}catch(e){console.warn('[SAYWARD] MY card auto-heal',e)}
   setHomeVisibleClass();bindLauncher();bindOverallProxy();buildDaySettings();placeTodayCard();bindHomeSwipe();
   placeTodayCard();
@@ -22106,9 +22214,9 @@ window.mvCleanAudit540=function(){
   const h=home(),bar=document.getElementById('sharedStudySelectBar');
   const cards=[...document.querySelectorAll('#homePage .myClassSection .myClassCard')].slice(0,4);
   return {
-    version:'v5.4.27',mode:currentMode(),hero:!!document.getElementById('cleanHeroMenuHit'),launcher:document.querySelectorAll('.cleanModeCard').length,
+    version:'v5.4.29',mode:currentMode(),hero:!!document.getElementById('cleanHeroMenuHit'),launcher:document.querySelectorAll('.cleanModeCard').length,
     sharedBar:!!bar,daySettings:!!document.getElementById('cleanDaySettings'),legacyModePanelVisible:!!document.getElementById('homeStudyModePanel')&&getComputedStyle(document.getElementById('homeStudyModePanel')).display!=='none',
-    visibleSections:{day:getComputedStyle(document.querySelector('#homePage .daySection')||document.body).display,my:getComputedStyle(document.querySelector('#homePage .myClassSection')||document.body).display,sori:getComputedStyle(document.querySelector('#homePage .soriClassSection')||document.body).display,opic:getComputedStyle(document.querySelector('#homePage .opicClassSection')||document.body).display},
+    visibleSections:{day:getComputedStyle(document.querySelector('#homePage .daySection')||document.body).display,my:getComputedStyle(document.querySelector('#homePage .myClassSection')||document.body).display,sori:getComputedStyle(document.querySelector('#homePage .soriClassSection')||document.body).display,opic:getComputedStyle(document.querySelector('#homePage .opicClassSection')||document.body).display,friends:getComputedStyle(document.querySelector('#homePage .friendsClassSection')||document.body).display},
     myCards:cards.map(c=>({w:Math.round(c.getBoundingClientRect().width),h:Math.round(c.getBoundingClientRect().height)})),
     rule:'single HOME UI owner; v5.3.293-310 presentation patches removed; feature engines preserved'
   };
@@ -22273,7 +22381,7 @@ window.mvCleanAudit540=function(){
      Do not append V13/V14 patch blocks. Edit that master block in place only. -->
 <style id="saywardHomeCleanMaster">
 /* ======================================================================
-   SAYWARD HOME CLEAN MASTER — v5.4.27
+   SAYWARD HOME CLEAN MASTER — v5.4.29
    One authoritative home-style block. Do NOT append version patches below.
    Future home UI edits must modify this block in place.
    ====================================================================== */
@@ -22292,7 +22400,7 @@ window.mvCleanAudit540=function(){
 #cleanHeroMenuHit,#cleanHeroSearchHit{position:absolute!important;top:0!important;height:100%!important;width:18%!important;border:0!important;background:transparent!important;padding:0!important;z-index:8!important;cursor:pointer!important;-webkit-tap-highlight-color:transparent!important}
 #cleanHeroMenuHit{left:0!important} #cleanHeroSearchHit{right:0!important}
 #homePage .homeHero::before{
-  content:"v5.4.27"!important;position:absolute!important;right:13.7%!important;top:10px!important;z-index:6!important;
+  content:"v5.4.29"!important;position:absolute!important;right:13.7%!important;top:10px!important;z-index:6!important;
   min-width:54px!important;padding:2px 8px 3px!important;box-sizing:border-box!important;text-align:center!important;
   border:1.5px solid rgba(255,255,255,.92)!important;border-radius:999px!important;background:rgba(77,62,202,.96)!important;
   color:#fff!important;font-size:9px!important;line-height:1.1!important;font-weight:950!important;letter-spacing:.1px!important;
@@ -22301,7 +22409,7 @@ window.mvCleanAudit540=function(){
 
 /* LAUNCHER */
 .cleanHomeLauncher{display:flex!important;flex-direction:column!important;gap:10px!important;margin-top:12px!important}
-.cleanModeGrid{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:7px!important}
+.cleanModeGrid{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:7px!important}
 .cleanModeCard{
   position:relative!important;min-width:0!important;min-height:86px!important;padding:8px 3px 7px!important;
   border-radius:17px!important;background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(250,251,255,.92))!important;
@@ -22312,10 +22420,12 @@ window.mvCleanAudit540=function(){
 .cleanModeCard[data-clean-mode-button="my"]{border:1.5px solid rgba(225,165,123,.42)!important;background:linear-gradient(180deg,#fffdfb,#fff8f3)!important}
 .cleanModeCard[data-clean-mode-button="sori"]{border:1.5px solid rgba(67,184,164,.42)!important;background:linear-gradient(180deg,#fbfffe,#f2fffb)!important}
 .cleanModeCard[data-clean-mode-button="opic"]{border:1.5px solid rgba(212,123,180,.42)!important;background:linear-gradient(180deg,#fffafd,#fff5fb)!important}
+.cleanModeCard[data-clean-mode-button="friends"]{border:1.5px solid rgba(130,104,230,.42)!important;background:linear-gradient(180deg,#fcfbff,#f7f4ff)!important}
 #homePage[data-clean-mode="day"] .cleanModeCard[data-clean-mode-button="day"],
 #homePage[data-clean-mode="my"] .cleanModeCard[data-clean-mode-button="my"],
 #homePage[data-clean-mode="sori"] .cleanModeCard[data-clean-mode-button="sori"],
-#homePage[data-clean-mode="opic"] .cleanModeCard[data-clean-mode-button="opic"]{
+#homePage[data-clean-mode="opic"] .cleanModeCard[data-clean-mode-button="opic"],
+#homePage[data-clean-mode="friends"] .cleanModeCard[data-clean-mode-button="friends"]{
   border:2px solid transparent!important;
   background:linear-gradient(#fff,#fff) padding-box,linear-gradient(135deg,var(--sw-cyan),var(--sw-violet)) border-box!important;
   box-shadow:0 8px 17px rgba(77,93,196,.11)!important;
