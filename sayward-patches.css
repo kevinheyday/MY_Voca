@@ -1,0 +1,577 @@
+/* SAYWARD consolidated inline styles; loaded after core.css and before home.css. */
+
+
+#sharedStudySelectAll,#sharedStudyClearAll{grid-row:1}
+#sharedStudyRepeatParts206{grid-row:2;grid-column:1;min-width:0;border:1px solid #d0d5dd;background:#fff;border-radius:14px;padding:9px 10px;display:flex;flex-direction:column;justify-content:center;gap:6px}
+#sharedStudyRepeatParts206 .rp206Title{font-size:10px;font-weight:950;color:#667085}
+#sharedStudyRepeatParts206 .rp206Checks{display:flex;flex-wrap:wrap;gap:6px 9px}
+#sharedStudyRepeatParts206 label{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:900;color:#344054;white-space:nowrap}
+#sharedStudyRepeatParts206 input{width:16px;height:16px;margin:0;accent-color:#7c3aed}
+
+@media(max-width:520px){#sharedStudyRepeatParts206{padding:8px}#sharedStudyRepeatParts206 label{font-size:9.5px}}
+
+
+
+/* v5.3.275 · shared study favorite standard */
+#myClassContent .myStudyCard,
+#myClassContent .mySpeakBlock{position:relative!important}
+#myClassContent .myStudyCard .myStudyNum,
+#myClassContent .mySpeakBlock .myStudyNum{padding-right:102px!important;box-sizing:border-box}
+.studyFavoriteBtn239{
+  position:absolute!important;
+  top:12px!important;
+  right:12px!important;
+  z-index:8!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:4px!important;
+  min-height:34px!important;
+  padding:7px 9px!important;
+  border:1px solid #d0d5dd!important;
+  border-radius:11px!important;
+  background:#fff!important;
+  color:#667085!important;
+  font-size:10.5px!important;
+  font-weight:950!important;
+  line-height:1!important;
+  box-shadow:0 2px 7px rgba(15,23,42,.07)!important;
+  cursor:pointer!important;
+  touch-action:manipulation!important;
+  -webkit-tap-highlight-color:transparent!important;
+}
+.studyFavoriteBtn239 .star{font-size:16px!important;line-height:1!important;color:#98a2b3!important}
+.studyFavoriteBtn239.active{
+  border-color:#f6c453!important;
+  background:#fff9df!important;
+  color:#8a5a00!important;
+}
+.studyFavoriteBtn239.active .star{color:#f4b400!important}
+#myClassContent .studyFavoriteCard239{
+  border-color:#f2cc63!important;
+  box-shadow:0 4px 14px rgba(244,180,0,.10)!important;
+}
+#sharedStudyRepeatParts206 .studyFavoriteOnly239{
+  display:inline-flex!important;
+  align-items:center!important;
+  gap:4px!important;
+  padding:5px 7px!important;
+  border:1px solid #f1d06a!important;
+  background:#fff9df!important;
+  color:#7a5300!important;
+  border-radius:9px!important;
+  font-size:10px!important;
+  font-weight:950!important;
+  white-space:nowrap!important;
+}
+#sharedStudyRepeatParts206 .studyFavoriteOnly239 input{
+  width:18px!important;
+  height:18px!important;
+  margin:0!important;
+  accent-color:#e0a400!important;
+}
+#sharedStudyRepeatParts206.favoriteOnly239{
+  border-color:#f0ca5c!important;
+  background:#fffdf4!important;
+}
+@media(max-width:520px){
+  .studyFavoriteBtn239{top:10px!important;right:10px!important;padding:6px 7px!important;font-size:10px!important}
+  #myClassContent .myStudyCard .myStudyNum,
+  #myClassContent .mySpeakBlock .myStudyNum{padding-right:94px!important}
+}
+
+
+
+/* v5.3.275 · 2D finger-follow page card */
+.mvSwipeStage246{position:fixed;inset:0;z-index:9997;overflow:hidden;pointer-events:none;perspective:1400px;background:transparent}
+.mvSwipeCard246{
+  position:absolute;inset:0;width:100vw;height:100vh;overflow:hidden;
+  background:#f7f8fc;transform-origin:center center;
+  will-change:transform,opacity,filter;backface-visibility:hidden;
+  /* Clean flat page edge: avoids stacked white arcs in rotated corners on Samsung/content:// */
+  border-radius:0;
+  box-shadow:0 10px 24px rgba(15,23,42,.16);
+  outline:1px solid rgba(148,163,184,.10);
+}
+.mvSwipeCard246.next,.mvSwipeCard246.prev{border-radius:0}
+.mvSwipeCardInner246{position:absolute;left:0;width:100vw;min-height:100vh;pointer-events:none}
+.mvSwipeShade246{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,transparent 56%,rgba(15,23,42,.14) 100%);opacity:0;will-change:opacity}
+body.mvSwipeActive246{overscroll-behavior:none!important}
+.mvSwipeCard246::after{
+  content:"";position:absolute;top:0;bottom:0;width:2px;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.85),rgba(148,163,184,.22),rgba(255,255,255,.55));
+  opacity:.72;
+}
+.mvSwipeCard246.next::after{right:0}
+.mvSwipeCard246.prev::after{left:0}
+
+
+
+
+/* v5.3.275 · non-invasive playback progress */
+.myClassPlaybackStatus{min-width:0}
+.myClassMiniStatus{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  flex:1 1 auto;
+}
+.mvPlaybackProgress258{
+  display:none;
+  align-items:center;
+  justify-content:flex-end;
+  gap:5px;
+  flex:0 0 clamp(104px,29vw,154px);
+  width:clamp(104px,29vw,154px);
+  min-width:0;
+  margin-left:6px;
+}
+.mvPlaybackProgress258.on{display:flex}
+.mvPlaybackTrack258{
+  height:7px;
+  flex:1 1 auto;
+  min-width:48px;
+  border-radius:999px;
+  background:rgba(99,102,241,.20);
+  overflow:hidden;
+  box-shadow:inset 0 0 0 1px rgba(99,102,241,.08)
+}
+.mvPlaybackFill258{
+  display:block;height:100%;width:0;border-radius:inherit;
+  background:linear-gradient(90deg,#4f46e5,#7c3aed);
+  transition:width .32s ease
+}
+.mvPlaybackCount258{
+  font-size:10px;
+  font-weight:950;
+  color:#4338ca;
+  white-space:nowrap;
+  min-width:30px;
+  text-align:right
+}
+.myClassPlaybackStatus.mvProgress258On{
+  gap:6px;
+}
+.myClassPlaybackStatus.mvProgress258On .myClassMiniStatus{
+  flex:1 1 0;
+  min-width:0;
+}
+.myClassPlaybackStatus.mvProgress258On .myClassAutoChip{display:none!important}
+@media(max-width:520px){
+  .myClassPlaybackStatus.mvProgress258On{padding-left:9px;padding-right:9px;gap:5px}
+  .mvPlaybackProgress258{
+    flex-basis:112px;
+    width:112px;
+    margin-left:2px;
+    gap:4px
+  }
+  .mvPlaybackTrack258{min-width:62px;height:6px}
+  .mvPlaybackCount258{font-size:9px;min-width:28px}
+}
+@media(max-width:380px){
+  .mvPlaybackProgress258{flex-basis:102px;width:102px}
+  .mvPlaybackTrack258{min-width:54px}
+  .mvPlaybackCount258{font-size:9px;min-width:27px}
+}
+
+
+
+/* ===== V5.3.286 · SORI/OPIC HOME COMPACT CARD STANDARD =====
+   Goal: DAY-like scanability without sacrificing lesson identity.
+   - 2-column compact grid
+   - strong lesson number + short readable subtitle
+   - selection checkbox stays one-tap, label text is visually suppressed
+   - long descriptions/script strips are hidden only on HOME
+*/
+#homePage .soriClassSection,
+#homePage .opicClassSection{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:8px!important;
+  align-items:stretch;
+}
+#homePage .soriClassSection>.sectionHead,
+#homePage .soriClassSection>.studyCourseInfo,
+#homePage .opicClassSection>.sectionHead,
+#homePage .opicClassSection>.studyCourseInfo,
+#homePage .opicClassSection>.opicReadyCard{
+  grid-column:1/-1;
+}
+#homePage .soriClassSection .soriCourseCard,
+#homePage .opicClassSection .opicCourseCard{
+  margin:0!important;
+  min-width:0!important;
+  min-height:104px!important;
+  padding:10px 10px 9px!important;
+  border-radius:14px!important;
+  display:flex!important;
+  flex-direction:column!important;
+  box-shadow:0 3px 10px rgba(15,23,42,.05)!important;
+}
+#homePage .soriClassSection .soriCourseCard .myClassTop,
+#homePage .opicClassSection .opicCourseCard .myClassTop{
+  min-height:20px!important;
+  padding-right:38px!important;
+  gap:4px!important;
+}
+#homePage .soriClassSection .soriCourseCard .myClassTop b,
+#homePage .opicClassSection .opicCourseCard .myClassTop b{
+  font-size:12.5px!important;
+  line-height:1.15!important;
+  font-weight:950!important;
+  min-width:0!important;
+}
+#homePage .soriClassSection .soriCourseCard .myClassBadge,
+#homePage .opicClassSection .opicCourseCard .myClassBadge{
+  display:none!important;
+}
+#homePage .soriClassSection .soriCourseCard .myClassTitle,
+#homePage .opicClassSection .opicCourseCard .myClassTitle{
+  margin-top:5px!important;
+  padding-right:0!important;
+  min-height:30px!important;
+  color:#344054!important;
+  font-size:11.5px!important;
+  line-height:1.28!important;
+  font-weight:850!important;
+  white-space:normal!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  display:-webkit-box!important;
+  -webkit-box-orient:vertical!important;
+  -webkit-line-clamp:2!important;
+}
+#homePage .soriClassSection .soriCourseCard .soriLessonStrip,
+#homePage .soriClassSection .soriCourseCard .myClassDesc,
+#homePage .opicClassSection .opicCourseCard .myClassDesc{
+  display:none!important;
+}
+#homePage .soriClassSection .soriCourseCard .myClassMeta,
+#homePage .opicClassSection .opicCourseCard .myClassMeta{
+  margin-top:auto!important;
+  padding-top:6px!important;
+  display:grid!important;
+  grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  gap:3px 5px!important;
+  font-size:8.8px!important;
+  line-height:1.12!important;
+  color:#667085!important;
+}
+#homePage .soriClassSection .soriCourseCard .myClassMeta span,
+#homePage .opicClassSection .opicCourseCard .myClassMeta span{
+  min-width:0!important;
+  white-space:nowrap!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+}
+#homePage .soriClassSection .soriCourseCard .studySelectMini,
+#homePage .opicClassSection .opicCourseCard .studySelectMini{
+  right:7px!important;
+  top:7px!important;
+  width:32px!important;
+  height:32px!important;
+  box-sizing:border-box!important;
+  justify-content:center!important;
+  padding:3px!important;
+  border-radius:8px!important;
+}
+#homePage .soriClassSection .soriCourseCard .studySelectMini span,
+#homePage .opicClassSection .opicCourseCard .studySelectMini span{
+  display:none!important;
+}
+#homePage .soriClassSection .soriCourseCard .studySelectMini .studySelectCheck,
+#homePage .opicClassSection .opicCourseCard .studySelectMini .studySelectCheck{
+  width:16px!important;
+  height:16px!important;
+}
+#homePage .soriClassSection .soriCourseCard.myClassChecked,
+#homePage .opicClassSection .opicCourseCard.myClassChecked{
+  outline:2px solid rgba(124,58,237,.32)!important;
+  outline-offset:-2px!important;
+}
+@media(max-width:360px){
+  #homePage .soriClassSection,
+  #homePage .opicClassSection{gap:6px!important}
+  #homePage .soriClassSection .soriCourseCard,
+  #homePage .opicClassSection .opicCourseCard{padding:9px 8px 8px!important;min-height:100px!important}
+  #homePage .soriClassSection .soriCourseCard .myClassTitle,
+  #homePage .opicClassSection .opicCourseCard .myClassTitle{font-size:10.8px!important}
+  #homePage .soriClassSection .soriCourseCard .myClassMeta,
+  #homePage .opicClassSection .opicCourseCard .myClassMeta{font-size:8.2px!important}
+}
+
+
+
+/* V5.3.278 · one horizontal-swipe hit area standard.
+   The page owns horizontal gestures; vertical scrolling stays native. */
+#dayAppPage #learn,
+#dayAppPage #learn .card,
+#dayAppPage #quiz,
+#dayAppPage #quiz #qw,
+#dayAppPage #quiz #opts,
+#dayAppPage #quiz .option,
+#myClassPage,
+#myClassPage #myClassContent,
+#myClassPage .myStudyCard,
+#myClassPage .mySpeakBlock{
+  touch-action:pan-y!important;
+  overscroll-behavior-x:contain;
+}
+
+
+
+/* v5.3.288 · swipe snapshot lifetime:
+   keep the live card visible for the entire finger-down gesture and its release animation;
+   remove only stale/orphaned snapshots after the gesture is truly finished. */
+.mvSwipeStage246.mvGhost288{display:none!important;visibility:hidden!important;opacity:0!important}
+
+
+
+/* v5.3.292 · isolated unified search UI. Existing study/playback layouts are untouched. */
+#mvSearchHomeBtn292{position:absolute;right:92px;top:12px;width:42px;height:42px;border-radius:14px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.96);color:#312e81;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 20px rgba(15,23,42,.18);z-index:4;cursor:pointer;padding:0}
+#mvSearchHomeBtn292 svg{width:22px;height:22px;stroke:currentColor;stroke-width:2.4;fill:none}
+.homeHero{position:relative}
+@media(max-width:480px){#mvSearchHomeBtn292{right:85px;top:9px;width:38px;height:38px;border-radius:12px}#mvSearchHomeBtn292 svg{width:20px;height:20px}}
+#mvGlobalSearch292[hidden]{display:none!important}
+#mvGlobalSearch292{position:fixed;inset:0;z-index:100000;background:#f8fafc;color:#101828;overflow:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.mvSearchShell292{width:min(760px,100%);min-height:100%;margin:0 auto;padding:calc(12px + env(safe-area-inset-top,0px)) 14px calc(34px + env(safe-area-inset-bottom,0px));box-sizing:border-box}
+.mvSearchHeader292{display:grid;grid-template-columns:42px 1fr 42px;align-items:center;gap:8px;position:sticky;top:0;z-index:3;background:rgba(248,250,252,.94);backdrop-filter:blur(13px);padding:7px 0 11px}
+.mvSearchIconBtn292{width:42px;height:42px;border:0;border-radius:13px;background:#fff;box-shadow:0 2px 10px rgba(15,23,42,.08);font-size:23px;color:#344054;font-weight:900}
+.mvSearchHeaderCopy292{text-align:center;min-width:0}.mvSearchHeaderCopy292 b{display:block;font-size:18px}.mvSearchHeaderCopy292 span{display:block;font-size:11px;color:#667085;margin-top:2px}
+.mvSearchInputWrap292{display:flex;align-items:center;gap:9px;background:#eef2f7;border:1px solid #e2e8f0;border-radius:18px;padding:0 13px;margin-top:7px;height:52px;box-sizing:border-box;transition:.18s ease}
+.mvSearchInputWrap292:focus-within{background:#fff;border-color:#8b5cf6;box-shadow:0 0 0 3px rgba(124,58,237,.10)}
+.mvSearchInputWrap292 svg{width:20px;height:20px;stroke:#475467;stroke-width:2.3;fill:none;flex:0 0 auto}.mvSearchInput292{border:0;outline:0;background:transparent;min-width:0;flex:1;font:800 17px/1.3 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#101828}.mvSearchInput292::placeholder{color:#98a2b3;font-weight:650}.mvSearchClear292{border:0;background:transparent;font-size:22px;color:#667085;padding:4px;line-height:1;visibility:hidden}.mvSearchClear292.on{visibility:visible}
+.mvSearchChips292{display:flex;gap:7px;overflow-x:auto;padding:11px 1px 7px;scrollbar-width:none}.mvSearchChips292::-webkit-scrollbar{display:none}.mvSearchChip292{white-space:nowrap;border:1px solid #e4e7ec;background:#fff;border-radius:999px;padding:8px 13px;font-size:12px;font-weight:900;color:#475467;box-shadow:0 2px 7px rgba(15,23,42,.04)}.mvSearchChip292.active{background:linear-gradient(135deg,#6d28d9,#7c3aed);border-color:#6d28d9;color:#fff;box-shadow:0 6px 15px rgba(124,58,237,.22)}
+.mvSearchMeta292{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:8px 2px 10px;font-size:12px;color:#667085}.mvSearchMeta292 b{color:#344054}.mvSearchSort292{border:1px solid #e4e7ec;background:#fff;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:850;color:#475467}
+.mvSearchResults292{display:flex;flex-direction:column;gap:9px}.mvSearchCard292{width:100%;border:1px solid #e4e7ec;background:#fff;border-radius:17px;padding:13px 14px;text-align:left;box-shadow:0 3px 13px rgba(15,23,42,.05);display:grid;grid-template-columns:1fr 24px;gap:9px;align-items:center;color:#101828}.mvSearchCard292:active{transform:scale(.995)}.mvSearchCardTop292{font-size:10.5px;font-weight:950;color:#6d4ce8;margin-bottom:4px}.mvSearchCardTitle292{font-size:16px;font-weight:950;line-height:1.35;color:#101828;overflow-wrap:anywhere}.mvSearchCardKo292{font-size:13px;font-weight:780;line-height:1.45;color:#475467;margin-top:3px}.mvSearchCardExample292{font-size:12px;line-height:1.45;color:#667085;margin-top:5px;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}.mvSearchArrow292{font-size:25px;color:#344054;text-align:right}.mvSearchMark292{background:#fef08a;color:inherit;border-radius:3px;padding:0 1px}
+.mvSearchEmpty292{padding:56px 22px;text-align:center;color:#667085}.mvSearchEmpty292 .ico{font-size:34px}.mvSearchEmpty292 b{display:block;color:#344054;font-size:16px;margin-top:9px}.mvSearchEmpty292 span{display:block;font-size:12px;line-height:1.55;margin-top:6px}
+.mvSearchRecent292{margin-top:15px}.mvSearchRecentHead292{display:flex;align-items:center;justify-content:space-between;margin:8px 3px 9px}.mvSearchRecentHead292 b{font-size:13px}.mvSearchRecentClear292{border:0;background:transparent;color:#7c3aed;font-size:11px;font-weight:900}.mvSearchRecentList292{display:flex;flex-direction:column}.mvSearchRecentBtn292{border:0;border-bottom:1px solid #eef2f6;background:transparent;padding:12px 4px;text-align:left;font-size:13px;font-weight:800;color:#344054;display:flex;gap:9px;align-items:center}.mvSearchRecentBtn292 span:first-child{color:#98a2b3}
+#mvSearchReturn292{position:fixed;right:14px;bottom:calc(92px + env(safe-area-inset-bottom,0px));z-index:9990;border:0;border-radius:999px;padding:10px 13px;background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;font-size:12px;font-weight:950;box-shadow:0 9px 24px rgba(79,70,229,.30);display:none;align-items:center;gap:6px}#mvSearchReturn292.on{display:flex}
+.mvSearchTarget292{animation:mvSearchPulse292 1.8s ease 1!important;box-shadow:0 0 0 4px rgba(45,212,191,.24),0 9px 28px rgba(15,118,110,.14)!important;border-color:#2dd4bf!important}@keyframes mvSearchPulse292{0%{transform:scale(.992);box-shadow:0 0 0 0 rgba(45,212,191,.45)}45%{transform:scale(1);box-shadow:0 0 0 7px rgba(45,212,191,.18)}100%{box-shadow:0 0 0 0 rgba(45,212,191,0)}}
+
+
+
+:root{--mv540-purple:#7134ee;--mv540-ink:#101828;--mv540-muted:#667085;--mv540-border:#e4e7ec}
+/* One authoritative visible version: baked into the approved hero image. */
+.appVersion,#mvBuildBadge,.versionTag,.versionBadge,.buildBadge,.drawerVersion{display:none!important}
+
+#homePage .homeShell{max-width:760px!important}
+
+
+#homePage #mvSearchHomeBtn292{display:none!important}
+body.mv540HomeVisible #drawerMenuButton{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+
+ 
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Retain the authoritative native controls for behavior, but never show the legacy home switch. */
+#homeStudyModePanel{display:none!important}
+#sharedStudySelectBar{margin:14px 0 0!important;padding:14px!important;border-radius:22px!important;border:1px solid #e6e9f0!important;background:#fff!important;box-shadow:0 7px 18px rgba(15,23,42,.05)!important}
+#sharedStudySelectBar .sharedStudySelectHead{gap:8px!important}
+#sharedStudySelectBar .sharedStudySelectHead b{font-size:16px!important}
+#sharedStudySelectBar .sharedStudySelectHead span:not(.sharedStudySelectCount){font-size:11px!important;line-height:1.35!important}
+
+#sharedStudySelectBar 
+
+/* Exactly one home course section is visible. */
+#homePage[data-clean-mode="day"] .daySection{display:block!important}
+#homePage[data-clean-mode="day"] .myClassSection,#homePage[data-clean-mode="day"] .soriClassSection,#homePage[data-clean-mode="day"] .opicClassSection,#homePage[data-clean-mode="day"] .friendsClassSection{display:none!important}
+#homePage[data-clean-mode="my"] .myClassSection{display:grid!important}
+#homePage[data-clean-mode="my"] .daySection,#homePage[data-clean-mode="my"] .soriClassSection,#homePage[data-clean-mode="my"] .opicClassSection,#homePage[data-clean-mode="my"] .friendsClassSection{display:none!important}
+#homePage[data-clean-mode="sori"] .soriClassSection{display:grid!important}
+#homePage[data-clean-mode="sori"] .daySection,#homePage[data-clean-mode="sori"] .myClassSection,#homePage[data-clean-mode="sori"] .opicClassSection,#homePage[data-clean-mode="sori"] .friendsClassSection{display:none!important}
+#homePage[data-clean-mode="opic"] .opicClassSection{display:grid!important}
+#homePage[data-clean-mode="opic"] .daySection,#homePage[data-clean-mode="opic"] .myClassSection,#homePage[data-clean-mode="opic"] .soriClassSection,#homePage[data-clean-mode="opic"] .friendsClassSection{display:none!important}
+#homePage[data-clean-mode="friends"] .friendsClassSection{display:grid!important}
+#homePage[data-clean-mode="friends"] .daySection,#homePage[data-clean-mode="friends"] .myClassSection,#homePage[data-clean-mode="friends"] .soriClassSection,#homePage[data-clean-mode="friends"] .opicClassSection{display:none!important}
+
+#homePage .friendsClassSection{margin-top:14px!important;margin-bottom:16px!important}
+#homePage .friendsClassSection .friendsCourseCard{cursor:pointer!important;touch-action:manipulation}
+#homePage .friendsClassSection .friendsCourseCard:active{transform:scale(.995)}
+
+/* Review card belongs only to DAY mode and is positioned inside the DAY section. */
+#homePage:not([data-clean-mode="day"]) .todayCard{display:none!important}
+#homePage .todayCard{margin:12px 0 14px!important;padding:14px 16px!important;border-radius:20px!important;background:#fff!important;box-shadow:0 7px 16px rgba(15,23,42,.05)!important;display:grid!important;grid-template-columns:minmax(0,1fr) auto!important;align-items:center!important;gap:12px!important}
+#homePage .todayHead{display:block!important;margin:0!important} #homePage .todayLabel,#homePage .todayNumber{display:none!important}
+#homePage .todayTitle{font-size:21px!important;line-height:1.18!important;font-weight:1000!important;letter-spacing:-.55px!important;color:#101828!important;margin:0!important}
+#homePage .todayTitle .todayCountAccent{color:#6d28d9!important}
+#homePage .todayStats{display:flex!important;gap:12px!important;margin-top:6px!important;flex-wrap:wrap!important}
+#homePage .todayStats div{display:flex!important;align-items:baseline!important;gap:5px!important}
+#homePage .todayStats b{font-size:15px!important;font-weight:1000!important} #homePage .todayStats span{font-size:11px!important;font-weight:850!important;color:#98a2b3!important}
+#todayStartBtn{min-width:168px!important;height:52px!important;border:0!important;border-radius:999px!important;background:#0c1535!important;color:#fff!important;font-size:14px!important;font-weight:1000!important;padding:0 18px!important;box-shadow:none!important}
+
+/* DAY settings: four existing authoritative selects in one compact card. */
+#homePage .daySection>.sectionHead .daySelectControls{display:none!important}
+#homePage .daySection>.homePlaybackCard{display:none!important}
+#selectedStartBtn{display:none!important}
+.cleanDaySettings{margin:12px 0 14px;padding:14px;border:1px solid #e4e7ec;border-radius:22px;background:#fff;box-shadow:0 6px 16px rgba(15,23,42,.045)}
+.cleanDaySettingsTitle{font-size:16px;font-weight:1000;color:#101828;margin-bottom:11px}
+.cleanDaySettingsGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.cleanDayField{min-width:0} .cleanDayField label{display:block;margin:0 0 5px 2px;font-size:11px;font-weight:900;color:#667085}
+.cleanDayField select{width:100%!important;min-width:0!important;height:48px!important;border:1px solid #d9dee8!important;border-radius:15px!important;background:#fff!important;color:#344054!important;padding:0 36px 0 12px!important;font-size:13px!important;font-weight:900!important;box-sizing:border-box!important}
+
+/* Frozen compact MY/SORI/OPIC/FRIENDS home cards. This is the single size contract. */
+#homePage .myClassSection,#homePage .soriClassSection,#homePage .opicClassSection,#homePage .friendsClassSection{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px!important;align-items:stretch!important}
+#homePage .myClassSection>.sectionHead,#homePage .myClassSection>.v534MyControls,#homePage .myClassSection>.studyCourseInfo,
+#homePage .soriClassSection>.sectionHead,#homePage .soriClassSection>.studyCourseInfo,
+#homePage .opicClassSection>.sectionHead,#homePage .opicClassSection>.studyCourseInfo,#homePage .opicClassSection>.opicReadyCard,#homePage .friendsClassSection>.sectionHead,#homePage .friendsClassSection>.studyCourseInfo{grid-column:1/-1!important}
+#homePage .myClassSection .myClassCard,#homePage .soriClassSection .soriCourseCard,#homePage .opicClassSection .opicCourseCard,#homePage .friendsClassSection .friendsCourseCard{
+  position:relative!important;display:flex!important;flex-direction:column!important;width:100%!important;min-width:0!important;height:108px!important;min-height:108px!important;max-height:108px!important;margin:0!important;padding:9px 9px 8px!important;border-radius:14px!important;overflow:hidden!important;box-sizing:border-box!important;box-shadow:0 3px 10px rgba(15,23,42,.05)!important
+}
+#homePage .myClassSection .myClassTop,#homePage .soriClassSection .myClassTop,#homePage .opicClassSection .myClassTop,#homePage .friendsClassSection .myClassTop{height:19px!important;min-height:19px!important;margin:0!important;padding:0 34px 0 0!important;display:flex!important;align-items:center!important;gap:3px!important;overflow:hidden!important}
+#homePage .myClassSection .myClassTop b,#homePage .soriClassSection .myClassTop b,#homePage .opicClassSection .myClassTop b,#homePage .friendsClassSection .myClassTop b{font-size:11.5px!important;line-height:1.1!important;font-weight:950!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#homePage .myClassSection .myClassBadge,#homePage .soriClassSection .myClassBadge,#homePage .opicClassSection .myClassBadge,#homePage .friendsClassSection .myClassBadge,#homePage .soriClassSection .soriLessonStrip{display:none!important}
+#homePage .myClassSection .myClassTitle,#homePage .soriClassSection .myClassTitle,#homePage .opicClassSection .myClassTitle,#homePage .friendsClassSection .myClassTitle{margin:4px 0 0!important;height:29px!important;min-height:29px!important;max-height:29px!important;font-size:10.4px!important;line-height:1.25!important;font-weight:850!important;color:#344054!important;overflow:hidden!important;display:-webkit-box!important;-webkit-box-orient:vertical!important;-webkit-line-clamp:2!important}
+#homePage .myClassSection .myClassDesc,#homePage .soriClassSection .myClassDesc,#homePage .opicClassSection .myClassDesc,#homePage .friendsClassSection .myClassDesc{display:none!important}
+#homePage .myClassSection .myClassMeta,#homePage .soriClassSection .myClassMeta,#homePage .opicClassSection .myClassMeta,#homePage .friendsClassSection .myClassMeta{margin:auto 0 0!important;padding-top:4px!important;display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:2px 4px!important;overflow:hidden!important}
+#homePage .myClassSection .myClassMeta>span,#homePage .soriClassSection .myClassMeta>span,#homePage .opicClassSection .myClassMeta>span,#homePage .friendsClassSection .myClassMeta>span{font-size:8.1px!important;line-height:1.1!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#homePage .myLessonSelectMini,#homePage .studySelectMini{position:absolute!important;right:6px!important;top:6px!important;width:30px!important;height:30px!important;padding:2px!important;border-radius:8px!important;display:flex!important;align-items:center!important;justify-content:center!important;z-index:3!important}
+#homePage .myLessonSelectMini span,#homePage .studySelectMini span{display:none!important}
+#homePage .myLessonSelectMini input,#homePage .studySelectMini input{width:16px!important;height:16px!important;margin:0!important}
+
+@media(max-width:480px){
+  
+  
+  
+  
+  
+    
+  
+   
+   
+   
+  #homePage .todayCard{padding:12px 13px!important;border-radius:18px!important;gap:8px!important}
+  #homePage .todayTitle{font-size:18px!important} #homePage .todayStats{gap:10px!important;margin-top:5px!important}
+  #homePage .todayStats b{font-size:13px!important} #homePage .todayStats span{font-size:10px!important}
+  #todayStartBtn{min-width:144px!important;height:48px!important;font-size:12px!important;padding:0 14px!important}
+  .cleanDaySettings{padding:12px;border-radius:20px} .cleanDaySettingsGrid{gap:8px}
+  .cleanDayField select{height:45px!important;font-size:11.5px!important;padding-left:10px!important}
+  #homePage .myClassSection .myClassCard,#homePage .soriClassSection .soriCourseCard,#homePage .opicClassSection .opicCourseCard,#homePage .friendsClassSection .friendsCourseCard{height:104px!important;min-height:104px!important;max-height:104px!important;padding:8px 7px 7px!important}
+}
+
+
+
+/* v5.4.5 patch · compact day/review cards + standardized repeat grid */
+#homePage .appVersion,#homePage #mvBuildBadge,#homePage .versionTag,#homePage .versionBadge,#homePage .buildBadge{display:none!important}
+#homePage .homeDayBadge{display:none!important}
+
+.cleanDaySettings{margin:8px 0 10px!important;padding:10px 12px!important;border-radius:18px!important;box-shadow:0 4px 12px rgba(15,23,42,.04)!important}
+.cleanDaySettingsTitle{font-size:14px!important;margin-bottom:8px!important}
+.cleanDaySettingsGrid{gap:8px!important}
+.cleanDayField label{margin:0 0 4px 1px!important;font-size:10px!important}
+.cleanDayField select{height:42px!important;border-radius:13px!important;font-size:12px!important;padding:0 32px 0 10px!important}
+
+#homePage .todayCard{margin:10px 0 12px!important;padding:10px 12px!important;border-radius:18px!important;display:flex!important;align-items:center!important;gap:10px!important;flex-wrap:nowrap!important}
+#homePage .todayHead{display:block!important;flex:1 1 auto!important;min-width:0!important;margin:0!important}
+#homePage .todayTitle{font-size:15px!important;line-height:1.15!important;font-weight:1000!important;letter-spacing:-.3px!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+#homePage .todayStats{display:flex!important;flex:0 0 auto!important;gap:8px!important;flex-wrap:nowrap!important;align-items:center!important;margin:0!important}
+#homePage .todayStats div{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:1px!important;min-width:66px!important;padding:6px 10px!important;border:1px solid #edf1f5!important;border-radius:14px!important;background:#f9fafb!important}
+#homePage .todayStats b{font-size:14px!important;line-height:1!important}
+#homePage .todayStats span{font-size:10px!important;line-height:1!important;color:#98a2b3!important}
+#todayStartBtn{flex:0 0 150px!important;min-width:150px!important;height:44px!important;border-radius:999px!important;font-size:12.5px!important;font-weight:1000!important;padding:0 14px!important}
+
+#sharedStudySelectBar{margin:12px 0 0!important;padding:12px!important;border-radius:20px!important}
+#sharedStudySelectBar .sharedStudySelectHead b{font-size:15px!important}
+#sharedStudySelectBar .sharedStudySelectHead span:not(.sharedStudySelectCount){font-size:10.5px!important}
+#sharedStudyRepeatParts206{padding:8px 10px!important;border-radius:16px!important;gap:5px!important}
+#sharedStudyRepeatParts206 .rp206Title{font-size:10px!important}
+#sharedStudyRepeatParts206 .rp206Checks{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:8px 10px!important;align-items:start!important}
+#sharedStudyRepeatParts206 label{display:flex!important;align-items:center!important;gap:6px!important;min-width:0!important;font-size:11px!important;white-space:nowrap!important}
+#sharedStudyRepeatParts206 input{width:18px!important;height:18px!important;margin:0!important}
+#sharedStudyRepeatParts206 .studyFavoriteOnly239{width:100%!important;box-sizing:border-box!important;padding:5px 8px!important;justify-content:flex-start!important;border-radius:10px!important}
+
+
+#homePage .myClassSection .myClassCard,#homePage .soriClassSection .soriCourseCard,#homePage .opicClassSection .opicCourseCard{height:112px!important;min-height:112px!important;max-height:112px!important}
+
+@media(max-width:480px){
+  .cleanDaySettings{padding:9px 10px!important;border-radius:16px!important}
+  .cleanDaySettingsTitle{font-size:13.5px!important;margin-bottom:7px!important}
+  .cleanDayField select{height:40px!important;font-size:11.5px!important;padding:0 28px 0 9px!important}
+  #homePage .todayCard{gap:8px!important;padding:9px 10px!important}
+  #homePage .todayTitle{font-size:14px!important}
+  #homePage .todayStats{gap:6px!important}
+  #homePage .todayStats div{min-width:58px!important;padding:5px 7px!important;border-radius:12px!important}
+  #homePage .todayStats b{font-size:13px!important}
+  #homePage .todayStats span{font-size:9.5px!important}
+  #todayStartBtn{flex-basis:136px!important;min-width:136px!important;height:42px!important;font-size:11.5px!important;padding:0 10px!important}
+  
+  #sharedStudyRepeatParts206{padding:8px!important}
+  #sharedStudyRepeatParts206 .rp206Checks{gap:7px 8px!important}
+  #sharedStudyRepeatParts206 label{font-size:10px!important}
+  
+  #homePage .myClassSection .myClassCard,#homePage .soriClassSection .soriCourseCard,#homePage .opicClassSection .opicCourseCard{height:108px!important;min-height:108px!important;max-height:108px!important}
+}
+
+
+
+/* Final consolidated fixes: single baked-in version, favorite alignment, swipe affordance. */
+#homePage .appVersion,#homePage #mvBuildBadge,#homePage .versionTag,#homePage .versionBadge,#homePage .buildBadge,#homePage .drawerVersion{display:none!important}
+#sharedStudySelectBar{touch-action:pan-y!important}
+#sharedStudyRepeatParts206.hasFavorite239 .rp206Checks{
+  display:grid!important;
+  grid-template-columns:minmax(0,.95fr) minmax(0,1.05fr)!important;
+  column-gap:14px!important;row-gap:8px!important;align-items:center!important;
+}
+#sharedStudyRepeatParts206.hasFavorite239 .rp206Checks>label:nth-child(2),
+#sharedStudyRepeatParts206.hasFavorite239 .studyFavoriteOnly239{transform:none!important;margin-left:0!important}
+#sharedStudyRepeatParts206 .studyFavoriteOnly239{
+  width:100%!important;max-width:100%!important;min-width:0!important;box-sizing:border-box!important;
+  display:flex!important;align-items:center!important;justify-content:flex-start!important;gap:5px!important;
+  padding:5px 7px!important;border:1px solid #f1d06a!important;background:#fff9df!important;
+  color:#7a5300!important;border-radius:10px!important;overflow:hidden!important;
+}
+#sharedStudyRepeatParts206 .studyFavoriteOnly239 input{width:18px!important;height:18px!important;flex:0 0 18px!important;margin:0!important}
+#sharedStudyRepeatParts206 .studyFavoriteOnly239 span{min-width:0!important;font-size:10.5px!important;line-height:1.1!important;font-weight:950!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:clip!important}
+@media(max-width:480px){
+  #sharedStudyRepeatParts206.hasFavorite239 .rp206Checks{grid-template-columns:minmax(0,.94fr) minmax(0,1.06fr)!important;column-gap:10px!important}
+  #sharedStudyRepeatParts206.hasFavorite239 .rp206Checks>label:nth-child(2),
+  #sharedStudyRepeatParts206.hasFavorite239 .studyFavoriteOnly239{transform:none!important;margin-left:0!important}
+  #sharedStudyRepeatParts206 .studyFavoriteOnly239{padding:5px 6px!important}
+  #sharedStudyRepeatParts206 .studyFavoriteOnly239 span{font-size:10px!important}
+}
+
+
+
+/* Requested: remove "오늘도, 한 걸음 더" only and compact the remaining message area. */
+#saywardGreeting{padding-top:10px!important;padding-bottom:9px!important}
+#saywardGreeting .saywardGreetingEyebrow{margin-bottom:2px!important}
+#saywardGreeting .saywardGreetingSub{margin-top:0!important;margin-left:0!important}
+@media(max-width:480px){
+  #saywardGreeting{padding:9px 14px 8px!important}
+  #saywardGreeting .saywardGreetingSub{margin-top:0!important;margin-left:0!important}
+}
+
+
+
+/* V6: remove greeting block and give all four mode cards a subtle permanent border.
+   Home visuals only; learning logic and event bindings are unchanged. */
+
+
+
+
+
+/* Keep the currently selected mode clearly distinguishable. */
+
+@media(max-width:480px){
+  
+}
+
