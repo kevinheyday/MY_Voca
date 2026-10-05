@@ -7856,19 +7856,19 @@ $('todayStartBtn').onclick=()=>{
    dtracking=false;
    if(dlock){dlock=false;window.MV_SWIPE_STANDARD_254?.end?.(false)}
  },{passive:true});
-}{const rateSelect=document.getElementById('homeSpeechRate');if(rateSelect){rateSelect.value=String(getSpeechRate());rateSelect.addEventListener('change',()=>setSpeechRate(rateSelect.value));}}{const m=$('speechMode').value;$('autoStatus').textContent=m==='off'?'자동 읽기가 꺼져 있습니다.':m==='word'?'단어 읽기: 영어 단어와 한글 뜻만 3회 읽습니다.':m==='full'?'전체 읽기: 학습 단어만 영어와 한글 뜻을 읽고, 그 외 모든 항목은 영어만 읽습니다.':'학습 단어만 영어와 한글 뜻을 읽고, 예문과 패러프레이즈는 영어만 읽습니다.';}decodeDataEntities(UNIFIED_WORDS);decodeDataEntities(UNIFIED_DAY_META);decodeDataEntities(V);ALL_WORDS=UNIFIED_WORDS;DAY_META=UNIFIED_DAY_META;currentDay=1;W=ALL_WORDS.filter(w=>w.newDay===1);deck=[...W];loadPackState();applyPackUI();quizSelectedDay=currentDay;quizAllWrongMode=false;updateQuizDayNav();buildDeck('book');updateHomeDashboard();$('dayAppPage').classList.add('hidden');$('homePage').classList.remove('hidden');
+}{const rateSelect=document.getElementById('homeSpeechRate');if(rateSelect){rateSelect.value=String(getSpeechRate());rateSelect.addEventListener('change',()=>setSpeechRate(rateSelect.value));}}{const m=$('speechMode').value;$('autoStatus').textContent=m==='off'?'자동 읽기가 꺼져 있습니다.':m==='word'?'단어 읽기: 영어 단어와 한글 뜻만 3회 읽습니다.':m==='full'?'전체 읽기: 학습 단어만 영어와 한글 뜻을 읽고, 그 외 모든 항목은 영어만 읽습니다.':'학습 단어만 영어와 한글 뜻을 읽고, 예문과 패러프레이즈는 영어만 읽습니다.';}/* cold-start: vocabulary/entity decoding is lazy at render/TTS time */ALL_WORDS=UNIFIED_WORDS;DAY_META=UNIFIED_DAY_META;currentDay=1;W=ALL_WORDS.filter(w=>w.newDay===1);deck=[...W];loadPackState();applyPackUI();quizSelectedDay=currentDay;quizAllWrongMode=false;updateQuizDayNav();buildDeck('book');updateHomeDashboard();$('dayAppPage').classList.add('hidden');$('homePage').classList.remove('hidden');
 
 
 
 
 
 
-window.APP_VERSION='V5.4.44-safe-boot';
+window.APP_VERSION='stable-staged-boot';
 window.addEventListener('pagehide',()=>{__repeatWakeSession=false;forceReleaseWakeLock();});
 
 
-// V5.4.44: no Service Worker registration/unregister/cache operation at runtime.
-// This app relies on normal GitHub Pages HTTP caching only.
+// Startup shell registers one stable Service Worker only after a successful boot.
+// Never unregister or delete caches during page startup.
 
 function refreshUsageRecommendation(){
   const title=$('usageRecommendTitle'),list=$('usageRecommendList');

@@ -53,6 +53,7 @@ html.saywardBooting body>*:not(#saywardBootOverlay){visibility:hidden!important}
 </div>
 
 
+<template id="saywardAppTemplate">
 <button id="drawerMenuButton" class="drawerMenuButton" type="button" aria-label="메뉴 열기" aria-expanded="false">☰</button>
 <div id="drawerBackdrop" class="drawerBackdrop" aria-hidden="true"></div>
 <aside id="drawerPanel" class="drawerPanel" aria-label="SAYWARD 메뉴" aria-hidden="true">
@@ -1133,10 +1134,13 @@ Config의 <b>Day Loop 문장당 반복 횟수</b>에서 1회 / 2회 / 3회 / 5�
 
 
 
+
+</template>
+
 <script id="saywardStagedBootstrap">
 (()=>{
 'use strict';
-const BUILD='20261006-stable-1';
+const BUILD='20261006-stable-2';
 const CSS=['sayward-core.css','sayward-patches.css','sayward-home.css'];
 const JS=['sayward-toefl-1.js','sayward-toefl-2.js','sayward-toefl-3.js','sayward-toefl-4.js','sayward-opic-1.js','sayward-opic-2.js','sayward-core.js','sayward-patches.js'];
 const fill=document.getElementById('saywardBootFill');
@@ -1170,13 +1174,19 @@ async function start(){
   setStage('boot-start');
   try{
     await nextPaint();
-    for(const f of CSS){setStage('css',f);progress(`화면 준비 · ${done+1}/${total}`);await loadCss(f);done++;progress(`화면 준비 · ${done}/${total}`);await wait(120);}
-    for(const f of JS){setStage('js',f);progress(`학습 데이터 준비 · ${done+1}/${total}`);await loadJs(f);done++;progress(`학습 데이터 준비 · ${done}/${total}`);await wait(f==='sayward-core.js'?220:110);}
+    for(const f of CSS){setStage('css',f);progress(`화면 스타일 준비 · ${done+1}/${total}`);await loadCss(f);done++;progress(`화면 스타일 준비 · ${done}/${total}`);await wait(90);}
+    setStage('dom','app-template');progress('앱 화면 구성');
+    const tpl=document.getElementById('saywardAppTemplate');
+    if(!tpl)throw new Error('App template not found');
+    tpl.replaceWith(tpl.content.cloneNode(true));
+    await nextPaint();await wait(80);
+    for(const f of JS){setStage('js',f);progress(`학습 기능 준비 · ${done+1}/${total}`);await loadJs(f);done++;progress(`학습 기능 준비 · ${done}/${total}`);await wait(f==='sayward-core.js'?180:80);}
     setStage('finalize');progress('마무리 중');
     await nextPaint();await wait(180);
     document.documentElement.classList.remove('saywardBooting');
     if(overlay)overlay.remove();
     try{localStorage.setItem('sayward_boot_last',JSON.stringify({build:BUILD,stage:'complete',at:Date.now(),complete:true}));}catch(e){}
+    if('serviceWorker' in navigator){setTimeout(()=>{navigator.serviceWorker.register('./sw.js').catch(()=>{});},1200);}
   }catch(err){
     console.error('[SAYWARD boot]',err);noteError('boot',err);setStage('failed',String(err?.message||err));
     if(status)status.textContent='초기화 중 오류가 발생했습니다. 다시 시도해 주세요.';
