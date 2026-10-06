@@ -1,6 +1,6 @@
 
 
-/* v5.4.55 TRUE LAZY DATA ASSEMBLY
+/* v5.4.56 TRUE LAZY DATA ASSEMBLY
    External course data can be loaded after the engine. These arrays keep stable identity
    so existing app references continue to see newly loaded data without a page reload. */
 const TOEFL_WORDS=[];
@@ -8,7 +8,12 @@ const OPIC_WORDS=[];
 const UNIFIED_WORDS=[];
 function __saywardExternalPart(name){const v=globalThis[name];return Array.isArray(v)?v:[]}
 function __saywardSyncExternalData(){
-  const t=[...__saywardExternalPart('TOEFL_WORDS_PART_1'),...__saywardExternalPart('TOEFL_WORDS_PART_2'),...__saywardExternalPart('TOEFL_WORDS_PART_3'),...__saywardExternalPart('TOEFL_WORDS_PART_4')];
+  const dayRegistry=globalThis.SAYWARD_TOEFL_DAYS;
+  let t=[];
+  if(dayRegistry&&typeof dayRegistry==='object'){
+    t=Object.keys(dayRegistry).map(Number).filter(Number.isFinite).sort((a,b)=>a-b).flatMap(d=>Array.isArray(dayRegistry[d])?dayRegistry[d]:[]);
+  }
+  if(!t.length)t=[...__saywardExternalPart('TOEFL_WORDS_PART_1'),...__saywardExternalPart('TOEFL_WORDS_PART_2'),...__saywardExternalPart('TOEFL_WORDS_PART_3'),...__saywardExternalPart('TOEFL_WORDS_PART_4')];
   const o=[...__saywardExternalPart('OPIC_WORDS_PART_1'),...__saywardExternalPart('OPIC_WORDS_PART_2')];
   t.forEach(w=>{w.course='toefl';w.courseDay=Number(w.courseDay||w.newDay);w.newDay=Number(w.courseDay)});
   o.forEach(w=>{w.course='opic';w.courseDay=Number(w.courseDay||w.newDay);w.newDay=Number(w.courseDay)+56});
@@ -16,8 +21,9 @@ function __saywardSyncExternalData(){
   OPIC_WORDS.splice(0,OPIC_WORDS.length,...o);
   UNIFIED_WORDS.splice(0,UNIFIED_WORDS.length,...TOEFL_WORDS,...OPIC_WORDS);
   try{if(typeof ALL_WORDS!=='undefined'&&ALL_WORDS!==UNIFIED_WORDS)ALL_WORDS=UNIFIED_WORDS}catch(e){}
-  try{if(typeof COURSES!=='undefined'&&COURSES?.unified)COURSES.unified.words=UNIFIED_WORDS.length}catch(e){}
-  return {toefl:TOEFL_WORDS.length,opic:OPIC_WORDS.length,total:UNIFIED_WORDS.length};
+  try{if(typeof COURSES!=='undefined'&&COURSES?.unified)COURSES.unified.words=1948}catch(e){}
+  try{ensureStats()}catch(e){}
+  return {toefl:TOEFL_WORDS.length,opic:OPIC_WORDS.length,total:UNIFIED_WORDS.length,days:dayRegistry?Object.keys(dayRegistry).length:0};
 }
 globalThis.SAYWARD_SYNC_EXTERNAL_DATA=__saywardSyncExternalData;
 /* ===== SCRIPT BLOCK 1  ===== */
@@ -2719,7 +2725,7 @@ function studyCourseSentenceCards(course='sori',lesson=1){
 window.studyCourseSentenceCards=studyCourseSentenceCards;
 
 
-// v5.4.55: storage failures/corruption must never abort app startup.
+// v5.4.56: storage failures/corruption must never abort app startup.
 const mvStorage={
   get(key,fallback=null){try{const v=localStorage.getItem(key);return v===null?fallback:v}catch(e){console.warn('[SAYWARD storage:get]',key,e);return fallback}},
   set(key,value){try{localStorage.setItem(key,value);return true}catch(e){console.warn('[SAYWARD storage:set]',key,e);return false}},
@@ -2728,7 +2734,7 @@ const mvStorage={
 };
 
 const PACKS={
-  unified:{key:'unified',name:'MY VOCA',short:'MY VOCA',desc:'TOEFL 1,680 Words + OPIC AL 268 Words & Expressions',days:TOEFL_DAY_COUNT+OPIC_DAY_COUNT,words:UNIFIED_WORDS.length,eyebrow:'MY VOCA UNIFIED COURSE · 69 DAYS'}
+  unified:{key:'unified',name:'MY VOCA',short:'MY VOCA',desc:'TOEFL 1,680 Words + OPIC AL 268 Words & Expressions',days:TOEFL_DAY_COUNT+OPIC_DAY_COUNT,words:1948,eyebrow:'MY VOCA UNIFIED COURSE · 69 DAYS'}
 };
 let currentPack='unified';
 mvStorage.set('mv_currentPack','unified');
@@ -7559,14 +7565,19 @@ function dueWordsAll(){
 }
 function homeDueWords(){return dueWordsAll().filter(w=>w.newDay===currentDay)}
 function dayProgress(day){
-  const words=ALL_WORDS.filter(w=>Number(w.newDay)===Number(day));
-  const learned=words.filter(w=>cardStudyCount(w)>0 || (stats[w.word]?.studyCount||0)>0).length;
-  const studyTotal=words.reduce((sum,w)=>sum+cardStudyCount(w),0);
-  const due=dueWordsAll().filter(w=>Number(w.newDay)===Number(day)).length;
+  day=Number(day);
+  const loaded=ALL_WORDS.filter(w=>Number(w.newDay)===day);
+  const fallback=Array.isArray(globalThis.SAYWARD_DAY_INDEX)?globalThis.SAYWARD_DAY_INDEX.filter(w=>Number(w.newDay)===day):[];
+  const words=loaded.length?loaded:fallback;
+  const isFull=loaded.length>0;
+  const learned=words.filter(w=>isFull?(cardStudyCount(w)>0 || (stats[w.word]?.studyCount||0)>0):((stats[w.word]?.studyCount||0)>0)).length;
+  const studyTotal=words.reduce((sum,w)=>sum+(isFull?cardStudyCount(w):Number(stats[w.word]?.studyCount||0)),0);
+  const now=Date.now();
+  const due=words.filter(w=>{const st=stats[w.word]||{};return (st.dueAt&&Number(st.dueAt)<=now)||(!st.dueAt&&(Number(st.quizWrong)||0)>0)}).length;
   const wrongWords=words.filter(w=>(stats[w.word]?.quizWrong||0)>0).length;
   const wrongAttempts=words.reduce((sum,w)=>sum+(stats[w.word]?.quizWrong||0),0);
   const favoriteCount=words.filter(w=>favs.includes(w.word)).length;
-  return {total:words.length,learned,studyTotal,due,wrongWords,wrongAttempts,favoriteCount,pct:words.length?Math.round(learned/words.length*100):0};
+  return {total:words.length||30,learned,studyTotal,due,wrongWords,wrongAttempts,favoriteCount,pct:words.length?Math.round(learned/words.length*100):0};
 }
 function currentLearningDayForHome(){
   if(AUTO.active&&cur())return Number(cur().newDay||0);
@@ -7594,6 +7605,10 @@ function showUnknownWordGuide(day){
 }
 function requestDayLearning(day){
   day=Number(day);
+  if(day<=11&&typeof globalThis.SAYWARD_ENSURE_DAY_DATA==='function'&&typeof globalThis.SAYWARD_IS_DAY_LOADED==='function'&&!globalThis.SAYWARD_IS_DAY_LOADED(day)){
+    globalThis.SAYWARD_ENSURE_DAY_DATA(day).then(()=>requestDayLearning(day)).catch(e=>console.error('[SAYWARD DAY lazy]',e));
+    return;
+  }
   if(unknownWordCountForDay(day)===0){
     showUnknownWordGuide(day);
     return;
@@ -7719,6 +7734,11 @@ function startSelectedAutoLearning(){
 }
 
 function openDay(day,tabName='learn'){
+  day=Number(day);
+  if(day<=11&&typeof globalThis.SAYWARD_ENSURE_DAY_DATA==='function'&&typeof globalThis.SAYWARD_IS_DAY_LOADED==='function'&&!globalThis.SAYWARD_IS_DAY_LOADED(day)){
+    globalThis.SAYWARD_ENSURE_DAY_DATA(day).then(()=>openDay(day,tabName)).catch(e=>console.error('[SAYWARD DAY lazy]',e));
+    return;
+  }
   try{stopDayLoop(true)}catch(e){}
   try{ if(typeof hideStandalonePages==='function') hideStandalonePages(); }catch(e){}
   if(!window.__repeatInternalNavigation){
@@ -7890,7 +7910,7 @@ $('todayStartBtn').onclick=()=>{
 
 
 
-window.APP_VERSION='5.4.55';
+window.APP_VERSION='5.4.56';
 window.addEventListener('pagehide',()=>{__repeatWakeSession=false;forceReleaseWakeLock();});
 
 
@@ -8542,7 +8562,7 @@ function mvSentenceEntryAudit182(){
 window.mvSentenceEntryAudit182=mvSentenceEntryAudit182;
 
 /* ===== V5.3.189 · STANDARD APP INFO / UPDATE HISTORY ===== */
-const MV_APP_VERSION='5.4.55';
+const MV_APP_VERSION='5.4.56';
 
 function mvCloseInfoOverlay(){
   const overlay=document.getElementById('mvInfoOverlay');
@@ -8572,7 +8592,7 @@ function mvOpenUpdateHistory(){
     `
       <div class="mvInfoVersionCard"><b>v${MV_APP_VERSION}</b><span>현재 설치 버전</span></div>
       <section class="mvInfoSection">
-        <h3>v5.4.55</h3>
+        <h3>v5.4.56</h3>
         <ul>
           <li>첫 실행 안정화를 위해 CSS 내 Base64 이미지를 외부 PNG로 분리했습니다.</li>
           <li>초기 화면 구성과 학습 데이터/기능 JS를 단계적으로 불러오는 STABILITY REBUILD 구조를 적용했습니다.</li>
@@ -9448,7 +9468,7 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
     }
   };
 
-  // v5.4.55: do not build the legacy home mode panel here.
+  // v5.4.56: do not build the legacy home mode panel here.
   // The later standard-course controller creates its single backend panel once.
   // Building an intermediate panel and then replacing it caused a large cold-start DOM/listener spike.
   setTimeout(()=>{
@@ -12352,7 +12372,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
 
     // MY / SORI / OPIC / FRIENDS cards use the same stamped canonical navigation route.
     studyStampCourseCards();
-    // v5.4.55: final clean-home controller applies the remembered mode once.
+    // v5.4.56: final clean-home controller applies the remembered mode once.
   }
 
   setTimeout(bindStandardCourseUI,160);
@@ -13522,5 +13542,5 @@ function mvSoriGroup2Audit194(){
 }
 window.mvSoriGroup2Audit194=mvSoriGroup2Audit194;
 
-// v5.4.55 bootstrap handshake: reached only after the full core evaluated successfully.
-window.__SAYWARD_CORE_READY__={version:'5.4.55',at:Date.now()};
+// v5.4.56 bootstrap handshake: reached only after the full core evaluated successfully.
+window.__SAYWARD_CORE_READY__={version:'5.4.56',at:Date.now()};

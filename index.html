@@ -1,9 +1,9 @@
 <!doctype html><html lang="ko"><head>
 <!-- SAYWARD · stable staged boot -->
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.55</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.56</title>
 
 <meta name="theme-color" content="#2563eb">
-<meta name="sayward-build" content="v5.4.55">
+<meta name="sayward-build" content="v5.4.56">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
@@ -40,18 +40,18 @@ html.saywardHomeBootGuard body{visibility:visible!important}
 #saywardBootOverlay .bootLogo{width:62px;height:62px;margin:0 auto 14px;border-radius:19px;display:grid;place-items:center;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-weight:900;font-size:23px}
 #saywardBootOverlay h1{margin:0;font-size:24px}.bootSub{margin:7px 0 18px;color:#667085;font-size:13px;line-height:1.45}.bootBar{height:9px;border-radius:999px;background:#edf1f7;overflow:hidden}.bootFill{height:100%;width:3%;background:linear-gradient(90deg,#2563eb,#7c3aed);border-radius:inherit;transition:width .2s ease}.bootStatus{margin-top:11px;font-size:12px;color:#475467;min-height:18px}.bootPct{font-weight:800;color:#2563eb}.bootRetry{display:none;margin:16px auto 0;border:0;border-radius:12px;background:#2563eb;color:#fff;padding:10px 16px;font-weight:800}.bootDiag{display:none;margin-top:10px;padding:8px 10px;border-radius:10px;background:#fff7ed;color:#9a3412;font-size:10.5px;line-height:1.4;text-align:left}
 </style>
-<script>window.SAYWARD_VERSION='5.4.55';document.documentElement.style.setProperty('--sayward-version-label','\"v'+window.SAYWARD_VERSION+'\"');document.documentElement.classList.add('saywardBooting');</script>
+<script>window.SAYWARD_VERSION='5.4.56';document.documentElement.style.setProperty('--sayward-version-label','\"v'+window.SAYWARD_VERSION+'\"');document.documentElement.classList.add('saywardBooting');</script>
 
 
 <script id="saywardZeroPreflightMarker">
-/* v5.4.55 ZERO PREFLIGHT: startup intentionally performs no Service Worker / CacheStorage access. */
-window.__SAYWARD_ZERO_PREFLIGHT__={version:'5.4.55',build:'20261007-v5.4.55-zero-preflight',enabled:true,at:Date.now(),perf:(performance?.now?.()||0)};
+/* v5.4.56 ZERO PREFLIGHT: startup intentionally performs no Service Worker / CacheStorage access. */
+window.__SAYWARD_ZERO_PREFLIGHT__={version:'5.4.56',build:'20261007-v5.4.56-day-by-day-lazy',enabled:true,at:Date.now(),perf:(performance?.now?.()||0)};
 </script>
 
 </head><body>
 <div id="saywardBootOverlay" aria-live="polite">
   <div class="bootCard">
-    <div class="bootLogo">S</div><h1>SAYWARD <span style="font-size:13px;color:#667085;font-weight:800;vertical-align:middle">v5.4.55</span></h1>
+    <div class="bootLogo">S</div><h1>SAYWARD <span style="font-size:13px;color:#667085;font-weight:800;vertical-align:middle">v5.4.56</span></h1>
     <div class="bootSub">빠른 첫 실행을 위해 브라우저 복구 검사를 건너뛰고 홈 화면부터 준비합니다.</div>
     <div class="bootBar"><div class="bootFill" id="saywardBootFill"></div></div>
     <div class="bootStatus" id="saywardBootStatus"><span class="bootPct">0%</span> · 시작 준비</div>
@@ -1148,13 +1148,14 @@ Config의 <b>Day Loop 문장당 반복 횟수</b>에서 1회 / 2회 / 3회 / 5�
 <script id="saywardStagedBootstrap">
 (()=>{
 'use strict';
-const BUILD='20261007-v5.4.55-zero-preflight';
-const VERSION='5.4.55';
+const BUILD='20261007-v5.4.56-day-by-day-lazy';
+const VERSION='5.4.56';
 const CSS=['sayward-core.css','sayward-patches.css','sayward-home.css'];
-const TOEFL_JS=['sayward-toefl-1.js','sayward-toefl-2.js','sayward-toefl-3.js','sayward-toefl-4.js'];
+const ACTIVE_DAY_MAX=11;
 const OPIC_JS=['sayward-opic-1.js','sayward-opic-2.js'];
 const ENGINE_JS=['sayward-core.js','sayward-patches.js'];
-const PROFILE_DATA={day:TOEFL_JS,opic:OPIC_JS,my:[],sori:[]};
+const PROFILE_DATA={day:[],opic:OPIC_JS,my:[],sori:[]};
+const dayDataFile=day=>`sayward-day-${String(Number(day)||1).padStart(2,'0')}.json`;
 const fill=document.getElementById('saywardBootFill');
 const status=document.getElementById('saywardBootStatus');
 const retry=document.getElementById('saywardBootRetry');
@@ -1256,6 +1257,24 @@ async function hydrateLeanHomeData(){
 let modeTransitionSeq=0;
 function installLeanInterception(){document.addEventListener('click',e=>{
   if(fullReady){
+    const dc=e.target?.closest?.('[data-lean-day],[data-day]');
+    if(dc&&dc.closest?.('#homePage')&&!e.target?.closest?.('.daySelectCheck')){
+      const day=Number(dc.dataset.leanDay||dc.dataset.day||0);
+      if(day>=1&&day<=ACTIVE_DAY_MAX&&!isDayLoaded(day)){
+        e.preventDefault();e.stopImmediatePropagation();
+        const seq=++modeTransitionSeq;
+        setBadge('DAY '+day+' 데이터 불러오는 중',true);
+        trace('day-transition-start','DAY '+day,{seq});
+        ensureDayData(day).then(()=>{
+          if(seq!==modeTransitionSeq){trace('day-transition-stale','DAY '+day,{seq,current:modeTransitionSeq});return}
+          setBadge('',false);
+          trace('day-transition-ready','DAY '+day,{seq});
+          if(typeof window.requestDayLearning==='function')window.requestDayLearning(day);
+          else replayAction({kind:'day',day});
+        }).catch(err=>noteError('day-switch',err));
+        return
+      }
+    }
     const mb=e.target?.closest?.('[data-clean-mode-button]');
     if(mb){
       const p=mb.dataset.cleanModeButton||'day';
@@ -1291,12 +1310,75 @@ function actionProfile(action){
 }
 const loadedProfiles=new Set();
 const profileLoadPromises=new Map();
+const loadedDays=new Set();
+const dayLoadPromises=new Map();
 let profileRequestSeq=0;
-function writeLoaderState(extra={}){
-  try{localStorage.setItem('sayward_lazy_loader',JSON.stringify({build:BUILD,runId:RUN_ID,loaded:[...loadedProfiles],inFlight:[...profileLoadPromises.keys()],scriptInFlight:[...scriptLoadPromises.keys()],seq:profileRequestSeq,at:Date.now(),...extra}))}catch(e){}
+globalThis.SAYWARD_TOEFL_DAYS=globalThis.SAYWARD_TOEFL_DAYS||{};
+function isDayLoaded(day){
+  day=Number(day);
+  return loadedDays.has(day)||Array.isArray(globalThis.SAYWARD_TOEFL_DAYS?.[day]);
 }
-async function ensureProfileData(profile){
+function writeLoaderState(extra={}){
+  try{localStorage.setItem('sayward_lazy_loader',JSON.stringify({build:BUILD,runId:RUN_ID,loaded:[...loadedProfiles],loadedDays:[...loadedDays].sort((a,b)=>a-b),inFlight:[...profileLoadPromises.keys()],dayInFlight:[...dayLoadPromises.keys()],scriptInFlight:[...scriptLoadPromises.keys()],seq:profileRequestSeq,at:Date.now(),...extra}))}catch(e){}
+}
+async function ensureDayData(day){
+  day=Number(day);
+  if(!Number.isInteger(day)||day<1||day>ACTIVE_DAY_MAX)throw new Error('DAY '+day+' is not available in this build');
+  if(isDayLoaded(day)){
+    loadedDays.add(day);
+    trace('day-data-skip','DAY '+day,{reason:'already-loaded'});
+    return true
+  }
+  if(dayLoadPromises.has(day)){
+    trace('day-data-join','DAY '+day,{reason:'in-flight'});
+    writeLoaderState({event:'day-join',day});
+    return dayLoadPromises.get(day)
+  }
+  const file=dayDataFile(day),started=Date.now();
+  const p=(async()=>{
+    trace('day-data-fetch-start',file,{day});
+    writeLoaderState({event:'day-start',day,file});
+    const data=await timed('DAY '+day+' data',(async()=>{
+      const r=await fetch(withBuild(file),{cache:'default',credentials:'same-origin'});
+      if(!r.ok)throw new Error('HTTP '+r.status+' for '+file);
+      return r.json()
+    })(),10000);
+    if(!Array.isArray(data)||!data.length)throw new Error(file+' returned empty data');
+    if(data.some(w=>Number(w?.newDay)!==day))throw new Error(file+' contains another DAY');
+    globalThis.SAYWARD_TOEFL_DAYS[day]=data;
+    loadedDays.add(day);
+    if(typeof globalThis.SAYWARD_SYNC_EXTERNAL_DATA==='function'){
+      const counts=globalThis.SAYWARD_SYNC_EXTERNAL_DATA();
+      trace('day-data-sync','DAY '+day,{day,words:data.length,counts});
+    }
+    try{localStorage.setItem('sayward_day_loader',JSON.stringify({build:BUILD,runId:RUN_ID,day,file,words:data.length,loadedDays:[...loadedDays].sort((a,b)=>a-b),ms:Date.now()-started,at:Date.now()}))}catch(e){}
+    trace('day-data-ready','DAY '+day,{day,file,words:data.length,ms:Date.now()-started,loadedDays:[...loadedDays].sort((a,b)=>a-b)});
+    writeLoaderState({event:'day-ready',day,file});
+    return true
+  })().catch(err=>{
+    trace('day-data-failed','DAY '+day,{day,file,error:String(err?.message||err)});
+    writeLoaderState({event:'day-failed',day,file,error:String(err?.message||err)});
+    throw err
+  }).finally(()=>{
+    dayLoadPromises.delete(day);
+    writeLoaderState({event:'day-settled',day,file})
+  });
+  dayLoadPromises.set(day,p);
+  writeLoaderState({event:'day-registered',day,file});
+  return p
+}
+globalThis.SAYWARD_ENSURE_DAY_DATA=ensureDayData;
+globalThis.SAYWARD_IS_DAY_LOADED=isDayLoaded;
+
+async function ensureProfileData(profile,day=null){
   profile=['day','my','sori','opic'].includes(profile)?profile:'day';
+  if(profile==='day'){
+    if(Number.isInteger(Number(day))&&Number(day)>=1&&Number(day)<=ACTIVE_DAY_MAX){
+      await ensureDayData(Number(day));
+    }
+    try{localStorage.setItem('sayward_lazy_profile',JSON.stringify({build:BUILD,runId:RUN_ID,profile:'day',loaded:[...loadedProfiles],loadedDays:[...loadedDays].sort((a,b)=>a-b),at:Date.now()}))}catch(e){}
+    return true
+  }
   if(loadedProfiles.has(profile)){trace('profile-load-skip',profile,{reason:'already-loaded'});return true}
   if(profileLoadPromises.has(profile)){trace('profile-load-join',profile,{reason:'in-flight'});writeLoaderState({event:'join',profile});return profileLoadPromises.get(profile)}
   const requestId=++profileRequestSeq;
@@ -1316,8 +1398,8 @@ async function ensureProfileData(profile){
       trace('profile-data-sync',profile,{profile,requestId,counts});
     }
     loadedProfiles.add(profile);
-    try{localStorage.setItem('sayward_lazy_profile',JSON.stringify({build:BUILD,runId:RUN_ID,profile,loaded:[...loadedProfiles],at:Date.now()}))}catch(e){}
-    trace('profile-load-ready',profile,{requestId,loaded:[...loadedProfiles]});
+    try{localStorage.setItem('sayward_lazy_profile',JSON.stringify({build:BUILD,runId:RUN_ID,profile,loaded:[...loadedProfiles],loadedDays:[...loadedDays].sort((a,b)=>a-b),at:Date.now()}))}catch(e){}
+    trace('profile-load-ready',profile,{requestId,loaded:[...loadedProfiles],loadedDays:[...loadedDays].sort((a,b)=>a-b)});
     writeLoaderState({event:'ready',profile,requestId});
     return true
   })().catch(err=>{trace('profile-load-failed',profile,{requestId,error:String(err?.message||err)});writeLoaderState({event:'failed',profile,requestId,error:String(err?.message||err)});throw err}).finally(()=>{profileLoadPromises.delete(profile);writeLoaderState({event:'settled',profile,requestId})});
@@ -1328,15 +1410,16 @@ function replayAction(a){if(!a)return;setTimeout(()=>{try{if(a.kind==='mode'){wi
 async function activateFull(action=null){
   if(action)pendingReplay=action;
   const profile=actionProfile(pendingReplay);
+  const requestedDay=pendingReplay?.kind==='day'?Number(pendingReplay.day):null;
   if(fullReady){
-    try{await ensureProfileData(profile)}catch(e){noteError('profile-data',e);throw e}
+    try{await ensureProfileData(profile,requestedDay)}catch(e){noteError('profile-data',e);throw e}
     const a=pendingReplay;pendingReplay=null;replayAction(a);return true
   }
   if(fullLoading){trace('full-activation-join',profile,{pending:pendingReplay});return fullPromise}
   fullLoading=true;setBadge('학습 기능 불러오는 중',true);showOverlay('필요한 기능만 준비');
   trace('full-activation-start','user-triggered',{profile});
   fullPromise=(async()=>{try{
-    await ensureProfileData(profile);
+    await ensureProfileData(profile,requestedDay);
     setBootProgress(66,'학습 화면 확장');await appendDeferredDom();await wait(45);
     setBootProgress(76,'핵심 기능 준비');trace('engine-load','sayward-core.js',{profile});
     await loadJs('sayward-core.js',20000);await waitReady('Core',()=>window.__SAYWARD_CORE_READY__?.version===VERSION,6500);
@@ -1347,7 +1430,11 @@ async function activateFull(action=null){
     fullReady=true;currentRun.fullReady=true;currentRun.fullReadyAt=Date.now();trace('full-ready','engine ready',{profile,loadedProfiles:[...loadedProfiles]});
     const finalAction=pendingReplay;
     const finalProfile=actionProfile(finalAction);
-    if(finalProfile!==profile&&!loadedProfiles.has(finalProfile)){trace('final-profile-catchup',finalProfile,{startedWith:profile});await ensureProfileData(finalProfile)}
+    const finalDay=finalAction?.kind==='day'?Number(finalAction.day):null;
+    if(finalProfile!==profile||finalDay!==requestedDay){
+      trace('final-profile-catchup',finalProfile,{startedWith:profile,finalDay,requestedDay});
+      await ensureProfileData(finalProfile,finalDay)
+    }
     try{const mode=document.getElementById('homePage')?.dataset.cleanMode||initialMode();window.setHomeStudyMode?.(mode)}catch(e){}
     setBootProgress(100,'준비 완료');hideOverlay();setBadge('',false);const a=pendingReplay;pendingReplay=null;replayAction(a);writeHistory();return true
   }catch(e){noteError('full-activation',e);hideOverlay();setBadge('기능 준비 실패 · 다시 눌러 재시도',true);if(retry){retry.style.display='inline-block';retry.onclick=()=>{fullLoading=false;fullPromise=null;activateFull(pendingReplay)}}throw e
