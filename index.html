@@ -1,9 +1,9 @@
 <!doctype html><html lang="ko"><head>
 <!-- SAYWARD · stable staged boot -->
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.53</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.54</title>
 
 <meta name="theme-color" content="#2563eb">
-<meta name="sayward-build" content="v5.4.53">
+<meta name="sayward-build" content="v5.4.54">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
@@ -40,15 +40,15 @@ html.saywardHomeBootGuard body{visibility:visible!important}
 #saywardBootOverlay .bootLogo{width:62px;height:62px;margin:0 auto 14px;border-radius:19px;display:grid;place-items:center;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-weight:900;font-size:23px}
 #saywardBootOverlay h1{margin:0;font-size:24px}.bootSub{margin:7px 0 18px;color:#667085;font-size:13px;line-height:1.45}.bootBar{height:9px;border-radius:999px;background:#edf1f7;overflow:hidden}.bootFill{height:100%;width:3%;background:linear-gradient(90deg,#2563eb,#7c3aed);border-radius:inherit;transition:width .2s ease}.bootStatus{margin-top:11px;font-size:12px;color:#475467;min-height:18px}.bootPct{font-weight:800;color:#2563eb}.bootRetry{display:none;margin:16px auto 0;border:0;border-radius:12px;background:#2563eb;color:#fff;padding:10px 16px;font-weight:800}.bootDiag{display:none;margin-top:10px;padding:8px 10px;border-radius:10px;background:#fff7ed;color:#9a3412;font-size:10.5px;line-height:1.4;text-align:left}
 </style>
-<script>window.SAYWARD_VERSION='5.4.53';document.documentElement.style.setProperty('--sayward-version-label','\"v'+window.SAYWARD_VERSION+'\"');document.documentElement.classList.add('saywardBooting');</script>
+<script>window.SAYWARD_VERSION='5.4.54';document.documentElement.style.setProperty('--sayward-version-label','\"v'+window.SAYWARD_VERSION+'\"');document.documentElement.classList.add('saywardBooting');</script>
 
 
 <script id="saywardSwRecoveryPreflight">
-/* v5.4.53 RECOVERY: centrally retire historical SAYWARD service workers/caches
+/* v5.4.54 RECOVERY: centrally retire historical SAYWARD service workers/caches
    without deleting learning data stored in localStorage. */
 window.__SAYWARD_PREFLIGHT__=(async()=>{
-  const VERSION='5.4.53';
-  const BUILD='20261006-v5.4.53-true-lazy';
+  const VERSION='5.4.54';
+  const BUILD='20261007-v5.4.54-profile-lock';
   const RELOAD_GUARD='sayward_recovery_reload_551';
   const STATUS_KEY='sayward_recovery_status';
   const sleep=ms=>new Promise(r=>setTimeout(r,ms));
@@ -146,7 +146,7 @@ window.__SAYWARD_PREFLIGHT__=(async()=>{
 </head><body>
 <div id="saywardBootOverlay" aria-live="polite">
   <div class="bootCard">
-    <div class="bootLogo">S</div><h1>SAYWARD <span style="font-size:13px;color:#667085;font-weight:800;vertical-align:middle">v5.4.53</span></h1>
+    <div class="bootLogo">S</div><h1>SAYWARD <span style="font-size:13px;color:#667085;font-weight:800;vertical-align:middle">v5.4.54</span></h1>
     <div class="bootSub">처음 실행에서도 안정적으로 열리도록 화면과 학습 데이터를 순서대로 준비하고 있습니다.</div>
     <div class="bootBar"><div class="bootFill" id="saywardBootFill"></div></div>
     <div class="bootStatus" id="saywardBootStatus"><span class="bootPct">0%</span> · 시작 준비</div>
@@ -1243,8 +1243,8 @@ Config의 <b>Day Loop 문장당 반복 횟수</b>에서 1회 / 2회 / 3회 / 5�
 <script id="saywardStagedBootstrap">
 (()=>{
 'use strict';
-const BUILD='20261006-v5.4.53-true-lazy';
-const VERSION='5.4.53';
+const BUILD='20261007-v5.4.54-profile-lock';
+const VERSION='5.4.54';
 const CSS=['sayward-core.css','sayward-patches.css','sayward-home.css'];
 const TOEFL_JS=['sayward-toefl-1.js','sayward-toefl-2.js','sayward-toefl-3.js','sayward-toefl-4.js'];
 const OPIC_JS=['sayward-opic-1.js','sayward-opic-2.js'];
@@ -1274,7 +1274,20 @@ function trace(stage,detail='',extra={}){const ev={stage,detail,at:Date.now(),el
 function withBuild(url){return `${url}?b=${encodeURIComponent(BUILD)}`}
 function timed(label,promise,ms=20000){let id;const timeout=new Promise((_,reject)=>{id=setTimeout(()=>reject(new Error(`${label} timeout (${ms/1000}s)`)),ms)});return Promise.race([promise,timeout]).finally(()=>clearTimeout(id))}
 async function loadCss(url){const href=withBuild(url),started=Date.now();try{const cssText=await timed('CSS '+url,(async()=>{const r=await fetch(href,{cache:'default',credentials:'same-origin'});if(!r.ok)throw new Error('HTTP '+r.status+' for '+url);return r.text()})(),8000);const st=document.createElement('style');st.setAttribute('data-sayward-css',url);st.textContent=cssText;document.head.appendChild(st);try{localStorage.setItem('sayward_boot_css',JSON.stringify({build:BUILD,runId:RUN_ID,file:url,mode:'fetch-style',ms:Date.now()-started,at:Date.now()}))}catch(e){}return true}catch(err){const l=document.createElement('link');l.rel='stylesheet';l.href=href;l.setAttribute('data-sayward-css-fallback',url);document.head.appendChild(l);trace('css-fallback',url,{error:String(err)});await wait(60);return false}}
-function loadJs(url,timeout=20000){if(loadedScripts.has(url))return Promise.resolve(true);return timed('JS '+url,new Promise((resolve,reject)=>{const sc=document.createElement('script');sc.src=withBuild(url);sc.async=false;sc.onload=()=>{loadedScripts.add(url);resolve(true)};sc.onerror=()=>reject(new Error('JS '+url));document.body.appendChild(sc)}),timeout)}
+const scriptLoadPromises=new Map();
+function loadJs(url,timeout=20000){
+  if(loadedScripts.has(url)){trace('script-load-skip',url,{reason:'already-loaded'});return Promise.resolve(true)}
+  if(scriptLoadPromises.has(url)){trace('script-load-join',url,{reason:'in-flight'});return scriptLoadPromises.get(url)}
+  const p=timed('JS '+url,new Promise((resolve,reject)=>{
+    const sc=document.createElement('script');sc.src=withBuild(url);sc.async=false;sc.dataset.saywardLazyScript=url;
+    sc.onload=()=>{loadedScripts.add(url);resolve(true)};
+    sc.onerror=()=>{try{sc.remove()}catch(e){}reject(new Error('JS '+url))};
+    document.body.appendChild(sc)
+  }),timeout).finally(()=>scriptLoadPromises.delete(url));
+  scriptLoadPromises.set(url,p);
+  trace('script-load-start',url);
+  return p
+}
 async function waitReady(name,test,ms=5000){const started=Date.now();while(Date.now()-started<ms){try{if(test())return true}catch(e){}await wait(40)}throw new Error(name+' loaded but did not reach READY handshake')}
 function setBootProgress(p,label){if(fill)fill.style.width=Math.max(2,Math.min(100,p))+'%';if(status)status.innerHTML=`<span class="bootPct">${Math.round(p)}%</span> · ${label}`}
 function showOverlay(label='학습 기능 준비 중'){if(overlay)overlay.style.display='grid';setBootProgress(35,label)}
@@ -1335,7 +1348,35 @@ async function hydrateLeanHomeData(){
     trace('lean-hydrate-failed','DAY 1~11 tiny index',{error:String(e?.message||e)})
   }
 }
-function installLeanInterception(){document.addEventListener('click',e=>{if(fullReady){const mb=e.target?.closest?.('[data-clean-mode-button]');if(mb){const p=mb.dataset.cleanModeButton||'day';if(!loadedProfiles.has(p)&&((PROFILE_DATA[p]||[]).length)){e.preventDefault();e.stopImmediatePropagation();setBadge(p.toUpperCase()+' 데이터 불러오는 중',true);ensureProfileData(p).then(()=>{setBadge('',false);window.setHomeStudyMode?.(p)}).catch(err=>noteError('profile-switch',err));return}}return;}if(e.target?.closest?.('.daySelectCheck,select,input,label'))return;const dayCard=e.target?.closest?.('[data-lean-day]');if(dayCard){e.preventDefault();e.stopImmediatePropagation();activateFull({kind:'day',day:Number(dayCard.dataset.leanDay)});return}const t=e.target?.closest?.('#homePage button,#homePage [role="button"],#homePage [onclick]');if(!t)return;const modeBtn=t.closest?.('[data-clean-mode-button]');if(modeBtn){e.preventDefault();e.stopImmediatePropagation();const mode=modeBtn.dataset.cleanModeButton||'day';leanModeApply(mode);trace('lean-mode-select',mode);if(mode==='sori'||mode==='opic')activateFull({kind:'mode',mode});return}e.preventDefault();e.stopImmediatePropagation();pendingReplay={kind:'id',id:t.id||'',onclick:t.getAttribute('onclick')||''};activateFull(pendingReplay)},true)}
+let modeTransitionSeq=0;
+function installLeanInterception(){document.addEventListener('click',e=>{
+  if(fullReady){
+    const mb=e.target?.closest?.('[data-clean-mode-button]');
+    if(mb){
+      const p=mb.dataset.cleanModeButton||'day';
+      if(!loadedProfiles.has(p)&&((PROFILE_DATA[p]||[]).length)){
+        e.preventDefault();e.stopImmediatePropagation();
+        const seq=++modeTransitionSeq;
+        setBadge(p.toUpperCase()+' 데이터 불러오는 중',true);
+        trace('mode-transition-start',p,{seq});
+        ensureProfileData(p).then(()=>{
+          if(seq!==modeTransitionSeq){trace('mode-transition-stale',p,{seq,current:modeTransitionSeq});return}
+          setBadge('',false);window.setHomeStudyMode?.(p);trace('mode-transition-ready',p,{seq})
+        }).catch(err=>noteError('profile-switch',err));
+        return
+      }
+      modeTransitionSeq++;
+    }
+    return;
+  }
+  if(e.target?.closest?.('.daySelectCheck,select,input,label'))return;
+  const dayCard=e.target?.closest?.('[data-lean-day]');
+  if(dayCard){e.preventDefault();e.stopImmediatePropagation();activateFull({kind:'day',day:Number(dayCard.dataset.leanDay)});return}
+  const t=e.target?.closest?.('#homePage button,#homePage [role="button"],#homePage [onclick]');if(!t)return;
+  const modeBtn=t.closest?.('[data-clean-mode-button]');
+  if(modeBtn){e.preventDefault();e.stopImmediatePropagation();const mode=modeBtn.dataset.cleanModeButton||'day';leanModeApply(mode);trace('lean-mode-select',mode);if(mode==='sori'||mode==='opic')activateFull({kind:'mode',mode});return}
+  e.preventDefault();e.stopImmediatePropagation();pendingReplay={kind:'id',id:t.id||'',onclick:t.getAttribute('onclick')||''};activateFull(pendingReplay)
+},true)}
 async function appendDeferredDom(){const frag=tpl.content.cloneNode(true);const homeClone=frag.querySelector('#homePage');if(homeClone)homeClone.remove();const nodes=[...frag.children];const home=document.getElementById('homePage');let beforeHome=true,inserted=0;for(const node of nodes){const originalOrder=[...tpl.content.children].findIndex(x=>x.id==='homePage');const idx=[...tpl.content.children].findIndex(x=>x.id===node.id&&x.tagName===node.tagName);beforeHome=idx>=0&&idx<originalOrder;if(beforeHome&&home)document.body.insertBefore(node,home);else document.body.insertBefore(node,tpl);inserted++;if(inserted%2===0)await wait(18)}trace('app-dom-expanded','deferred nodes attached',{inserted,domElements:document.getElementsByTagName('*').length})}
 function actionProfile(action){
   if(action?.kind==='day')return 'day';
@@ -1344,25 +1385,39 @@ function actionProfile(action){
   return ['day','my','sori','opic'].includes(mode)?mode:'day';
 }
 const loadedProfiles=new Set();
+const profileLoadPromises=new Map();
+let profileRequestSeq=0;
+function writeLoaderState(extra={}){
+  try{localStorage.setItem('sayward_lazy_loader',JSON.stringify({build:BUILD,runId:RUN_ID,loaded:[...loadedProfiles],inFlight:[...profileLoadPromises.keys()],scriptInFlight:[...scriptLoadPromises.keys()],seq:profileRequestSeq,at:Date.now(),...extra}))}catch(e){}
+}
 async function ensureProfileData(profile){
   profile=['day','my','sori','opic'].includes(profile)?profile:'day';
-  if(loadedProfiles.has(profile))return true;
-  const files=PROFILE_DATA[profile]||[];
-  if(files.length){
-    let i=0;
-    for(const f of files){
-      setBootProgress(38+Math.round((i/files.length)*24),`${profile.toUpperCase()} 데이터 ${i+1}/${files.length}`);
-      trace('profile-data-load',f,{profile});
-      await loadJs(f,15000);i++;await wait(24);
+  if(loadedProfiles.has(profile)){trace('profile-load-skip',profile,{reason:'already-loaded'});return true}
+  if(profileLoadPromises.has(profile)){trace('profile-load-join',profile,{reason:'in-flight'});writeLoaderState({event:'join',profile});return profileLoadPromises.get(profile)}
+  const requestId=++profileRequestSeq;
+  const p=(async()=>{
+    trace('profile-load-start',profile,{requestId});writeLoaderState({event:'start',profile,requestId});
+    const files=PROFILE_DATA[profile]||[];
+    if(files.length){
+      let i=0;
+      for(const f of files){
+        setBootProgress(38+Math.round((i/files.length)*24),`${profile.toUpperCase()} 데이터 ${i+1}/${files.length}`);
+        trace('profile-data-load',f,{profile,requestId});
+        await loadJs(f,15000);i++;await wait(24);
+      }
     }
-  }
-  if(typeof globalThis.SAYWARD_SYNC_EXTERNAL_DATA==='function'){
-    const counts=globalThis.SAYWARD_SYNC_EXTERNAL_DATA();
-    trace('profile-data-sync',profile,{profile,counts});
-  }
-  loadedProfiles.add(profile);
-  try{localStorage.setItem('sayward_lazy_profile',JSON.stringify({build:BUILD,runId:RUN_ID,profile,loaded:[...loadedProfiles],at:Date.now()}))}catch(e){}
-  return true;
+    if(typeof globalThis.SAYWARD_SYNC_EXTERNAL_DATA==='function'){
+      const counts=globalThis.SAYWARD_SYNC_EXTERNAL_DATA();
+      trace('profile-data-sync',profile,{profile,requestId,counts});
+    }
+    loadedProfiles.add(profile);
+    try{localStorage.setItem('sayward_lazy_profile',JSON.stringify({build:BUILD,runId:RUN_ID,profile,loaded:[...loadedProfiles],at:Date.now()}))}catch(e){}
+    trace('profile-load-ready',profile,{requestId,loaded:[...loadedProfiles]});
+    writeLoaderState({event:'ready',profile,requestId});
+    return true
+  })().catch(err=>{trace('profile-load-failed',profile,{requestId,error:String(err?.message||err)});writeLoaderState({event:'failed',profile,requestId,error:String(err?.message||err)});throw err}).finally(()=>{profileLoadPromises.delete(profile);writeLoaderState({event:'settled',profile,requestId})});
+  profileLoadPromises.set(profile,p);writeLoaderState({event:'registered',profile,requestId});
+  return p;
 }
 function replayAction(a){if(!a)return;setTimeout(()=>{try{if(a.kind==='mode'){window.setHomeStudyMode?.(a.mode);return}if(a.kind==='day'){if(typeof window.requestDayLearning==='function')window.requestDayLearning(a.day);else document.querySelector('#dayGrid [data-day="'+a.day+'"]')?.click();return}if(a.id){const el=document.getElementById(a.id);if(el)el.click();else if(a.onclick){(0,eval)(a.onclick)}}}catch(e){noteError('replay',e)}},30)}
 async function activateFull(action=null){
@@ -1372,7 +1427,7 @@ async function activateFull(action=null){
     try{await ensureProfileData(profile)}catch(e){noteError('profile-data',e);throw e}
     const a=pendingReplay;pendingReplay=null;replayAction(a);return true
   }
-  if(fullLoading)return fullPromise;
+  if(fullLoading){trace('full-activation-join',profile,{pending:pendingReplay});return fullPromise}
   fullLoading=true;setBadge('학습 기능 불러오는 중',true);showOverlay('필요한 기능만 준비');
   trace('full-activation-start','user-triggered',{profile});
   fullPromise=(async()=>{try{
@@ -1385,6 +1440,9 @@ async function activateFull(action=null){
     setBootProgress(88,'화면 기능 연결');trace('engine-load','sayward-patches.js',{profile});
     await loadJs('sayward-patches.js',16000);await waitReady('Patches',()=>window.__SAYWARD_PATCHES_READY__?.version===VERSION,6500);await wait(80);
     fullReady=true;currentRun.fullReady=true;currentRun.fullReadyAt=Date.now();trace('full-ready','engine ready',{profile,loadedProfiles:[...loadedProfiles]});
+    const finalAction=pendingReplay;
+    const finalProfile=actionProfile(finalAction);
+    if(finalProfile!==profile&&!loadedProfiles.has(finalProfile)){trace('final-profile-catchup',finalProfile,{startedWith:profile});await ensureProfileData(finalProfile)}
     try{const mode=document.getElementById('homePage')?.dataset.cleanMode||initialMode();window.setHomeStudyMode?.(mode)}catch(e){}
     setBootProgress(100,'준비 완료');hideOverlay();setBadge('',false);const a=pendingReplay;pendingReplay=null;replayAction(a);writeHistory();return true
   }catch(e){noteError('full-activation',e);hideOverlay();setBadge('기능 준비 실패 · 다시 눌러 재시도',true);if(retry){retry.style.display='inline-block';retry.onclick=()=>{fullLoading=false;fullPromise=null;activateFull(pendingReplay)}}throw e

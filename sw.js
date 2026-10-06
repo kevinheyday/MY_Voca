@@ -1,7 +1,7 @@
-// SAYWARD v5.4.53 RECOVERY WORKER — TRUE LAZY release
+// SAYWARD v5.4.54 RECOVERY WORKER — TRUE LAZY release
 // Purpose: remove historical SAYWARD caches/service-worker registration centrally.
 // It intentionally has NO fetch handler and never touches localStorage learning data.
-const RECOVERY_VERSION='5.4.53';
+const RECOVERY_VERSION='5.4.54';
 const RECOVERY_TAG='551';
 self.addEventListener('install',event=>event.waitUntil(self.skipWaiting()));
 self.addEventListener('activate',event=>{
