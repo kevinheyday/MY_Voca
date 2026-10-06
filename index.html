@@ -1,9 +1,9 @@
 <!doctype html><html lang="ko"><head>
 <!-- SAYWARD · stable staged boot -->
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.46</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.47</title>
 
 <meta name="theme-color" content="#2563eb">
-<meta name="sayward-build" content="v5.4.46">
+<meta name="sayward-build" content="v5.4.47">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
@@ -38,38 +38,113 @@ html.saywardBooting body>*:not(#saywardBootOverlay){visibility:hidden!important}
 #saywardBootOverlay .bootLogo{width:62px;height:62px;margin:0 auto 14px;border-radius:19px;display:grid;place-items:center;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-weight:900;font-size:23px}
 #saywardBootOverlay h1{margin:0;font-size:24px}.bootSub{margin:7px 0 18px;color:#667085;font-size:13px;line-height:1.45}.bootBar{height:9px;border-radius:999px;background:#edf1f7;overflow:hidden}.bootFill{height:100%;width:3%;background:linear-gradient(90deg,#2563eb,#7c3aed);border-radius:inherit;transition:width .2s ease}.bootStatus{margin-top:11px;font-size:12px;color:#475467;min-height:18px}.bootPct{font-weight:800;color:#2563eb}.bootRetry{display:none;margin:16px auto 0;border:0;border-radius:12px;background:#2563eb;color:#fff;padding:10px 16px;font-weight:800}.bootDiag{display:none;margin-top:10px;padding:8px 10px;border-radius:10px;background:#fff7ed;color:#9a3412;font-size:10.5px;line-height:1.4;text-align:left}
 </style>
-<script>document.documentElement.classList.add('saywardBooting');</script>
+<script>window.SAYWARD_VERSION='5.4.47';document.documentElement.style.setProperty('--sayward-version-label','\"v'+window.SAYWARD_VERSION+'\"');document.documentElement.classList.add('saywardBooting');</script>
 
 
-<script id="saywardSwPreflight">
-/* v5.4.46: retire every historical SAYWARD service worker before heavy boot. */
+<script id="saywardSwRecoveryPreflight">
+/* v5.4.47 RECOVERY: centrally retire historical SAYWARD service workers/caches
+   without deleting learning data stored in localStorage. */
 window.__SAYWARD_PREFLIGHT__=(async()=>{
-  const BUILD='v5.4.46';
-  const GUARD='sayward_sw_cleanup_'+BUILD;
+  const VERSION='5.4.47';
+  const BUILD='20261006-v5.4.47-recovery';
+  const RELOAD_GUARD='sayward_recovery_reload_547';
+  const STATUS_KEY='sayward_recovery_status';
+  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+  const writeStatus=(step,extra={})=>{try{localStorage.setItem(STATUS_KEY,JSON.stringify({version:VERSION,build:BUILD,step,at:Date.now(),...extra}))}catch(e){}};
   try{
-    if(!('serviceWorker' in navigator))return {ok:true,sw:false};
-    const controlled=!!navigator.serviceWorker.controller;
-    const regs=await navigator.serviceWorker.getRegistrations();
-    if(regs.length)await Promise.all(regs.map(r=>r.unregister().catch(()=>false)));
-    if('caches' in window){
-      const keys=await caches.keys();
-      await Promise.all(keys.filter(k=>k.startsWith('sayward-runtime-')).map(k=>caches.delete(k)));
+    // Reset only a transient playback checkpoint once. Learning/progress/stat keys are untouched.
+    try{
+      if(!localStorage.getItem('sayward_recovery_transient_547')){
+        localStorage.removeItem('sayward_playback_resume_v1');
+        localStorage.setItem('sayward_recovery_transient_547','1');
+      }
+    }catch(e){}
+
+    if(!('serviceWorker' in navigator)){
+      writeStatus('no-service-worker-api');
+      return {ok:true,legacy:false};
     }
-    if(controlled && !sessionStorage.getItem(GUARD)){
-      sessionStorage.setItem(GUARD,'1');
-      const u=new URL(location.href);u.searchParams.set('swclean','546');u.searchParams.set('_',Date.now());
+
+    let regs=[]; let cacheKeys=[];
+    try{regs=await navigator.serviceWorker.getRegistrations()}catch(e){}
+    try{if('caches' in window)cacheKeys=await caches.keys()}catch(e){}
+    const swController=navigator.serviceWorker.controller;
+    const saywardCaches=cacheKeys.filter(k=>/^sayward/i.test(k));
+    const hadLegacy=!!swController||regs.length>0||saywardCaches.length>0;
+
+    if(!hadLegacy){
+      writeStatus('clean-start');
+      return {ok:true,legacy:false};
+    }
+
+    writeStatus('legacy-detected',{
+      controller:swController?.scriptURL||'',
+      registrations:regs.map(r=>r.active?.scriptURL||r.waiting?.scriptURL||r.installing?.scriptURL||''),
+      caches:saywardCaches
+    });
+
+    let recoveryMessage=false;
+    const onMessage=e=>{
+      if(e?.data?.type==='SAYWARD_RECOVERY_DONE'){
+        recoveryMessage=true;
+        writeStatus('worker-cleaned',{deletedCaches:e.data.deletedCaches||[]});
+      }
+    };
+    navigator.serviceWorker.addEventListener('message',onMessage);
+
+    // Force an update of the registration at the SAME scope before any heavy app code runs.
+    // updateViaCache:'none' prevents the recovery worker itself from being satisfied by HTTP cache.
+    try{
+      const reg=await navigator.serviceWorker.register('./sw.js?recovery=547',{scope:'./',updateViaCache:'none'});
+      try{await reg.update()}catch(e){}
+      writeStatus('recovery-worker-requested',{script:reg.installing?.scriptURL||reg.waiting?.scriptURL||reg.active?.scriptURL||''});
+    }catch(e){
+      writeStatus('recovery-worker-register-failed',{error:String(e)});
+    }
+
+    // Give the recovery worker a short window to activate. The page also performs the
+    // same cleanup as a fallback so users are not dependent on worker lifecycle timing.
+    const until=Date.now()+3200;
+    while(Date.now()<until&&!recoveryMessage)await sleep(80);
+
+    try{
+      if('caches' in window){
+        const keys=await caches.keys();
+        await Promise.all(keys.filter(k=>/^sayward/i.test(k)).map(k=>caches.delete(k)));
+      }
+    }catch(e){}
+    try{
+      regs=await navigator.serviceWorker.getRegistrations();
+      await Promise.all(regs.map(r=>r.unregister().catch(()=>false)));
+    }catch(e){}
+    navigator.serviceWorker.removeEventListener('message',onMessage);
+    writeStatus('page-cleanup-complete',{recoveryMessage});
+
+    // If the current document was controlled by an old worker, start ONE fresh network
+    // navigation after the registration/cache is gone. sessionStorage prevents loops.
+    if(!sessionStorage.getItem(RELOAD_GUARD)){
+      sessionStorage.setItem(RELOAD_GUARD,'1');
+      const u=new URL(location.href);
+      u.searchParams.set('swrecovery','547');
+      u.searchParams.set('_',Date.now());
       location.replace(u.toString());
       return await new Promise(()=>{});
     }
-    return {ok:true,sw:regs.length>0||controlled};
-  }catch(e){console.warn('[SAYWARD preflight]',e);return {ok:false,error:String(e)}}
+
+    return {ok:true,legacy:true,recoveryMessage};
+  }catch(e){
+    console.warn('[SAYWARD recovery preflight]',e);
+    writeStatus('preflight-error',{error:String(e)});
+    // Recovery must never block access to the app forever.
+    return {ok:false,error:String(e)};
+  }
 })();
 </script>
 
 </head><body>
 <div id="saywardBootOverlay" aria-live="polite">
   <div class="bootCard">
-    <div class="bootLogo">S</div><h1>SAYWARD <span style="font-size:13px;color:#667085;font-weight:800;vertical-align:middle">v5.4.46</span></h1>
+    <div class="bootLogo">S</div><h1>SAYWARD <span style="font-size:13px;color:#667085;font-weight:800;vertical-align:middle">v5.4.47</span></h1>
     <div class="bootSub">처음 실행에서도 안정적으로 열리도록 화면과 학습 데이터를 순서대로 준비하고 있습니다.</div>
     <div class="bootBar"><div class="bootFill" id="saywardBootFill"></div></div>
     <div class="bootStatus" id="saywardBootStatus"><span class="bootPct">0%</span> · 시작 준비</div>
@@ -1166,8 +1241,8 @@ Config의 <b>Day Loop 문장당 반복 횟수</b>에서 1회 / 2회 / 3회 / 5�
 <script id="saywardStagedBootstrap">
 (()=>{
 'use strict';
-const BUILD='20261006-v5.4.46-safe-core';
-const VERSION='5.4.46';
+const BUILD='20261006-v5.4.47-recovery';
+const VERSION='5.4.47';
 const CSS=['sayward-core.css','sayward-patches.css','sayward-home.css'];
 const JS=['sayward-toefl-1.js','sayward-toefl-2.js','sayward-toefl-3.js','sayward-toefl-4.js','sayward-opic-1.js','sayward-opic-2.js','sayward-core.js','sayward-patches.js'];
 const fill=document.getElementById('saywardBootFill');
@@ -1211,7 +1286,7 @@ window.addEventListener('error',e=>noteError('error',e.error||e.message,`${e.fil
 window.addEventListener('unhandledrejection',e=>noteError('rejection',e.reason));
 async function start(){
   if(retry)retry.style.display='none';done=0;progress('시작 준비');
-  setStage('preflight','service-worker cleanup');
+  setStage('preflight','v5.4.47 recovery cleanup');
   try{
     if(window.__SAYWARD_PREFLIGHT__)await timed('preflight',window.__SAYWARD_PREFLIGHT__,8000);
     await nextPaint();
@@ -1236,7 +1311,7 @@ async function start(){
     document.documentElement.classList.remove('saywardBooting');
     if(overlay)overlay.remove();
     try{localStorage.setItem('sayward_boot_last',JSON.stringify({build:BUILD,stage:'complete',at:Date.now(),complete:true}));}catch(e){}
-    // Intentionally NO service-worker registration in v5.4.46.
+    // v5.4.47: normal runtime does not register a persistent service worker.
   }catch(err){
     console.error('[SAYWARD boot]',err);noteError('boot',err);setStage('failed',String(err?.message||err));
     if(status)status.textContent='초기화 중 오류가 발생했습니다. 아래 진단 문구를 캡처해 주세요.';

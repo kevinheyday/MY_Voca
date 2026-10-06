@@ -2705,7 +2705,7 @@ function studyCourseSentenceCards(course='sori',lesson=1){
 window.studyCourseSentenceCards=studyCourseSentenceCards;
 
 
-// v5.4.46: storage failures/corruption must never abort app startup.
+// v5.4.47: storage failures/corruption must never abort app startup.
 const mvStorage={
   get(key,fallback=null){try{const v=localStorage.getItem(key);return v===null?fallback:v}catch(e){console.warn('[SAYWARD storage:get]',key,e);return fallback}},
   set(key,value){try{localStorage.setItem(key,value);return true}catch(e){console.warn('[SAYWARD storage:set]',key,e);return false}},
@@ -7876,7 +7876,7 @@ $('todayStartBtn').onclick=()=>{
 
 
 
-window.APP_VERSION='5.4.46';
+window.APP_VERSION='5.4.47';
 window.addEventListener('pagehide',()=>{__repeatWakeSession=false;forceReleaseWakeLock();});
 
 
@@ -8528,7 +8528,7 @@ function mvSentenceEntryAudit182(){
 window.mvSentenceEntryAudit182=mvSentenceEntryAudit182;
 
 /* ===== V5.3.189 · STANDARD APP INFO / UPDATE HISTORY ===== */
-const MV_APP_VERSION='5.4.46';
+const MV_APP_VERSION='5.4.47';
 
 function mvCloseInfoOverlay(){
   const overlay=document.getElementById('mvInfoOverlay');
@@ -8558,11 +8558,11 @@ function mvOpenUpdateHistory(){
     `
       <div class="mvInfoVersionCard"><b>v${MV_APP_VERSION}</b><span>현재 설치 버전</span></div>
       <section class="mvInfoSection">
-        <h3>v5.4.46</h3>
+        <h3>v5.4.47</h3>
         <ul>
           <li>첫 실행 안정화를 위해 CSS 내 Base64 이미지를 외부 PNG로 분리했습니다.</li>
           <li>초기 화면 구성과 학습 데이터/기능 JS를 단계적으로 불러오는 STABILITY REBUILD 구조를 적용했습니다.</li>
-          <li>로딩 화면·홈 배지·앱 정보·브라우저 제목의 버전 표시를 v5.4.46로 통일했습니다.</li>
+          <li>Chrome 일반 모드에 남은 과거 Service Worker·SAYWARD 캐시를 학습기록 손실 없이 자동 정리하는 Recovery 릴리스입니다.</li>
           <li>GitHub 관리용 파일명은 버전 없이 고정하고, 내부 빌드 키만 갱신하도록 변경했습니다.</li>
         </ul>
       </section>
@@ -9434,7 +9434,7 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
     }
   };
 
-  // v5.4.46: do not build the legacy home mode panel here.
+  // v5.4.47: do not build the legacy home mode panel here.
   // The later standard-course controller creates its single backend panel once.
   // Building an intermediate panel and then replacing it caused a large cold-start DOM/listener spike.
   setTimeout(()=>{
@@ -12338,7 +12338,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
 
     // MY / SORI / OPIC / FRIENDS cards use the same stamped canonical navigation route.
     studyStampCourseCards();
-    // v5.4.46: final clean-home controller applies the remembered mode once.
+    // v5.4.47: final clean-home controller applies the remembered mode once.
   }
 
   setTimeout(bindStandardCourseUI,160);
@@ -13508,5 +13508,5 @@ function mvSoriGroup2Audit194(){
 }
 window.mvSoriGroup2Audit194=mvSoriGroup2Audit194;
 
-// v5.4.46 bootstrap handshake: reached only after the full core evaluated successfully.
-window.__SAYWARD_CORE_READY__={version:'5.4.46',at:Date.now()};
+// v5.4.47 bootstrap handshake: reached only after the full core evaluated successfully.
+window.__SAYWARD_CORE_READY__={version:'5.4.47',at:Date.now()};

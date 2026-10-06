@@ -1,6 +1,6 @@
 
 /* ======================================================================
-   SAYWARD HOME CLEAN MASTER — v5.4.45
+   SAYWARD HOME CLEAN MASTER — v5.4.47
    One authoritative home-style block. Do NOT append version patches below.
    Future home UI edits must modify this block in place.
    ====================================================================== */
@@ -19,7 +19,7 @@
 #cleanHeroMenuHit,#cleanHeroSearchHit{position:absolute!important;top:0!important;height:100%!important;width:18%!important;border:0!important;background:transparent!important;padding:0!important;z-index:8!important;cursor:pointer!important;-webkit-tap-highlight-color:transparent!important}
 #cleanHeroMenuHit{left:-5px!important} #cleanHeroSearchHit{right:0!important}
 #homePage .homeHero::before{
-  content:"v5.4.45"!important;position:absolute!important;right:14.0%!important;top:8px!important;z-index:6!important;
+  content:var(--sayward-version-label,"v5.4.47")!important;position:absolute!important;right:14.0%!important;top:8px!important;z-index:6!important;
   min-width:54px!important;padding:2px 8px 3px!important;box-sizing:border-box!important;text-align:center!important;
   border:1.5px solid rgba(255,255,255,.92)!important;border-radius:999px!important;background:rgba(77,62,202,.96)!important;
   color:#fff!important;font-size:9px!important;line-height:1.1!important;font-weight:950!important;letter-spacing:.1px!important;
