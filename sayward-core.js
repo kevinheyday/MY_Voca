@@ -2705,11 +2705,19 @@ function studyCourseSentenceCards(course='sori',lesson=1){
 window.studyCourseSentenceCards=studyCourseSentenceCards;
 
 
+// v5.4.46: storage failures/corruption must never abort app startup.
+const mvStorage={
+  get(key,fallback=null){try{const v=localStorage.getItem(key);return v===null?fallback:v}catch(e){console.warn('[SAYWARD storage:get]',key,e);return fallback}},
+  set(key,value){try{localStorage.setItem(key,value);return true}catch(e){console.warn('[SAYWARD storage:set]',key,e);return false}},
+  remove(key){try{localStorage.removeItem(key);return true}catch(e){return false}},
+  json(key,fallback){try{const raw=localStorage.getItem(key);if(raw==null||raw==='')return fallback;const v=JSON.parse(raw);return v==null?fallback:v}catch(e){console.warn('[SAYWARD storage:json]',key,e);return fallback}}
+};
+
 const PACKS={
   unified:{key:'unified',name:'MY VOCA',short:'MY VOCA',desc:'TOEFL 1,680 Words + OPIC AL 268 Words & Expressions',days:TOEFL_DAY_COUNT+OPIC_DAY_COUNT,words:UNIFIED_WORDS.length,eyebrow:'MY VOCA UNIFIED COURSE · 69 DAYS'}
 };
 let currentPack='unified';
-localStorage.setItem('mv_currentPack','unified');
+mvStorage.set('mv_currentPack','unified');
 let ALL_WORDS=UNIFIED_WORDS;
 let DAY_META=UNIFIED_DAY_META;
 let currentDay=1;
@@ -2728,27 +2736,29 @@ function dayDisplayLabel(day,padded=false){
 }
 function dayCourseName(day){return Number(day)<=TOEFL_DAY_COUNT?'TOEFL':'OPIC AL';}
 function migrateUnifiedState(){
-  if(localStorage.getItem('mv_unified_migrated_v1'))return;
-  const read=(k,fallback)=>{try{return JSON.parse(localStorage.getItem(k)||JSON.stringify(fallback))}catch(e){return fallback}};
-  const unique=a=>[...new Set(a)];
-  localStorage.setItem('mv_unified_known',JSON.stringify(unique([...read('mv_toefl_known',[]),...read('mv_opic_known',[])])));
-  localStorage.setItem('mv_unified_favs',JSON.stringify(unique([...read('mv_toefl_favs',[]),...read('mv_opic_favs',[])])));
-  const ts=read('mv_toefl_stats',{}), os=read('mv_opic_stats',{}), merged={...ts};
-  Object.entries(os).forEach(([word,b])=>{
-    if(!merged[word]){merged[word]=b;return}
-    const a=merged[word];
-    merged[word]={...a,...b,
-      miss:(a.miss||0)+(b.miss||0),studyCount:(a.studyCount||0)+(b.studyCount||0),
-      quizWrong:(a.quizWrong||0)+(b.quizWrong||0),quizCorrect:(a.quizCorrect||0)+(b.quizCorrect||0),
-      quizStreak:Math.max(a.quizStreak||0,b.quizStreak||0),streak:Math.max(a.streak||0,b.streak||0),
-      lastSeen:Math.max(a.lastSeen||0,b.lastSeen||0),lastMiss:Math.max(a.lastMiss||0,b.lastMiss||0),
-      lastQuizWrong:Math.max(a.lastQuizWrong||0,b.lastQuizWrong||0),dueAt:Math.min(...[a.dueAt,b.dueAt].filter(Boolean))||0,
-      reviewStep:Math.max(a.reviewStep||0,b.reviewStep||0)};
-  });
-  localStorage.setItem('mv_unified_stats',JSON.stringify(merged));
-  const td=read('mv_toefl_selectedStudyDays',[]), od=read('mv_opic_selectedStudyDays',[]).map(d=>Number(d)+TOEFL_DAY_COUNT);
-  localStorage.setItem('mv_unified_selectedStudyDays',JSON.stringify(unique([...td,...od]).sort((a,b)=>a-b)));
-  localStorage.setItem('mv_unified_migrated_v1','1');
+  try{
+    if(mvStorage.get('mv_unified_migrated_v1'))return;
+    const read=(k,fallback)=>mvStorage.json(k,fallback);
+    const unique=a=>[...new Set(a)];
+    mvStorage.set('mv_unified_known',JSON.stringify(unique([...read('mv_toefl_known',[]),...read('mv_opic_known',[])])));
+    mvStorage.set('mv_unified_favs',JSON.stringify(unique([...read('mv_toefl_favs',[]),...read('mv_opic_favs',[])])));
+    const ts=read('mv_toefl_stats',{}), os=read('mv_opic_stats',{}), merged={...ts};
+    Object.entries(os).forEach(([word,b])=>{
+      if(!merged[word]){merged[word]=b;return}
+      const a=merged[word];
+      merged[word]={...a,...b,
+        miss:(a.miss||0)+(b.miss||0),studyCount:(a.studyCount||0)+(b.studyCount||0),
+        quizWrong:(a.quizWrong||0)+(b.quizWrong||0),quizCorrect:(a.quizCorrect||0)+(b.quizCorrect||0),
+        quizStreak:Math.max(a.quizStreak||0,b.quizStreak||0),streak:Math.max(a.streak||0,b.streak||0),
+        lastSeen:Math.max(a.lastSeen||0,b.lastSeen||0),lastMiss:Math.max(a.lastMiss||0,b.lastMiss||0),
+        lastQuizWrong:Math.max(a.lastQuizWrong||0,b.lastQuizWrong||0),dueAt:Math.min(...[a.dueAt,b.dueAt].filter(Boolean))||0,
+        reviewStep:Math.max(a.reviewStep||0,b.reviewStep||0)};
+    });
+    mvStorage.set('mv_unified_stats',JSON.stringify(merged));
+    const td=read('mv_toefl_selectedStudyDays',[]), od=read('mv_opic_selectedStudyDays',[]).map(d=>Number(d)+TOEFL_DAY_COUNT);
+    mvStorage.set('mv_unified_selectedStudyDays',JSON.stringify(unique([...td,...od]).sort((a,b)=>a-b)));
+    mvStorage.set('mv_unified_migrated_v1','1');
+  }catch(e){console.warn('[SAYWARD migration skipped]',e)}
 }
 migrateUnifiedState();
 function packKey(name){return `mv_${currentPack}_${name}`}
@@ -2764,17 +2774,20 @@ function ensureStats(){
   });
 }
 function loadPackState(){
-  known=JSON.parse(localStorage.getItem(packKey('known'))||'[]');
-  favs=JSON.parse(localStorage.getItem(packKey('favs'))||'[]');
-  stats=JSON.parse(localStorage.getItem(packKey('stats'))||'{}');
+  known=mvStorage.json(packKey('known'),[]);
+  favs=mvStorage.json(packKey('favs'),[]);
+  stats=mvStorage.json(packKey('stats'),{});
+  if(!Array.isArray(known))known=[];
+  if(!Array.isArray(favs))favs=[];
+  if(!stats||typeof stats!=='object'||Array.isArray(stats))stats={};
   ensureStats();
 }
 function save(){
-  localStorage.setItem(packKey('known'),JSON.stringify(known));
-  localStorage.setItem(packKey('favs'),JSON.stringify(favs));
-  localStorage.setItem(packKey('stats'),JSON.stringify(stats));
-  if($('orderMode'))localStorage.setItem(packKey('order'),$('orderMode').value);
-  if($('speechMode'))localStorage.setItem(packKey('speech'),$('speechMode').value);
+  mvStorage.set(packKey('known'),JSON.stringify(known));
+  mvStorage.set(packKey('favs'),JSON.stringify(favs));
+  mvStorage.set(packKey('stats'),JSON.stringify(stats));
+  if($('orderMode'))mvStorage.set(packKey('order'),$('orderMode').value);
+  if($('speechMode'))mvStorage.set(packKey('speech'),$('speechMode').value);
 }
 loadPackState();
 function missClass(n){return n>=5?'fire':n>=3?'hot':n>=1?'warm':''}
@@ -7856,14 +7869,14 @@ $('todayStartBtn').onclick=()=>{
    dtracking=false;
    if(dlock){dlock=false;window.MV_SWIPE_STANDARD_254?.end?.(false)}
  },{passive:true});
-}{const rateSelect=document.getElementById('homeSpeechRate');if(rateSelect){rateSelect.value=String(getSpeechRate());rateSelect.addEventListener('change',()=>setSpeechRate(rateSelect.value));}}{const m=$('speechMode').value;$('autoStatus').textContent=m==='off'?'자동 읽기가 꺼져 있습니다.':m==='word'?'단어 읽기: 영어 단어와 한글 뜻만 3회 읽습니다.':m==='full'?'전체 읽기: 학습 단어만 영어와 한글 뜻을 읽고, 그 외 모든 항목은 영어만 읽습니다.':'학습 단어만 영어와 한글 뜻을 읽고, 예문과 패러프레이즈는 영어만 읽습니다.';}/* cold-start: vocabulary/entity decoding is lazy at render/TTS time */ALL_WORDS=UNIFIED_WORDS;DAY_META=UNIFIED_DAY_META;currentDay=1;W=ALL_WORDS.filter(w=>w.newDay===1);deck=[...W];loadPackState();applyPackUI();quizSelectedDay=currentDay;quizAllWrongMode=false;updateQuizDayNav();buildDeck('book');updateHomeDashboard();$('dayAppPage').classList.add('hidden');$('homePage').classList.remove('hidden');
+}{const rateSelect=document.getElementById('homeSpeechRate');if(rateSelect){rateSelect.value=String(getSpeechRate());rateSelect.addEventListener('change',()=>setSpeechRate(rateSelect.value));}}{const m=$('speechMode').value;$('autoStatus').textContent=m==='off'?'자동 읽기가 꺼져 있습니다.':m==='word'?'단어 읽기: 영어 단어와 한글 뜻만 3회 읽습니다.':m==='full'?'전체 읽기: 학습 단어만 영어와 한글 뜻을 읽고, 그 외 모든 항목은 영어만 읽습니다.':'학습 단어만 영어와 한글 뜻을 읽고, 예문과 패러프레이즈는 영어만 읽습니다.';}/* cold-start: vocabulary/entity decoding is lazy at render/TTS time */ALL_WORDS=UNIFIED_WORDS;DAY_META=UNIFIED_DAY_META;currentDay=1;W=ALL_WORDS.filter(w=>w.newDay===1);deck=[...W];/* state already loaded once above; do not render hidden DAY VOCA on startup */applyPackUI();quizSelectedDay=currentDay;quizAllWrongMode=false;updateQuizDayNav();updateHomeDashboard();$('dayAppPage').classList.add('hidden');$('homePage').classList.remove('hidden');
 
 
 
 
 
 
-window.APP_VERSION='5.4.45';
+window.APP_VERSION='5.4.46';
 window.addEventListener('pagehide',()=>{__repeatWakeSession=false;forceReleaseWakeLock();});
 
 
@@ -8515,7 +8528,7 @@ function mvSentenceEntryAudit182(){
 window.mvSentenceEntryAudit182=mvSentenceEntryAudit182;
 
 /* ===== V5.3.189 · STANDARD APP INFO / UPDATE HISTORY ===== */
-const MV_APP_VERSION='5.4.45';
+const MV_APP_VERSION='5.4.46';
 
 function mvCloseInfoOverlay(){
   const overlay=document.getElementById('mvInfoOverlay');
@@ -8545,11 +8558,11 @@ function mvOpenUpdateHistory(){
     `
       <div class="mvInfoVersionCard"><b>v${MV_APP_VERSION}</b><span>현재 설치 버전</span></div>
       <section class="mvInfoSection">
-        <h3>v5.4.45</h3>
+        <h3>v5.4.46</h3>
         <ul>
           <li>첫 실행 안정화를 위해 CSS 내 Base64 이미지를 외부 PNG로 분리했습니다.</li>
           <li>초기 화면 구성과 학습 데이터/기능 JS를 단계적으로 불러오는 STABILITY REBUILD 구조를 적용했습니다.</li>
-          <li>로딩 화면·홈 배지·앱 정보·브라우저 제목의 버전 표시를 v5.4.45로 통일했습니다.</li>
+          <li>로딩 화면·홈 배지·앱 정보·브라우저 제목의 버전 표시를 v5.4.46로 통일했습니다.</li>
           <li>GitHub 관리용 파일명은 버전 없이 고정하고, 내부 빌드 키만 갱신하도록 변경했습니다.</li>
         </ul>
       </section>
@@ -9421,11 +9434,11 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
     }
   };
 
-  // Rebind after all original setTimeout(0) handlers have executed.
+  // v5.4.46: do not build the legacy home mode panel here.
+  // The later standard-course controller creates its single backend panel once.
+  // Building an intermediate panel and then replacing it caused a large cold-start DOM/listener spike.
   setTimeout(()=>{
-    initHomeModeSwitch();injectFullRepeatConfig();bindSentenceSourceButtons();rebindMyControls();updateFullRepeatChip();
-    // Default home mode must always be DAY VOCA on a fresh load.
-    setHomeStudyMode('day');
+    injectFullRepeatConfig();bindSentenceSourceButtons();rebindMyControls();updateFullRepeatChip();
   },30);
 })();
 
@@ -12052,9 +12065,14 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
   'use strict';
 
   function rebuildStandardHomeModeSwitch(){
-    const panel=document.getElementById('homeStudyModePanel');
+    let panel=document.getElementById('homeStudyModePanel');
     const mySection=document.querySelector('#homePage .myClassSection');
-    if(!panel||!mySection)return;
+    if(!mySection)return;
+    if(!panel){
+      panel=document.createElement('section');
+      panel.id='homeStudyModePanel';panel.className='homeStudyModePanel';
+      mySection.parentNode.insertBefore(panel,mySection);
+    }
 
     panel.innerHTML=`
       <div class="homeStudyModeTitle" style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap">
@@ -12320,8 +12338,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
 
     // MY / SORI / OPIC / FRIENDS cards use the same stamped canonical navigation route.
     studyStampCourseCards();
-
-    setHomeStudyMode('day');
+    // v5.4.46: final clean-home controller applies the remembered mode once.
   }
 
   setTimeout(bindStandardCourseUI,160);
@@ -13490,3 +13507,6 @@ function mvSoriGroup2Audit194(){
   return {version:'v5.3.196',lessonCount:studyCourseLessonCount('sori'),core:SORI_GROUP_2.corrections.length,chunks:SORI_GROUP_2.chunks.length,speaking:SORI_GROUP_2.speaking.length,points:SORI_GROUP_2.habits.length,sources:[...new Set(SORI_GROUP_2.corrections.map(x=>x.source))],card:!!document.getElementById('soriGroup2Card')};
 }
 window.mvSoriGroup2Audit194=mvSoriGroup2Audit194;
+
+// v5.4.46 bootstrap handshake: reached only after the full core evaluated successfully.
+window.__SAYWARD_CORE_READY__={version:'5.4.46',at:Date.now()};
