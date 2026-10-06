@@ -1,9 +1,9 @@
 <!doctype html><html lang="ko"><head>
 <!-- SAYWARD · stable staged boot -->
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.48</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.49</title>
 
 <meta name="theme-color" content="#2563eb">
-<meta name="sayward-build" content="v5.4.48">
+<meta name="sayward-build" content="v5.4.49">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
@@ -38,15 +38,15 @@ html.saywardBooting body>*:not(#saywardBootOverlay){visibility:hidden!important}
 #saywardBootOverlay .bootLogo{width:62px;height:62px;margin:0 auto 14px;border-radius:19px;display:grid;place-items:center;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-weight:900;font-size:23px}
 #saywardBootOverlay h1{margin:0;font-size:24px}.bootSub{margin:7px 0 18px;color:#667085;font-size:13px;line-height:1.45}.bootBar{height:9px;border-radius:999px;background:#edf1f7;overflow:hidden}.bootFill{height:100%;width:3%;background:linear-gradient(90deg,#2563eb,#7c3aed);border-radius:inherit;transition:width .2s ease}.bootStatus{margin-top:11px;font-size:12px;color:#475467;min-height:18px}.bootPct{font-weight:800;color:#2563eb}.bootRetry{display:none;margin:16px auto 0;border:0;border-radius:12px;background:#2563eb;color:#fff;padding:10px 16px;font-weight:800}.bootDiag{display:none;margin-top:10px;padding:8px 10px;border-radius:10px;background:#fff7ed;color:#9a3412;font-size:10.5px;line-height:1.4;text-align:left}
 </style>
-<script>window.SAYWARD_VERSION='5.4.48';document.documentElement.style.setProperty('--sayward-version-label','\"v'+window.SAYWARD_VERSION+'\"');document.documentElement.classList.add('saywardBooting');</script>
+<script>window.SAYWARD_VERSION='5.4.49';document.documentElement.style.setProperty('--sayward-version-label','\"v'+window.SAYWARD_VERSION+'\"');document.documentElement.classList.add('saywardBooting');</script>
 
 
 <script id="saywardSwRecoveryPreflight">
-/* v5.4.48 RECOVERY: centrally retire historical SAYWARD service workers/caches
+/* v5.4.49 RECOVERY: centrally retire historical SAYWARD service workers/caches
    without deleting learning data stored in localStorage. */
 window.__SAYWARD_PREFLIGHT__=(async()=>{
-  const VERSION='5.4.48';
-  const BUILD='20261006-v5.4.48-boot-failsafe';
+  const VERSION='5.4.49';
+  const BUILD='20261006-v5.4.49-css-failsafe';
   const RELOAD_GUARD='sayward_recovery_reload_548';
   const STATUS_KEY='sayward_recovery_status';
   const sleep=ms=>new Promise(r=>setTimeout(r,ms));
@@ -144,7 +144,7 @@ window.__SAYWARD_PREFLIGHT__=(async()=>{
 </head><body>
 <div id="saywardBootOverlay" aria-live="polite">
   <div class="bootCard">
-    <div class="bootLogo">S</div><h1>SAYWARD <span style="font-size:13px;color:#667085;font-weight:800;vertical-align:middle">v5.4.48</span></h1>
+    <div class="bootLogo">S</div><h1>SAYWARD <span style="font-size:13px;color:#667085;font-weight:800;vertical-align:middle">v5.4.49</span></h1>
     <div class="bootSub">처음 실행에서도 안정적으로 열리도록 화면과 학습 데이터를 순서대로 준비하고 있습니다.</div>
     <div class="bootBar"><div class="bootFill" id="saywardBootFill"></div></div>
     <div class="bootStatus" id="saywardBootStatus"><span class="bootPct">0%</span> · 시작 준비</div>
@@ -1241,8 +1241,8 @@ Config의 <b>Day Loop 문장당 반복 횟수</b>에서 1회 / 2회 / 3회 / 5�
 <script id="saywardStagedBootstrap">
 (()=>{
 'use strict';
-const BUILD='20261006-v5.4.48-boot-failsafe';
-const VERSION='5.4.48';
+const BUILD='20261006-v5.4.49-css-failsafe';
+const VERSION='5.4.49';
 const CSS=['sayward-core.css','sayward-patches.css','sayward-home.css'];
 const JS=['sayward-toefl-1.js','sayward-toefl-2.js','sayward-toefl-3.js','sayward-toefl-4.js','sayward-opic-1.js','sayward-opic-2.js','sayward-core.js','sayward-patches.js'];
 const fill=document.getElementById('saywardBootFill');
@@ -1291,7 +1291,35 @@ function timed(label,promise,ms=20000){
   let id;const timeout=new Promise((_,reject)=>{id=setTimeout(()=>reject(new Error(`${label} timeout (${ms/1000}s)`)),ms)});
   return Promise.race([promise,timeout]).finally(()=>clearTimeout(id));
 }
-function loadCss(url){return timed('CSS '+url,new Promise((resolve,reject)=>{const l=document.createElement('link');l.rel='stylesheet';l.href=withBuild(url);l.onload=()=>resolve();l.onerror=()=>reject(new Error('CSS '+url));document.head.appendChild(l);}));}
+async function loadCss(url){
+  // v5.4.49: do not make boot depend on <link rel=stylesheet>.onload.
+  // Android Chrome normal profiles can occasionally delay that event even when
+  // the same CSS fetch completes immediately. Fetch the text, inject it, and
+  // fall back to a non-blocking link if fetch ever fails.
+  const href=withBuild(url);
+  const started=Date.now();
+  try{
+    const cssText=await timed('CSS fetch '+url,(async()=>{
+      const r=await fetch(href,{cache:'default',credentials:'same-origin'});
+      if(!r.ok)throw new Error('HTTP '+r.status+' for '+url);
+      return await r.text();
+    })(),8000);
+    const st=document.createElement('style');
+    st.setAttribute('data-sayward-css',url);
+    st.textContent=cssText;
+    document.head.appendChild(st);
+    try{localStorage.setItem('sayward_boot_css',JSON.stringify({build:BUILD,file:url,mode:'fetch-style',ms:Date.now()-started,at:Date.now()}));}catch(e){}
+    return 'fetch-style';
+  }catch(err){
+    // Last-resort path: attach the stylesheet but never wait for its load event.
+    const l=document.createElement('link');
+    l.rel='stylesheet';l.href=href;l.setAttribute('data-sayward-css-fallback',url);
+    document.head.appendChild(l);
+    try{localStorage.setItem('sayward_boot_css',JSON.stringify({build:BUILD,file:url,mode:'link-nonblocking',message:String(err?.message||err),ms:Date.now()-started,at:Date.now()}));}catch(e){}
+    await wait(80);
+    return 'link-nonblocking';
+  }
+}
 function loadJs(url){return timed('JS '+url,new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=withBuild(url);s.async=false;s.onload=()=>resolve();s.onerror=()=>reject(new Error('JS '+url));document.body.appendChild(s);}));}
 async function waitReady(name,test,ms=4000){
   const started=Date.now();
@@ -1320,10 +1348,11 @@ function armBootWatchdog(){
 }
 async function start(){
   if(retry)retry.style.display='none';done=0;progress('시작 준비');armBootWatchdog();
-  setStage('preflight','v5.4.48 recovery cleanup');
+  setStage('preflight','v5.4.49 recovery cleanup');
   try{
     if(window.__SAYWARD_PREFLIGHT__)await timed('preflight',window.__SAYWARD_PREFLIGHT__,8000);
-    await safeNextPaint();
+    await wait(25);
+    try{localStorage.setItem(BOOT_YIELD_KEY,JSON.stringify({build:BUILD,source:'timer-pre-css',fallbacks:bootYieldFallbacks,visibility:document.visibilityState,at:Date.now()}));}catch(e){}
     for(const f of CSS){setStage('css',f);progress(`화면 스타일 준비 · ${done+1}/${total}`);await loadCss(f);done++;progress(`화면 스타일 준비 · ${done}/${total}`);await wait(35);}
     setStage('dom','app-template');progress('앱 화면 구성');
     const tpl=document.getElementById('saywardAppTemplate');
@@ -1346,7 +1375,7 @@ async function start(){
     if(overlay)overlay.remove();
     try{localStorage.setItem('sayward_boot_last',JSON.stringify({build:BUILD,stage:'complete',at:Date.now(),complete:true,yieldFallbacks:bootYieldFallbacks}));}catch(e){}
     clearTimeout(bootWatchdog);
-    // v5.4.48: normal runtime does not register a persistent service worker.
+    // v5.4.49: normal runtime does not register a persistent service worker.
   }catch(err){
     console.error('[SAYWARD boot]',err);noteError('boot',err);setStage('failed',String(err?.message||err));
     if(status)status.textContent='초기화 중 오류가 발생했습니다. 아래 진단 문구를 캡처해 주세요.';

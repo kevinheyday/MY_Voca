@@ -4292,7 +4292,7 @@ function navigate292(item){S292.lastTarget=item?.id||null;if(item.course==='day'
 
 /* Keep the launcher isolated to HOME so playback/swipe behavior is not modified. */
 createUI292();
-// v5.4.48: the full cross-course search index is built only on first real search.
+// v5.4.49: the full cross-course search index is built only on first real search.
 // Do not scan all learning data during cold start.
 
 window.mvUnifiedSearchAudit292=()=>({version:'v5.3.292',indexCount:buildIndex292().length,query:S292.query,filter:S292.filter,resultCount:S292.results.length,homeButton:!!document.getElementById('mvSearchHomeBtn292'),rule:'additive unified search only; existing playback/swipe/card logic unchanged'});
@@ -4464,7 +4464,7 @@ function bindHomeSwipe(){
 }
 
 function boot(){
-  try{document.title='SAYWARD v5.4.48'}catch(e){}
+  try{document.title='SAYWARD v5.4.49'}catch(e){}
   try{ensureMyClassHomeCards()}catch(e){console.warn('[SAYWARD] MY card auto-heal',e)}
   setHomeVisibleClass();bindLauncher();bindOverallProxy();buildDaySettings();placeTodayCard();bindHomeSwipe();
   const initialMainMode=resolveInitialMainMode();
@@ -4483,7 +4483,7 @@ window.mvCleanAudit540=function(){
   const h=home(),bar=document.getElementById('sharedStudySelectBar');
   const cards=[...document.querySelectorAll('#homePage .myClassSection .myClassCard')].slice(0,4);
   return {
-    version:'v5.4.48',mode:currentMode(),defaultMainMode:resolveInitialMainMode(),hero:!!document.getElementById('cleanHeroMenuHit'),launcher:document.querySelectorAll('.cleanModeCard').length,
+    version:'v5.4.49',mode:currentMode(),defaultMainMode:resolveInitialMainMode(),hero:!!document.getElementById('cleanHeroMenuHit'),launcher:document.querySelectorAll('.cleanModeCard').length,
     sharedBar:!!bar,daySettings:!!document.getElementById('cleanDaySettings'),legacyModePanelVisible:!!document.getElementById('homeStudyModePanel')&&getComputedStyle(document.getElementById('homeStudyModePanel')).display!=='none',
     visibleSections:{day:getComputedStyle(document.querySelector('#homePage .daySection')||document.body).display,my:getComputedStyle(document.querySelector('#homePage .myClassSection')||document.body).display,sori:getComputedStyle(document.querySelector('#homePage .soriClassSection')||document.body).display,opic:getComputedStyle(document.querySelector('#homePage .opicClassSection')||document.body).display,friends:getComputedStyle(document.querySelector('#homePage .friendsClassSection')||document.body).display},
     myCards:cards.map(c=>({w:Math.round(c.getBoundingClientRect().width),h:Math.round(c.getBoundingClientRect().height)})),
@@ -4530,13 +4530,13 @@ window.mvCleanAudit540=function(){
   document.addEventListener('change',e=>{if(e.target?.closest?.('#sharedStudyRepeatParts206'))setTimeout(normalizeFavorite,0)},true);
 })();
 
-// v5.4.48: one authoritative visible version update after all legacy patches have loaded.
+// v5.4.49: one authoritative visible version update after all legacy patches have loaded.
 try{
-  const __v=String(window.SAYWARD_VERSION||'5.4.48');
+  const __v=String(window.SAYWARD_VERSION||'5.4.49');
   document.title='SAYWARD v'+__v;
   document.documentElement.style.setProperty('--sayward-version-label','\"v'+__v+'\"');
   document.querySelectorAll('.appVersion').forEach(x=>x.textContent='SAYWARD v'+__v);
   const b=document.getElementById('mvBuildBadge');if(b)b.textContent='v'+__v;
   document.querySelectorAll('.versionTag,.versionBadge,.buildBadge').forEach(x=>x.textContent='v'+__v);
 }catch(e){}
-window.__SAYWARD_PATCHES_READY__={version:'5.4.48',at:Date.now()};
+window.__SAYWARD_PATCHES_READY__={version:'5.4.49',at:Date.now()};
