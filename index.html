@@ -1,9 +1,9 @@
 <!doctype html><html lang="ko"><head>
 <!-- SAYWARD · stable staged boot -->
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.45</title>
 
 <meta name="theme-color" content="#2563eb">
-<meta name="sayward-build" content="stable-staged-boot">
+<meta name="sayward-build" content="v5.4.45">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
@@ -43,7 +43,7 @@ html.saywardBooting body>*:not(#saywardBootOverlay){visibility:hidden!important}
 </head><body>
 <div id="saywardBootOverlay" aria-live="polite">
   <div class="bootCard">
-    <div class="bootLogo">S</div><h1>SAYWARD</h1>
+    <div class="bootLogo">S</div><h1>SAYWARD <span style="font-size:13px;color:#667085;font-weight:800;vertical-align:middle">v5.4.45</span></h1>
     <div class="bootSub">처음 실행에서도 안정적으로 열리도록 화면과 학습 데이터를 순서대로 준비하고 있습니다.</div>
     <div class="bootBar"><div class="bootFill" id="saywardBootFill"></div></div>
     <div class="bootStatus" id="saywardBootStatus"><span class="bootPct">0%</span> · 시작 준비</div>
@@ -1140,7 +1140,7 @@ Config의 <b>Day Loop 문장당 반복 횟수</b>에서 1회 / 2회 / 3회 / 5�
 <script id="saywardStagedBootstrap">
 (()=>{
 'use strict';
-const BUILD='20261006-stable-2';
+const BUILD='20261006-v5.4.45';
 const CSS=['sayward-core.css','sayward-patches.css','sayward-home.css'];
 const JS=['sayward-toefl-1.js','sayward-toefl-2.js','sayward-toefl-3.js','sayward-toefl-4.js','sayward-opic-1.js','sayward-opic-2.js','sayward-core.js','sayward-patches.js'];
 const fill=document.getElementById('saywardBootFill');

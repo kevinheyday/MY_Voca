@@ -1,4 +1,4 @@
-const CACHE='sayward-runtime-20261006-stable-2';
+const CACHE='sayward-runtime-v5.4.45';
 const CORE=['./','./index.html','./sayward-core.css','./sayward-patches.css','./sayward-home.css'];
 self.addEventListener('install',event=>{
   event.waitUntil((async()=>{

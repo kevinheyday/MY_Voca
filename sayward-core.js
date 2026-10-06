@@ -7863,7 +7863,7 @@ $('todayStartBtn').onclick=()=>{
 
 
 
-window.APP_VERSION='stable-staged-boot';
+window.APP_VERSION='5.4.45';
 window.addEventListener('pagehide',()=>{__repeatWakeSession=false;forceReleaseWakeLock();});
 
 
@@ -8515,7 +8515,7 @@ function mvSentenceEntryAudit182(){
 window.mvSentenceEntryAudit182=mvSentenceEntryAudit182;
 
 /* ===== V5.3.189 · STANDARD APP INFO / UPDATE HISTORY ===== */
-const MV_APP_VERSION='5.4.41';
+const MV_APP_VERSION='5.4.45';
 
 function mvCloseInfoOverlay(){
   const overlay=document.getElementById('mvInfoOverlay');
@@ -8544,6 +8544,15 @@ function mvOpenUpdateHistory(){
     `MY ENGLISH v${MV_APP_VERSION}`,
     `
       <div class="mvInfoVersionCard"><b>v${MV_APP_VERSION}</b><span>현재 설치 버전</span></div>
+      <section class="mvInfoSection">
+        <h3>v5.4.45</h3>
+        <ul>
+          <li>첫 실행 안정화를 위해 CSS 내 Base64 이미지를 외부 PNG로 분리했습니다.</li>
+          <li>초기 화면 구성과 학습 데이터/기능 JS를 단계적으로 불러오는 STABILITY REBUILD 구조를 적용했습니다.</li>
+          <li>로딩 화면·홈 배지·앱 정보·브라우저 제목의 버전 표시를 v5.4.45로 통일했습니다.</li>
+          <li>GitHub 관리용 파일명은 버전 없이 고정하고, 내부 빌드 키만 갱신하도록 변경했습니다.</li>
+        </ul>
+      </section>
       <section class="mvInfoSection">
         <h3>v5.4.41</h3>
         <ul><li>MY 수업 13에 Based on everything I've heard so far, ... Chunk를 추가했습니다.</li>
