@@ -2705,7 +2705,7 @@ function studyCourseSentenceCards(course='sori',lesson=1){
 window.studyCourseSentenceCards=studyCourseSentenceCards;
 
 
-// v5.4.49: storage failures/corruption must never abort app startup.
+// v5.4.50: storage failures/corruption must never abort app startup.
 const mvStorage={
   get(key,fallback=null){try{const v=localStorage.getItem(key);return v===null?fallback:v}catch(e){console.warn('[SAYWARD storage:get]',key,e);return fallback}},
   set(key,value){try{localStorage.setItem(key,value);return true}catch(e){console.warn('[SAYWARD storage:set]',key,e);return false}},
@@ -7876,7 +7876,7 @@ $('todayStartBtn').onclick=()=>{
 
 
 
-window.APP_VERSION='5.4.49';
+window.APP_VERSION='5.4.50';
 window.addEventListener('pagehide',()=>{__repeatWakeSession=false;forceReleaseWakeLock();});
 
 
@@ -8528,7 +8528,7 @@ function mvSentenceEntryAudit182(){
 window.mvSentenceEntryAudit182=mvSentenceEntryAudit182;
 
 /* ===== V5.3.189 · STANDARD APP INFO / UPDATE HISTORY ===== */
-const MV_APP_VERSION='5.4.49';
+const MV_APP_VERSION='5.4.50';
 
 function mvCloseInfoOverlay(){
   const overlay=document.getElementById('mvInfoOverlay');
@@ -8558,7 +8558,7 @@ function mvOpenUpdateHistory(){
     `
       <div class="mvInfoVersionCard"><b>v${MV_APP_VERSION}</b><span>현재 설치 버전</span></div>
       <section class="mvInfoSection">
-        <h3>v5.4.49</h3>
+        <h3>v5.4.50</h3>
         <ul>
           <li>첫 실행 안정화를 위해 CSS 내 Base64 이미지를 외부 PNG로 분리했습니다.</li>
           <li>초기 화면 구성과 학습 데이터/기능 JS를 단계적으로 불러오는 STABILITY REBUILD 구조를 적용했습니다.</li>
@@ -9434,7 +9434,7 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
     }
   };
 
-  // v5.4.49: do not build the legacy home mode panel here.
+  // v5.4.50: do not build the legacy home mode panel here.
   // The later standard-course controller creates its single backend panel once.
   // Building an intermediate panel and then replacing it caused a large cold-start DOM/listener spike.
   setTimeout(()=>{
@@ -12338,7 +12338,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
 
     // MY / SORI / OPIC / FRIENDS cards use the same stamped canonical navigation route.
     studyStampCourseCards();
-    // v5.4.49: final clean-home controller applies the remembered mode once.
+    // v5.4.50: final clean-home controller applies the remembered mode once.
   }
 
   setTimeout(bindStandardCourseUI,160);
@@ -13508,5 +13508,5 @@ function mvSoriGroup2Audit194(){
 }
 window.mvSoriGroup2Audit194=mvSoriGroup2Audit194;
 
-// v5.4.49 bootstrap handshake: reached only after the full core evaluated successfully.
-window.__SAYWARD_CORE_READY__={version:'5.4.49',at:Date.now()};
+// v5.4.50 bootstrap handshake: reached only after the full core evaluated successfully.
+window.__SAYWARD_CORE_READY__={version:'5.4.50',at:Date.now()};

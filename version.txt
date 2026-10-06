@@ -1,3 +1,3 @@
-SAYWARD v5.4.49
-build: 20261006-v5.4.49-css-failsafe
-mode: boot-failsafe + service-worker-recovery
+SAYWARD v5.4.50
+build: 20261006-v5.4.50-post-boot-trace
+mode: post-boot-trace + home-stability-check + service-worker-recovery

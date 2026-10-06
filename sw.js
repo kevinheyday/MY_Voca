@@ -1,8 +1,8 @@
-// SAYWARD v5.4.49 RECOVERY WORKER
+// SAYWARD v5.4.50 RECOVERY WORKER — POST-BOOT TRACE release
 // Purpose: remove historical SAYWARD caches/service-worker registration centrally.
 // It intentionally has NO fetch handler and never touches localStorage learning data.
-const RECOVERY_VERSION='5.4.49';
-const RECOVERY_TAG='548';
+const RECOVERY_VERSION='5.4.50';
+const RECOVERY_TAG='550';
 self.addEventListener('install',event=>event.waitUntil(self.skipWaiting()));
 self.addEventListener('activate',event=>{
   event.waitUntil((async()=>{
