@@ -1,9 +1,9 @@
 <!doctype html><html lang="ko"><head>
 <!-- SAYWARD · stable staged boot -->
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.54</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.55</title>
 
 <meta name="theme-color" content="#2563eb">
-<meta name="sayward-build" content="v5.4.54">
+<meta name="sayward-build" content="v5.4.55">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
@@ -40,114 +40,19 @@ html.saywardHomeBootGuard body{visibility:visible!important}
 #saywardBootOverlay .bootLogo{width:62px;height:62px;margin:0 auto 14px;border-radius:19px;display:grid;place-items:center;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-weight:900;font-size:23px}
 #saywardBootOverlay h1{margin:0;font-size:24px}.bootSub{margin:7px 0 18px;color:#667085;font-size:13px;line-height:1.45}.bootBar{height:9px;border-radius:999px;background:#edf1f7;overflow:hidden}.bootFill{height:100%;width:3%;background:linear-gradient(90deg,#2563eb,#7c3aed);border-radius:inherit;transition:width .2s ease}.bootStatus{margin-top:11px;font-size:12px;color:#475467;min-height:18px}.bootPct{font-weight:800;color:#2563eb}.bootRetry{display:none;margin:16px auto 0;border:0;border-radius:12px;background:#2563eb;color:#fff;padding:10px 16px;font-weight:800}.bootDiag{display:none;margin-top:10px;padding:8px 10px;border-radius:10px;background:#fff7ed;color:#9a3412;font-size:10.5px;line-height:1.4;text-align:left}
 </style>
-<script>window.SAYWARD_VERSION='5.4.54';document.documentElement.style.setProperty('--sayward-version-label','\"v'+window.SAYWARD_VERSION+'\"');document.documentElement.classList.add('saywardBooting');</script>
+<script>window.SAYWARD_VERSION='5.4.55';document.documentElement.style.setProperty('--sayward-version-label','\"v'+window.SAYWARD_VERSION+'\"');document.documentElement.classList.add('saywardBooting');</script>
 
 
-<script id="saywardSwRecoveryPreflight">
-/* v5.4.54 RECOVERY: centrally retire historical SAYWARD service workers/caches
-   without deleting learning data stored in localStorage. */
-window.__SAYWARD_PREFLIGHT__=(async()=>{
-  const VERSION='5.4.54';
-  const BUILD='20261007-v5.4.54-profile-lock';
-  const RELOAD_GUARD='sayward_recovery_reload_551';
-  const STATUS_KEY='sayward_recovery_status';
-  const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-  const writeStatus=(step,extra={})=>{try{localStorage.setItem(STATUS_KEY,JSON.stringify({version:VERSION,build:BUILD,step,at:Date.now(),...extra}))}catch(e){}};
-  try{
-    // Reset only a transient playback checkpoint once. Learning/progress/stat keys are untouched.
-    try{
-      if(!localStorage.getItem('sayward_recovery_transient_551')){
-        localStorage.removeItem('sayward_playback_resume_v1');
-        localStorage.setItem('sayward_recovery_transient_551','1');
-      }
-    }catch(e){}
-
-    if(!('serviceWorker' in navigator)){
-      writeStatus('no-service-worker-api');
-      return {ok:true,legacy:false};
-    }
-
-    let regs=[]; let cacheKeys=[];
-    try{regs=await navigator.serviceWorker.getRegistrations()}catch(e){}
-    try{if('caches' in window)cacheKeys=await caches.keys()}catch(e){}
-    const swController=navigator.serviceWorker.controller;
-    const saywardCaches=cacheKeys.filter(k=>/^sayward/i.test(k));
-    const hadLegacy=!!swController||regs.length>0||saywardCaches.length>0;
-
-    if(!hadLegacy){
-      writeStatus('clean-start');
-      return {ok:true,legacy:false};
-    }
-
-    writeStatus('legacy-detected',{
-      controller:swController?.scriptURL||'',
-      registrations:regs.map(r=>r.active?.scriptURL||r.waiting?.scriptURL||r.installing?.scriptURL||''),
-      caches:saywardCaches
-    });
-
-    let recoveryMessage=false;
-    const onMessage=e=>{
-      if(e?.data?.type==='SAYWARD_RECOVERY_DONE'){
-        recoveryMessage=true;
-        writeStatus('worker-cleaned',{deletedCaches:e.data.deletedCaches||[]});
-      }
-    };
-    navigator.serviceWorker.addEventListener('message',onMessage);
-
-    // Force an update of the registration at the SAME scope before any heavy app code runs.
-    // updateViaCache:'none' prevents the recovery worker itself from being satisfied by HTTP cache.
-    try{
-      const reg=await navigator.serviceWorker.register('./sw.js?recovery=551',{scope:'./',updateViaCache:'none'});
-      try{await reg.update()}catch(e){}
-      writeStatus('recovery-worker-requested',{script:reg.installing?.scriptURL||reg.waiting?.scriptURL||reg.active?.scriptURL||''});
-    }catch(e){
-      writeStatus('recovery-worker-register-failed',{error:String(e)});
-    }
-
-    // Give the recovery worker a short window to activate. The page also performs the
-    // same cleanup as a fallback so users are not dependent on worker lifecycle timing.
-    const until=Date.now()+3200;
-    while(Date.now()<until&&!recoveryMessage)await sleep(80);
-
-    try{
-      if('caches' in window){
-        const keys=await caches.keys();
-        await Promise.all(keys.filter(k=>/^sayward/i.test(k)).map(k=>caches.delete(k)));
-      }
-    }catch(e){}
-    try{
-      regs=await navigator.serviceWorker.getRegistrations();
-      await Promise.all(regs.map(r=>r.unregister().catch(()=>false)));
-    }catch(e){}
-    navigator.serviceWorker.removeEventListener('message',onMessage);
-    writeStatus('page-cleanup-complete',{recoveryMessage});
-
-    // If the current document was controlled by an old worker, start ONE fresh network
-    // navigation after the registration/cache is gone. sessionStorage prevents loops.
-    if(!sessionStorage.getItem(RELOAD_GUARD)){
-      sessionStorage.setItem(RELOAD_GUARD,'1');
-      const u=new URL(location.href);
-      u.searchParams.set('swrecovery','551');
-      u.searchParams.set('_',Date.now());
-      location.replace(u.toString());
-      return await new Promise(()=>{});
-    }
-
-    return {ok:true,legacy:true,recoveryMessage};
-  }catch(e){
-    console.warn('[SAYWARD recovery preflight]',e);
-    writeStatus('preflight-error',{error:String(e)});
-    // Recovery must never block access to the app forever.
-    return {ok:false,error:String(e)};
-  }
-})();
+<script id="saywardZeroPreflightMarker">
+/* v5.4.55 ZERO PREFLIGHT: startup intentionally performs no Service Worker / CacheStorage access. */
+window.__SAYWARD_ZERO_PREFLIGHT__={version:'5.4.55',build:'20261007-v5.4.55-zero-preflight',enabled:true,at:Date.now(),perf:(performance?.now?.()||0)};
 </script>
 
 </head><body>
 <div id="saywardBootOverlay" aria-live="polite">
   <div class="bootCard">
-    <div class="bootLogo">S</div><h1>SAYWARD <span style="font-size:13px;color:#667085;font-weight:800;vertical-align:middle">v5.4.54</span></h1>
-    <div class="bootSub">처음 실행에서도 안정적으로 열리도록 화면과 학습 데이터를 순서대로 준비하고 있습니다.</div>
+    <div class="bootLogo">S</div><h1>SAYWARD <span style="font-size:13px;color:#667085;font-weight:800;vertical-align:middle">v5.4.55</span></h1>
+    <div class="bootSub">빠른 첫 실행을 위해 브라우저 복구 검사를 건너뛰고 홈 화면부터 준비합니다.</div>
     <div class="bootBar"><div class="bootFill" id="saywardBootFill"></div></div>
     <div class="bootStatus" id="saywardBootStatus"><span class="bootPct">0%</span> · 시작 준비</div>
     <div class="bootDiag" id="saywardBootDiag"></div>
@@ -1243,8 +1148,8 @@ Config의 <b>Day Loop 문장당 반복 횟수</b>에서 1회 / 2회 / 3회 / 5�
 <script id="saywardStagedBootstrap">
 (()=>{
 'use strict';
-const BUILD='20261007-v5.4.54-profile-lock';
-const VERSION='5.4.54';
+const BUILD='20261007-v5.4.55-zero-preflight';
+const VERSION='5.4.55';
 const CSS=['sayward-core.css','sayward-patches.css','sayward-home.css'];
 const TOEFL_JS=['sayward-toefl-1.js','sayward-toefl-2.js','sayward-toefl-3.js','sayward-toefl-4.js'];
 const OPIC_JS=['sayward-opic-1.js','sayward-opic-2.js'];
@@ -1449,7 +1354,7 @@ async function activateFull(action=null){
   }finally{if(fullReady)fullLoading=false}})();return fullPromise
 }
 window.SAYWARD_ACTIVATE_FULL=activateFull;
-(async()=>{try{trace('bootstrap-start','lean startup initialized');setBootProgress(4,'브라우저 정리 확인');await Promise.race([Promise.resolve(window.__SAYWARD_PREFLIGHT__),wait(4500)]);trace('preflight','done');for(let i=0;i<CSS.length;i++){setBootProgress(8+i*7,`화면 스타일 ${i+1}/${CSS.length}`);trace('css',CSS[i]);await loadCss(CSS[i]);await wait(18)}setBootProgress(30,'홈 화면 구성');const home=attachLeanHome();prepareLeanHomeLayout();installLeanInterception();document.title='SAYWARD v'+VERSION;document.documentElement.classList.remove('saywardBooting','saywardHomeBootGuard');document.documentElement.classList.add('saywardLeanReady');hideOverlay();await wait(40);shellReady=true;currentRun.shellReady=true;currentRun.shellReadyAt=Date.now();trace('lean-home-visible','first usable home',{homeNodes:home.getElementsByTagName('*').length});try{localStorage.removeItem('sayward_boot_error')}catch(e){}setBadge('홈 학습 현황 준비 중',true);setTimeout(()=>hydrateLeanHomeData().finally(()=>setTimeout(()=>setBadge('',false),500)),220);trace('true-lazy-idle','no background prefetch');writeHistory()}catch(e){noteError('lean-bootstrap',e);if(status)status.textContent='초기 화면 준비 중 오류가 발생했습니다.';if(retry){retry.style.display='inline-block';retry.onclick=()=>location.reload()}}})();
+(async()=>{try{trace('bootstrap-start','zero-preflight startup');setBootProgress(4,'화면 준비');trace('zero-preflight','Service Worker / CacheStorage startup checks skipped');for(let i=0;i<CSS.length;i++){setBootProgress(8+i*7,`화면 스타일 ${i+1}/${CSS.length}`);trace('css',CSS[i]);await loadCss(CSS[i]);await wait(18)}setBootProgress(30,'홈 화면 구성');const home=attachLeanHome();prepareLeanHomeLayout();installLeanInterception();document.title='SAYWARD v'+VERSION;document.documentElement.classList.remove('saywardBooting','saywardHomeBootGuard');document.documentElement.classList.add('saywardLeanReady');hideOverlay();await wait(40);shellReady=true;currentRun.shellReady=true;currentRun.shellReadyAt=Date.now();trace('lean-home-visible','first usable home',{homeNodes:home.getElementsByTagName('*').length});try{localStorage.removeItem('sayward_boot_error')}catch(e){}setBadge('홈 학습 현황 준비 중',true);setTimeout(()=>hydrateLeanHomeData().finally(()=>setTimeout(()=>setBadge('',false),500)),220);trace('true-lazy-idle','no background prefetch');writeHistory()}catch(e){noteError('lean-bootstrap',e);if(status)status.textContent='초기 화면 준비 중 오류가 발생했습니다.';if(retry){retry.style.display='inline-block';retry.onclick=()=>location.reload()}}})();
 })();
 </script>
 
