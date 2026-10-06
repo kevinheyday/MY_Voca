@@ -1,9 +1,9 @@
 <!doctype html><html lang="ko"><head>
 <!-- SAYWARD · stable staged boot -->
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.51</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.52</title>
 
 <meta name="theme-color" content="#2563eb">
-<meta name="sayward-build" content="v5.4.51">
+<meta name="sayward-build" content="v5.4.52">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 
@@ -40,15 +40,15 @@ html.saywardHomeBootGuard body{visibility:visible!important}
 #saywardBootOverlay .bootLogo{width:62px;height:62px;margin:0 auto 14px;border-radius:19px;display:grid;place-items:center;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-weight:900;font-size:23px}
 #saywardBootOverlay h1{margin:0;font-size:24px}.bootSub{margin:7px 0 18px;color:#667085;font-size:13px;line-height:1.45}.bootBar{height:9px;border-radius:999px;background:#edf1f7;overflow:hidden}.bootFill{height:100%;width:3%;background:linear-gradient(90deg,#2563eb,#7c3aed);border-radius:inherit;transition:width .2s ease}.bootStatus{margin-top:11px;font-size:12px;color:#475467;min-height:18px}.bootPct{font-weight:800;color:#2563eb}.bootRetry{display:none;margin:16px auto 0;border:0;border-radius:12px;background:#2563eb;color:#fff;padding:10px 16px;font-weight:800}.bootDiag{display:none;margin-top:10px;padding:8px 10px;border-radius:10px;background:#fff7ed;color:#9a3412;font-size:10.5px;line-height:1.4;text-align:left}
 </style>
-<script>window.SAYWARD_VERSION='5.4.51';document.documentElement.style.setProperty('--sayward-version-label','\"v'+window.SAYWARD_VERSION+'\"');document.documentElement.classList.add('saywardBooting');</script>
+<script>window.SAYWARD_VERSION='5.4.52';document.documentElement.style.setProperty('--sayward-version-label','\"v'+window.SAYWARD_VERSION+'\"');document.documentElement.classList.add('saywardBooting');</script>
 
 
 <script id="saywardSwRecoveryPreflight">
-/* v5.4.51 RECOVERY: centrally retire historical SAYWARD service workers/caches
+/* v5.4.52 RECOVERY: centrally retire historical SAYWARD service workers/caches
    without deleting learning data stored in localStorage. */
 window.__SAYWARD_PREFLIGHT__=(async()=>{
-  const VERSION='5.4.51';
-  const BUILD='20261006-v5.4.51-lean-startup';
+  const VERSION='5.4.52';
+  const BUILD='20261006-v5.4.52-lean-home-fix';
   const RELOAD_GUARD='sayward_recovery_reload_551';
   const STATUS_KEY='sayward_recovery_status';
   const sleep=ms=>new Promise(r=>setTimeout(r,ms));
@@ -146,7 +146,7 @@ window.__SAYWARD_PREFLIGHT__=(async()=>{
 </head><body>
 <div id="saywardBootOverlay" aria-live="polite">
   <div class="bootCard">
-    <div class="bootLogo">S</div><h1>SAYWARD <span style="font-size:13px;color:#667085;font-weight:800;vertical-align:middle">v5.4.51</span></h1>
+    <div class="bootLogo">S</div><h1>SAYWARD <span style="font-size:13px;color:#667085;font-weight:800;vertical-align:middle">v5.4.52</span></h1>
     <div class="bootSub">처음 실행에서도 안정적으로 열리도록 화면과 학습 데이터를 순서대로 준비하고 있습니다.</div>
     <div class="bootBar"><div class="bootFill" id="saywardBootFill"></div></div>
     <div class="bootStatus" id="saywardBootStatus"><span class="bootPct">0%</span> · 시작 준비</div>
@@ -1243,8 +1243,8 @@ Config의 <b>Day Loop 문장당 반복 횟수</b>에서 1회 / 2회 / 3회 / 5�
 <script id="saywardStagedBootstrap">
 (()=>{
 'use strict';
-const BUILD='20261006-v5.4.51-lean-startup';
-const VERSION='5.4.51';
+const BUILD='20261006-v5.4.52-lean-home-fix';
+const VERSION='5.4.52';
 const CSS=['sayward-core.css','sayward-patches.css','sayward-home.css'];
 const DATA_JS=['sayward-toefl-1.js','sayward-toefl-2.js','sayward-toefl-3.js','sayward-toefl-4.js','sayward-opic-1.js','sayward-opic-2.js'];
 const ENGINE_JS=['sayward-core.js','sayward-patches.js'];
@@ -1260,6 +1260,8 @@ const HISTORY_KEY='sayward_boot_history';
 const RUN_ID=Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7);
 const RUN_STARTED=Date.now();
 let shellReady=false,fullReady=false,fullLoading=false,fullPromise=null,pendingReplay=null;
+const loadedScripts=new Set();
+const LEAN_DAY_META={1:'Everyday Essentials',2:'Everyday Essentials · Expressing Opinions',3:'Expressing Opinions',4:'Expressing Opinions · Reasons & Explanations',5:'Reasons & Explanations',6:'Reasons & Explanations · Choices & Decisions',7:'Choices & Decisions',8:'Choices & Decisions · People & Feelings',9:'People & Feelings',10:'People & Feelings · Comparisons & Differences',11:'Comparisons & Differences'};
 let currentRun={id:RUN_ID,build:BUILD,version:VERSION,startedAt:RUN_STARTED,shellReady:false,fullReady:false,events:[]};
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 function readHistory(){try{const h=JSON.parse(localStorage.getItem(HISTORY_KEY)||'[]');return Array.isArray(h)?h:[]}catch(e){return []}}
@@ -1270,7 +1272,7 @@ function trace(stage,detail='',extra={}){const ev={stage,detail,at:Date.now(),el
 function withBuild(url){return `${url}?b=${encodeURIComponent(BUILD)}`}
 function timed(label,promise,ms=20000){let id;const timeout=new Promise((_,reject)=>{id=setTimeout(()=>reject(new Error(`${label} timeout (${ms/1000}s)`)),ms)});return Promise.race([promise,timeout]).finally(()=>clearTimeout(id))}
 async function loadCss(url){const href=withBuild(url),started=Date.now();try{const cssText=await timed('CSS '+url,(async()=>{const r=await fetch(href,{cache:'default',credentials:'same-origin'});if(!r.ok)throw new Error('HTTP '+r.status+' for '+url);return r.text()})(),8000);const st=document.createElement('style');st.setAttribute('data-sayward-css',url);st.textContent=cssText;document.head.appendChild(st);try{localStorage.setItem('sayward_boot_css',JSON.stringify({build:BUILD,runId:RUN_ID,file:url,mode:'fetch-style',ms:Date.now()-started,at:Date.now()}))}catch(e){}return true}catch(err){const l=document.createElement('link');l.rel='stylesheet';l.href=href;l.setAttribute('data-sayward-css-fallback',url);document.head.appendChild(l);trace('css-fallback',url,{error:String(err)});await wait(60);return false}}
-function loadJs(url,timeout=20000){return timed('JS '+url,new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=withBuild(url);s.async=false;s.onload=resolve;s.onerror=()=>reject(new Error('JS '+url));document.body.appendChild(s)}),timeout)}
+function loadJs(url,timeout=20000){if(loadedScripts.has(url))return Promise.resolve(true);return timed('JS '+url,new Promise((resolve,reject)=>{const sc=document.createElement('script');sc.src=withBuild(url);sc.async=false;sc.onload=()=>{loadedScripts.add(url);resolve(true)};sc.onerror=()=>reject(new Error('JS '+url));document.body.appendChild(sc)}),timeout)}
 async function waitReady(name,test,ms=5000){const started=Date.now();while(Date.now()-started<ms){try{if(test())return true}catch(e){}await wait(40)}throw new Error(name+' loaded but did not reach READY handshake')}
 function setBootProgress(p,label){if(fill)fill.style.width=Math.max(2,Math.min(100,p))+'%';if(status)status.innerHTML=`<span class="bootPct">${Math.round(p)}%</span> · ${label}`}
 function showOverlay(label='학습 기능 준비 중'){if(overlay)overlay.style.display='grid';setBootProgress(35,label)}
@@ -1281,13 +1283,53 @@ window.addEventListener('error',e=>noteError('error',e.error||e.message));
 window.addEventListener('unhandledrejection',e=>noteError('rejection',e.reason));
 function initialMode(){try{const m=localStorage.getItem('mv_mainHomeStudyMode540')||localStorage.getItem('mv_homeStudyMode212');if(['day','my','sori','opic'].includes(m))return m}catch(e){}return 'day'}
 function attachLeanHome(){if(document.getElementById('homePage'))return document.getElementById('homePage');const source=tpl?.content?.querySelector('#homePage');if(!source)throw new Error('homePage missing from template');const home=source.cloneNode(true);home.dataset.cleanMode=initialMode();document.body.insertBefore(home,tpl);document.body.classList.add('mv540HomeVisible');trace('lean-home-attached','home only',{homeNodes:home.getElementsByTagName('*').length});return home}
-function installLeanInterception(){document.addEventListener('click',e=>{if(fullReady)return;const t=e.target?.closest?.('#homePage button,#homePage [role="button"],#homePage [onclick]');if(!t)return;const modeBtn=t.closest?.('[data-clean-mode-button]');if(modeBtn){e.preventDefault();e.stopImmediatePropagation();const mode=modeBtn.dataset.cleanModeButton||'day';const home=document.getElementById('homePage');if(home)home.dataset.cleanMode=mode;try{if(['day','my','sori','opic'].includes(mode)){localStorage.setItem('mv_mainHomeStudyMode540',mode);localStorage.setItem('mv_homeStudyMode212',mode)}}catch(x){}trace('lean-mode-select',mode);if(mode==='sori'||mode==='opic')activateFull({kind:'mode',mode});return}e.preventDefault();e.stopImmediatePropagation();pendingReplay={kind:'id',id:t.id||'',onclick:t.getAttribute('onclick')||''};activateFull(pendingReplay)},true)}
+
+function leanJson(key,fallback){try{const v=JSON.parse(localStorage.getItem(key)||'null');return v==null?fallback:v}catch(e){return fallback}}
+function leanModeApply(mode){
+  const m=['day','my','sori','opic'].includes(mode)?mode:'day',h=document.getElementById('homePage');if(!h)return;
+  h.dataset.cleanMode=m;
+  document.querySelectorAll('[data-clean-mode-button]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.cleanModeButton===m?'true':'false'));
+  try{if(['day','my','sori','opic'].includes(m)){localStorage.setItem('mv_mainHomeStudyMode540',m);localStorage.setItem('mv_homeStudyMode212',m)}}catch(e){}
+}
+function buildLeanDaySettings(){
+  const day=document.querySelector('#homePage .daySection');if(!day)return;
+  if(!document.getElementById('cleanDaySettings')){
+    const head=day.querySelector(':scope>.sectionHead');
+    const card=document.createElement('section');card.id='cleanDaySettings';card.className='cleanDaySettings';
+    card.innerHTML='<div class="cleanDaySettingsTitle">🎧 DAY 학습 설정</div><div class="cleanDaySettingsGrid"><div class="cleanDayField" data-slot="target"><label>학습 대상</label></div><div class="cleanDayField" data-slot="order"><label>재생 순서</label></div><div class="cleanDayField" data-slot="speech"><label>자동 읽기</label></div><div class="cleanDayField" data-slot="repeat"><label>반복 횟수</label></div></div>';
+    if(head)head.insertAdjacentElement('afterend',card);else day.prepend(card);
+    [['selectedStudyMode','target'],['homeOrderMode','order'],['homeSpeechMode','speech'],['autoRepeat','repeat']].forEach(([id,slot])=>{const el=document.getElementById(id),host=card.querySelector('[data-slot="'+slot+'"]');if(el&&host){el.classList.remove('repeatSelect');host.appendChild(el)}});
+  }
+  const today=document.querySelector('#homePage .todayCard'),settings=document.getElementById('cleanDaySettings');
+  if(today&&settings&&today.previousElementSibling!==settings)settings.insertAdjacentElement('afterend',today);
+  const mode=document.getElementById('selectedStudyMode'),rep=document.getElementById('autoRepeat'),ord=document.getElementById('homeOrderMode'),speech=document.getElementById('homeSpeechMode');
+  try{if(mode){mode.value=localStorage.getItem('mv_unified_selectedStudyMode')||mode.value;mode.onchange=()=>localStorage.setItem('mv_unified_selectedStudyMode',mode.value)}if(rep){rep.value=localStorage.getItem('mv_unified_selectedStudyRepeat')||rep.value;rep.onchange=()=>localStorage.setItem('mv_unified_selectedStudyRepeat',rep.value)}if(ord){ord.value=localStorage.getItem('mv_unified_order')||ord.value;ord.onchange=()=>localStorage.setItem('mv_unified_order',ord.value)}if(speech){speech.value=localStorage.getItem('mv_unified_speech')||speech.value;speech.onchange=()=>localStorage.setItem('mv_unified_speech',speech.value)}}catch(e){}
+}
+function leanSavedDays(){const a=leanJson('mv_unified_selectedStudyDays',[]);return Array.isArray(a)?a.map(Number).filter(d=>d>=1&&d<=11):[]}
+function renderLeanDayGrid(words=null){
+  const grid=document.getElementById('dayGrid');if(!grid)return;
+  const saved=leanSavedDays(),stats=leanJson('mv_unified_stats',leanJson('mv_toefl_stats',{}))||{},favs=leanJson('mv_unified_favs',leanJson('mv_toefl_favs',[]))||[],now=Date.now();
+  const list=Array.isArray(words)?words:[];
+  const byDay={};list.forEach(w=>{const d=Number(w.newDay);if(d>=1&&d<=11)(byDay[d]||(byDay[d]=[])).push(w)});
+  grid.dataset.leanHydrated=list.length?'1':'0';
+  grid.innerHTML=Array.from({length:11},(_,i)=>{const d=i+1,arr=byDay[d]||[],checked=saved.includes(d);let learned=0,studyTotal=0,due=0,wrong=0,fav=0;arr.forEach(w=>{const st=stats[w.word]||{};const sc=Number(st.studyCount)||0;studyTotal+=sc;if(sc>0)learned++;if(Number(st.quizWrong)||0)wrong++;if((st.dueAt&&Number(st.dueAt)<=now)||(!st.dueAt&&(Number(st.quizWrong)||0)>0))due++;if(Array.isArray(favs)&&favs.includes(w.word))fav++});const total=arr.length||30,pct=arr.length?Math.round(learned/total*100):0;return '<div class="dayCard activeDayCard '+(checked?'selectedDay ':'')+'leanDayCard" data-day="'+d+'" data-lean-day="'+d+'" role="button" tabindex="0"><div class="dayCardTop"><span>DAY '+d+'</span><span class="dayStatus">'+(arr.length?(learned===0?'미학습':learned===total?'완료':'학습 중'):'준비 중')+'</span><span class="dayCardCheckWrap"><input class="daySelectCheck" type="checkbox" data-check-day="'+d+'" '+(checked?'checked':'')+' aria-label="DAY '+d+' 선택"></span></div><div style="font-size:14px;font-weight:950;margin-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+(LEAN_DAY_META[d]||('DAY '+d))+'</div><div class="dayProgress"><div style="width:'+pct+'%"></div></div><div class="dayCompactMeta leanDayMeta"><span>📖 '+learned+'/'+total+'</span><span>❌ '+wrong+'</span><span>⭐ '+fav+' 모름</span></div><div class="dayCardBottom leanDayMeta"><span>'+pct+'%</span><span>학습 '+studyTotal+'회</span><span>복습 '+due+'</span></div></div>'}).join('');
+  grid.querySelectorAll('.daySelectCheck').forEach(ch=>ch.addEventListener('change',e=>{e.stopPropagation();const days=[...grid.querySelectorAll('.daySelectCheck:checked')].map(x=>Number(x.dataset.checkDay)).sort((a,b)=>a-b);try{localStorage.setItem('mv_unified_selectedStudyDays',JSON.stringify(days))}catch(x){};ch.closest('.dayCard')?.classList.toggle('selectedDay',ch.checked)}));
+}
+function updateLeanSummary(words){
+  if(!Array.isArray(words)||!words.length)return;const stats=leanJson('mv_unified_stats',leanJson('mv_toefl_stats',{}))||{},now=Date.now();let learned=0,due=0,weak=0;words.forEach(w=>{const st=stats[w.word]||{};if((Number(st.studyCount)||0)>0)learned++;if(Number(st.quizWrong)||0)weak++;if((st.dueAt&&Number(st.dueAt)<=now)||(!st.dueAt&&(Number(st.quizWrong)||0)>0))due++});const unlearned=words.length-learned;const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=String(v)};set('todayReviewCount',due);set('todayLearned',learned);set('todayUnlearned',unlearned);set('todayWeak',weak);const title=document.getElementById('todayTitle'),btn=document.getElementById('todayStartBtn');if(title)title.textContent=due?'오늘 복습할 단어가 '+due+'개 있어요':(unlearned?'DAY 1~11 학습을 이어서 진행하세요':'현재 선택 가능 DAY를 완료했어요 🎉');if(btn)btn.textContent=due?'오늘 복습 '+due+'개 시작':(unlearned?'다음 DAY 학습 시작':'DAY 1 다시 보기');
+}
+function prepareLeanHomeLayout(){buildLeanDaySettings();leanModeApply(initialMode());renderLeanDayGrid(null);const t=document.getElementById('todayTitle');if(t)t.textContent='오늘 학습 현황을 준비하고 있어요';try{localStorage.setItem('sayward_lean_hydration',JSON.stringify({build:BUILD,runId:RUN_ID,stage:'layout-ready',at:Date.now()}))}catch(e){}}
+async function hydrateLeanHomeData(){
+  try{trace('lean-hydrate-start','DAY 1~11 lightweight data');await loadJs('sayward-toefl-1.js',12000);await wait(35);let words=[];try{words=[...TOEFL_WORDS_PART_1].filter(w=>Number(w.newDay)<=11)}catch(e){}renderLeanDayGrid(words);updateLeanSummary(words);try{localStorage.setItem('sayward_lean_hydration',JSON.stringify({build:BUILD,runId:RUN_ID,stage:'ready',words:words.length,at:Date.now()}))}catch(e){}trace('lean-hydrate-ready','DAY 1~11 dashboard',{words:words.length,domElements:document.getElementsByTagName('*').length});
+  }catch(e){try{localStorage.setItem('sayward_lean_hydration',JSON.stringify({build:BUILD,runId:RUN_ID,stage:'failed',error:String(e?.message||e),at:Date.now()}))}catch(x){}trace('lean-hydrate-failed','DAY 1~11 dashboard',{error:String(e?.message||e)})}
+}
+function installLeanInterception(){document.addEventListener('click',e=>{if(fullReady)return;if(e.target?.closest?.('.daySelectCheck,select,input,label'))return;const dayCard=e.target?.closest?.('[data-lean-day]');if(dayCard){e.preventDefault();e.stopImmediatePropagation();activateFull({kind:'day',day:Number(dayCard.dataset.leanDay)});return}const t=e.target?.closest?.('#homePage button,#homePage [role="button"],#homePage [onclick]');if(!t)return;const modeBtn=t.closest?.('[data-clean-mode-button]');if(modeBtn){e.preventDefault();e.stopImmediatePropagation();const mode=modeBtn.dataset.cleanModeButton||'day';leanModeApply(mode);trace('lean-mode-select',mode);if(mode==='sori'||mode==='opic')activateFull({kind:'mode',mode});return}e.preventDefault();e.stopImmediatePropagation();pendingReplay={kind:'id',id:t.id||'',onclick:t.getAttribute('onclick')||''};activateFull(pendingReplay)},true)}
 function installPrefetch(){const doIt=()=>{[...DATA_JS,...ENGINE_JS].forEach(f=>{try{const l=document.createElement('link');l.rel='prefetch';l.as='script';l.href=withBuild(f);document.head.appendChild(l)}catch(e){}});trace('prefetch-issued','heavy scripts network-only')};if('requestIdleCallback'in window)requestIdleCallback(doIt,{timeout:4000});else setTimeout(doIt,1800)}
 async function appendDeferredDom(){const frag=tpl.content.cloneNode(true);const homeClone=frag.querySelector('#homePage');if(homeClone)homeClone.remove();const nodes=[...frag.children];const home=document.getElementById('homePage');let beforeHome=true,inserted=0;for(const node of nodes){const originalOrder=[...tpl.content.children].findIndex(x=>x.id==='homePage');const idx=[...tpl.content.children].findIndex(x=>x.id===node.id&&x.tagName===node.tagName);beforeHome=idx>=0&&idx<originalOrder;if(beforeHome&&home)document.body.insertBefore(node,home);else document.body.insertBefore(node,tpl);inserted++;if(inserted%2===0)await wait(18)}trace('app-dom-expanded','deferred nodes attached',{inserted,domElements:document.getElementsByTagName('*').length})}
-function replayAction(a){if(!a)return;setTimeout(()=>{try{if(a.kind==='mode'){window.setHomeStudyMode?.(a.mode);return}if(a.id){const el=document.getElementById(a.id);if(el)el.click();else if(a.onclick){(0,eval)(a.onclick)}}}catch(e){noteError('replay',e)}},30)}
+function replayAction(a){if(!a)return;setTimeout(()=>{try{if(a.kind==='mode'){window.setHomeStudyMode?.(a.mode);return}if(a.kind==='day'){if(typeof window.requestDayLearning==='function')window.requestDayLearning(a.day);else document.querySelector('#dayGrid [data-day="'+a.day+'"]')?.click();return}if(a.id){const el=document.getElementById(a.id);if(el)el.click();else if(a.onclick){(0,eval)(a.onclick)}}}catch(e){noteError('replay',e)}},30)}
 async function activateFull(action=null){if(action)pendingReplay=action;if(fullReady){const a=pendingReplay;pendingReplay=null;replayAction(a);return true}if(fullLoading)return fullPromise;fullLoading=true;setBadge('학습 기능 불러오는 중',true);showOverlay('학습 데이터 준비');trace('full-activation-start','user-triggered');fullPromise=(async()=>{try{let i=0;for(const f of DATA_JS){setBootProgress(38+i*5,`데이터 준비 ${i+1}/${DATA_JS.length}`);trace('data-load',f);await loadJs(f,15000);i++;await wait(28)}setBootProgress(69,'학습 화면 확장');await appendDeferredDom();await wait(60);setBootProgress(76,'핵심 기능 준비');trace('engine-load','sayward-core.js');await loadJs('sayward-core.js',20000);await waitReady('Core',()=>window.__SAYWARD_CORE_READY__?.version===VERSION,6500);await wait(80);setBootProgress(88,'화면 기능 연결');trace('engine-load','sayward-patches.js');await loadJs('sayward-patches.js',16000);await waitReady('Patches',()=>window.__SAYWARD_PATCHES_READY__?.version===VERSION,6500);await wait(120);fullReady=true;currentRun.fullReady=true;currentRun.fullReadyAt=Date.now();trace('full-ready','all engines ready');try{const mode=document.getElementById('homePage')?.dataset.cleanMode||initialMode();window.setHomeStudyMode?.(mode)}catch(e){}setBootProgress(100,'준비 완료');hideOverlay();setBadge('',false);const a=pendingReplay;pendingReplay=null;replayAction(a);writeHistory();return true}catch(e){noteError('full-activation',e);hideOverlay();setBadge('기능 준비 실패 · 다시 눌러 재시도',true);if(retry){retry.style.display='inline-block';retry.onclick=()=>{fullLoading=false;fullPromise=null;activateFull(pendingReplay)}}throw e}finally{if(fullReady)fullLoading=false}})();return fullPromise}
 window.SAYWARD_ACTIVATE_FULL=activateFull;
-(async()=>{try{trace('bootstrap-start','lean startup initialized');setBootProgress(4,'브라우저 정리 확인');await Promise.race([Promise.resolve(window.__SAYWARD_PREFLIGHT__),wait(4500)]);trace('preflight','done');for(let i=0;i<CSS.length;i++){setBootProgress(8+i*7,`화면 스타일 ${i+1}/${CSS.length}`);trace('css',CSS[i]);await loadCss(CSS[i]);await wait(18)}setBootProgress(30,'홈 화면 구성');const home=attachLeanHome();installLeanInterception();document.title='SAYWARD v'+VERSION;document.documentElement.classList.remove('saywardBooting','saywardHomeBootGuard');document.documentElement.classList.add('saywardLeanReady');hideOverlay();await wait(40);shellReady=true;currentRun.shellReady=true;currentRun.shellReadyAt=Date.now();trace('lean-home-visible','first usable home',{homeNodes:home.getElementsByTagName('*').length});try{localStorage.removeItem('sayward_boot_error')}catch(e){}setBadge('학습 기능은 필요할 때 불러옵니다',true);setTimeout(()=>setBadge('',false),2600);installPrefetch();writeHistory()}catch(e){noteError('lean-bootstrap',e);if(status)status.textContent='초기 화면 준비 중 오류가 발생했습니다.';if(retry){retry.style.display='inline-block';retry.onclick=()=>location.reload()}}})();
+(async()=>{try{trace('bootstrap-start','lean startup initialized');setBootProgress(4,'브라우저 정리 확인');await Promise.race([Promise.resolve(window.__SAYWARD_PREFLIGHT__),wait(4500)]);trace('preflight','done');for(let i=0;i<CSS.length;i++){setBootProgress(8+i*7,`화면 스타일 ${i+1}/${CSS.length}`);trace('css',CSS[i]);await loadCss(CSS[i]);await wait(18)}setBootProgress(30,'홈 화면 구성');const home=attachLeanHome();prepareLeanHomeLayout();installLeanInterception();document.title='SAYWARD v'+VERSION;document.documentElement.classList.remove('saywardBooting','saywardHomeBootGuard');document.documentElement.classList.add('saywardLeanReady');hideOverlay();await wait(40);shellReady=true;currentRun.shellReady=true;currentRun.shellReadyAt=Date.now();trace('lean-home-visible','first usable home',{homeNodes:home.getElementsByTagName('*').length});try{localStorage.removeItem('sayward_boot_error')}catch(e){}setBadge('홈 학습 현황을 가볍게 준비 중',true);setTimeout(()=>hydrateLeanHomeData().finally(()=>setTimeout(()=>setBadge('',false),700)),220);installPrefetch();writeHistory()}catch(e){noteError('lean-bootstrap',e);if(status)status.textContent='초기 화면 준비 중 오류가 발생했습니다.';if(retry){retry.style.display='inline-block';retry.onclick=()=>location.reload()}}})();
 })();
 </script>
 

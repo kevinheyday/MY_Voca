@@ -575,3 +575,17 @@ body.mv540HomeVisible #drawerMenuButton{opacity:0!important;visibility:hidden!im
   
 }
 
+
+
+/* v5.4.52 LEAN HOME FIX — prevent the DAY summary row from collapsing on phone width. */
+@media(max-width:600px){
+  #homePage .todayCard{display:grid!important;grid-template-columns:1fr!important;gap:9px!important;align-items:stretch!important;padding:11px!important}
+  #homePage .todayHead{min-width:0!important;width:100%!important}
+  #homePage .todayTitle{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;font-size:15px!important}
+  #homePage .todayStats{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:7px!important;width:100%!important}
+  #homePage .todayStats div{min-width:0!important;width:auto!important;padding:7px 5px!important}
+  #todayStartBtn{width:100%!important;min-width:0!important;max-width:none!important;flex:none!important}
+}
+html.saywardLeanReady #homePage .leanDayCard{cursor:pointer!important;touch-action:manipulation!important}
+html.saywardLeanReady #homePage .leanDayCard:active{transform:scale(.995)}
+html.saywardLeanReady #homePage .dayGrid[data-lean-hydrated="0"] .leanDayMeta{opacity:.55}

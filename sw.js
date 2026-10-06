@@ -1,7 +1,7 @@
-// SAYWARD v5.4.51 RECOVERY WORKER — LEAN STARTUP release
+// SAYWARD v5.4.52 RECOVERY WORKER — LEAN HOME FIX release
 // Purpose: remove historical SAYWARD caches/service-worker registration centrally.
 // It intentionally has NO fetch handler and never touches localStorage learning data.
-const RECOVERY_VERSION='5.4.51';
+const RECOVERY_VERSION='5.4.52';
 const RECOVERY_TAG='551';
 self.addEventListener('install',event=>event.waitUntil(self.skipWaiting()));
 self.addEventListener('activate',event=>{
