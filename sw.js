@@ -1,8 +1,8 @@
-// SAYWARD v5.4.47 RECOVERY WORKER
+// SAYWARD v5.4.48 RECOVERY WORKER
 // Purpose: remove historical SAYWARD caches/service-worker registration centrally.
 // It intentionally has NO fetch handler and never touches localStorage learning data.
-const RECOVERY_VERSION='5.4.47';
-const RECOVERY_TAG='547';
+const RECOVERY_VERSION='5.4.48';
+const RECOVERY_TAG='548';
 self.addEventListener('install',event=>event.waitUntil(self.skipWaiting()));
 self.addEventListener('activate',event=>{
   event.waitUntil((async()=>{
