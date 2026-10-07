@@ -1,6 +1,6 @@
 <!doctype html><html lang="ko"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<title>SAYWARD v5.4.61</title><meta name="theme-color" content="#2563eb"><meta name="sayward-version" content="v5.4.61"><meta name="sayward-build" content="20261008-v5.4.61-fail-capture-isolation">
+<title>SAYWARD v5.4.62</title><meta name="theme-color" content="#2563eb"><meta name="sayward-version" content="v5.4.62"><meta name="sayward-build" content="20261008-v5.4.62-fail-capture-isolation">
 <style>
 html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;background:#f6f8fc;color:#172033;-webkit-text-size-adjust:100%}*{box-sizing:border-box}
 #saywardBootOverlay{position:fixed;inset:0;z-index:2147483647;display:grid;place-items:center;padding:24px;background:#f6f8fc;color:#172033}
@@ -9,12 +9,12 @@ html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,"Noto San
 #saywardBootOverlay h1{margin:0;font-size:24px}.bootSub{margin:7px 0 18px;color:#667085;font-size:13px}.bootBar{height:9px;border-radius:999px;background:#edf1f7;overflow:hidden}.bootFill{height:100%;width:3%;background:linear-gradient(90deg,#2563eb,#7c3aed);border-radius:inherit;transition:width .2s ease}.bootStatus{margin-top:11px;font-size:12px;color:#475467;min-height:18px}.bootPct{font-weight:800;color:#2563eb}.bootRetry{display:none;margin:16px auto 0;border:0;border-radius:12px;background:#2563eb;color:#fff;padding:10px 16px;font-weight:800}.bootDiag{display:none;margin-top:10px;padding:8px 10px;border-radius:10px;background:#fff7ed;color:#9a3412;font-size:10.5px;text-align:left}.bootHome{display:inline-block;margin-top:15px;color:#475467;font-size:12px;text-decoration:none}
 #saywardLeanBadge{position:fixed;left:50%;bottom:18px;z-index:2147483000;transform:translateX(-50%);display:none;align-items:center;gap:7px;padding:8px 12px;border-radius:999px;background:#111827;color:#fff;font:700 11px system-ui;box-shadow:0 7px 20px #0003}#saywardLeanBadge.on{display:flex}#saywardLeanBadge .dot{width:6px;height:6px;border-radius:50%;background:#60a5fa}
 </style></head><body>
-<div id="saywardBootOverlay" aria-live="polite"><div class="bootCard"><div class="bootLogo">S</div><h1>SAYWARD <span style="font-size:13px;color:#667085;font-weight:800;vertical-align:middle">v5.4.61</span></h1><div class="bootSub">선택한 학습 기능만 준비합니다.</div><div class="bootBar"><div class="bootFill" id="saywardBootFill"></div></div><div class="bootStatus" id="saywardBootStatus"><span class="bootPct">5%</span> · 준비</div><div class="bootDiag" id="saywardBootDiag"></div><button class="bootRetry" id="saywardBootRetry" type="button">다시 시도</button><a class="bootHome" href="./">← 홈으로</a></div></div>
+<div id="saywardBootOverlay" aria-live="polite"><div class="bootCard"><div class="bootLogo">S</div><h1>SAYWARD <span style="font-size:13px;color:#667085;font-weight:800;vertical-align:middle">v5.4.62</span></h1><div class="bootSub">선택한 학습 기능만 준비합니다.</div><div class="bootBar"><div class="bootFill" id="saywardBootFill"></div></div><div class="bootStatus" id="saywardBootStatus"><span class="bootPct">5%</span> · 준비</div><div class="bootDiag" id="saywardBootDiag"></div><button class="bootRetry" id="saywardBootRetry" type="button">다시 시도</button><a class="bootHome" href="./">← 홈으로</a></div></div>
 <div id="saywardLeanBadge" aria-live="polite"><span class="dot"></span><span id="saywardLeanBadgeText">학습 기능 준비</span></div><div id="saywardRuntimeAnchor" hidden></div>
 <script>
 (function(){
   var prebootId=Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7); window.__SAYWARD_PREBOOT_ID__=prebootId;
-  try{localStorage.setItem('sayward_preboot_sentinel_v1',JSON.stringify({build:'20261008-v5.4.61-fail-capture-isolation',version:'5.4.61',id:prebootId,at:Date.now(),url:location.href}))}catch(e){}
+  try{localStorage.setItem('sayward_preboot_sentinel_v1',JSON.stringify({build:'20261008-v5.4.62-fail-capture-isolation',version:'5.4.62',id:prebootId,at:Date.now(),url:location.href}))}catch(e){}
   var q=new URLSearchParams(location.search), allowed=['day','my','sori','opic'];
   var mode=q.get('mode'); if(allowed.indexOf(mode)<0) mode='day';
   var day=Number(q.get('day')||0), action=q.get('action')||'';
@@ -29,5 +29,5 @@ html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,"Noto San
   window.__SAYWARD_EARLY_ACTION__=early;
 })();
 </script>
-<script src="sayward-boot.js?b=20261008-v5.4.61-fail-capture-isolation"></script>
+<script src="sayward-boot.js?b=20261008-v5.4.62-fail-capture-isolation"></script>
 </body></html>

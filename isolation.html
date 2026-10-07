@@ -1,10 +1,10 @@
 <!doctype html><html lang="ko"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>SAYWARD v5.4.61 Module Isolation</title>
+<title>SAYWARD v5.4.62 Module Isolation</title>
 <style>
 :root{font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;color:#172033;background:#f4f7fb}*{box-sizing:border-box}body{margin:0}.w{max-width:760px;margin:auto;padding:16px}.card{background:#fff;border:1px solid #e4e7ec;border-radius:18px;padding:16px;box-shadow:0 8px 24px #102a560d;margin-bottom:12px}h1{font-size:21px;margin:0 0 6px}p{font-size:13px;line-height:1.55;color:#667085;margin:6px 0 12px}.controls{display:grid;grid-template-columns:1fr 1fr;gap:8px}.controls label{font-size:11px;font-weight:800;color:#475467}.controls select,.controls input{width:100%;margin-top:4px;padding:9px;border:1px solid #d0d5dd;border-radius:10px;background:#fff}.check{display:flex;align-items:center;gap:7px;margin:10px 0;font-size:12px}.check input{width:auto}.btns{display:flex;gap:8px;flex-wrap:wrap}.btn{border:0;border-radius:11px;background:#2563eb;color:#fff;padding:10px 13px;font-weight:850;font-size:12px}.btn.secondary{background:#475467}.btn:disabled{opacity:.5}.stageGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:10px}.stageBtn{border:1px solid #d0d5dd;background:#fff;border-radius:11px;padding:9px;text-align:left;font-size:11px;font-weight:760;color:#344054}.stageBtn small{display:block;color:#667085;font-weight:600;margin-top:2px}.stageBtn.pass{border-color:#12b76a;background:#ecfdf3;color:#067647}.stageBtn.fail{border-color:#f04438;background:#fef3f2;color:#b42318}.stageBtn.running{border-color:#2e90fa;background:#eff8ff;color:#175cd3}.log{font:11px ui-monospace,SFMono-Regular,Consolas,monospace;white-space:pre-wrap;word-break:break-word;background:#0b1020;color:#d1e0ff;border-radius:12px;padding:12px;min-height:120px;max-height:310px;overflow:auto}.summary{font-weight:900;font-size:13px;padding:10px 12px;border-radius:11px;background:#f8fafc;margin-bottom:8px}.summary.ok{background:#ecfdf3;color:#067647}.summary.bad{background:#fef3f2;color:#b42318}.summary.warn{background:#fff7ed;color:#b54708}iframe{width:100%;height:470px;border:1px solid #d0d5dd;border-radius:14px;background:#fff}.hint{font-size:11px;color:#667085;line-height:1.5}.links a{font-size:12px;font-weight:800;margin-right:12px;color:#175cd3;text-decoration:none}
 </style></head><body><div class="w">
-<div class="card"><h1>SAYWARD v5.4.61 모듈 격리 검사</h1><p>매 단계마다 새 페이지로 시작해서 <b>0→N까지만 누적 로딩</b>합니다. 자동 검사는 첫 FAIL에서 멈춥니다. 이렇게 해야 이전 단계의 DOM·전역변수·초기화 상태가 다음 결과를 오염시키지 않습니다.</p>
+<div class="card"><h1>SAYWARD v5.4.62 모듈 격리 검사</h1><p>매 단계마다 새 페이지로 시작해서 <b>0→N까지만 누적 로딩</b>합니다. 자동 검사는 첫 FAIL에서 멈춥니다. 이렇게 해야 이전 단계의 DOM·전역변수·초기화 상태가 다음 결과를 오염시키지 않습니다.</p>
 <div class="controls"><label>학습 모드<select id="mode"><option value="day">DAY VOCA</option><option value="my">MY 수업</option><option value="sori">소리영어</option><option value="opic">OPIC</option></select></label><label>DAY<input id="day" type="number" min="1" max="11" value="1"></label></div>
 <label class="check"><input id="cold" type="checkbox"> Cold load — 선택한 단계의 리소스를 캐시 없이 다시 다운로드</label>
 <div class="btns"><button class="btn" id="auto">0→10 자동 검사</button><button class="btn secondary" id="stop">중지</button><button class="btn secondary" id="read">현재 FAIL Capture 읽기</button></div>
@@ -13,7 +13,7 @@
 <div class="card"><div class="hint">아래 프레임은 실제 <code>sayward-app.html</code>을 실행합니다. Stage 8~10에서는 실제 core/patch 엔진까지 평가합니다. 문제가 재현되면 위 로그의 마지막 PASS와 첫 FAIL 사이가 원인 후보입니다.</div><iframe id="frame" title="SAYWARD isolation runtime"></iframe></div>
 <div class="card links"><a href="diagnostic.html?check=561">일반 진단</a><a href="./">SAYWARD Home</a></div>
 </div><script>
-const BUILD='20261008-v5.4.61-fail-capture-isolation';
+const BUILD='20261008-v5.4.62-fail-capture-isolation';
 const KEY='sayward_fail_capture_v2';
 const LABELS=['Recorder only','Core CSS','Patch CSS','Home CSS','Home fragment','DAY index','Profile data','Deferred DOM','Core engine','Patch engine','Actual feature entry'];
 const $=id=>document.getElementById(id), stages=$('stages'), log=$('log'), summary=$('summary'), frame=$('frame');

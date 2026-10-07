@@ -1,6 +1,6 @@
-SAYWARD v5.4.61 FAIL CAPTURE + MODULE ISOLATION
-build=20261008-v5.4.61-fail-capture-isolation
-landing=index.html (0 JS / 0 storage / 0 timers / 0 fetch)
-app=sayward-app.html (durable fail capture)
-isolation=isolation.html (0→10 cumulative module isolation)
-diagnostic=HEAD asset check + build contract + fail capture audit
+SAYWARD v5.4.62 ATOMIC HOME + FAIL CAPTURE
+landing_build=20261008-v5.4.62-atomic-home
+app_build=20261008-v5.4.62-fail-capture-isolation
+landing=index.html (ATOMIC HTML/CSS only; 0 JS / 0 storage / 0 timers / 0 fetch)
+app=sayward-app.html (FAIL CAPTURE + MODULE ISOLATION)
+probe=probe.html (ultra-minimal browser render probe)

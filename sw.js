@@ -1,4 +1,4 @@
-// SAYWARD v5.4.61 RECOVERY WORKER — ZERO PREFLIGHT release
+// SAYWARD v5.4.62 RECOVERY WORKER — ZERO PREFLIGHT release
 // Purpose: remove historical SAYWARD caches/service-worker registration centrally.
 // It intentionally has NO fetch handler and never touches localStorage learning data.
 const RECOVERY_VERSION='5.4.61';

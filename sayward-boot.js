@@ -1,7 +1,7 @@
 (()=>{
 'use strict';
-const BUILD='20261008-v5.4.61-fail-capture-isolation';
-const VERSION='5.4.61';
+const BUILD='20261008-v5.4.62-fail-capture-isolation';
+const VERSION='5.4.62';
 const FULL_CSS=['sayward-core.css','sayward-patches.css','sayward-home.css'];
 const HOME_SUMMARY_KEY='sayward_home_summary_v1';
 const ACTIVE_DAY_MAX=11;
