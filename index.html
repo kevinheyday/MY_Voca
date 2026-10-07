@@ -1,9 +1,9 @@
 <!doctype html><html lang="ko" class="saywardStaticGate"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<title>SAYWARD v5.4.60</title><meta name="theme-color" content="#2563eb"><meta name="sayward-version" content="v5.4.60"><meta name="sayward-build" content="20261007-v5.4.60-native-gate-hardened"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<title>SAYWARD v5.4.61</title><meta name="theme-color" content="#2563eb"><meta name="sayward-version" content="v5.4.61"><meta name="sayward-build" content="20261008-v5.4.61-fail-capture-isolation"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
 <style id="saywardStaticGateStyle">
 /* ======================================================================
-   SAYWARD HOME CLEAN MASTER — v5.4.60
+   SAYWARD HOME CLEAN MASTER — v5.4.61
    One authoritative home-style block. Do NOT append version patches below.
    Future home UI edits must modify this block in place.
    ====================================================================== */
@@ -22,7 +22,7 @@
 #cleanHeroMenuHit,#cleanHeroSearchHit{position:absolute!important;top:0!important;height:100%!important;width:18%!important;border:0!important;background:transparent!important;padding:0!important;z-index:8!important;cursor:pointer!important;-webkit-tap-highlight-color:transparent!important}
 #cleanHeroMenuHit{left:-5px!important} #cleanHeroSearchHit{right:0!important}
 #homePage .homeHero::before{
-  content:var(--sayward-version-label,"v5.4.60")!important;position:absolute!important;right:14.0%!important;top:8px!important;z-index:6!important;
+  content:var(--sayward-version-label,"v5.4.61")!important;position:absolute!important;right:14.0%!important;top:8px!important;z-index:6!important;
   min-width:54px!important;padding:2px 8px 3px!important;box-sizing:border-box!important;text-align:center!important;
   border:1.5px solid rgba(255,255,255,.92)!important;border-radius:999px!important;background:rgba(77,62,202,.96)!important;
   color:#fff!important;font-size:9px!important;line-height:1.1!important;font-weight:950!important;letter-spacing:.1px!important;
@@ -175,7 +175,7 @@ html,body{margin:0;min-height:100%;background:#f4f7fb;font-family:-apple-system,
 
 @media(max-width:480px){#homePage{padding:7px 8px 24px}.staticTodayBar{grid-template-columns:30px repeat(3,minmax(0,1fr)) minmax(118px,1.45fr);gap:5px;padding:9px 8px}.staticStat{padding:7px 2px}.staticStat b{font-size:17px}.staticStat span{font-size:9px}.staticTodayStart{display:grid;place-items:center;text-decoration:none;font-size:11.5px}.staticDayHeader{display:block;text-decoration:none;padding:14px 15px 16px}.staticDayHeader span{padding-right:18px}}
 </style>
-</head><body data-sayward-static="5.4.60">
+</head><body data-sayward-static="5.4.61">
 <div class="homePage" id="homePage" data-clean-mode="day" data-static-gate="1"><div class="homeShell">
 <section class="homeHero">
 <div>
@@ -204,5 +204,5 @@ html,body{margin:0;min-height:100%;background:#f4f7fb;font-family:-apple-system,
 <section class="staticTodayBar" aria-label="오늘 학습 요약"><div class="staticTodayLabel">오늘</div><div class="staticStat"><b id="todayLearned">—</b><span>학습</span></div><div class="staticStat"><b id="todayUnlearned">—</b><span>미학습</span></div><div class="staticStat"><b id="todayWeak">—</b><span>취약</span></div><a class="staticTodayStart" id="todayStartBtn" href="sayward-app.html?action=today&mode=day">오늘 학습 시작</a></section>
 <a class="staticDayHeader" data-static-day-open="1" href="sayward-app.html?mode=day"><b>📚 DAY별 학습</b><span>Day를 선택해 개별 학습하거나 연속 학습을 시작하세요.</span></a>
 </div></div>
-<!-- v5.4.60 NATIVE GATE HARDENED: landing page intentionally contains zero script tags, zero storage reads, zero timers and zero fetch calls. -->
+<!-- v5.4.61 NATIVE GATE HARDENED: landing page intentionally contains zero script tags, zero storage reads, zero timers and zero fetch calls. -->
 </body></html>

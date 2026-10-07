@@ -1,7 +1,7 @@
 (()=>{
 'use strict';
-const BUILD='20261007-v5.4.60-native-gate-hardened';
-const VERSION='5.4.60';
+const BUILD='20261008-v5.4.61-fail-capture-isolation';
+const VERSION='5.4.61';
 const FULL_CSS=['sayward-core.css','sayward-patches.css','sayward-home.css'];
 const HOME_SUMMARY_KEY='sayward_home_summary_v1';
 const ACTIVE_DAY_MAX=11;
@@ -22,6 +22,23 @@ const runtimeAnchor=document.getElementById('saywardRuntimeAnchor');
 const HISTORY_KEY='sayward_boot_history';
 const RUN_ID=Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7);
 const RUN_STARTED=Date.now();
+const FAIL_CAPTURE_KEY='sayward_fail_capture_v2';
+const FAIL_CAPTURE_HISTORY_KEY='sayward_fail_capture_history_v2';
+const __swQuery=new URLSearchParams(location.search);
+const __isoRaw=__swQuery.get('isolate');
+const ISOLATION_STAGE=__isoRaw===null?null:Math.max(0,Math.min(10,Number(__isoRaw)||0));
+const ISOLATION_MODE=['day','my','sori','opic'].includes(__swQuery.get('mode'))?__swQuery.get('mode'):'day';
+const ISOLATION_DAY=Math.max(1,Math.min(ACTIVE_DAY_MAX,Number(__swQuery.get('day'))||1));
+const COLD_TEST=__swQuery.get('cold')==='1';
+const captureRun={build:BUILD,version:VERSION,runId:RUN_ID,prebootId:window.__SAYWARD_PREBOOT_ID__||null,startedAt:RUN_STARTED,url:location.href,mode:ISOLATION_MODE,day:ISOLATION_DAY,isolationStage:ISOLATION_STAGE,complete:false,result:'RUNNING',events:[]};
+function readCapture(key,fallback){try{const x=JSON.parse(localStorage.getItem(key)||'null');return x??fallback}catch(e){return fallback}}
+function archivePreviousCapture(){try{const prev=readCapture(FAIL_CAPTURE_KEY,null);if(!prev||prev.runId===RUN_ID)return;let h=readCapture(FAIL_CAPTURE_HISTORY_KEY,[]);if(!Array.isArray(h))h=[];h.unshift(prev);localStorage.setItem(FAIL_CAPTURE_HISTORY_KEY,JSON.stringify(h.slice(0,8)))}catch(e){}}
+function slimCaptureExtra(extra){const out={};if(!extra||typeof extra!=='object')return out;for(const k of ['profile','day','file','ms','error','reason','requestId','seq','words','loaded','requestedDay','status']){if(extra[k]!==undefined){let v=extra[k];if(typeof v==='object'){try{v=JSON.stringify(v).slice(0,500)}catch(e){v=String(v)}}out[k]=v}}return out}
+function persistCapture(){try{localStorage.setItem(FAIL_CAPTURE_KEY,JSON.stringify({...captureRun,events:captureRun.events.slice(-70)}))}catch(e){}}
+function captureEvent(stage,status='trace',detail='',extra={}){const ev={stage,status,detail:String(detail||''),at:Date.now(),elapsed:Date.now()-RUN_STARTED,...slimCaptureExtra(extra)};captureRun.lastStage=stage;captureRun.lastStatus=status;captureRun.lastDetail=ev.detail;captureRun.lastAt=ev.at;captureRun.events.push(ev);if(captureRun.events.length>70)captureRun.events=captureRun.events.slice(-70);persistCapture();return ev}
+function finishCapture(result,detail=''){captureRun.complete=true;captureRun.result=result;captureRun.finishedAt=Date.now();captureRun.durationMs=Date.now()-RUN_STARTED;if(detail)captureRun.detail=String(detail);persistCapture()}
+archivePreviousCapture();
+captureEvent('boot-script','start','sayward-boot.js evaluated',{profile:ISOLATION_MODE,day:ISOLATION_DAY});
 let bootLastTimer=null,bootLastPending=null;
 let shellReady=false,fullReady=false,fullLoading=false,fullPromise=null,pendingReplay=null;
 const loadedScripts=new Set();
@@ -54,16 +71,16 @@ function pruneDebugStorage(){
 function homeSnapshot(){try{const h=document.getElementById('homePage');if(!h)return {exists:false,visible:false};const cs=getComputedStyle(h),r=h.getBoundingClientRect();const visible=!h.classList.contains('hidden')&&cs.display!=='none'&&cs.visibility!=='hidden'&&Number(cs.opacity||1)>0&&r.width>20&&r.height>20;return {exists:true,visible,hiddenClass:h.classList.contains('hidden'),display:cs.display,visibility:cs.visibility,opacity:cs.opacity,w:Math.round(r.width),h:Math.round(r.height),children:h.children.length,textLen:(h.textContent||'').trim().length}}catch(e){return {exists:!!document.getElementById('homePage'),visible:false,error:String(e)}}}
 function runtimeSnapshot(){const snap={visibility:document.visibilityState,domElements:document.getElementsByTagName('*').length,home:homeSnapshot(),shellReady,fullReady};try{if(performance.memory)snap.heapMB=Math.round(performance.memory.usedJSHeapSize/1048576*10)/10}catch(e){}return snap}
 function flushBootLast(){if(!bootLastPending)return;try{localStorage.setItem('sayward_boot_last',JSON.stringify(bootLastPending))}catch(e){}bootLastPending=null;bootLastTimer=null}
-function trace(stage,detail='',extra={}){const ev={stage,detail,at:Date.now(),elapsed:Date.now()-RUN_STARTED,...runtimeSnapshot(),...extra};currentRun.lastStage=stage;currentRun.lastDetail=detail;currentRun.lastAt=ev.at;currentRun.events.push(ev);scheduleHistory(false);bootLastPending={build:BUILD,runId:RUN_ID,stage,detail,at:ev.at,complete:shellReady,shellReady,fullReady,home:ev.home};if(!bootLastTimer)bootLastTimer=setTimeout(flushBootLast,450);return ev}
-function withBuild(url){return `${url}?b=${encodeURIComponent(BUILD)}`}
+function trace(stage,detail='',extra={}){const ev={stage,detail,at:Date.now(),elapsed:Date.now()-RUN_STARTED,...runtimeSnapshot(),...extra};currentRun.lastStage=stage;currentRun.lastDetail=detail;currentRun.lastAt=ev.at;currentRun.events.push(ev);captureEvent(stage,'trace',detail,extra);scheduleHistory(false);bootLastPending={build:BUILD,runId:RUN_ID,stage,detail,at:ev.at,complete:shellReady,shellReady,fullReady,home:ev.home};if(!bootLastTimer)bootLastTimer=setTimeout(flushBootLast,450);return ev}
+function withBuild(url){return `${url}?b=${encodeURIComponent(BUILD)}${COLD_TEST?'&cold='+encodeURIComponent(RUN_ID):''}`}
 function timed(label,promise,ms=20000){let id;const timeout=new Promise((_,reject)=>{id=setTimeout(()=>reject(new Error(`${label} timeout (${ms/1000}s)`)),ms)});return Promise.race([promise,timeout]).finally(()=>clearTimeout(id))}
 const loadedCss=new Set();let fullCssPromise=null;
-async function loadCss(url){if(loadedCss.has(url))return true;const href=withBuild(url),started=Date.now();try{const cssText=await timed('CSS '+url,(async()=>{const r=await fetch(href,{cache:'default',credentials:'same-origin'});if(!r.ok)throw new Error('HTTP '+r.status+' for '+url);return r.text()})(),8000);const st=document.createElement('style');st.setAttribute('data-sayward-css',url);st.textContent=cssText;document.head.appendChild(st);loadedCss.add(url);try{localStorage.setItem('sayward_boot_css',JSON.stringify({build:BUILD,runId:RUN_ID,file:url,mode:'fetch-style',ms:Date.now()-started,at:Date.now()}))}catch(e){}return true}catch(err){const l=document.createElement('link');l.rel='stylesheet';l.href=href;l.setAttribute('data-sayward-css-fallback',url);l.onload=()=>loadedCss.add(url);document.head.appendChild(l);trace('css-fallback',url,{error:String(err)});await wait(60);return false}}
+async function loadCss(url){if(loadedCss.has(url))return true;const href=withBuild(url),started=Date.now();try{const cssText=await timed('CSS '+url,(async()=>{const r=await fetch(href,{cache:COLD_TEST?'no-store':'default',credentials:'same-origin'});if(!r.ok)throw new Error('HTTP '+r.status+' for '+url);return r.text()})(),8000);const st=document.createElement('style');st.setAttribute('data-sayward-css',url);st.textContent=cssText;document.head.appendChild(st);loadedCss.add(url);try{localStorage.setItem('sayward_boot_css',JSON.stringify({build:BUILD,runId:RUN_ID,file:url,mode:'fetch-style',ms:Date.now()-started,at:Date.now()}))}catch(e){}return true}catch(err){const l=document.createElement('link');l.rel='stylesheet';l.href=href;l.setAttribute('data-sayward-css-fallback',url);l.onload=()=>loadedCss.add(url);document.head.appendChild(l);trace('css-fallback',url,{error:String(err)});await wait(60);return false}}
 function ensureFullStyles(){if(fullCssPromise)return fullCssPromise;fullCssPromise=(async()=>{trace('full-css-start','user-triggered');for(const f of FULL_CSS){trace('css',f);await loadCss(f);await wait(12)}trace('full-css-ready','all app styles');return true})().catch(e=>{fullCssPromise=null;throw e});return fullCssPromise}
 let fragmentFetchPromises=new Map();
 function fetchTextAsset(url,timeout=10000){
   if(fragmentFetchPromises.has(url))return fragmentFetchPromises.get(url);
-  const p=timed('HTML '+url,(async()=>{const r=await fetch(withBuild(url),{cache:'default',credentials:'same-origin'});if(!r.ok)throw new Error('HTTP '+r.status+' for '+url);return r.text()})(),timeout).finally(()=>fragmentFetchPromises.delete(url));
+  const p=timed('HTML '+url,(async()=>{const r=await fetch(withBuild(url),{cache:COLD_TEST?'no-store':'default',credentials:'same-origin'});if(!r.ok)throw new Error('HTTP '+r.status+' for '+url);return r.text()})(),timeout).finally(()=>fragmentFetchPromises.delete(url));
   fragmentFetchPromises.set(url,p);return p
 }
 const scriptLoadPromises=new Map();
@@ -85,9 +102,14 @@ function setBootProgress(p,label){if(fill)fill.style.width=Math.max(2,Math.min(1
 function showOverlay(label='학습 기능 준비 중'){if(overlay)overlay.style.display='grid';setBootProgress(35,label)}
 function hideOverlay(){if(overlay)overlay.style.display='none'}
 function setBadge(text,on=true){if(leanBadgeText)leanBadgeText.textContent=text;if(leanBadge)leanBadge.classList.toggle('on',!!on)}
-function noteError(type,err){const payload={build:BUILD,runId:RUN_ID,type,message:String(err?.message||err||''),stack:String(err?.stack||''),at:Date.now()};try{localStorage.setItem('sayward_boot_error',JSON.stringify(payload))}catch(e){}trace('runtime-error',type,{error:payload});if(diag){diag.style.display='block';diag.textContent=`진단: ${type} · ${payload.message}`}}
+function noteError(type,err){const payload={build:BUILD,runId:RUN_ID,type,message:String(err?.message||err||''),stack:String(err?.stack||''),at:Date.now()};try{localStorage.setItem('sayward_boot_error',JSON.stringify(payload))}catch(e){}captureRun.complete=true;captureRun.result='FAIL';captureRun.detail=payload.message;captureEvent('runtime-error','FAIL',type,{error:payload.message});persistCapture();trace('runtime-error',type,{error:payload.message});if(diag){diag.style.display='block';diag.textContent=`진단: ${type} · ${payload.message}`}}
 window.addEventListener('error',e=>noteError('error',e.error||e.message));
 window.addEventListener('unhandledrejection',e=>noteError('rejection',e.reason));
+window.addEventListener('pagehide',()=>captureEvent('pagehide','info',document.visibilityState));
+window.addEventListener('pageshow',()=>captureEvent('pageshow','info',document.visibilityState));
+window.addEventListener('visibilitychange',()=>captureEvent('visibilitychange','info',document.visibilityState));
+window.addEventListener('offline',()=>captureEvent('network','info','offline'));
+window.addEventListener('online',()=>captureEvent('network','info','online'));
 function initialMode(){try{const m=localStorage.getItem('mv_mainHomeStudyMode540')||localStorage.getItem('mv_homeStudyMode212');if(['day','my','sori','opic'].includes(m))return m}catch(e){}return 'day'}
 async function attachLeanHome(){
   const existing=document.getElementById('homePage');
@@ -151,7 +173,7 @@ async function hydrateLeanHomeData(){
     try{localStorage.setItem('sayward_lean_hydration',JSON.stringify({build:BUILD,runId:RUN_ID,stage:'ready',mode:'compact-summary',words:words.length,hasSummary:!!compact,at:Date.now()}))}catch(e){}
     trace('lean-hydrate-ready','DAY 1~11 tiny index',{words:words.length,compact:!!compact,domElements:document.getElementsByTagName('*').length});
     if(!compact){const t=document.getElementById('todayTitle');if(t)t.textContent='홈은 준비됐습니다 · 학습 현황은 학습 기능 사용 후 자동 갱신됩니다';trace('large-storage-skipped','mv_unified_stats not read on Home startup')}
-  }catch(e){try{localStorage.setItem('sayward_lean_hydration',JSON.stringify({build:BUILD,runId:RUN_ID,stage:'failed',mode:'compact-summary',error:String(e?.message||e),at:Date.now()}))}catch(x){}trace('lean-hydrate-failed','DAY 1~11 tiny index',{error:String(e?.message||e)})}
+  }catch(e){const msg=String(e?.message||e);try{localStorage.setItem('sayward_lean_hydration',JSON.stringify({build:BUILD,runId:RUN_ID,stage:'failed',mode:'compact-summary',error:msg,at:Date.now()}))}catch(x){}captureRun.result='FAIL';captureRun.complete=true;captureRun.detail='lean hydration: '+msg;captureEvent('lean-hydrate-failed','FAIL','DAY 1~11 tiny index',{error:msg});persistCapture();trace('lean-hydrate-failed','DAY 1~11 tiny index',{error:msg})}
 }
 let modeTransitionSeq=0;
 function installLeanInterception(){document.addEventListener('click',e=>{
@@ -258,7 +280,7 @@ async function ensureDayData(day){
     trace('day-data-fetch-start',file,{day});
     writeLoaderState({event:'day-start',day,file});
     const data=await timed('DAY '+day+' data',(async()=>{
-      const r=await fetch(withBuild(file),{cache:'default',credentials:'same-origin'});
+      const r=await fetch(withBuild(file),{cache:COLD_TEST?'no-store':'default',credentials:'same-origin'});
       if(!r.ok)throw new Error('HTTP '+r.status+' for '+file);
       return r.json()
     })(),10000);
@@ -358,7 +380,7 @@ async function activateFull(action=null){
       await ensureProfileData(finalProfile,finalDay)
     }
     try{const mode=document.getElementById('homePage')?.dataset.cleanMode||initialMode();window.setHomeStudyMode?.(mode)}catch(e){}
-    setBootProgress(100,'준비 완료');hideOverlay();setBadge('',false);const a=pendingReplay;pendingReplay=null;replayAction(a);scheduleHistory(true);return true
+    setBootProgress(100,'준비 완료');hideOverlay();setBadge('',false);captureRun.shellReady=shellReady;captureRun.fullReady=fullReady;finishCapture('PASS','full activation ready');const a=pendingReplay;pendingReplay=null;replayAction(a);scheduleHistory(true);return true
   }catch(e){noteError('full-activation',e);hideOverlay();setBadge('기능 준비 실패 · 다시 눌러 재시도',true);if(retry){retry.style.display='inline-block';retry.onclick=()=>{fullLoading=false;fullPromise=null;activateFull(pendingReplay)}}throw e
   }finally{if(fullReady)fullLoading=false}})();return fullPromise
 }
@@ -375,7 +397,7 @@ async function handleEarlyAction(action){
   return activateFull(action);
 }
 window.SAYWARD_HANDLE_EARLY_ACTION=handleEarlyAction;
-(async()=>{try{
+async function runNormalBootstrap(){try{
   trace('bootstrap-start','interaction-gated enhancer');
   setBootProgress(15,'홈 화면 확장');
   await ensureFullStyles();
@@ -391,6 +413,64 @@ window.SAYWARD_HANDLE_EARLY_ACTION=handleEarlyAction;
   window.__SAYWARD_BOOT_READY__=true;
   const early=window.__SAYWARD_EARLY_ACTION__;window.__SAYWARD_EARLY_ACTION__=null;
   if(early)await handleEarlyAction(early);else hideOverlay();
-}catch(e){noteError('enhancer-bootstrap',e);hideOverlay();setBadge('기능 준비 실패 · 다시 눌러 재시도',true);flushBootLast();}
-})();
+  captureRun.shellReady=shellReady;captureRun.fullReady=fullReady;finishCapture('PASS','normal bootstrap reached usable shell');
+}catch(e){noteError('enhancer-bootstrap',e);finishCapture('FAIL',String(e?.message||e));hideOverlay();setBadge('기능 준비 실패 · 다시 눌러 재시도',true);flushBootLast();}}
+
+const ISO_LABELS=[
+  'Recorder only',
+  'Core CSS',
+  'Patch CSS',
+  'Home CSS',
+  'Home fragment',
+  'DAY index',
+  'Profile data',
+  'Deferred DOM',
+  'Core engine',
+  'Patch engine',
+  'Actual feature entry'
+];
+function isolationOverlay(stage,result,detail=''){
+  if(overlay)overlay.style.display='grid';
+  if(fill)fill.style.width=(result==='PASS'?'100%':Math.max(6,Math.round((stage+1)/11*100)))+'%';
+  if(status)status.innerHTML=`<span class="bootPct">${result}</span> · Isolation ${stage}/10 · ${ISO_LABELS[stage]||''}`;
+  if(diag){diag.style.display='block';diag.textContent=detail||`Stage ${stage}: ${ISO_LABELS[stage]||''}`}
+}
+async function runIsolation(){
+  const stage=ISOLATION_STAGE??0,mode=ISOLATION_MODE,day=ISOLATION_DAY;
+  window.__SAYWARD_ISOLATION__={stage,mode,day,build:BUILD};
+  historyEnabled=true;captureRun.test='module-isolation';captureEvent('isolation-start','start',`0→${stage}`,{profile:mode,day});
+  const steps=[
+    async()=>true,
+    async()=>{await loadCss('sayward-core.css')},
+    async()=>{await loadCss('sayward-patches.css')},
+    async()=>{await loadCss('sayward-home.css')},
+    async()=>{const home=await attachLeanHome();prepareLeanHomeLayout();shellReady=true;currentRun.shellReady=true;currentRun.shellReadyAt=Date.now();document.documentElement.classList.add('saywardStaticReady');return home},
+    async()=>{await loadJs('sayward-day-index.js',6000);const words=Array.isArray(globalThis.SAYWARD_DAY_INDEX)?globalThis.SAYWARD_DAY_INDEX:[];if(!words.length)throw new Error('DAY index loaded but empty');const compact=readHomeSummary();renderLeanDayGrid(words,compact);if(compact)updateLeanSummaryFromCompact(compact)},
+    async()=>{if(mode==='day')await ensureDayData(day);else await ensureProfileData(mode)},
+    async()=>{await appendDeferredDom()},
+    async()=>{await loadJs('sayward-core.js',20000);await waitReady('Core',()=>window.__SAYWARD_CORE_READY__?.version===VERSION,6500)},
+    async()=>{await loadJs('sayward-patches.js',16000);await waitReady('Patches',()=>window.__SAYWARD_PATCHES_READY__?.version===VERSION,6500);fullReady=true;currentRun.fullReady=true;currentRun.fullReadyAt=Date.now()},
+    async()=>{if(typeof window.setHomeStudyMode==='function')window.setHomeStudyMode(mode);if(mode==='day'&&typeof window.requestDayLearning==='function')window.requestDayLearning(day);await wait(120)}
+  ];
+  try{
+    for(let i=0;i<=stage;i++){
+      captureEvent('isolation-step-'+i,'START',ISO_LABELS[i],{profile:mode,day});
+      const t=Date.now();await steps[i]();
+      captureEvent('isolation-step-'+i,'PASS',ISO_LABELS[i],{profile:mode,day,ms:Date.now()-t});
+      setBootProgress(Math.max(5,Math.round((i+1)/11*95)),`격리 단계 ${i}/10 통과`);
+    }
+    currentRun.shellReady=shellReady;currentRun.fullReady=fullReady;currentRun.lastStage='isolation-pass';currentRun.lastDetail=`stage ${stage}`;scheduleHistory(true);flushBootLast();
+    captureRun.shellReady=shellReady;captureRun.fullReady=fullReady;finishCapture('PASS',`Isolation stage ${stage} passed`);
+    window.__SAYWARD_ISOLATION_RESULT__={result:'PASS',stage,mode,day,at:Date.now()};
+    isolationOverlay(stage,'PASS',`PASS · 0→${stage} 누적 로딩 성공 · ${ISO_LABELS[stage]}`);
+  }catch(e){
+    noteError('isolation-stage-'+stage,e);currentRun.failed=true;currentRun.lastStage='isolation-fail';currentRun.lastDetail=String(e?.message||e);scheduleHistory(true);flushBootLast();
+    finishCapture('FAIL',String(e?.message||e));
+    window.__SAYWARD_ISOLATION_RESULT__={result:'FAIL',stage,mode,day,error:String(e?.message||e),at:Date.now()};
+    isolationOverlay(stage,'FAIL',`FAIL · stage ${stage} · ${ISO_LABELS[stage]} · ${String(e?.message||e)}`);
+  }
+}
+
+if(ISOLATION_STAGE!==null)runIsolation();else runNormalBootstrap();
+
 })();
