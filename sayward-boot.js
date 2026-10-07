@@ -1,7 +1,7 @@
 (()=>{
 'use strict';
-const BUILD='20261007-v5.4.58-static-first-paint';
-const VERSION='5.4.58';
+const BUILD='20261007-v5.4.59-static-gate';
+const VERSION='5.4.59';
 const FULL_CSS=['sayward-core.css','sayward-patches.css','sayward-home.css'];
 const HOME_SUMMARY_KEY='sayward_home_summary_v1';
 const ACTIVE_DAY_MAX=11;
@@ -22,6 +22,7 @@ const runtimeAnchor=document.getElementById('saywardRuntimeAnchor');
 const HISTORY_KEY='sayward_boot_history';
 const RUN_ID=Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,7);
 const RUN_STARTED=Date.now();
+let bootLastTimer=null,bootLastPending=null;
 let shellReady=false,fullReady=false,fullLoading=false,fullPromise=null,pendingReplay=null;
 const loadedScripts=new Set();
 const LEAN_DAY_META={1:'Everyday Essentials',2:'Everyday Essentials · Expressing Opinions',3:'Expressing Opinions',4:'Expressing Opinions · Reasons & Explanations',5:'Reasons & Explanations',6:'Reasons & Explanations · Choices & Decisions',7:'Choices & Decisions',8:'Choices & Decisions · People & Feelings',9:'People & Feelings',10:'People & Feelings · Comparisons & Differences',11:'Comparisons & Differences'};
@@ -33,9 +34,9 @@ function writeHistory(force=false){
   if(!historyEnabled&&!force)return;
   try{
     const h=readHistory();const i=h.findIndex(x=>x&&x.id===RUN_ID);
-    const copy={...currentRun,events:currentRun.events.slice(-48)};
+    const copy={...currentRun,events:currentRun.events.slice(-32)};
     if(i>=0)h[i]=copy;else h.unshift(copy);
-    localStorage.setItem(HISTORY_KEY,JSON.stringify(h.slice(0,6)));
+    localStorage.setItem(HISTORY_KEY,JSON.stringify(h.slice(0,4)));
   }catch(e){}
 }
 function scheduleHistory(force=false){
@@ -52,7 +53,8 @@ function pruneDebugStorage(){
 }
 function homeSnapshot(){try{const h=document.getElementById('homePage');if(!h)return {exists:false,visible:false};const cs=getComputedStyle(h),r=h.getBoundingClientRect();const visible=!h.classList.contains('hidden')&&cs.display!=='none'&&cs.visibility!=='hidden'&&Number(cs.opacity||1)>0&&r.width>20&&r.height>20;return {exists:true,visible,hiddenClass:h.classList.contains('hidden'),display:cs.display,visibility:cs.visibility,opacity:cs.opacity,w:Math.round(r.width),h:Math.round(r.height),children:h.children.length,textLen:(h.textContent||'').trim().length}}catch(e){return {exists:!!document.getElementById('homePage'),visible:false,error:String(e)}}}
 function runtimeSnapshot(){const snap={visibility:document.visibilityState,domElements:document.getElementsByTagName('*').length,home:homeSnapshot(),shellReady,fullReady};try{if(performance.memory)snap.heapMB=Math.round(performance.memory.usedJSHeapSize/1048576*10)/10}catch(e){}return snap}
-function trace(stage,detail='',extra={}){const ev={stage,detail,at:Date.now(),elapsed:Date.now()-RUN_STARTED,...runtimeSnapshot(),...extra};currentRun.lastStage=stage;currentRun.lastDetail=detail;currentRun.lastAt=ev.at;currentRun.events.push(ev);scheduleHistory(false);try{localStorage.setItem('sayward_boot_last',JSON.stringify({build:BUILD,runId:RUN_ID,stage,detail,at:ev.at,complete:shellReady,shellReady,fullReady,home:ev.home}))}catch(e){}return ev}
+function flushBootLast(){if(!bootLastPending)return;try{localStorage.setItem('sayward_boot_last',JSON.stringify(bootLastPending))}catch(e){}bootLastPending=null;bootLastTimer=null}
+function trace(stage,detail='',extra={}){const ev={stage,detail,at:Date.now(),elapsed:Date.now()-RUN_STARTED,...runtimeSnapshot(),...extra};currentRun.lastStage=stage;currentRun.lastDetail=detail;currentRun.lastAt=ev.at;currentRun.events.push(ev);scheduleHistory(false);bootLastPending={build:BUILD,runId:RUN_ID,stage,detail,at:ev.at,complete:shellReady,shellReady,fullReady,home:ev.home};if(!bootLastTimer)bootLastTimer=setTimeout(flushBootLast,450);return ev}
 function withBuild(url){return `${url}?b=${encodeURIComponent(BUILD)}`}
 function timed(label,promise,ms=20000){let id;const timeout=new Promise((_,reject)=>{id=setTimeout(()=>reject(new Error(`${label} timeout (${ms/1000}s)`)),ms)});return Promise.race([promise,timeout]).finally(()=>clearTimeout(id))}
 const loadedCss=new Set();let fullCssPromise=null;
@@ -88,14 +90,15 @@ window.addEventListener('error',e=>noteError('error',e.error||e.message));
 window.addEventListener('unhandledrejection',e=>noteError('rejection',e.reason));
 function initialMode(){try{const m=localStorage.getItem('mv_mainHomeStudyMode540')||localStorage.getItem('mv_homeStudyMode212');if(['day','my','sori','opic'].includes(m))return m}catch(e){}return 'day'}
 async function attachLeanHome(){
-  const existing=document.getElementById('homePage');if(existing)return existing;
-  trace('home-fragment-start',HOME_FRAGMENT);
+  const existing=document.getElementById('homePage');
+  if(existing&&!existing.hasAttribute('data-static-gate'))return existing;
+  trace(existing?'home-upgrade-start':'home-fragment-start',HOME_FRAGMENT);
   const html=await fetchTextAsset(HOME_FRAGMENT,8000);
   const t=document.createElement('template');t.innerHTML=html.trim();
   const home=t.content.querySelector('#homePage');
   if(!home)throw new Error('homePage missing from '+HOME_FRAGMENT);
-  document.body.insertBefore(home,runtimeAnchor||document.body.lastChild);
-  trace('home-fragment-ready',HOME_FRAGMENT,{bytes:html.length,homeNodes:home.getElementsByTagName('*').length});
+  if(existing)existing.replaceWith(home);else document.body.insertBefore(home,runtimeAnchor||document.body.lastChild);
+  trace(existing?'home-upgrade-ready':'home-fragment-ready',HOME_FRAGMENT,{bytes:html.length,homeNodes:home.getElementsByTagName('*').length});
   return home
 }
 
@@ -138,15 +141,6 @@ function prepareLeanHomeLayout(){
   if(compact){renderLeanDayGrid(null,compact);updateLeanSummaryFromCompact(compact)}
   else{const t=document.getElementById('todayTitle');if(t)t.textContent='홈 화면 준비 완료 · 학습 현황은 잠시 후 갱신됩니다'}
   try{localStorage.setItem('sayward_lean_hydration',JSON.stringify({build:BUILD,runId:RUN_ID,stage:'static-layout-ready',mode:'compact-only',hasSummary:!!compact,at:Date.now()}))}catch(e){}
-}
-function buildCompactSummaryOffMainThread(words){
-  if(!Array.isArray(words)||!words.length||typeof Worker==='undefined')return Promise.resolve(null);
-  return new Promise(resolve=>{
-    let rawStats='{}',rawFavs='[]';
-    try{rawStats=localStorage.getItem('mv_unified_stats')||'{}';rawFavs=localStorage.getItem('mv_unified_favs')||'[]'}catch(e){resolve(null);return}
-    const code=`self.onmessage=e=>{try{const words=e.data.words||[],stats=JSON.parse(e.data.stats||'{}')||{},favs=new Set(JSON.parse(e.data.favs||'[]')||[]),now=Date.now(),days={},g={learned:0,due:0,weak:0,total:words.length};for(const w of words){const d=Number(w.newDay);if(!days[d])days[d]={learned:0,studyTotal:0,due:0,wrong:0,fav:0,total:0,pct:0};const s=days[d],st=stats[w.word]||{},sc=Number(st.studyCount)||0;s.total++;s.studyTotal+=sc;if(sc>0){s.learned++;g.learned++}if(Number(st.quizWrong)||0){s.wrong++;g.weak++}if((st.dueAt&&Number(st.dueAt)<=now)||(!st.dueAt&&(Number(st.quizWrong)||0)>0)){s.due++;g.due++}if(favs.has(w.word))s.fav++}Object.values(days).forEach(s=>s.pct=s.total?Math.round(s.learned/s.total*100):0);postMessage({version:1,updatedAt:Date.now(),global:g,days})}catch(err){postMessage({error:String(err)})}}`;
-    const url=URL.createObjectURL(new Blob([code],{type:'application/javascript'})),w=new Worker(url);let done=false;const finish=v=>{if(done)return;done=true;try{w.terminate();URL.revokeObjectURL(url)}catch(e){}resolve(v)};const timer=setTimeout(()=>finish(null),5000);w.onmessage=e=>{clearTimeout(timer);const v=e.data&&e.data.error?null:e.data;finish(v)};w.onerror=()=>{clearTimeout(timer);finish(null)};w.postMessage({words:words.map(x=>({word:x.word,newDay:x.newDay})),stats:rawStats,favs:rawFavs});
-  })
 }
 async function hydrateLeanHomeData(){
   try{
@@ -370,23 +364,33 @@ async function activateFull(action=null){
 }
 window.SAYWARD_ACTIVATE_FULL=activateFull;
 
+async function handleEarlyAction(action){
+  if(!action)return true;
+  if(action.kind==='mode'){
+    leanModeApply(action.mode||'day');
+    trace('early-mode-ready',action.mode||'day');
+    if(action.mode==='sori'||action.mode==='opic')return activateFull(action);
+    hideOverlay();setBadge('',false);return true;
+  }
+  return activateFull(action);
+}
+window.SAYWARD_HANDLE_EARLY_ACTION=handleEarlyAction;
 (async()=>{try{
-  trace('bootstrap-start','static-first-paint startup');
+  trace('bootstrap-start','interaction-gated enhancer');
+  setBootProgress(15,'홈 화면 확장');
+  await ensureFullStyles();
   const home=await attachLeanHome();
   prepareLeanHomeLayout();installLeanInterception();
   document.title='SAYWARD v'+VERSION;
   shellReady=true;currentRun.shellReady=true;currentRun.shellReadyAt=Date.now();
   document.documentElement.classList.add('saywardStaticReady');
-  trace('static-home-ready','home came from index.html',{homeNodes:home.getElementsByTagName('*').length,paint:globalThis.__SAYWARD_PAINT__||{}});
+  trace('full-home-ready','full home attached after user interaction',{homeNodes:home.getElementsByTagName('*').length});
   try{localStorage.removeItem('sayward_boot_error')}catch(e){}
-  pruneDebugStorage();historyEnabled=true;scheduleHistory(true);
-  // No external full-app CSS is fetched on Home startup. Critical Home CSS is already in index.html.
-  trace('home-css-idle','core/patch/home CSS deferred until learning feature');
-  // No large stats JSON.parse on the main thread. Only the tiny DAY index and an existing compact summary are used.
-  setTimeout(()=>hydrateLeanHomeData(),700);
-  trace('true-lazy-idle','static home visible; no background heavy engine prefetch');scheduleHistory(true);
-  setTimeout(()=>{trace('home-stable-2s','static shell still alive',{paint:globalThis.__SAYWARD_PAINT__||{}});scheduleHistory(true)},2000);
-  setTimeout(()=>{trace('home-stable-5s','static shell still alive',{paint:globalThis.__SAYWARD_PAINT__||{}});scheduleHistory(true)},5000);
-}catch(e){noteError('static-bootstrap',e);/* Static Home remains visible even if enhancement fails. */}
+  pruneDebugStorage();historyEnabled=true;scheduleHistory(true);flushBootLast();
+  setTimeout(()=>hydrateLeanHomeData(),80);
+  window.__SAYWARD_BOOT_READY__=true;
+  const early=window.__SAYWARD_EARLY_ACTION__;window.__SAYWARD_EARLY_ACTION__=null;
+  if(early)await handleEarlyAction(early);else hideOverlay();
+}catch(e){noteError('enhancer-bootstrap',e);hideOverlay();setBadge('기능 준비 실패 · 다시 눌러 재시도',true);flushBootLast();}
 })();
 })();

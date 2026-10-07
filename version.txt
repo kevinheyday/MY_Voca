@@ -1,3 +1,3 @@
-SAYWARD v5.4.58
-build: 20261007-v5.4.58-static-first-paint
-mode: STATIC FIRST PAINT + STORAGE-SAFE SUMMARY + DAY-BY-DAY LAZY
+SAYWARD v5.4.59 STATIC GATE
+build=20261007-v5.4.59-static-gate
+startup=index HTML/CSS only; no localStorage/timer/fetch/boot JS before user interaction
