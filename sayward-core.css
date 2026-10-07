@@ -597,7 +597,7 @@ body.drawer-open .drawerPanel{transform:translateX(0)}
 .drawerHeader{
   padding:24px 22px 18px;color:#fff;position:relative;overflow:hidden;box-sizing:border-box;
   min-height:248px;flex:0 0 auto;
-  background-image:linear-gradient(115deg,rgba(7,17,52,.90) 0%,rgba(18,35,88,.76) 52%,rgba(23,27,78,.62) 100%),url("drawer-header.png");
+  background-image:linear-gradient(115deg,rgba(7,17,52,.90) 0%,rgba(18,35,88,.76) 52%,rgba(23,27,78,.62) 100%),image-set(url("drawer-header.webp") type("image/webp"),url("drawer-header.png") type("image/png"));
   background-size:cover;background-position:74% 50%;background-repeat:no-repeat;
   border-bottom:1px solid rgba(255,255,255,.10);
 }

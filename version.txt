@@ -1,3 +1,5 @@
-SAYWARD v5.4.59 STATIC GATE
-build=20261007-v5.4.59-static-gate
-startup=index HTML/CSS only; no localStorage/timer/fetch/boot JS before user interaction
+SAYWARD v5.4.60 NATIVE GATE HARDENED
+build=20261007-v5.4.60-native-gate-hardened
+landing=index.html (0 JS / 0 storage / 0 timers / 0 fetch)
+app=sayward-app.html (interaction only)
+diagnostic=HEAD asset check + build contract audit

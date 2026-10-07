@@ -1,7 +1,7 @@
 (()=>{
 'use strict';
-const BUILD='20261007-v5.4.59-static-gate';
-const VERSION='5.4.59';
+const BUILD='20261007-v5.4.60-native-gate-hardened';
+const VERSION='5.4.60';
 const FULL_CSS=['sayward-core.css','sayward-patches.css','sayward-home.css'];
 const HOME_SUMMARY_KEY='sayward_home_summary_v1';
 const ACTIVE_DAY_MAX=11;
@@ -144,7 +144,7 @@ function prepareLeanHomeLayout(){
 }
 async function hydrateLeanHomeData(){
   try{
-    trace('lean-hydrate-start','tiny DAY index + compact summary');
+    trace('lean-hydrate-start','APP-ONLY tiny DAY index + compact summary');
     await loadJs('sayward-day-index.js',6000);await wait(15);
     const words=Array.isArray(globalThis.SAYWARD_DAY_INDEX)?globalThis.SAYWARD_DAY_INDEX:[];
     const compact=readHomeSummary();if(compact){renderLeanDayGrid(words,compact);updateLeanSummaryFromCompact(compact)}
@@ -387,7 +387,7 @@ window.SAYWARD_HANDLE_EARLY_ACTION=handleEarlyAction;
   trace('full-home-ready','full home attached after user interaction',{homeNodes:home.getElementsByTagName('*').length});
   try{localStorage.removeItem('sayward_boot_error')}catch(e){}
   pruneDebugStorage();historyEnabled=true;scheduleHistory(true);flushBootLast();
-  setTimeout(()=>hydrateLeanHomeData(),80);
+  setTimeout(()=>hydrateLeanHomeData(),80); // APP-ONLY: landing index.html never loads this file
   window.__SAYWARD_BOOT_READY__=true;
   const early=window.__SAYWARD_EARLY_ACTION__;window.__SAYWARD_EARLY_ACTION__=null;
   if(early)await handleEarlyAction(early);else hideOverlay();

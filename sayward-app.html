@@ -1,1 +1,31 @@
-<!doctype html><html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>SAYWARD</title><script>location.replace('./');</script></head><body></body></html>
+<!doctype html><html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
+<title>SAYWARD v5.4.60</title><meta name="theme-color" content="#2563eb"><meta name="sayward-version" content="v5.4.60"><meta name="sayward-build" content="20261007-v5.4.60-native-gate-hardened">
+<style>
+html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,"Noto Sans KR",sans-serif;background:#f6f8fc;color:#172033;-webkit-text-size-adjust:100%}*{box-sizing:border-box}
+#saywardBootOverlay{position:fixed;inset:0;z-index:2147483647;display:grid;place-items:center;padding:24px;background:#f6f8fc;color:#172033}
+#saywardBootOverlay .bootCard{width:min(430px,100%);background:#fff;border:1px solid #e6eaf0;border-radius:24px;padding:28px 22px;box-shadow:0 14px 40px rgba(25,50,90,.10);text-align:center}
+#saywardBootOverlay .bootLogo{width:62px;height:62px;margin:0 auto 14px;border-radius:19px;display:grid;place-items:center;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-weight:900;font-size:23px}
+#saywardBootOverlay h1{margin:0;font-size:24px}.bootSub{margin:7px 0 18px;color:#667085;font-size:13px}.bootBar{height:9px;border-radius:999px;background:#edf1f7;overflow:hidden}.bootFill{height:100%;width:3%;background:linear-gradient(90deg,#2563eb,#7c3aed);border-radius:inherit;transition:width .2s ease}.bootStatus{margin-top:11px;font-size:12px;color:#475467;min-height:18px}.bootPct{font-weight:800;color:#2563eb}.bootRetry{display:none;margin:16px auto 0;border:0;border-radius:12px;background:#2563eb;color:#fff;padding:10px 16px;font-weight:800}.bootDiag{display:none;margin-top:10px;padding:8px 10px;border-radius:10px;background:#fff7ed;color:#9a3412;font-size:10.5px;text-align:left}.bootHome{display:inline-block;margin-top:15px;color:#475467;font-size:12px;text-decoration:none}
+#saywardLeanBadge{position:fixed;left:50%;bottom:18px;z-index:2147483000;transform:translateX(-50%);display:none;align-items:center;gap:7px;padding:8px 12px;border-radius:999px;background:#111827;color:#fff;font:700 11px system-ui;box-shadow:0 7px 20px #0003}#saywardLeanBadge.on{display:flex}#saywardLeanBadge .dot{width:6px;height:6px;border-radius:50%;background:#60a5fa}
+</style></head><body>
+<div id="saywardBootOverlay" aria-live="polite"><div class="bootCard"><div class="bootLogo">S</div><h1>SAYWARD <span style="font-size:13px;color:#667085;font-weight:800;vertical-align:middle">v5.4.60</span></h1><div class="bootSub">선택한 학습 기능만 준비합니다.</div><div class="bootBar"><div class="bootFill" id="saywardBootFill"></div></div><div class="bootStatus" id="saywardBootStatus"><span class="bootPct">5%</span> · 준비</div><div class="bootDiag" id="saywardBootDiag"></div><button class="bootRetry" id="saywardBootRetry" type="button">다시 시도</button><a class="bootHome" href="./">← 홈으로</a></div></div>
+<div id="saywardLeanBadge" aria-live="polite"><span class="dot"></span><span id="saywardLeanBadgeText">학습 기능 준비</span></div><div id="saywardRuntimeAnchor" hidden></div>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search), allowed=['day','my','sori','opic'];
+  var mode=q.get('mode'); if(allowed.indexOf(mode)<0) mode='day';
+  var day=Number(q.get('day')||0), action=q.get('action')||'';
+  var early;
+  if(Number.isInteger(day)&&day>=1&&day<=11) early={kind:'day',day:day};
+  else if(action==='overall') early={kind:'id',id:'cleanOverallStart'};
+  else if(action==='today') early={kind:'id',id:'todayStartBtn'};
+  else if(action==='menu') early={kind:'id',id:'cleanHeroMenuHit'};
+  else if(action==='search') early={kind:'id',id:'cleanHeroSearchHit'};
+  else early={kind:'mode',mode:mode};
+  window.SAYWARD_VERSION='5.4.60';
+  window.__SAYWARD_EARLY_ACTION__=early;
+})();
+</script>
+<script src="sayward-boot.js?b=20261007-v5.4.60-native-gate-hardened"></script>
+</body></html>
