@@ -1,8 +1,9 @@
 (()=>{
 'use strict';
-const BUILD='20261007-v5.4.57-true-shell';
-const VERSION='5.4.57';
-const CSS=['sayward-core.css','sayward-patches.css','sayward-home.css'];
+const BUILD='20261007-v5.4.58-static-first-paint';
+const VERSION='5.4.58';
+const FULL_CSS=['sayward-core.css','sayward-patches.css','sayward-home.css'];
+const HOME_SUMMARY_KEY='sayward_home_summary_v1';
 const ACTIVE_DAY_MAX=11;
 const OPIC_JS=['sayward-opic-1.js','sayward-opic-2.js'];
 const ENGINE_JS=['sayward-core.js','sayward-patches.js'];
@@ -54,7 +55,9 @@ function runtimeSnapshot(){const snap={visibility:document.visibilityState,domEl
 function trace(stage,detail='',extra={}){const ev={stage,detail,at:Date.now(),elapsed:Date.now()-RUN_STARTED,...runtimeSnapshot(),...extra};currentRun.lastStage=stage;currentRun.lastDetail=detail;currentRun.lastAt=ev.at;currentRun.events.push(ev);scheduleHistory(false);try{localStorage.setItem('sayward_boot_last',JSON.stringify({build:BUILD,runId:RUN_ID,stage,detail,at:ev.at,complete:shellReady,shellReady,fullReady,home:ev.home}))}catch(e){}return ev}
 function withBuild(url){return `${url}?b=${encodeURIComponent(BUILD)}`}
 function timed(label,promise,ms=20000){let id;const timeout=new Promise((_,reject)=>{id=setTimeout(()=>reject(new Error(`${label} timeout (${ms/1000}s)`)),ms)});return Promise.race([promise,timeout]).finally(()=>clearTimeout(id))}
-async function loadCss(url){const href=withBuild(url),started=Date.now();try{const cssText=await timed('CSS '+url,(async()=>{const r=await fetch(href,{cache:'default',credentials:'same-origin'});if(!r.ok)throw new Error('HTTP '+r.status+' for '+url);return r.text()})(),8000);const st=document.createElement('style');st.setAttribute('data-sayward-css',url);st.textContent=cssText;document.head.appendChild(st);try{localStorage.setItem('sayward_boot_css',JSON.stringify({build:BUILD,runId:RUN_ID,file:url,mode:'fetch-style',ms:Date.now()-started,at:Date.now()}))}catch(e){}return true}catch(err){const l=document.createElement('link');l.rel='stylesheet';l.href=href;l.setAttribute('data-sayward-css-fallback',url);document.head.appendChild(l);trace('css-fallback',url,{error:String(err)});await wait(60);return false}}
+const loadedCss=new Set();let fullCssPromise=null;
+async function loadCss(url){if(loadedCss.has(url))return true;const href=withBuild(url),started=Date.now();try{const cssText=await timed('CSS '+url,(async()=>{const r=await fetch(href,{cache:'default',credentials:'same-origin'});if(!r.ok)throw new Error('HTTP '+r.status+' for '+url);return r.text()})(),8000);const st=document.createElement('style');st.setAttribute('data-sayward-css',url);st.textContent=cssText;document.head.appendChild(st);loadedCss.add(url);try{localStorage.setItem('sayward_boot_css',JSON.stringify({build:BUILD,runId:RUN_ID,file:url,mode:'fetch-style',ms:Date.now()-started,at:Date.now()}))}catch(e){}return true}catch(err){const l=document.createElement('link');l.rel='stylesheet';l.href=href;l.setAttribute('data-sayward-css-fallback',url);l.onload=()=>loadedCss.add(url);document.head.appendChild(l);trace('css-fallback',url,{error:String(err)});await wait(60);return false}}
+function ensureFullStyles(){if(fullCssPromise)return fullCssPromise;fullCssPromise=(async()=>{trace('full-css-start','user-triggered');for(const f of FULL_CSS){trace('css',f);await loadCss(f);await wait(12)}trace('full-css-ready','all app styles');return true})().catch(e=>{fullCssPromise=null;throw e});return fullCssPromise}
 let fragmentFetchPromises=new Map();
 function fetchTextAsset(url,timeout=10000){
   if(fragmentFetchPromises.has(url))return fragmentFetchPromises.get(url);
@@ -118,32 +121,43 @@ function buildLeanDaySettings(){
   try{if(mode){mode.value=localStorage.getItem('mv_unified_selectedStudyMode')||mode.value;mode.onchange=()=>localStorage.setItem('mv_unified_selectedStudyMode',mode.value)}if(rep){rep.value=localStorage.getItem('mv_unified_selectedStudyRepeat')||rep.value;rep.onchange=()=>localStorage.setItem('mv_unified_selectedStudyRepeat',rep.value)}if(ord){ord.value=localStorage.getItem('mv_unified_order')||ord.value;ord.onchange=()=>localStorage.setItem('mv_unified_order',ord.value)}if(speech){speech.value=localStorage.getItem('mv_unified_speech')||speech.value;speech.onchange=()=>localStorage.setItem('mv_unified_speech',speech.value)}}catch(e){}
 }
 function leanSavedDays(){const a=leanJson('mv_unified_selectedStudyDays',[]);return Array.isArray(a)?a.map(Number).filter(d=>d>=1&&d<=11):[]}
-function renderLeanDayGrid(words=null){
+function readHomeSummary(){try{const x=JSON.parse(localStorage.getItem(HOME_SUMMARY_KEY)||'null');return x&&typeof x==='object'?x:null}catch(e){return null}}
+function renderLeanDayGrid(words=null,summary=null){
   const grid=document.getElementById('dayGrid');if(!grid)return;
-  const saved=leanSavedDays(),stats=leanJson('mv_unified_stats',leanJson('mv_toefl_stats',{}))||{},favs=leanJson('mv_unified_favs',leanJson('mv_toefl_favs',[]))||[],now=Date.now();
-  const list=Array.isArray(words)?words:[];
-  const byDay={};list.forEach(w=>{const d=Number(w.newDay);if(d>=1&&d<=11)(byDay[d]||(byDay[d]=[])).push(w)});
+  const saved=leanSavedDays(),list=Array.isArray(words)?words:[],sum=summary||readHomeSummary()||{},byDayMeta=sum.days||{};
   grid.dataset.leanHydrated=list.length?'1':'0';
-  grid.innerHTML=Array.from({length:11},(_,i)=>{const d=i+1,arr=byDay[d]||[],checked=saved.includes(d);let learned=0,studyTotal=0,due=0,wrong=0,fav=0;arr.forEach(w=>{const st=stats[w.word]||{};const sc=Number(st.studyCount)||0;studyTotal+=sc;if(sc>0)learned++;if(Number(st.quizWrong)||0)wrong++;if((st.dueAt&&Number(st.dueAt)<=now)||(!st.dueAt&&(Number(st.quizWrong)||0)>0))due++;if(Array.isArray(favs)&&favs.includes(w.word))fav++});const total=arr.length||30,pct=arr.length?Math.round(learned/total*100):0;return '<div class="dayCard activeDayCard '+(checked?'selectedDay ':'')+'leanDayCard" data-day="'+d+'" data-lean-day="'+d+'" role="button" tabindex="0"><div class="dayCardTop"><span>DAY '+d+'</span><span class="dayStatus">'+(arr.length?(learned===0?'미학습':learned===total?'완료':'학습 중'):'준비 중')+'</span><span class="dayCardCheckWrap"><input class="daySelectCheck" type="checkbox" data-check-day="'+d+'" '+(checked?'checked':'')+' aria-label="DAY '+d+' 선택"></span></div><div style="font-size:14px;font-weight:950;margin-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+(LEAN_DAY_META[d]||('DAY '+d))+'</div><div class="dayProgress"><div style="width:'+pct+'%"></div></div><div class="dayCompactMeta leanDayMeta"><span>📖 '+learned+'/'+total+'</span><span>❌ '+wrong+'</span><span>⭐ '+fav+' 모름</span></div><div class="dayCardBottom leanDayMeta"><span>'+pct+'%</span><span>학습 '+studyTotal+'회</span><span>복습 '+due+'</span></div></div>'}).join('');
+  grid.innerHTML=Array.from({length:11},(_,i)=>{const d=i+1,s=byDayMeta[d]||byDayMeta[String(d)]||{},checked=saved.includes(d),learned=Number(s.learned)||0,total=Number(s.total)||30,studyTotal=Number(s.studyTotal)||0,due=Number(s.due)||0,wrong=Number(s.wrong)||0,fav=Number(s.fav)||0,pct=Number.isFinite(Number(s.pct))?Number(s.pct):(total?Math.round(learned/total*100):0),hasSummary=!!(summary||readHomeSummary());return '<div class="dayCard activeDayCard '+(checked?'selectedDay ':'')+'leanDayCard" data-day="'+d+'" data-lean-day="'+d+'" role="button" tabindex="0"><div class="dayCardTop"><span>DAY '+d+'</span><span class="dayStatus">'+(hasSummary?(learned===0?'미학습':learned>=total?'완료':'학습 중'):'준비')+'</span><span class="dayCardCheckWrap"><input class="daySelectCheck" type="checkbox" data-check-day="'+d+'" '+(checked?'checked':'')+' aria-label="DAY '+d+' 선택"></span></div><div class="leanDayTitle">'+(LEAN_DAY_META[d]||('DAY '+d))+'</div><div class="dayProgress"><div style="width:'+pct+'%"></div></div><div class="dayCompactMeta leanDayMeta"><span>📖 '+(hasSummary?learned:'—')+'/'+total+'</span><span>❌ '+(hasSummary?wrong:'—')+'</span><span>⭐ '+(hasSummary?fav:'—')+' 모름</span></div><div class="dayCardBottom leanDayMeta"><span>'+(hasSummary?pct:'—')+'%</span><span>학습 '+(hasSummary?studyTotal:'—')+'회</span><span>복습 '+(hasSummary?due:'—')+'</span></div></div>'}).join('');
   grid.querySelectorAll('.daySelectCheck').forEach(ch=>ch.addEventListener('change',e=>{e.stopPropagation();const days=[...grid.querySelectorAll('.daySelectCheck:checked')].map(x=>Number(x.dataset.checkDay)).sort((a,b)=>a-b);try{localStorage.setItem('mv_unified_selectedStudyDays',JSON.stringify(days))}catch(x){};ch.closest('.dayCard')?.classList.toggle('selectedDay',ch.checked)}));
 }
-function updateLeanSummary(words){
-  if(!Array.isArray(words)||!words.length)return;const stats=leanJson('mv_unified_stats',leanJson('mv_toefl_stats',{}))||{},now=Date.now();let learned=0,due=0,weak=0;words.forEach(w=>{const st=stats[w.word]||{};if((Number(st.studyCount)||0)>0)learned++;if(Number(st.quizWrong)||0)weak++;if((st.dueAt&&Number(st.dueAt)<=now)||(!st.dueAt&&(Number(st.quizWrong)||0)>0))due++});const unlearned=words.length-learned;const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=String(v)};set('todayReviewCount',due);set('todayLearned',learned);set('todayUnlearned',unlearned);set('todayWeak',weak);const title=document.getElementById('todayTitle'),btn=document.getElementById('todayStartBtn');if(title)title.textContent=due?'오늘 복습할 단어가 '+due+'개 있어요':(unlearned?'DAY 1~11 학습을 이어서 진행하세요':'현재 선택 가능 DAY를 완료했어요 🎉');if(btn)btn.textContent=due?'오늘 복습 '+due+'개 시작':(unlearned?'다음 DAY 학습 시작':'DAY 1 다시 보기');
+function updateLeanSummaryFromCompact(summary){
+  if(!summary||typeof summary!=='object')return;const g=summary.global||{};const learned=Number(g.learned)||0,due=Number(g.due)||0,weak=Number(g.weak)||0,total=Number(g.total)||330,unlearned=Math.max(0,total-learned);const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=String(v)};set('todayReviewCount',due);set('todayLearned',learned);set('todayUnlearned',unlearned);set('todayWeak',weak);const title=document.getElementById('todayTitle'),btn=document.getElementById('todayStartBtn');if(title)title.textContent=due?'오늘 복습할 단어가 '+due+'개 있어요':(unlearned?'DAY 1~11 학습을 이어서 진행하세요':'현재 선택 가능 DAY를 완료했어요 🎉');if(btn)btn.textContent=due?'오늘 복습 '+due+'개 시작':(unlearned?'다음 DAY 학습 시작':'DAY 1 다시 보기');
 }
-function prepareLeanHomeLayout(){buildLeanDaySettings();leanModeApply(initialMode());renderLeanDayGrid(null);const t=document.getElementById('todayTitle');if(t)t.textContent='오늘 학습 현황을 준비하고 있어요';try{localStorage.setItem('sayward_lean_hydration',JSON.stringify({build:BUILD,runId:RUN_ID,stage:'layout-ready',at:Date.now()}))}catch(e){}}
+function prepareLeanHomeLayout(){
+  buildLeanDaySettings();leanModeApply(initialMode());
+  const compact=readHomeSummary();
+  if(compact){renderLeanDayGrid(null,compact);updateLeanSummaryFromCompact(compact)}
+  else{const t=document.getElementById('todayTitle');if(t)t.textContent='홈 화면 준비 완료 · 학습 현황은 잠시 후 갱신됩니다'}
+  try{localStorage.setItem('sayward_lean_hydration',JSON.stringify({build:BUILD,runId:RUN_ID,stage:'static-layout-ready',mode:'compact-only',hasSummary:!!compact,at:Date.now()}))}catch(e){}
+}
+function buildCompactSummaryOffMainThread(words){
+  if(!Array.isArray(words)||!words.length||typeof Worker==='undefined')return Promise.resolve(null);
+  return new Promise(resolve=>{
+    let rawStats='{}',rawFavs='[]';
+    try{rawStats=localStorage.getItem('mv_unified_stats')||'{}';rawFavs=localStorage.getItem('mv_unified_favs')||'[]'}catch(e){resolve(null);return}
+    const code=`self.onmessage=e=>{try{const words=e.data.words||[],stats=JSON.parse(e.data.stats||'{}')||{},favs=new Set(JSON.parse(e.data.favs||'[]')||[]),now=Date.now(),days={},g={learned:0,due:0,weak:0,total:words.length};for(const w of words){const d=Number(w.newDay);if(!days[d])days[d]={learned:0,studyTotal:0,due:0,wrong:0,fav:0,total:0,pct:0};const s=days[d],st=stats[w.word]||{},sc=Number(st.studyCount)||0;s.total++;s.studyTotal+=sc;if(sc>0){s.learned++;g.learned++}if(Number(st.quizWrong)||0){s.wrong++;g.weak++}if((st.dueAt&&Number(st.dueAt)<=now)||(!st.dueAt&&(Number(st.quizWrong)||0)>0)){s.due++;g.due++}if(favs.has(w.word))s.fav++}Object.values(days).forEach(s=>s.pct=s.total?Math.round(s.learned/s.total*100):0);postMessage({version:1,updatedAt:Date.now(),global:g,days})}catch(err){postMessage({error:String(err)})}}`;
+    const url=URL.createObjectURL(new Blob([code],{type:'application/javascript'})),w=new Worker(url);let done=false;const finish=v=>{if(done)return;done=true;try{w.terminate();URL.revokeObjectURL(url)}catch(e){}resolve(v)};const timer=setTimeout(()=>finish(null),5000);w.onmessage=e=>{clearTimeout(timer);const v=e.data&&e.data.error?null:e.data;finish(v)};w.onerror=()=>{clearTimeout(timer);finish(null)};w.postMessage({words:words.map(x=>({word:x.word,newDay:x.newDay})),stats:rawStats,favs:rawFavs});
+  })
+}
 async function hydrateLeanHomeData(){
   try{
-    trace('lean-hydrate-start','tiny DAY index only');
-    await loadJs('sayward-day-index.js',6000);
-    await wait(15);
+    trace('lean-hydrate-start','tiny DAY index + compact summary');
+    await loadJs('sayward-day-index.js',6000);await wait(15);
     const words=Array.isArray(globalThis.SAYWARD_DAY_INDEX)?globalThis.SAYWARD_DAY_INDEX:[];
-    renderLeanDayGrid(words);updateLeanSummary(words);
-    try{localStorage.setItem('sayward_lean_hydration',JSON.stringify({build:BUILD,runId:RUN_ID,stage:'ready',mode:'tiny-index',words:words.length,at:Date.now()}))}catch(e){}
-    trace('lean-hydrate-ready','DAY 1~11 tiny index',{words:words.length,domElements:document.getElementsByTagName('*').length});
-  }catch(e){
-    try{localStorage.setItem('sayward_lean_hydration',JSON.stringify({build:BUILD,runId:RUN_ID,stage:'failed',mode:'tiny-index',error:String(e?.message||e),at:Date.now()}))}catch(x){}
-    trace('lean-hydrate-failed','DAY 1~11 tiny index',{error:String(e?.message||e)})
-  }
+    const compact=readHomeSummary();if(compact){renderLeanDayGrid(words,compact);updateLeanSummaryFromCompact(compact)}
+    try{localStorage.setItem('sayward_lean_hydration',JSON.stringify({build:BUILD,runId:RUN_ID,stage:'ready',mode:'compact-summary',words:words.length,hasSummary:!!compact,at:Date.now()}))}catch(e){}
+    trace('lean-hydrate-ready','DAY 1~11 tiny index',{words:words.length,compact:!!compact,domElements:document.getElementsByTagName('*').length});
+    if(!compact){const t=document.getElementById('todayTitle');if(t)t.textContent='홈은 준비됐습니다 · 학습 현황은 학습 기능 사용 후 자동 갱신됩니다';trace('large-storage-skipped','mv_unified_stats not read on Home startup')}
+  }catch(e){try{localStorage.setItem('sayward_lean_hydration',JSON.stringify({build:BUILD,runId:RUN_ID,stage:'failed',mode:'compact-summary',error:String(e?.message||e),at:Date.now()}))}catch(x){}trace('lean-hydrate-failed','DAY 1~11 tiny index',{error:String(e?.message||e)})}
 }
 let modeTransitionSeq=0;
 function installLeanInterception(){document.addEventListener('click',e=>{
@@ -331,6 +345,8 @@ async function activateFull(action=null){
   trace('full-activation-start','user-triggered',{profile});
   fullPromise=(async()=>{try{
     await ensureProfileData(profile,requestedDay);
+    if(!loadedScripts.has('sayward-day-index.js')){try{await loadJs('sayward-day-index.js',6000)}catch(e){}}
+    setBootProgress(58,'화면 스타일 준비');await ensureFullStyles();
     setBootProgress(66,'학습 화면 확장');await appendDeferredDom();await wait(45);
     setBootProgress(76,'핵심 기능 준비');trace('engine-load','sayward-core.js',{profile});
     await loadJs('sayward-core.js',20000);await waitReady('Core',()=>window.__SAYWARD_CORE_READY__?.version===VERSION,6500);
@@ -353,5 +369,24 @@ async function activateFull(action=null){
   }finally{if(fullReady)fullLoading=false}})();return fullPromise
 }
 window.SAYWARD_ACTIVATE_FULL=activateFull;
-(async()=>{try{trace('bootstrap-start','zero-preflight startup');setBootProgress(4,'화면 준비');trace('zero-preflight','Service Worker / CacheStorage startup checks skipped');for(let i=0;i<CSS.length;i++){setBootProgress(8+i*7,`화면 스타일 ${i+1}/${CSS.length}`);trace('css',CSS[i]);await loadCss(CSS[i]);await wait(18)}setBootProgress(30,'홈 화면 구성');const home=await attachLeanHome();prepareLeanHomeLayout();installLeanInterception();document.title='SAYWARD v'+VERSION;document.documentElement.classList.remove('saywardBooting','saywardHomeBootGuard');document.documentElement.classList.add('saywardLeanReady');hideOverlay();await wait(40);shellReady=true;currentRun.shellReady=true;currentRun.shellReadyAt=Date.now();trace('lean-home-visible','first usable home',{homeNodes:home.getElementsByTagName('*').length});try{localStorage.removeItem('sayward_boot_error')}catch(e){}pruneDebugStorage();historyEnabled=true;scheduleHistory(true);setBadge('홈 학습 현황 준비 중',true);setTimeout(()=>hydrateLeanHomeData().finally(()=>setTimeout(()=>setBadge('',false),500)),220);trace('true-lazy-idle','no background prefetch');scheduleHistory(true)}catch(e){noteError('lean-bootstrap',e);if(status)status.textContent='초기 화면 준비 중 오류가 발생했습니다.';if(retry){retry.style.display='inline-block';retry.onclick=()=>location.reload()}}})();
+
+(async()=>{try{
+  trace('bootstrap-start','static-first-paint startup');
+  const home=await attachLeanHome();
+  prepareLeanHomeLayout();installLeanInterception();
+  document.title='SAYWARD v'+VERSION;
+  shellReady=true;currentRun.shellReady=true;currentRun.shellReadyAt=Date.now();
+  document.documentElement.classList.add('saywardStaticReady');
+  trace('static-home-ready','home came from index.html',{homeNodes:home.getElementsByTagName('*').length,paint:globalThis.__SAYWARD_PAINT__||{}});
+  try{localStorage.removeItem('sayward_boot_error')}catch(e){}
+  pruneDebugStorage();historyEnabled=true;scheduleHistory(true);
+  // No external full-app CSS is fetched on Home startup. Critical Home CSS is already in index.html.
+  trace('home-css-idle','core/patch/home CSS deferred until learning feature');
+  // No large stats JSON.parse on the main thread. Only the tiny DAY index and an existing compact summary are used.
+  setTimeout(()=>hydrateLeanHomeData(),700);
+  trace('true-lazy-idle','static home visible; no background heavy engine prefetch');scheduleHistory(true);
+  setTimeout(()=>{trace('home-stable-2s','static shell still alive',{paint:globalThis.__SAYWARD_PAINT__||{}});scheduleHistory(true)},2000);
+  setTimeout(()=>{trace('home-stable-5s','static shell still alive',{paint:globalThis.__SAYWARD_PAINT__||{}});scheduleHistory(true)},5000);
+}catch(e){noteError('static-bootstrap',e);/* Static Home remains visible even if enhancement fails. */}
+})();
 })();

@@ -1,21 +1,215 @@
-<!doctype html><html lang="ko" class="saywardBooting"><head>
+<!doctype html><html lang="ko" class="saywardStaticShell"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
-<title>SAYWARD v5.4.57</title><meta name="theme-color" content="#2563eb"><meta name="sayward-build" content="v5.4.57"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
-<style id="saywardCriticalBootStyle">
-html.saywardBooting,html.saywardBooting body{margin:0;min-height:100%;background:#f6f8fc;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif}
-html.saywardBooting body>*:not(#saywardBootOverlay){visibility:hidden!important}
-html.saywardHomeBootGuard #homePage{display:block!important;visibility:visible!important;opacity:1!important}
-html.saywardHomeBootGuard body{visibility:visible!important}
-#saywardBootOverlay{position:fixed;inset:0;z-index:2147483647;display:grid;place-items:center;padding:24px;background:#f6f8fc;color:#172033}
-#saywardBootOverlay .bootCard{width:min(430px,100%);background:#fff;border:1px solid #e6eaf0;border-radius:24px;padding:28px 22px;box-shadow:0 14px 40px rgba(25,50,90,.10);text-align:center}
-#saywardBootOverlay .bootLogo{width:62px;height:62px;margin:0 auto 14px;border-radius:19px;display:grid;place-items:center;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-weight:900;font-size:23px}
-#saywardBootOverlay h1{margin:0;font-size:24px}.bootSub{margin:7px 0 18px;color:#667085;font-size:13px;line-height:1.45}.bootBar{height:9px;border-radius:999px;background:#edf1f7;overflow:hidden}.bootFill{height:100%;width:3%;background:linear-gradient(90deg,#2563eb,#7c3aed);border-radius:inherit;transition:width .2s ease}.bootStatus{margin-top:11px;font-size:12px;color:#475467;min-height:18px}.bootPct{font-weight:800;color:#2563eb}.bootRetry{display:none;margin:16px auto 0;border:0;border-radius:12px;background:#2563eb;color:#fff;padding:10px 16px;font-weight:800}.bootDiag{display:none;margin-top:10px;padding:8px 10px;border-radius:10px;background:#fff7ed;color:#9a3412;font-size:10.5px;line-height:1.4;text-align:left}
+<title>SAYWARD v5.4.58</title><meta name="theme-color" content="#2563eb"><meta name="sayward-build" content="v5.4.58"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
+<style id="saywardStaticCriticalStyle">
+:root{--sw-navy:#0b1d42;--sw-cyan:#39ddff;--sw-blue:#4c8fff;--sw-violet:#7a51ff;--sw-ink:#10204b}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#f6f8fc;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR",sans-serif;color:#111827}button,select,input{font:inherit}
+#homePage{display:block;visibility:visible;opacity:1;min-height:100vh;background:linear-gradient(180deg,#f8fafc,#edf2f7);padding:10px 10px 26px;color:#111827}.homeShell{max-width:760px;margin:auto}
+#homePage .homeHero{position:relative;width:100%;aspect-ratio:941/296;border-radius:20px;overflow:hidden;background:linear-gradient(135deg,#243b78,#4a46a8 58%,#6d55bf);box-shadow:0 10px 22px rgba(15,28,75,.09)}#homePage .homeHero>div{display:none}#cleanHeroMenuHit,#cleanHeroSearchHit{position:absolute;top:0;height:100%;width:18%;border:0;background:transparent;padding:0;z-index:8}#cleanHeroMenuHit{left:-5px}#cleanHeroSearchHit{right:0}#homePage .homeHero:before{content:var(--sayward-version-label,"v5.4.58");position:absolute;right:14%;top:7px;z-index:6;min-width:52px;padding:2px 8px 3px;text-align:center;border:1.5px solid #fffe;border-radius:999px;background:#4d3eca;color:#fff;font-size:8.7px;font-weight:950}
+.cleanHomeLauncher{display:flex;flex-direction:column;gap:9px;margin-top:11px}.cleanModeGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.cleanModeCard{min-width:0;min-height:84px;padding:7px 2px 6px;border:1.5px solid #dfe4ef;border-radius:17px;background:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;color:#10204b}.swModeIcon{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:#fff;box-shadow:0 4px 12px #313f7112}.swModeIcon svg{width:34px;height:34px;display:block}.swModeCopy{display:flex;flex-direction:column;align-items:center;min-width:0}.swModeCopy b{font-size:10.3px;line-height:1.05;font-weight:950;white-space:nowrap}.swModeCopy small{display:none}#homePage[data-clean-mode="day"] .cleanModeCard[data-clean-mode-button="day"],#homePage[data-clean-mode="my"] .cleanModeCard[data-clean-mode-button="my"],#homePage[data-clean-mode="sori"] .cleanModeCard[data-clean-mode-button="sori"],#homePage[data-clean-mode="opic"] .cleanModeCard[data-clean-mode-button="opic"]{border:3px solid #4c8fff;background:linear-gradient(180deg,#fff,#eef5ff);box-shadow:0 8px 20px #4c8fff33;transform:translateY(-1px)}
+.cleanOverallCard{height:58px;min-height:58px;border-radius:16px;border:2px solid #3d6aa6;background:linear-gradient(120deg,#172a48,#203756 56%,#2a3961);overflow:hidden}.cleanOverallStart{position:relative;width:100%;height:100%;border:0;background:transparent;color:#fff}.cleanOverallPlay{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:26px;height:26px;border-radius:50%;display:grid;place-items:center;border:1px solid #71cdff66;background:#1e456eb8;color:#fff;font-size:10px}.swOverallCopy{position:absolute;left:46px;top:50%;transform:translateY(-50%);width:67%;display:flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap}.swOverallCopy strong{font-size:12.5px}.swOverallCopy small{font-size:6.3px;color:#c8d5e8}.swOverallCopy em,.swForwardMark{display:none}
+.todayCard,.daySection{background:#fff;border:1px solid #e5e7eb;border-radius:20px;padding:15px;margin-top:10px;box-shadow:0 10px 28px #0f172a0f}.todayHead{display:flex;justify-content:space-between;align-items:center;gap:12px}.todayLabel{font-size:12px;font-weight:950;color:#ea580c}.todayTitle{font-size:18px;font-weight:950;margin-top:4px}.todayNumber{min-width:72px;background:#fff7ed;border:1px solid #fed7aa;border-radius:17px;padding:10px;text-align:center}.todayNumber b{display:block;color:#c2410c;font-size:27px;line-height:1}.todayNumber span{font-size:11px;color:#9a3412;font-weight:850}.todayStats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:15px 0}.todayStats>div{background:#f8fafc;border-radius:15px;padding:11px;text-align:center}.todayStats b{display:block;font-size:20px}.todayStats span{font-size:11px;color:#667085;font-weight:800}.todayStartBtn{width:100%;border:0;border-radius:15px;background:#111827;color:#fff;font-size:16px;font-weight:950;padding:13px}
+.sectionHead{display:flex;justify-content:space-between;align-items:center;gap:10px}.sectionHead div>b{font-size:15px}.sectionSub{display:block;font-size:9.5px;line-height:1.25;color:#667085;margin-top:3px}.daySelectControls,.homePlaybackCard{display:none}.dayGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-top:12px;width:100%}.dayCard{border:1px solid #e5e7eb;background:#fff;border-radius:18px;padding:13px;text-align:left;min-height:126px;min-width:0;overflow:hidden;box-shadow:0 7px 20px #0f172a10}.dayCardTop{display:flex;align-items:center;gap:5px;font-weight:950}.dayStatus{font-size:10px;border-radius:999px;background:#f2f4f7;color:#667085;padding:3px 6px;white-space:nowrap}.dayCardCheckWrap{margin-left:auto}.daySelectCheck{width:17px;height:17px}.leanDayTitle{font-size:12.5px;font-weight:950;margin-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.dayProgress{height:3px;background:#e5e7eb;border-radius:99px;overflow:hidden;margin:9px 0 7px}.dayProgress>div{height:100%;background:#4f46e5}.dayCompactMeta,.dayCardBottom{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;font-size:9.4px;font-weight:850;color:#475467;text-align:center;line-height:1.25}.dayCompactMeta span,.dayCardBottom span{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.myClassSection{display:none;margin-top:12px}.myClassCard{border:1px solid #d7dcf5;background:#fff;border-radius:16px;padding:11px;box-shadow:0 5px 14px #4f46e512}.myClassTop{display:flex;justify-content:space-between;gap:8px}.myClassTop b{font-size:11px}.myClassBadge{font-size:9px}.myClassTitle{font-size:12px;font-weight:900;margin-top:5px}.myClassDesc{display:none}.myClassMeta{display:flex;gap:4px;flex-wrap:wrap;margin-top:7px}.myClassMeta span{font-size:8.5px;background:#f8fafc;border-radius:999px;padding:3px 5px}.myLessonSelectMini{display:none}
+#homePage[data-clean-mode="day"] .daySection{display:block}#homePage[data-clean-mode="day"] .myClassSection{display:none}#homePage[data-clean-mode="my"] .daySection,#homePage[data-clean-mode="my"] .todayCard{display:none}#homePage[data-clean-mode="my"] .myClassSection{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}#homePage[data-clean-mode="sori"] .daySection,#homePage[data-clean-mode="sori"] .myClassSection,#homePage[data-clean-mode="sori"] .todayCard,#homePage[data-clean-mode="opic"] .daySection,#homePage[data-clean-mode="opic"] .myClassSection,#homePage[data-clean-mode="opic"] .todayCard{display:none}
+#saywardBootOverlay{position:fixed;inset:0;z-index:2147483647;display:none;place-items:center;padding:24px;background:#f6f8fc;color:#172033}#saywardBootOverlay .bootCard{width:min(430px,100%);background:#fff;border:1px solid #e6eaf0;border-radius:24px;padding:28px 22px;box-shadow:0 14px 40px #19325a1a;text-align:center}#saywardBootOverlay .bootLogo{width:62px;height:62px;margin:0 auto 14px;border-radius:19px;display:grid;place-items:center;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;font-weight:900;font-size:23px}#saywardBootOverlay h1{margin:0;font-size:24px}.bootSub{margin:7px 0 18px;color:#667085;font-size:13px}.bootBar{height:9px;border-radius:999px;background:#edf1f7;overflow:hidden}.bootFill{height:100%;width:3%;background:linear-gradient(90deg,#2563eb,#7c3aed);border-radius:inherit}.bootStatus{margin-top:11px;font-size:12px;color:#475467;min-height:18px}.bootPct{font-weight:800;color:#2563eb}.bootRetry{display:none;margin:16px auto 0;border:0;border-radius:12px;background:#2563eb;color:#fff;padding:10px 16px;font-weight:800}.bootDiag{display:none;margin-top:10px;padding:8px 10px;border-radius:10px;background:#fff7ed;color:#9a3412;font-size:10.5px;text-align:left}
+.saywardDeferredMount{display:none!important}#saywardLeanBadge{position:fixed;left:50%;bottom:18px;z-index:2147483000;transform:translateX(-50%);display:none;align-items:center;gap:7px;padding:8px 12px;border-radius:999px;background:#111827;color:#fff;font:700 11px system-ui;box-shadow:0 7px 20px #0003}#saywardLeanBadge.on{display:flex}#saywardLeanBadge .dot{width:6px;height:6px;border-radius:50%;background:#60a5fa}
+@media(max-width:360px){.cleanModeGrid{gap:4px}.cleanModeCard{min-height:78px}.swModeIcon{width:38px;height:38px}.swModeIcon svg{width:31px;height:31px}.swModeCopy b{font-size:9.5px}.dayGrid{gap:6px}.dayCard{padding:10px}}
 </style>
-<style id="saywardShellGuard">.saywardDeferredMount{display:none!important}#saywardLeanBadge{position:fixed;left:50%;bottom:18px;z-index:2147483000;transform:translateX(-50%);display:none;align-items:center;gap:7px;padding:8px 12px;border-radius:999px;background:#111827;color:#fff;font:700 11px system-ui;box-shadow:0 7px 20px #0003}#saywardLeanBadge.on{display:flex}#saywardLeanBadge .dot{width:6px;height:6px;border-radius:50%;background:#60a5fa}</style>
-<script>window.SAYWARD_VERSION='5.4.57';window.__SAYWARD_DOCUMENT_START__={version:'5.4.57',build:'20261007-v5.4.57-true-shell',at:Date.now(),perf:(performance.now?performance.now():0)};document.documentElement.style.setProperty('--sayward-version-label','"v5.4.57"');</script>
+<script>window.SAYWARD_VERSION='5.4.58';window.__SAYWARD_DOCUMENT_START__={version:'5.4.58',build:'20261007-v5.4.58-static-first-paint',at:Date.now(),perf:(performance.now?performance.now():0)};document.documentElement.style.setProperty('--sayward-version-label','"v5.4.58"');window.__SAYWARD_PAINT__={};try{new PerformanceObserver(function(list){list.getEntries().forEach(function(e){window.__SAYWARD_PAINT__[e.name]=Math.round(e.startTime);try{localStorage.setItem('sayward_first_paint',JSON.stringify({build:'20261007-v5.4.58-static-first-paint',name:e.name,ms:Math.round(e.startTime),at:Date.now()}))}catch(_){}})}).observe({type:'paint',buffered:true})}catch(_){}</script>
 </head><body>
-<div id="saywardBootOverlay" aria-live="polite"><div class="bootCard"><div class="bootLogo">S</div><h1>SAYWARD <span style="font-size:13px;color:#667085;font-weight:800;vertical-align:middle">v5.4.57</span></h1><div class="bootSub">가벼운 Shell을 먼저 열고 필요한 화면만 불러옵니다.</div><div class="bootBar"><div class="bootFill" id="saywardBootFill"></div></div><div class="bootStatus" id="saywardBootStatus"><span class="bootPct">0%</span> · 시작 준비</div><div class="bootDiag" id="saywardBootDiag"></div><button class="bootRetry" id="saywardBootRetry" type="button">다시 시도</button></div></div>
-<div id="saywardLeanBadge" aria-live="polite"><span class="dot"></span><span id="saywardLeanBadgeText">학습 기능 준비 대기</span></div>
-<div id="saywardRuntimeAnchor" hidden></div>
-<script src="sayward-boot.js?b=20261007-v5.4.57-true-shell" onerror="document.getElementById('saywardBootStatus').textContent='시작 파일을 불러오지 못했습니다.';document.getElementById('saywardBootRetry').style.display='inline-block';document.getElementById('saywardBootRetry').onclick=()=>location.reload()"></script>
+<div class="homePage" id="homePage" data-clean-mode="day">
+<div class="homeShell">
+<section class="homeHero">
+<div>
+<div class="homeEyebrow" id="homeCourseEyebrow">MY VOCA UNIFIED COURSE · 69 DAYS</div>
+<h1 id="homeCourseTitle">MY ENGLISH</h1>
+<p id="homeCourseDesc">말하는 순간, 더 오래 기억되는 영어</p>
+</div>
+<div class="homeDayBadge"><b id="homeRegisteredDays">30</b><span>등록 Day</span></div>
+<button aria-label="메뉴 열기" id="cleanHeroMenuHit" type="button"></button><button aria-label="통합 검색" id="cleanHeroSearchHit" type="button"></button></section>
+<section aria-label="학습 모드 및 전체 반복" class="cleanHomeLauncher" id="cleanHomeLauncher">
+<div class="cleanModeGrid">
+<button aria-label="DAY VOCA" class="cleanModeCard" data-clean-mode-button="day" type="button"><span class="swModeIcon"><svg aria-hidden="true" viewbox="0 0 64 64"><defs><lineargradient id="g1" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#7567ff"></stop><stop offset="1" stop-color="#a58aff"></stop></lineargradient></defs><path d="M8 15c8-3 15-2 24 4v31c-9-6-16-7-24-4z" fill="#fff" stroke="#7c6cf8" stroke-width="3"></path><path d="M56 15c-8-3-15-2-24 4v31c9-6 16-7 24-4z" fill="#fff" stroke="#7c6cf8" stroke-width="3"></path><path d="M32 19v31" stroke="url(#g1)" stroke-linecap="round" stroke-width="4"></path><path d="M13 20c6-1 11 0 16 3M13 27c6-1 11 0 16 3" stroke="#c9c4ff" stroke-linecap="round" stroke-width="2"></path><path d="M51 20c-6-1-11 0-16 3M51 27c-6-1-11 0-16 3" stroke="#c9c4ff" stroke-linecap="round" stroke-width="2"></path></svg></span><span class="swModeCopy"><b>DAY VOCA</b><small>오늘의 단어로 말문을 열어요.</small></span></button>
+<button aria-label="MY 수업" class="cleanModeCard" data-clean-mode-button="my" type="button"><span class="swModeIcon"><svg aria-hidden="true" viewbox="0 0 64 64"><defs><lineargradient id="g2" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#4b5ddf"></stop><stop offset="1" stop-color="#8f6cff"></stop></lineargradient></defs><path d="M5 24 32 10l27 14-27 14z" fill="url(#g2)"></path><path d="M15 31v10c7 8 27 8 34 0V31L32 40z" fill="#5968e8"></path><path d="M56 26v16" stroke="#6f5cf5" stroke-linecap="round" stroke-width="3"></path><circle cx="56" cy="45" fill="#8b67ff" r="3"></circle></svg></span><span class="swModeCopy"><b>MY 수업</b><small>나에게 맞춘 수업을 이어가요.</small></span></button>
+<button aria-label="소리 영어" class="cleanModeCard" data-clean-mode-button="sori" type="button"><span class="swModeIcon"><svg aria-hidden="true" viewbox="0 0 64 64"><defs><lineargradient id="g3" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#2dd7ff"></stop><stop offset="1" stop-color="#6a5cff"></stop></lineargradient></defs><path d="M13 33a19 19 0 0 1 38 0" fill="none" stroke="url(#g3)" stroke-linecap="round" stroke-width="7"></path><rect fill="#5a67ef" height="21" rx="5" width="11" x="8" y="31"></rect><rect fill="#5a67ef" height="21" rx="5" width="11" x="45" y="31"></rect><path d="M51 47c-3 7-8 9-15 9" fill="none" stroke="#45c7ff" stroke-linecap="round" stroke-width="3"></path><circle cx="33" cy="56" fill="#45c7ff" r="3"></circle></svg></span><span class="swModeCopy"><b>소리 영어</b><small>듣고 따라 말하며 익혀요.</small></span></button>
+<button aria-label="OPIC" class="cleanModeCard" data-clean-mode-button="opic" type="button"><span class="swModeIcon"><svg aria-hidden="true" viewbox="0 0 64 64"><defs><lineargradient id="g4" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#8b62ff"></stop><stop offset="1" stop-color="#e06ad9"></stop></lineargradient></defs><rect fill="url(#g4)" height="44" rx="7" width="36" x="14" y="10"></rect><rect fill="#fff" height="5" opacity=".95" rx="2.5" width="22" x="21" y="17"></rect><circle cx="24" cy="31" fill="#fff" r="3"></circle><path d="M30 31h12M30 39h12M24 39h1" stroke="#fff" stroke-linecap="round" stroke-width="3"></path><path d="m21 46 3 3 6-7" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path></svg></span><span class="swModeCopy"><b>OPIC</b><small>실전처럼 더 자신 있게.</small></span></button>
+</div>
+<div class="cleanOverallCard">
+<input aria-hidden="true" hidden="" id="cleanOverallRepeat" type="checkbox"/>
+<button class="cleanOverallStart" id="cleanOverallStart" type="button">
+<span aria-hidden="true" class="cleanOverallPlay">▶</span>
+<span class="swOverallCopy"><strong id="cleanOverallStartText">전체 학습 반복</strong><small>각 학습별로 선택한 항목을 반복 재생합니다</small><em>SMALL STEPS · BIG CHANGES</em></span>
+<span aria-hidden="true" class="swForwardMark"><i></i><i></i><i></i></span>
+</button>
+</div>
+</section>
+<section class="todayCard">
+<div class="todayHead">
+<div>
+<div class="todayLabel">🔥 오늘의 학습</div>
+<div class="todayTitle" id="todayTitle">오늘 복습을 확인하고 있어요</div>
+</div>
+<div class="todayNumber"><b id="todayReviewCount">0</b><span>복습</span></div>
+</div>
+<div class="todayStats">
+<div><b id="todayLearned">0</b><span>학습</span></div>
+<div><b id="todayUnlearned">57</b><span>미학습</span></div>
+<div><b id="todayWeak">0</b><span>취약</span></div>
+</div>
+<button class="todayStartBtn" id="todayStartBtn">오늘 학습 시작</button>
+</section>
+<section class="myClassSection">
+<div class="sectionHead"><div><b>🎯 MY 수업</b><span class="sectionSub">실제 영어 수업에서 나온 내 오류와 Native 표현을 집중 반복합니다.</span></div></div>
+<div class="myClassCard" id="myClassLesson1Card" onclick="studyDirectOpenCourse('my',1)" role="button" tabindex="0">
+<label class="myLessonSelectMini" onclick="event.stopPropagation()">
+<input aria-label="수업 1 전체 반복 선택" class="myClassSelectCheck" data-my-lesson="1" onclick="event.stopPropagation()" type="checkbox"/>
+<span>선택</span>
+</label>
+<div class="myClassTop"><b>MY 수업 · 수업 1</b><span class="myClassBadge">NEW · 집중학습</span></div>
+<div class="myClassTitle">First English Class · Native Speaking Reset</div>
+<div class="myClassDesc">수업에서 실제로 틀리거나 막혔던 표현을 다시 말하면서, 한국어→영어 번역 습관을 줄이고 문장 Chunk를 자동화합니다.</div>
+<div class="myClassMeta"><span>✅ 핵심 교정 12</span><span>🧩 Chunk 15</span><span>🗣 말하기 3</span><span>⚠ 습관 5</span></div>
+</div>
+<div class="myClassCard" id="myClassLesson2Card" onclick="studyDirectOpenCourse('my',2)" role="button" style="margin-top:10px" tabindex="0">
+<label class="myLessonSelectMini" onclick="event.stopPropagation()">
+<input aria-label="수업 2 전체 반복 선택" class="myClassSelectCheck" data-my-lesson="2" onclick="event.stopPropagation()" type="checkbox"/>
+<span>선택</span>
+</label>
+<div class="myClassTop"><b>MY 수업 · 수업 2</b><span class="myClassBadge">NEW · 8/13</span></div>
+<div class="myClassTitle">Native Patterns · Meeting &amp; Sleep</div>
+<div class="myClassDesc">8월 13일 수업에서 나온 실제 교정, 선생님이 알려준 Native 표현, 회의 진행 영어와 Staircase 억양을 집중 학습합니다.</div>
+<div class="myClassMeta"><span>✅ 핵심 교정 14</span><span>🧩 Chunk 20</span><span>🗣 말하기 4</span><span>⚠ 습관 5</span></div>
+</div>
+<div class="myClassCard" id="myClassLesson3Card" onclick="studyDirectOpenCourse('my',3)" role="button" style="margin-top:10px" tabindex="0">
+<label class="myLessonSelectMini" onclick="event.stopPropagation()">
+<input aria-label="수업 3 전체 반복 선택" class="myClassSelectCheck" data-my-lesson="3" onclick="event.stopPropagation()" type="checkbox"/>
+<span>선택</span>
+</label>
+<div class="myClassTop"><b>MY 수업 · 수업 3</b><span class="myClassBadge">NEW · 8/18</span></div>
+<div class="myClassTitle">Hiring, FDC &amp; Corporate Card</div>
+<div class="myClassDesc">8월 18일 실제 수업의 법인카드 에피소드, 사내 면접·FDC 질문, 채용 기준과 반복 발화 습관을 집중 학습합니다.</div>
+<div class="myClassMeta"><span>✅ 핵심 교정 20</span><span>🧩 Chunk 14</span><span>🗣 말하기 3</span><span>⚠ 습관 6</span></div>
+</div>
+<div class="myClassCard" id="myClassLesson4Card" onclick="studyDirectOpenCourse('my',4)" role="button" style="margin-top:10px" tabindex="0">
+<label class="myLessonSelectMini" onclick="event.stopPropagation()">
+<input aria-label="수업 4 전체 반복 선택" class="myClassSelectCheck" data-my-lesson="4" onclick="event.stopPropagation()" type="checkbox"/>
+<span>선택</span>
+</label>
+<div class="myClassTop"><b>MY 수업 · 수업 4</b><span class="myClassBadge">NEW · 8/25</span></div>
+<div class="myClassTitle">Work, Speaking &amp; Active Vocabulary</div>
+<div class="myClassDesc">8월 25일 실제 수업에서 나온 업무시간·팀장 책임·영어 말하기 개선·Active Vocabulary 표현을 집중 학습합니다.</div>
+<div class="myClassMeta"><span>✅ 핵심 교정 12</span><span>🧩 Chunk 8</span><span>🗣 말하기 3</span><span>⚠ 습관 5</span></div>
+</div>
+<div class="myClassCard" id="myClassLesson5Card" onclick="studyDirectOpenCourse('my',5)" role="button" style="margin-top:10px" tabindex="0">
+<label class="myLessonSelectMini" onclick="event.stopPropagation()">
+<input aria-label="수업 5 전체 반복 선택" class="myClassSelectCheck" data-my-lesson="5" onclick="event.stopPropagation()" type="checkbox"/>
+<span>선택</span>
+</label>
+<div class="myClassTop"><b>MY 수업 · 수업 5</b><span class="myClassBadge">NEW · 8/27</span></div>
+<div class="myClassTitle">AI, Critical Thinking &amp; Concise Speaking</div>
+<div class="myClassDesc">8월 27일 실제 수업의 AI workslop·업무 위임·비판적 사고와 LONG → SHORT 요약 훈련을 집중 학습합니다.</div>
+<div class="myClassMeta"><span>✅ 핵심 교정 20</span><span>🧩 Chunk 12</span><span>🗣 말하기 4</span><span>⚠ 습관 6</span></div>
+</div>
+<div class="myClassCard" id="myClassLesson6Card" onclick="studyDirectOpenCourse('my',6)" role="button" style="margin-top:10px" tabindex="0">
+<label class="myLessonSelectMini" onclick="event.stopPropagation()">
+<input aria-label="수업 6 전체 반복 선택" class="myClassSelectCheck" data-my-lesson="6" onclick="event.stopPropagation()" type="checkbox"/>
+<span>선택</span>
+</label>
+<div class="myClassTop"><b>MY 수업 · 수업 6</b><span class="myClassBadge">NEW · 9/1</span></div>
+<div class="myClassTitle">Active Vocabulary, Sleep &amp; Natural Fluency</div>
+<div class="myClassDesc">9월 1일 실제 수업의 캐나다 이야기·수면·골프·Deep → Surface Lexicon과 confide in / abhor의 뉘앙스를 집중 학습합니다.</div>
+<div class="myClassMeta"><span>✅ 핵심 교정 12</span><span>🧩 Chunk 16</span><span>🗣 말하기 4</span></div>
+</div>
+<div class="myClassCard" id="myClassLesson7Card" onclick="studyDirectOpenCourse('my',7)" role="button" style="margin-top:10px" tabindex="0">
+<label class="myLessonSelectMini" onclick="event.stopPropagation()">
+<input aria-label="수업 7 전체 반복 선택" class="myClassSelectCheck" data-my-lesson="7" onclick="event.stopPropagation()" type="checkbox"/>
+<span>선택</span>
+</label>
+<div class="myClassTop"><b>MY 수업 · 수업 7</b><span class="myClassBadge">NEW · 9/3</span></div>
+<div class="myClassTitle">Breaking the Plateau &amp; Business Presentation</div>
+<div class="myClassDesc">9월 3일 실제 수업의 영어 프레젠테이션·Signposting·Speaking Plateau·Active Chunk 활용과 to each his own을 집중 학습합니다.</div>
+<div class="myClassMeta"><span>✅ 핵심 교정 16</span><span>🧩 Chunk 16</span><span>🗣 말하기 4</span></div>
+</div>
+<div class="myClassCard" id="myClassLesson8Card" onclick="studyDirectOpenCourse('my',8)" role="button" style="margin-top:10px" tabindex="0">
+<label class="myLessonSelectMini" onclick="event.stopPropagation()">
+<input aria-label="수업 8 전체 반복 선택" class="myClassSelectCheck" data-my-lesson="8" onclick="event.stopPropagation()" type="checkbox"/>
+<span>선택</span>
+</label>
+<div class="myClassTop"><b>MY 수업 · 수업 8</b><span class="myClassBadge">NEW · 9/8</span></div>
+<div class="myClassTitle">Natural Rhythm, Personality &amp; Dream Interpretation</div>
+<div class="myClassDesc">9월 8일 실제 수업의 over-enunciation·pause·영어 리듬 교정과 업무 collocation, Type A 성격, 꿈 해석 관련 표현을 집중 학습합니다.</div>
+<div class="myClassMeta"><span>✅ 핵심 교정 13</span><span>🧩 Chunk 15</span><span>🗣 말하기 4</span><span>⚠ 습관 6</span></div>
+</div>
+<div class="myClassCard" id="myClassLesson9Card" onclick="studyDirectOpenCourse('my',9)" role="button" style="margin-top:10px" tabindex="0">
+<label class="myLessonSelectMini" onclick="event.stopPropagation()">
+<input aria-label="수업 9 전체 반복 선택" class="myClassSelectCheck" data-my-lesson="9" onclick="event.stopPropagation()" type="checkbox"/>
+<span>선택</span>
+</label>
+<div class="myClassTop"><b>MY 수업 · 수업 9</b><span class="myClassBadge">NEW · 9/10</span></div>
+<div class="myClassTitle">Accurate Expressions &amp; Structured Speaking</div>
+<div class="myClassDesc">9월 10일 실제 수업의 assure vs make sure, go through vs get through, second thoughts, PREP 답변 구조와 Chunk 정확도를 집중 학습합니다.</div>
+<div class="myClassMeta"><span>✅ 핵심 교정 12</span><span>🧩 Chunk 14</span><span>🗣 말하기 4</span><span>⚠ 습관 6</span></div>
+</div>
+<div class="myClassCard" id="myClassLesson10Card" onclick="studyDirectOpenCourse('my',10)" role="button" style="margin-top:10px" tabindex="0">
+<label class="myLessonSelectMini" onclick="event.stopPropagation()">
+<input aria-label="수업 10 전체 반복 선택" class="myClassSelectCheck" data-my-lesson="10" onclick="event.stopPropagation()" type="checkbox"/>
+<span>선택</span>
+</label>
+<div class="myClassTop"><b>MY 수업 · 수업 10</b><span class="myClassBadge">NEW · 9/22</span></div>
+<div class="myClassTitle">PREP Presentation · Neighborly Relations</div>
+<div class="myClassDesc">9월 22일 발표 훈련. Introduction → PREP → 왼쪽 차트 → 오른쪽 그래프 → 두 자료의 의미 해석 → 결론까지 자연스럽게 연결하는 발표용 영어를 집중 학습합니다.</div>
+<div class="myClassMeta"><span>✅ 핵심 문장 12</span><span>🧩 Chunk 16</span><span>🗣 말하기 3</span><span>⚠ 습관 6</span></div>
+</div>
+<div class="myClassCard" id="myClassLesson11Card" onclick="studyDirectOpenCourse('my',11)" role="button" style="margin-top:10px" tabindex="0">
+<label class="myLessonSelectMini" onclick="event.stopPropagation()">
+<input aria-label="수업 11 전체 반복 선택" class="myClassSelectCheck" data-my-lesson="11" onclick="event.stopPropagation()" type="checkbox"/>
+<span>선택</span>
+</label>
+<div class="myClassTop"><b>MY 수업 · 수업 11</b><span class="myClassBadge">NEW · 9/28</span></div>
+<div class="myClassTitle">Life Story, Past Experience &amp; Active Chunks</div>
+<div class="myClassDesc">9월 28일 실제 수업의 장거리 운전·어린 시절 역할·진학과 경력·인생 회고 표현을 Chunk 중심으로 복습합니다.</div>
+<div class="myClassMeta"><span>✅ 핵심 교정 21</span><span>🧩 Chunk 22</span><span>🗣 말하기 4</span><span>⚠ 습관 5</span></div>
+</div>
+<div class="myClassCard" id="myClassLesson12Card" onclick="studyDirectOpenCourse('my',12)" role="button" style="margin-top:10px" tabindex="0">
+<label class="myLessonSelectMini" onclick="event.stopPropagation()">
+<input aria-label="수업 12 전체 반복 선택" class="myClassSelectCheck" data-my-lesson="12" onclick="event.stopPropagation()" type="checkbox"/>
+<span>선택</span>
+</label>
+<div class="myClassTop"><b>MY 수업 · 수업 12</b><span class="myClassBadge">NEW · 9/8–17</span></div>
+<div class="myClassTitle">Teacher Patterns &amp; Missing Chunks</div>
+<div class="myClassDesc">9/8·9/10·9/15·9/17 선생님 표현과 as ... as 문장 끝 보완구조 약점을 함께 복습합니다.</div>
+<div class="myClassMeta"><span>✅ 핵심 교정 20</span><span>🧩 Chunk 20</span><span>🗣 말하기 4</span><span>⚠ 습관 6</span></div>
+</div>
+</section>
+<section class="daySection">
+<div class="sectionHead">
+<div><b>📚 DAY별 학습</b><span class="sectionSub">체크한 Day를 연속 자동 학습하거나, 카드를 눌러 개별 Day로 들어가세요.</span></div>
+<div class="daySelectControls">
+<select aria-label="DAY별 단어 학습 범위" class="repeatSelect" id="selectedStudyMode">
+<option selected="" value="all">전체 반복</option>
+<option value="wrong">틀린 단어만</option>
+<option value="favorite">모르는 단어</option>
+<option value="wrongFav">틀린 단어 + 모르는 단어</option>
+<option value="sentences">🗣 실전 문장만</option>
+</select>
+<select aria-label="연속 재생 학습 횟수" class="repeatSelect" id="autoRepeat"><option selected="" value="1">1회</option><option value="2">2회</option><option value="3">3회</option><option value="5">5회</option><option value="10">10회</option></select>
+<button class="selectedStartBtn" id="selectedStartBtn" type="button">▶ DAY별 단어 학습</button>
+</div>
+</div>
+<section class="homePlaybackCard">
+<div class="homePlaybackTitle">🎧 학습 재생 설정</div>
+<div class="homePlaybackGrid">
+<div class="homePlaybackField"><label for="homeOrderMode">학습 순서</label><select id="homeOrderMode"><option value="book">📘 기본 순서</option><option value="quizWrongDesc">❌ 퀴즈 오답 많은 순</option><option value="quizWeak">🎯 틀린 단어만</option><option value="favorite">⭐ 모르는 단어</option><option value="wrongFav">🎯⭐ 틀린 단어 + 모르는 단어</option><option value="quizRateAsc">📉 퀴즈 정답률 낮은 순</option><option value="quizRateDesc">📈 퀴즈 정답률 높은 순</option><option value="random">🔀 랜덤</option><option value="practiceSentence">🗣 실전 문장 연습</option></select></div>
+<div class="homePlaybackField"><label for="homeSpeechMode">자동 읽기 범위</label><select id="homeSpeechMode"><option value="off">🔇 자동 읽기 끄기</option><option value="word">🔤 단어 읽기 · 단어+뜻</option><option value="all">🎙 단어 + 예문 + 패러프레이즈</option><option value="full">🔊 전체 읽기</option></select></div>
+</div>
+<div class="homePlaybackHint">여기서 고른 값이 모든 Day 학습에 적용됩니다. 학습 중에는 화면 아래 고정 버튼으로 재생을 즉시 멈추거나 현재 카드부터 다시 시작할 수 있습니다.</div>
+</section>
+<div class="dayGrid" id="dayGrid"><div class="dayCard activeDayCard leanDayCard" data-day="1" data-lean-day="1" role="button" tabindex="0"><div class="dayCardTop"><span>DAY 1</span><span class="dayStatus">준비</span><span class="dayCardCheckWrap"><input class="daySelectCheck" type="checkbox" data-check-day="1" aria-label="DAY 1 선택"></span></div><div class="leanDayTitle">Everyday Essentials</div><div class="dayProgress"><div style="width:0%"></div></div><div class="dayCompactMeta leanDayMeta"><span>📖 —/30</span><span>❌ —</span><span>⭐ — 모름</span></div><div class="dayCardBottom leanDayMeta"><span>—%</span><span>학습 —회</span><span>복습 —</span></div></div><div class="dayCard activeDayCard leanDayCard" data-day="2" data-lean-day="2" role="button" tabindex="0"><div class="dayCardTop"><span>DAY 2</span><span class="dayStatus">준비</span><span class="dayCardCheckWrap"><input class="daySelectCheck" type="checkbox" data-check-day="2" aria-label="DAY 2 선택"></span></div><div class="leanDayTitle">Everyday Essentials · Expressing Opinions</div><div class="dayProgress"><div style="width:0%"></div></div><div class="dayCompactMeta leanDayMeta"><span>📖 —/30</span><span>❌ —</span><span>⭐ — 모름</span></div><div class="dayCardBottom leanDayMeta"><span>—%</span><span>학습 —회</span><span>복습 —</span></div></div><div class="dayCard activeDayCard leanDayCard" data-day="3" data-lean-day="3" role="button" tabindex="0"><div class="dayCardTop"><span>DAY 3</span><span class="dayStatus">준비</span><span class="dayCardCheckWrap"><input class="daySelectCheck" type="checkbox" data-check-day="3" aria-label="DAY 3 선택"></span></div><div class="leanDayTitle">Expressing Opinions</div><div class="dayProgress"><div style="width:0%"></div></div><div class="dayCompactMeta leanDayMeta"><span>📖 —/30</span><span>❌ —</span><span>⭐ — 모름</span></div><div class="dayCardBottom leanDayMeta"><span>—%</span><span>학습 —회</span><span>복습 —</span></div></div><div class="dayCard activeDayCard leanDayCard" data-day="4" data-lean-day="4" role="button" tabindex="0"><div class="dayCardTop"><span>DAY 4</span><span class="dayStatus">준비</span><span class="dayCardCheckWrap"><input class="daySelectCheck" type="checkbox" data-check-day="4" aria-label="DAY 4 선택"></span></div><div class="leanDayTitle">Expressing Opinions · Reasons & Explanations</div><div class="dayProgress"><div style="width:0%"></div></div><div class="dayCompactMeta leanDayMeta"><span>📖 —/30</span><span>❌ —</span><span>⭐ — 모름</span></div><div class="dayCardBottom leanDayMeta"><span>—%</span><span>학습 —회</span><span>복습 —</span></div></div><div class="dayCard activeDayCard leanDayCard" data-day="5" data-lean-day="5" role="button" tabindex="0"><div class="dayCardTop"><span>DAY 5</span><span class="dayStatus">준비</span><span class="dayCardCheckWrap"><input class="daySelectCheck" type="checkbox" data-check-day="5" aria-label="DAY 5 선택"></span></div><div class="leanDayTitle">Reasons & Explanations</div><div class="dayProgress"><div style="width:0%"></div></div><div class="dayCompactMeta leanDayMeta"><span>📖 —/30</span><span>❌ —</span><span>⭐ — 모름</span></div><div class="dayCardBottom leanDayMeta"><span>—%</span><span>학습 —회</span><span>복습 —</span></div></div><div class="dayCard activeDayCard leanDayCard" data-day="6" data-lean-day="6" role="button" tabindex="0"><div class="dayCardTop"><span>DAY 6</span><span class="dayStatus">준비</span><span class="dayCardCheckWrap"><input class="daySelectCheck" type="checkbox" data-check-day="6" aria-label="DAY 6 선택"></span></div><div class="leanDayTitle">Reasons & Explanations · Choices & Decisions</div><div class="dayProgress"><div style="width:0%"></div></div><div class="dayCompactMeta leanDayMeta"><span>📖 —/30</span><span>❌ —</span><span>⭐ — 모름</span></div><div class="dayCardBottom leanDayMeta"><span>—%</span><span>학습 —회</span><span>복습 —</span></div></div><div class="dayCard activeDayCard leanDayCard" data-day="7" data-lean-day="7" role="button" tabindex="0"><div class="dayCardTop"><span>DAY 7</span><span class="dayStatus">준비</span><span class="dayCardCheckWrap"><input class="daySelectCheck" type="checkbox" data-check-day="7" aria-label="DAY 7 선택"></span></div><div class="leanDayTitle">Choices & Decisions</div><div class="dayProgress"><div style="width:0%"></div></div><div class="dayCompactMeta leanDayMeta"><span>📖 —/30</span><span>❌ —</span><span>⭐ — 모름</span></div><div class="dayCardBottom leanDayMeta"><span>—%</span><span>학습 —회</span><span>복습 —</span></div></div><div class="dayCard activeDayCard leanDayCard" data-day="8" data-lean-day="8" role="button" tabindex="0"><div class="dayCardTop"><span>DAY 8</span><span class="dayStatus">준비</span><span class="dayCardCheckWrap"><input class="daySelectCheck" type="checkbox" data-check-day="8" aria-label="DAY 8 선택"></span></div><div class="leanDayTitle">Choices & Decisions · People & Feelings</div><div class="dayProgress"><div style="width:0%"></div></div><div class="dayCompactMeta leanDayMeta"><span>📖 —/30</span><span>❌ —</span><span>⭐ — 모름</span></div><div class="dayCardBottom leanDayMeta"><span>—%</span><span>학습 —회</span><span>복습 —</span></div></div><div class="dayCard activeDayCard leanDayCard" data-day="9" data-lean-day="9" role="button" tabindex="0"><div class="dayCardTop"><span>DAY 9</span><span class="dayStatus">준비</span><span class="dayCardCheckWrap"><input class="daySelectCheck" type="checkbox" data-check-day="9" aria-label="DAY 9 선택"></span></div><div class="leanDayTitle">People & Feelings</div><div class="dayProgress"><div style="width:0%"></div></div><div class="dayCompactMeta leanDayMeta"><span>📖 —/30</span><span>❌ —</span><span>⭐ — 모름</span></div><div class="dayCardBottom leanDayMeta"><span>—%</span><span>학습 —회</span><span>복습 —</span></div></div><div class="dayCard activeDayCard leanDayCard" data-day="10" data-lean-day="10" role="button" tabindex="0"><div class="dayCardTop"><span>DAY 10</span><span class="dayStatus">준비</span><span class="dayCardCheckWrap"><input class="daySelectCheck" type="checkbox" data-check-day="10" aria-label="DAY 10 선택"></span></div><div class="leanDayTitle">People & Feelings · Comparisons & Differences</div><div class="dayProgress"><div style="width:0%"></div></div><div class="dayCompactMeta leanDayMeta"><span>📖 —/30</span><span>❌ —</span><span>⭐ — 모름</span></div><div class="dayCardBottom leanDayMeta"><span>—%</span><span>학습 —회</span><span>복습 —</span></div></div><div class="dayCard activeDayCard leanDayCard" data-day="11" data-lean-day="11" role="button" tabindex="0"><div class="dayCardTop"><span>DAY 11</span><span class="dayStatus">준비</span><span class="dayCardCheckWrap"><input class="daySelectCheck" type="checkbox" data-check-day="11" aria-label="DAY 11 선택"></span></div><div class="leanDayTitle">Comparisons & Differences</div><div class="dayProgress"><div style="width:0%"></div></div><div class="dayCompactMeta leanDayMeta"><span>📖 —/30</span><span>❌ —</span><span>⭐ — 모름</span></div><div class="dayCardBottom leanDayMeta"><span>—%</span><span>학습 —회</span><span>복습 —</span></div></div></div>
+</section>
+</div>
+</div>
+<div id="saywardBootOverlay" aria-live="polite"><div class="bootCard"><div class="bootLogo">S</div><h1>SAYWARD <span style="font-size:13px;color:#667085;font-weight:800;vertical-align:middle">v5.4.58</span></h1><div class="bootSub">선택한 학습 기능만 준비합니다.</div><div class="bootBar"><div class="bootFill" id="saywardBootFill"></div></div><div class="bootStatus" id="saywardBootStatus"><span class="bootPct">0%</span> · 준비</div><div class="bootDiag" id="saywardBootDiag"></div><button class="bootRetry" id="saywardBootRetry" type="button">다시 시도</button></div></div>
+<div id="saywardLeanBadge" aria-live="polite"><span class="dot"></span><span id="saywardLeanBadgeText">학습 기능 준비 대기</span></div><div id="saywardRuntimeAnchor" hidden></div>
+<script src="sayward-boot.js?b=20261007-v5.4.58-static-first-paint" defer onerror="document.getElementById('saywardBootDiag').style.display='block';document.getElementById('saywardBootDiag').textContent='기능 스크립트를 불러오지 못했습니다. 홈은 계속 사용할 수 있습니다.'"></script>
 </body></html>

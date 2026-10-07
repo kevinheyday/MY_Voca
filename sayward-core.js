@@ -1,6 +1,6 @@
 
 
-/* v5.4.57 TRUE LAZY DATA ASSEMBLY
+/* v5.4.58 TRUE LAZY DATA ASSEMBLY
    External course data can be loaded after the engine. These arrays keep stable identity
    so existing app references continue to see newly loaded data without a page reload. */
 const TOEFL_WORDS=[];
@@ -2725,7 +2725,7 @@ function studyCourseSentenceCards(course='sori',lesson=1){
 window.studyCourseSentenceCards=studyCourseSentenceCards;
 
 
-// v5.4.57: storage failures/corruption must never abort app startup.
+// v5.4.58: storage failures/corruption must never abort app startup.
 const mvStorage={
   get(key,fallback=null){try{const v=localStorage.getItem(key);return v===null?fallback:v}catch(e){console.warn('[SAYWARD storage:get]',key,e);return fallback}},
   set(key,value){try{localStorage.setItem(key,value);return true}catch(e){console.warn('[SAYWARD storage:set]',key,e);return false}},
@@ -2802,14 +2802,26 @@ function loadPackState(){
   if(!stats||typeof stats!=='object'||Array.isArray(stats))stats={};
   ensureStats();
 }
+let __saywardHomeSummaryTimer=0;
+function scheduleSaywardHomeSummary(){
+  clearTimeout(__saywardHomeSummaryTimer);
+  __saywardHomeSummaryTimer=setTimeout(()=>{try{
+    const words=Array.isArray(globalThis.SAYWARD_DAY_INDEX)?globalThis.SAYWARD_DAY_INDEX:[];if(!words.length)return;
+    const now=Date.now(),favSet=new Set(Array.isArray(favs)?favs:[]),days={},g={learned:0,due:0,weak:0,total:words.length};
+    words.forEach(w=>{const d=Number(w.newDay);if(d<1||d>11)return;const s=days[d]||(days[d]={learned:0,studyTotal:0,due:0,wrong:0,fav:0,total:0,pct:0}),st=stats[w.word]||{},sc=Number(st.studyCount)||0;s.total++;s.studyTotal+=sc;if(sc>0){s.learned++;g.learned++}if(Number(st.quizWrong)||0){s.wrong++;g.weak++}if((st.dueAt&&Number(st.dueAt)<=now)||(!st.dueAt&&(Number(st.quizWrong)||0)>0)){s.due++;g.due++}if(favSet.has(w.word))s.fav++});
+    Object.values(days).forEach(s=>s.pct=s.total?Math.round(s.learned/s.total*100):0);
+    mvStorage.set('sayward_home_summary_v1',JSON.stringify({version:1,updatedAt:Date.now(),global:g,days}));
+  }catch(e){}},450);
+}
 function save(){
   mvStorage.set(packKey('known'),JSON.stringify(known));
   mvStorage.set(packKey('favs'),JSON.stringify(favs));
   mvStorage.set(packKey('stats'),JSON.stringify(stats));
   if($('orderMode'))mvStorage.set(packKey('order'),$('orderMode').value);
   if($('speechMode'))mvStorage.set(packKey('speech'),$('speechMode').value);
+  scheduleSaywardHomeSummary();
 }
-loadPackState();
+loadPackState();scheduleSaywardHomeSummary();
 function missClass(n){return n>=5?'fire':n>=3?'hot':n>=1?'warm':''}
 function escHtml(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 const __saywardEntityRx=/&(?:#x?[0-9a-fA-F]+|[a-zA-Z][a-zA-Z0-9]+);/;
@@ -7910,7 +7922,7 @@ $('todayStartBtn').onclick=()=>{
 
 
 
-window.APP_VERSION='5.4.57';
+window.APP_VERSION='5.4.58';
 window.addEventListener('pagehide',()=>{__repeatWakeSession=false;forceReleaseWakeLock();});
 
 
@@ -8562,7 +8574,7 @@ function mvSentenceEntryAudit182(){
 window.mvSentenceEntryAudit182=mvSentenceEntryAudit182;
 
 /* ===== V5.3.189 · STANDARD APP INFO / UPDATE HISTORY ===== */
-const MV_APP_VERSION='5.4.57';
+const MV_APP_VERSION='5.4.58';
 
 function mvCloseInfoOverlay(){
   const overlay=document.getElementById('mvInfoOverlay');
@@ -8592,7 +8604,7 @@ function mvOpenUpdateHistory(){
     `
       <div class="mvInfoVersionCard"><b>v${MV_APP_VERSION}</b><span>현재 설치 버전</span></div>
       <section class="mvInfoSection">
-        <h3>v5.4.57</h3>
+        <h3>v5.4.58</h3>
         <ul>
           <li>첫 실행 안정화를 위해 CSS 내 Base64 이미지를 외부 PNG로 분리했습니다.</li>
           <li>초기 화면 구성과 학습 데이터/기능 JS를 단계적으로 불러오는 STABILITY REBUILD 구조를 적용했습니다.</li>
@@ -9468,7 +9480,7 @@ if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded'
     }
   };
 
-  // v5.4.57: do not build the legacy home mode panel here.
+  // v5.4.58: do not build the legacy home mode panel here.
   // The later standard-course controller creates its single backend panel once.
   // Building an intermediate panel and then replacing it caused a large cold-start DOM/listener spike.
   setTimeout(()=>{
@@ -12372,7 +12384,7 @@ if(typeof mvDomClearHighlight==='function' && !mvDomClearHighlight.__normalized1
 
     // MY / SORI / OPIC / FRIENDS cards use the same stamped canonical navigation route.
     studyStampCourseCards();
-    // v5.4.57: final clean-home controller applies the remembered mode once.
+    // v5.4.58: final clean-home controller applies the remembered mode once.
   }
 
   setTimeout(bindStandardCourseUI,160);
@@ -13542,5 +13554,5 @@ function mvSoriGroup2Audit194(){
 }
 window.mvSoriGroup2Audit194=mvSoriGroup2Audit194;
 
-// v5.4.57 bootstrap handshake: reached only after the full core evaluated successfully.
-window.__SAYWARD_CORE_READY__={version:'5.4.57',at:Date.now()};
+// v5.4.58 bootstrap handshake: reached only after the full core evaluated successfully.
+window.__SAYWARD_CORE_READY__={version:'5.4.58',at:Date.now()};

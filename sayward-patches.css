@@ -577,7 +577,7 @@ body.mv540HomeVisible #drawerMenuButton{opacity:0!important;visibility:hidden!im
 
 
 
-/* v5.4.57 TRUE LAZY — prevent the DAY summary row from collapsing on phone width. */
+/* v5.4.58 TRUE LAZY — prevent the DAY summary row from collapsing on phone width. */
 @media(max-width:600px){
   #homePage .todayCard{display:grid!important;grid-template-columns:1fr!important;gap:9px!important;align-items:stretch!important;padding:11px!important}
   #homePage .todayHead{min-width:0!important;width:100%!important}
