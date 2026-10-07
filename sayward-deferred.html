@@ -1,0 +1,539 @@
+<button aria-expanded="false" aria-label="메뉴 열기" class="drawerMenuButton" id="drawerMenuButton" type="button">☰</button>
+<div aria-hidden="true" class="drawerBackdrop" id="drawerBackdrop"></div>
+<aside aria-hidden="true" aria-label="SAYWARD 메뉴" class="drawerPanel" id="drawerPanel">
+<div class="drawerHeader">
+<button aria-label="메뉴 닫기" class="drawerClose" id="drawerClose" type="button">×</button>
+<div aria-label="SAYWARD" class="drawerBrand"><span class="drawerBrandWord">SAYWARD</span><span class="drawerBrandArrow">&gt;</span></div>
+<div class="drawerSummary">
+<div><b id="drawerLearned">0</b><span>학습</span></div>
+<div><b id="drawerWrong">0</b><span>오답</span></div>
+<div><b id="drawerFavorite">0</b><span>모르는 단어</span></div>
+</div>
+<div aria-label="전체 진행률" class="drawerProgressCard">
+<div class="drawerProgressHead"><span>전체 진행률</span><b id="drawerOverallPercent">0%</b></div>
+<div class="drawerProgressBar"><div id="drawerOverallBar"></div></div>
+<div class="drawerProgressMeta"><span>등록 <b id="drawerTotal">0</b></span><span>복습 <b id="drawerReview">0</b></span></div>
+</div>
+</div>
+<nav class="drawerNav">
+<button class="drawerItem" data-drawer-action="home"><span class="drawerIcon">🏠</span><span class="drawerItemText">홈<small>메인 화면으로 이동</small></span></button>
+<div class="drawerDivider"></div><div class="drawerSectionTitle">1. 학습</div>
+<button class="drawerItem" data-drawer-action="studyDay"><span class="drawerIcon">📚</span><span class="drawerItemText">DAY VOCA<small>DAY별 단어 학습</small></span></button>
+<button class="drawerItem" data-drawer-action="studyMy"><span class="drawerIcon">🎯</span><span class="drawerItemText">MY 수업<small>수업별 교정 · Chunk · 말하기</small></span></button>
+<button class="drawerItem" data-drawer-action="studySori"><span class="drawerIcon">🎧</span><span class="drawerItemText">소리영어<small>Chunk · 핵심 문장 · 말하기 · 소리 Point</small></span></button>
+<button class="drawerItem" data-drawer-action="studyOpic"><span class="drawerIcon">🎤</span><span class="drawerItemText">OPIC<small>OPIC 표준 학습</small></span></button>
+<div class="drawerDivider"></div><div class="drawerSectionTitle">2. 콘텐츠 영어</div>
+<button class="drawerItem" data-drawer-action="studyFriends"><span class="drawerIcon">🎬</span><span class="drawerItemText">FRIENDS<small>드라마 대사 · Chunk · 핵심 문장 · 말하기</small></span></button>
+<div class="drawerDivider"></div><div class="drawerSectionTitle">3. 단어 학습</div>
+<button class="drawerItem" data-drawer-action="quiz"><span class="drawerIcon">📝</span><span class="drawerItemText">단어 퀴즈<small>단어 맞추기 · 유의어/반의어 · 단어 말하기 · 모르는 단어 선택</small></span></button>
+<button class="drawerItem" data-drawer-action="compare"><span class="drawerIcon">🔎</span><span class="drawerItemText">단어 비교<small>비슷한 단어와 뜻 · 예문 비교</small></span></button>
+<div class="drawerDivider"></div><div class="drawerSectionTitle">4. 문장 말하기</div>
+<button class="drawerItem" data-drawer-action="sentenceSpeaking"><span class="drawerIcon">🗣️</span><span class="drawerItemText">문장 말하기 연습<small>학습 예문 · 실전 리딩 · MY · 소리영어 문장</small></span></button>
+<button class="drawerItem" data-drawer-action="voicePractice"><span class="drawerIcon">🎙️</span><span class="drawerItemText">음성 녹음 학습<small>자유 문장 녹음 · 정답 음성 · 비교 듣기</small></span></button>
+<div class="drawerDivider"></div><div class="drawerSectionTitle">기타</div>
+<button class="drawerItem" data-drawer-action="score"><span class="drawerIcon">📊</span><span class="drawerItemText">학습 통계<small>스코어와 DAY별 기록</small></span></button>
+<button class="drawerItem" data-drawer-action="forget"><span class="drawerIcon">🧠</span><span class="drawerItemText">망각곡선<small>오늘의 복습 대상 확인</small></span></button>
+<button class="drawerItem" data-drawer-action="config"><span class="drawerIcon">⚙️</span><span class="drawerItemText">Config<small>음성 · 반복 · 퀴즈 설정</small></span></button>
+<button class="drawerItem" data-drawer-action="usage"><span class="drawerIcon">📘</span><span class="drawerItemText">사용 방법<small>MY VOCA 학습 방법과 기능 안내</small></span></button>
+<button class="drawerItem" data-drawer-action="whatsnew"><span class="drawerIcon">🆕</span><span class="drawerItemText">업데이트 내역<small>이번 버전 변경 사항</small></span></button>
+<button class="drawerItem" data-drawer-action="info"><span class="drawerIcon">ℹ️</span><span class="drawerItemText">앱 정보<small>앱 버전과 주요 정보를 확인</small></span></button>
+</nav>
+</aside>
+<div id="__saywardHomeSlot" hidden></div>
+<section class="soriClassSection" style="display:none">
+<div class="sectionHead"><div><b>🎧 소리영어</b><span class="sectionSub">토요일 수업 스크립트를 한 박스에 누적하고 Chunk → 핵심 문장 → 말하기 → 소리 Point로 반복 복습합니다.</span></div></div>
+<div class="studyCourseInfo">공통 학습 엔진 · MY 수업과 동일한 재생/집중반복/하이라이트/문장 말하기 포맷</div>
+<div class="myClassCard soriCourseCard" id="soriGroup1Card" onclick="studyDirectOpenCourse('sori',1)" role="button" tabindex="0">
+<div class="myClassTop"><b>소리영어 · 수업 1</b><span class="myClassBadge">3 SCRIPTS</span></div>
+<div class="myClassTitle">Drinking Culture · To Tip or Skip? · Dumplin' Day 1</div>
+<div class="soriLessonStrip">
+<span>① 8/29 Drinking Culture</span>
+<span>② 8/28 To Tip or Skip?</span>
+<span>③ 8/28 Dumplin' Day 1</span>
+</div>
+<div class="myClassDesc">세 수업을 한 번에 복습하되 각 핵심 문장과 Chunk에는 원래 수업 출처를 표시합니다. 전체 반복에서는 세 스크립트의 핵심 표현이 한 학습 세트로 이어집니다.</div>
+<div class="myClassMeta"><span>⭐ 핵심 문장 24</span><span>🧩 Chunk 27</span><span>🗣 말하기 12</span><span>🎧 소리 Point 9</span></div>
+</div>
+<div class="myClassCard soriCourseCard" data-study-course="sori" data-study-lesson="2" id="soriGroup2Card" onclick="studyDirectOpenCourse('sori',2)" role="button" tabindex="0">
+<div class="myClassTop"><b>소리영어 · 수업 2</b><span class="myClassBadge">3 SCRIPTS</span></div>
+<div class="myClassTitle">Dumplin' Day #2 · To Fill or Not to Fill · The Ring Rescue</div>
+<div class="soriLessonStrip">
+<span>① Dumplin' Day #2</span><span>② To Fill or Not to Fill</span><span>③ The Ring Rescue</span>
+</div>
+<div class="myClassDesc">선택한 핵심 문장과 Chunk를 기존 소리영어와 동일한 Chunk → 핵심 문장 → 말하기 → 소리 Point 포맷으로 학습합니다.</div>
+<div class="myClassMeta"><span>⭐ 핵심 문장 28</span><span>🧩 Chunk 35</span><span>🗣 말하기 12</span><span>🎧 소리 Point 7</span></div>
+</div>
+<div class="myClassCard soriCourseCard" data-study-course="sori" data-study-lesson="3" id="soriGroup3Card" onclick="studyDirectOpenCourse('sori',3)" role="button" tabindex="0">
+<div class="myClassTop"><b>소리영어 · 수업 3</b><span class="myClassBadge">NEW · 9/12</span></div>
+<div class="myClassTitle">Daycare Should Mean Care</div>
+<div class="soriLessonStrip"><span>① Daycare Should Mean Care</span></div>
+<div class="myClassDesc">Daycare 지문의 핵심 Chunk와 문장을 Chunk → 핵심 문장 → 말하기 → 소리 Point 포맷으로 학습합니다.</div>
+<div class="myClassMeta"><span>⭐ 핵심 문장 16</span><span>🧩 Chunk 24</span><span>🗣 말하기 7</span><span>🎧 소리 Point 6</span></div>
+</div>
+<div class="myClassCard soriCourseCard" data-study-course="sori" data-study-lesson="4" id="soriGroup4Card" onclick="studyDirectOpenCourse('sori',4)" role="button" tabindex="0">
+<div class="myClassTop"><b>소리영어 · 수업 4</b><span class="myClassBadge">NEW · 9/19</span></div>
+<div class="myClassTitle">Food Safety · Marriage Calculation · Dumplin' Day #4</div>
+<div class="soriLessonStrip"><span>① Food Safety</span><span>② Marriage Calculation</span><span>③ Dumplin' Day #4</span></div>
+<div class="myClassDesc">9월 19일 수업의 주요 문장 패턴을 Chunk → 핵심 문장 → 말하기 → 소리 Point 포맷으로 학습합니다.</div>
+<div class="myClassMeta"><span>⭐ 핵심 문장 24</span><span>🧩 Chunk 33</span><span>🗣 말하기 9</span><span>🎧 소리 Point 6</span></div>
+</div>
+</section>
+<section class="opicClassSection" style="display:none">
+<div class="sectionHead"><div><b>🎤 OPIC</b><span class="sectionSub">OPIC 번호별 질문을 핵심 교정 → Chunk → 말하기 순서로 학습합니다.</span></div></div>
+<div class="opicReadyCard">
+<b>OPIC 표준 포맷 준비 완료</b>
+<p>핵심 답변 → Chunk → 말하기 → AL Point 구조로 콘텐츠만 추가하면 동일한 퀴즈·문장 말하기·반복재생 기능을 사용할 수 있습니다.</p>
+</div>
+</section>
+<section class="friendsClassSection" style="display:none">
+<div class="sectionHead"><div><b>🎬 FRIENDS</b><span class="sectionSub">에피소드별 핵심 Chunk · 대사 · 말하기 · 소리 Point를 반복 학습합니다.</span></div></div>
+<div class="studyCourseInfo">공통 학습 엔진 · MY 수업과 동일한 선택/반복/하이라이트/문장 말하기 포맷</div>
+</section>
+<div class="myClassPage hidden" id="myClassPage">
+<div class="myClassShell">
+<div class="myClassHeader">
+<div class="myClassHeaderRow"><button aria-expanded="false" aria-label="메뉴 열기" class="courseMenuBtn" id="myClassMenuBtn" type="button">☰</button><div class="myClassHeaderTitle"><b id="myClassHeaderMain">MY 수업 · 수업 1 / 9</b><span id="myClassHeaderSub">First English Class · Native Speaking Reset</span></div></div>
+</div>
+<div class="myClassHabit"><b>이번 수업의 최우선 목표</b><p id="myClassGoal"><strong>쉬운 영어를 짧고 정확하게.</strong> 문장을 만들기 전에 So / you know로 시작하지 말고, 0.5~1초 쉬었다가 주어 + 동사부터 말합니다.</p></div>
+<div class="myClassTabs"><button class="myClassTab active" data-myclass-tab="corrections">✅ 핵심 교정</button><button class="myClassTab" data-myclass-tab="chunks">🧩 Chunk</button><button class="myClassTab" data-myclass-tab="speaking">🗣 말하기</button><button class="myClassTab" data-myclass-tab="habits">⚠ 습관</button></div>
+<div class="myClassPlaybackStatus paused" id="myClassPlaybackStatus"><span class="myClassMiniStatus">MY 수업 자동 재생 준비</span><span aria-label="현재 탭 진행률" class="mvPlaybackProgress258"><span class="mvPlaybackTrack258"><span class="mvPlaybackFill258"></span></span><span class="mvPlaybackCount258">0/0</span></span><span class="myClassAutoChip">문장 단위</span></div>
+<div class="myClassStudyHint">DAY 학습처럼 영어 문장을 한 문장씩 읽고, 현재 카드로 자동 이동합니다. 하단 버튼에서 언제든 정지·재시작하거나 현재 학습 문장으로 바로 말하기 연습을 할 수 있습니다.</div>
+<div id="myClassContent"></div>
+</div>
+<div class="bottom myClassControlBar hidden" id="myClassBottom"><div class="myClassControlInner"><button class="myClassControlBtn" id="myClassHomeBtn" type="button">🏠<br/>홈</button><button class="myClassControlBtn primary" id="myClassPlayPause" type="button">▶<br/>재생 시작</button><button class="myClassControlBtn" id="myClassSpeakingBridge" type="button">🗣️<br/>문장 말하기</button><button class="myClassControlBtn" id="myClassConfigBtn" type="button">⚙️<br/>Config</button></div></div>
+</div>
+<div aria-labelledby="unknownWordGuideTitle" aria-modal="true" class="unknownWordGuideOverlay hidden" id="unknownWordGuideOverlay" role="dialog">
+<div class="unknownWordGuideCard">
+<div class="unknownWordGuideIcon">⭐</div>
+<h2 id="unknownWordGuideTitle">모르는 단어를 먼저 골라보세요</h2>
+<p class="unknownWordGuideDay" id="unknownWordGuideDay">DAY</p>
+<div class="unknownWordGuideMessage">
+<b>이 DAY에는 아직 모르는 단어가 선택되어 있지 않습니다.</b>
+<p>학습 전에 헷갈리거나 아직 완전히 익숙하지 않은 단어를 골라두면 <b>모르는 단어만</b>, <b>틀린 단어만</b>, <b>틀린 단어 + 모르는 단어</b>로 집중 학습할 수 있습니다.</p>
+<p class="unknownWordGuideRule">이 화면은 해당 DAY에서 모르는 단어가 0개일 때만 팝업됩니다. 모르는 단어가 없더라도 복습할 단어를 최소 1개 선택해 보세요.</p>
+</div>
+<button class="unknownWordGuidePrimary" id="unknownWordGuideSelect" type="button">⭐ 모르는 단어 선택</button>
+<button class="unknownWordGuideSecondary" id="unknownWordGuideSkip" type="button">바로 학습하기</button>
+</div>
+</div>
+<div class="configPage hidden" id="configPage">
+<div class="configShell">
+<div class="configHeader"><button aria-label="홈으로" class="configBackBtn" id="configBackBtn" type="button">←</button><div><h1>Config</h1><p>음성·반복·문장 말하기·퀴즈 설정을 관리합니다.</p></div></div>
+<section aria-label="오늘의 추천 학습" class="usageHero">
+<div class="usageHeroTitle">💡 오늘의 추천 학습</div>
+<div class="usageHeroText">현재 학습 기록을 기준으로 오늘 먼저 하면 좋은 순서를 안내합니다.</div>
+<div class="usageRecommend"><b id="usageRecommendTitle">추천 순서를 계산하고 있어요</b><ul id="usageRecommendList"><li>잠시만 기다려 주세요.</li></ul></div>
+</section>
+<section class="configSection">
+<div class="configSectionTitle">📘 MY VOCA 사용방법</div><p><b>이번 업데이트:</b> 홈 상단의 MY VOCA, 오늘의 학습, 학습 재생 설정 영역을 모바일 화면에 맞게 압축했습니다. 기능은 그대로 유지되며 첫 화면에서 DAY별 학습 영역을 더 빠르게 확인할 수 있습니다.</p>
+<details class="usageDetail"><summary>⭐ DAY 시작 전 모르는 단어 선택</summary><div class="usageBody">홈에서 DAY 카드를 눌렀을 때 해당 DAY의 <b>모르는 단어가 0개</b>이면 안내 팝업이 표시됩니다. <b>모르는 단어 선택</b>에서 헷갈리거나 다시 볼 단어를 최소 1개 표시하면 이후 <b>모르는 단어만</b>, <b>틀린 단어만</b>, <b>틀린 단어 + 모르는 단어</b> 집중 학습을 바로 사용할 수 있습니다. 이미 모르는 단어가 1개 이상 저장된 DAY에서는 이 팝업이 다시 뜨지 않습니다.</div></details>
+<details class="usageSection" open="">
+<summary>1. 처음 시작할 때</summary>
+<div class="usageBody">
+<ol class="usageSteps"><li>홈에서 공부할 <b>DAY</b>를 선택합니다.</li><li>퀴즈의 <b>모르는 단어 선택</b>에서 전체 단어와 뜻을 먼저 훑어봅니다.</li><li>모르는 단어를 체크하면 학습 화면의 <b>모르는 단어</b>와 자동으로 연동됩니다.</li><li>홈에서 <b>전체 반복</b> 또는 <b>틀린 단어 + 모르는 단어</b>를 선택해 학습을 시작합니다.</li></ol>
+<div class="usageFlow"><span class="usageChip">DAY 선택</span><span class="usageArrow">→</span><span class="usageChip">모르는 단어 선택</span><span class="usageArrow">→</span><span class="usageChip">모르는 단어</span><span class="usageArrow">→</span><span class="usageChip">반복 학습</span></div>
+</div>
+</details>
+<details class="usageSection">
+<summary>2. 홈 화면과 반복 학습</summary>
+<div class="usageBody">
+<div class="usageMiniGrid"><div class="usageMini"><b>전체 반복</b>선택한 DAY의 모든 단어를 연속 학습합니다.</div><div class="usageMini"><b>틀린 단어만</b>퀴즈에서 한 번 이상 틀린 단어만 재생합니다.</div><div class="usageMini"><b>모르는 단어</b>직접 표시한 모르는 단어만 재생합니다.</div><div class="usageMini"><b>틀린 단어 + 모르는 단어</b>두 목록을 합쳐 중복 없이 재생합니다.</div><div class="usageMini"><b>기본 순서</b>DAY와 단어 번호 순서대로 학습합니다.</div><div class="usageMini"><b>랜덤</b>저장된 랜덤 순서를 유지해 중단 지점부터 이어서 학습합니다.</div></div>
+<div class="usageTip">여러 DAY를 공부하다 앱을 닫아도 마지막 학습 DAY가 새 선택 범위에 포함되면 저장 위치부터 이어집니다.</div>
+</div>
+</details>
+<details class="usageSection">
+<summary>3. 학습 화면 사용법</summary>
+<div class="usageBody">
+<p><b>읽기 순서:</b> 단어 → 뜻 → 첫 예문 → 패러프레이징 → 회화 패턴 → Collocation → 유의어·반의어</p><p><b>패러프레이징의 사용된 유의어:</b> 패러프레이징 문장에 실제로 들어간 표현만 파란색으로 강조하고 <b>영어 표현 - 한국어 뜻</b>으로 표시합니다. 원문 단어가 그대로 유지되거나 등록된 유의어가 문장에 없으면 배지를 표시하지 않습니다.</p><p><b>유의어·반의어 목록:</b> 각 표현은 <b>영어 단어 - 한국어 뜻</b> 형식으로 표시됩니다. 🔊 버튼을 누르면 영어 표현을 들을 수 있습니다.</p>
+<ul class="usageSteps"><li><b>🏠 홈:</b> 음성·자동 스크롤·반복을 즉시 중지하고 홈으로 이동합니다.</li><li><b>☆ 모르는 단어:</b> 현재 단어를 바로 등록하거나 해제합니다.</li><li><b>⏸ 재생 정지 / ▶ 재생 시작:</b> 현재 카드 위치를 유지한 채 음성을 멈추거나 다시 시작합니다.</li><li><b>좌우 스와이프:</b> 이전·다음 단어로 이동합니다.</li></ul>
+</div>
+</details>
+<details class="usageSection">
+<summary>4. 퀴즈 4가지</summary>
+<div class="usageBody">
+<ul class="usageSteps"><li><b>학습 조건 동기화:</b> Drawer의 모르는 단어·틀린 단어·틀린 단어 + 모르는 단어를 선택하면 DAY 위 학습 범위와 퀴즈 대상 콤보박스에도 즉시 반영됩니다. 어느 콤보박스에서 변경해도 다른 화면에 같은 조건이 저장됩니다.</li><li><b>퀴즈 대상 조건:</b> 전체 단어·틀린 단어만·모르는 단어·틀린 단어 + 모르는 단어 중 하나를 선택하면 모든 퀴즈 방식에 같은 조건이 적용됩니다.</li><li><b>퀴즈 하단 버튼:</b> 왼쪽부터 다음·이전·자동 넘기기 순서입니다. 자동 넘기기 ON이면 정답·오답 후 단어와 예문을 끝까지 읽고 다음 문제로 이동합니다. OFF이면 자동 음성과 자동 이동이 멈추며 다음 버튼으로 직접 진행합니다.</li><li><b>기존 객관식:</b> 자동 재생이 켜져 있으면 정답 선택 후 정답 단어와 예문을 끝까지 들은 뒤 다음 문제로 이동합니다.</li><li><b>단어 말하기:</b> 영어 또는 뜻을 보고 답을 소리 내어 말한 뒤 맞았어요·오답을 선택합니다. 정답을 열면 영어 예문 아래에 한글 해석도 함께 표시됩니다. 자동 재생이 켜져 있으면 정답 단어와 영어 예문을 읽고 이동합니다.</li><li><b>문장 말하기:</b> 한글 뜻 → 전체 문장 → 핵심 빈칸 → 전체 문장 말하기 순서로 기본·패러프레이징 문장을 연습합니다. 최종 채점 후 자동 재생을 시작하거나 정지할 수 있습니다.</li><li><b>모르는 단어 선택:</b> 선택한 조건에 해당하는 단어 목록에서 모르는 단어를 한꺼번에 관리합니다. 전체 DAY를 확인하려면 퀴즈 대상을 ‘전체 단어’로 선택하세요.</li><li><b>유의어·반의어:</b> 같은 뜻 찾기, 유의어 뜻 맞추기, 패러프레이징 문장에 사용된 유의어 찾기, 반의어 찾기를 섞어서 출제합니다. 뜻이 확인된 유의어만 문제로 사용하므로 ‘등록된 뜻이 없습니다.’ 선택지는 표시되지 않습니다. 등록된 데이터가 있는 단어만 문제로 나오며 결과는 해당 학습 단어의 퀴즈 통계와 망각곡선에 반영됩니다.</li></ul>
+<div class="usageTip">문제를 풀지 않아도 다음 문제로 건너뛸 수 있으며, 건너뛴 문제는 정답·오답 통계에 포함되지 않습니다.</div>
+</div>
+</details>
+<details class="usageSection">
+<summary>5. 망각곡선과 스코어</summary>
+<div class="usageBody">망각곡선은 학습 화면의 임의 버튼이 아니라 <b>퀴즈 정답·오답 결과</b>를 기준으로 계산됩니다. 오답은 빠르게 다시 복습 대상으로 들어가고, 연속 정답이 쌓이면 복습 간격이 점차 길어집니다. 스코어 화면에서는 DAY별 정답률과 취약 단어를 확인할 수 있습니다.</div>
+</details>
+<details class="usageSection">
+<summary>6. 추천 학습 순서</summary>
+<div class="usageBody">
+<p><b>처음 학습:</b></p><div class="usageFlow"><span class="usageChip">모르는 단어 선택</span><span class="usageArrow">→</span><span class="usageChip">전체 반복</span><span class="usageArrow">→</span><span class="usageChip">객관식</span><span class="usageArrow">→</span><span class="usageChip">단어 말하기</span><span class="usageArrow">→</span><span class="usageChip">문장 말하기</span></div>
+<p style="margin-top:12px"><b>복습:</b></p><div class="usageFlow"><span class="usageChip">틀린 단어 + 모르는 단어</span><span class="usageArrow">→</span><span class="usageChip">망각곡선</span><span class="usageArrow">→</span><span class="usageChip">문장 말하기</span></div>
+</div>
+</details>
+</section>
+<section class="configSection">
+<div class="configSectionTitle">🔊 학습 모드 음성 설정</div>
+<div class="configRow"><div class="configCopy"><b>음성 읽기 속도</b><span>모든 영어·한국어 TTS에 공통 적용</span></div><select class="configSelect" id="cfgSpeechRate"><option value="0.8">0.8배</option><option value="0.9">0.9배</option><option value="1.0">1.0배</option><option value="1.1">1.1배</option><option value="1.2">1.2배</option><option value="1.3">1.3배</option><option value="1.5">1.5배</option></select></div>
+<div class="configRow"><div class="configCopy"><b>예문·패러프레이징 반복</b><span>학습 화면의 예문 듣기 반복 횟수</span></div><select class="configSelect" id="cfgExampleRepeat"><option value="1">1회</option><option value="2">2회</option><option value="3">3회</option><option value="4">4회</option><option value="5">5회</option></select></div>
+<div class="configRow"><div class="configCopy"><b>패턴 활용 예문 반복</b><span>패턴 활용 예문 각각의 읽기 횟수</span></div><select class="configSelect" id="cfgPatternRepeat"><option value="1">1회</option><option value="2">2회</option><option value="3">3회</option></select></div>
+<div class="configRow"><div class="configCopy"><b>Collocation 반복</b><span>각 Collocation의 읽기 횟수</span></div><select class="configSelect" id="cfgCollocationRepeat"><option value="1">1회</option><option value="2">2회</option><option value="3">3회</option></select></div>
+<div class="configRow"><div class="configCopy"><b>유의어·반의어 반복</b><span>각 표현의 읽기 횟수</span></div><select class="configSelect" id="cfgSynonymRepeat"><option value="1">1회</option><option value="2">2회</option><option value="3">3회</option></select></div>
+<div class="configRow"><div class="configCopy"><b>단어만 읽기 횟수</b><span>‘단어 읽기’ 모드에서 영어 단어와 한글 뜻을 반복하는 횟수입니다. 기본값은 3회입니다.</span></div><select class="configSelect" id="cfgWordReadRepeat"><option value="1">1회</option><option value="2">2회</option><option value="3">3회</option><option value="4">4회</option><option value="5">5회</option><option value="10">10회</option></select></div>
+<div class="configRow"><div class="configCopy"><b>연속 재생 학습 횟수</b><span>선택한 DAY 전체를 처음부터 끝까지 반복하는 회수입니다. 기본값은 1회입니다.</span></div><select class="configSelect" id="cfgContinuousStudyRepeat"><option value="1">1회</option><option value="2">2회</option><option value="3">3회</option><option value="5">5회</option><option value="10">10회</option></select></div>
+</section>
+<section class="configSection">
+<div class="configSectionTitle">🎯 MY 수업 재생 설정</div>
+<div class="configRow"><div class="configCopy"><b>MY 수업 자동 재생</b><span>수업 화면을 열거나 핵심 교정·Chunk·말하기 탭으로 이동하면 첫 문장부터 자동으로 읽습니다.</span></div><input class="configCheck" id="cfgMyClassAutoPlay" type="checkbox"/></div>
+<div class="configRow"><div class="configCopy"><b>문장당 반복 횟수</b><span>현재 문장을 몇 번 읽은 뒤 다음 문장으로 이동할지 설정합니다.</span></div><select class="configSelect" id="cfgMyClassSentenceRepeat"><option value="1">1회</option><option value="2">2회</option><option value="3">3회</option><option value="5">5회</option></select></div>
+<div class="configRow"><div class="configCopy"><b>문장 사이 쉼</b><span>한 문장이 끝난 뒤 다음 문장을 시작하기 전 대기 시간입니다.</span></div><select class="configSelect" id="cfgMyClassPause"><option value="300">0.3초</option><option value="500">0.5초</option><option value="700">0.7초</option><option value="1000">1.0초</option><option value="1500">1.5초</option><option value="2000">2.0초</option></select></div>
+<div class="configNotice">MY 수업의 ‘전체 듣기’도 긴 문단을 한 번에 재생하지 않고 문장별로 나눠 순차 재생합니다. Android/Samsung TTS에서 긴 문장이 중간에 끊기는 현상을 줄이기 위한 방식입니다.</div>
+</section>
+<section class="configSection">
+<div class="configSectionTitle">🎤 문장 말하기 설정</div>
+<div class="configRow"><div class="configCopy"><b>영어 문장 공개 전 대기</b><span>한글 뜻을 보고 문장을 떠올리는 시간</span></div><select class="configSelect" id="cfgRecallDelay"><option value="1">1초</option><option value="2">2초</option><option value="3">3초</option><option value="4">4초</option><option value="5">5초</option><option value="7">7초</option><option value="10">10초</option></select></div>
+<div class="configRow"><div class="configCopy"><b>한 주기 문장 반복 횟수</b><span>1단계에서 쉬기 전 연속으로 읽는 횟수</span></div><select class="configSelect" id="cfgSentenceRepeat"><option value="1">1회</option><option value="2">2회</option><option value="3">3회</option><option value="4">4회</option><option value="5">5회</option></select></div><div class="configRow"><div class="configCopy"><b>Day Loop 문장당 반복 횟수</b><span>전체 Loop에서 한 문장을 연속으로 읽고 다음 문장으로 넘어가는 횟수</span></div><select class="configSelect" id="cfgDayLoopSentenceRepeat"><option value="1">1회</option><option value="2">2회</option><option value="3">3회</option><option value="5">5회</option></select></div>
+<div class="configRow"><div class="configCopy"><b>2단계 전까지 계속 반복</b><span>끄면 설정한 횟수만 읽고 멈춥니다.</span></div><input class="configCheck" id="cfgSentenceContinuous" type="checkbox"/></div>
+<div class="configRow"><div class="configCopy"><b>반복 주기 사이 쉼</b><span>한 주기 종료 후 다시 읽기 전 대기시간</span></div><select class="configSelect" id="cfgSentencePause"><option value="300">0.3초</option><option value="500">0.5초</option><option value="700">0.7초</option><option value="1000">1.0초</option><option value="1500">1.5초</option><option value="2000">2.0초</option></select></div>
+</section>
+<section class="configSection">
+<div class="configSectionTitle">📝 퀴즈 설정</div>
+<div class="configRow"><div class="configCopy"><b>퀴즈 단어 읽기 횟수</b><span>퀴즈에서 문제 단어와 정답 단어를 읽어 주는 횟수</span></div><select class="configSelect" id="cfgQuizWordRepeat"><option value="1">1회</option><option value="2">2회</option><option value="3">3회</option><option value="4">4회</option><option value="5">5회</option></select></div>
+<div class="configRow"><div class="configCopy"><b>정답·오답 후 자동 넘기기</b><span>켜면 퀴즈 화면의 ‘자동 넘기기 ON’ 상태에서 단어와 예문을 끝까지 읽은 뒤 다음 문제로 이동합니다. 끄면 자동 이동 없이 다음 버튼으로 직접 진행합니다.</span></div><input class="configCheck" id="cfgQuizAutoNext" type="checkbox"/></div>
+</section>
+<details class="usageDetail"><summary>🔎 단어 비교 사용법</summary><div class="usageBody">Drawer 메뉴의 <b>단어 비교</b>에서 영어 단어나 한글 뜻을 검색하세요. 마스터에 등록된 유의어와 뜻이 비슷한 학습 단어를 예문과 함께 비교할 수 있습니다. 비교 카드의 단어를 누르면 그 단어를 새 기준으로 계속 탐색합니다.</div></details>
+<details class="usageDetail"><summary>🔊 학습 모드 음성 설정</summary><div class="usageBody">읽기 속도와 학습 반복 설정을 한곳에서 관리합니다. 예문·패턴·Collocation·유의어 반복 횟수, 단어만 읽기 횟수, 연속 재생 학습 횟수를 같은 섹션에서 설정할 수 있으며 각 값은 서로 독립적으로 적용됩니다.</div></details><details class="usageDetail"><summary>⚙ 단어 읽기와 연속 학습 횟수</summary><div class="usageBody"><b>단어만 읽기 횟수</b>와 <b>연속 재생 학습 횟수</b>는 서로 독립적으로 설정됩니다. 기본값은 각각 <b>3회</b>와 <b>1회</b>입니다. 단어 읽기 횟수는 한 카드에서 영어 단어와 한글 뜻을 읽는 횟수이고, 연속 학습 횟수는 선택한 DAY 전체를 처음부터 끝까지 반복하는 회수입니다.</div></details><details class="usageDetail"><summary>🔤 단어 읽기 모드</summary><div class="usageBody">홈의 <b>자동 읽기 범위</b>에서 <b>단어 읽기</b>를 선택하면 각 카드에서 <b>영어 단어 → 한글 뜻</b>만 Config에서 지정한 횟수만큼 읽고 다음 단어로 이동합니다. 이 상태에서 <b>현재 단어</b>를 누르면 영어 단어와 한글 뜻을 제한 없이 반복합니다. 반복 종료 방식은 선택 학습과 일반 DAY 학습의 규칙을 그대로 따릅니다.</div></details><details class="usageDetail"><summary>🔁 현재 단어 반복</summary><div class="usageBody"><b>DAY별 선택 학습 중</b>에는 현재 단어를 제한 없이 반복합니다. <b>반복 종료</b>를 누르면 현재 읽기를 끝까지 마친 뒤 다음 단어부터 전체 반복 학습을 자연스럽게 이어갑니다.<br/><br/><b>일반 DAY 학습 중</b>에는 현재 단어만 제한 없이 반복합니다. <b>반복 종료</b>를 누르면 현재 읽기를 끝까지 마친 뒤 그 자리에서 정지합니다.</div></details><details class="usageDetail"><summary>📝 퀴즈 조작과 음성 설정</summary><div class="usageBody">Config의 <b>퀴즈 단어 읽기 횟수</b>에서 1~5회를 선택할 수 있습니다. 퀴즈 화면에서는 왼쪽으로 밀면 다음 문제, 오른쪽으로 밀면 이전 문제로 이동합니다. ☰ 메뉴는 학습·퀴즈·스코어·망각곡선 등 주요 화면에서 언제든 사용할 수 있습니다.</div></details><details class="usageDetail" open=""><summary>🎧 Day Loop Training 사용법</summary><div class="usageBody">
+<b>Day Loop Training</b>은 실전 문장 말하기의 마지막 문장까지 학습하면 자동으로 시작됩니다. 해당 Day의 모든 실전 문장을 <b>2단계와 동일하게 50% 이상 가린 상태</b>로 한 화면에 보여주고, 완전한 영어 문장을 반복해서 들려줍니다.<br/><br/>
+<b>① 전체 반복</b><br/>
+Config의 <b>Day Loop 문장당 반복 횟수</b>에서 1회 / 2회 / 3회 / 5회 중 선택할 수 있습니다. 예를 들어 2회로 설정하면 <b>Sentence 1을 2회 → Sentence 2를 2회 → Sentence 3을 2회</b> 순서로 진행하고, 마지막 문장이 끝나면 다시 Sentence 1부터 반복합니다.<br/><br/>
+<b>② Sentence N ∞ 집중 반복</b><br/>
+각 카드의 <b>Sentence N ∞</b> 버튼을 누르면 해당 문장만 무한 반복합니다. 다른 문장의 Sentence 버튼을 누르면 기존 집중 반복은 자동으로 해제되고 새로 선택한 문장으로 즉시 이동합니다. 현재 집중 반복 중인 같은 버튼을 다시 누르면 집중 반복을 해제하고 <b>다음 문장부터 기존 전체 Loop를 자동으로 이어갑니다.</b><br/><br/>
+<b>③ 문장 보기 / 숨기기</b><br/>
+각 Sentence 버튼 옆의 <b>👁 문장 보기</b>를 누르면 그 카드의 영어 문장만 전체 문장으로 표시됩니다. 버튼은 <b>🙈 문장 숨기기</b>로 바뀌며, 다시 누르면 2단계처럼 50% 이상 가린 문장으로 돌아갑니다. 이 기능은 <b>화면 표시만 변경</b>하므로 일반 반복 중이거나 집중 무한 반복 중에도 <b>음성은 중단되지 않습니다.</b><br/><br/>
+<b>④ 반복 듣기 ON / OFF</b><br/>
+상단의 <b>반복 듣기 OFF</b>를 누르면 현재 음성이 즉시 정지합니다. 다시 ON 하면 Day Loop를 다시 시작할 수 있습니다. 학습·퀴즈·홈 등 다른 화면으로 이동할 때도 Day Loop 음성은 자동으로 종료됩니다.<br/><br/>
+<b>추가 실전 패턴</b><br/>
+실전 문장에는 Day에서 직접 학습한 패턴 외에도 실제 회화에서 재사용 가치가 높은 표현이 포함될 수 있습니다. 이런 표현은 <b>보라색</b>으로 표시되며, 문장 아래의 <b>추가 실전 패턴</b>에서 기준 영어 패턴과 한글 뜻을 확인할 수 있습니다.<br/><br/>
+<b>추천 학습 순서</b><br/>
+한글 문장을 먼저 보고 영어 문장을 떠올린 뒤, 아래의 50% 가린 영어 문장으로 확인하고 정답 음성을 들으세요. 한글과 영어 모두 학습 단어는 파랑, 학습 패턴은 분홍, 추가 패턴은 보라색으로 표시됩니다. 한글 패턴은 ~ 또는 ... 자리에 들어가는 내용 전체를 칠하지 않고, 실제로 재사용되는 고정 문형 부분만 색칠합니다. 2단계와 Day Loop의 빈칸도 같은 색 규칙을 사용하며, 어느 항목에도 속하지 않는 일반 빈칸은 검정 테두리로 표시됩니다. 그다음, 막히는 문장은 <b>Sentence N ∞</b>로 집중 반복하세요. 필요할 때만 <b>문장 보기</b>로 정답을 확인하고 다시 숨기면 Recall 연습을 계속할 수 있습니다.
+</div></details>
+<section class="configSection" id="playbackPositionConfigSection">
+<div class="configSectionTitle">▶ 재생 위치</div>
+<div class="configRow">
+<div class="configCopy"><b>재생 위치 리셋</b><span>DAY VOCA · MY 수업 · 소리영어 · OPIC · FRIENDS에 저장된 전체 재생 위치를 모두 처음으로 되돌립니다.</span></div>
+<button class="homeConfigBtn" id="cfgPlaybackPositionReset" type="button">재생 위치 리셋</button>
+</div>
+</section>
+<div class="configActions"><button class="configAction configReset" id="configResetBtn" type="button">기본값 복원</button><button class="configAction configSave" id="configSaveBtn" type="button">설정 저장</button></div>
+<div class="configNotice">설정은 서버 계정이 아니라 현재 휴대폰의 브라우저 저장소(localStorage)에 저장됩니다. 따라서 서로 다른 휴대폰에서는 각자 다른 설정을 사용할 수 있습니다.</div>
+</div>
+</div>
+<div class="configPage hidden" id="usagePage">
+<div class="configShell">
+<div class="configHeader"><button aria-label="홈으로" class="configBackBtn" id="usageBackBtn" type="button">←</button><div><h1>📘 사용 방법</h1><p>MY VOCA의 학습 흐름과 각 기능의 사용법을 확인하세요.</p></div></div>
+<div id="usagePageContent"></div>
+</div>
+</div>
+<div class="comparePage hidden" id="comparePage">
+<div class="compareShell">
+<div class="compareHeader">
+<button aria-label="홈으로" class="compareBackBtn" id="compareBackBtn" type="button">←</button>
+<div><h1>🔎 단어 비교</h1><p>비슷한 뜻의 단어를 찾아 의미와 예문을 나란히 비교합니다.</p></div>
+</div>
+<section class="compareSearchCard">
+<div class="compareSearchRow"><input autocomplete="off" class="compareSearchInput" id="compareSearchInput" placeholder="영어 단어 또는 한글 뜻 검색" type="search"/><button class="compareSearchBtn" id="compareSearchBtn" type="button">검색</button></div>
+<div class="compareSearchHint">예: bountiful, ample, 풍부한. 검색 결과를 누르면 기준 단어가 바뀝니다.</div>
+<div class="compareResults hidden" id="compareSearchResults"></div>
+</section>
+<section class="compareBaseCard" id="compareBaseCard">
+<div class="compareBaseTop"><div><div class="compareBaseWord" id="compareBaseWord">단어를 선택하세요</div><div class="compareBaseMeaning" id="compareBaseMeaning">학습 중인 단어나 검색한 단어를 기준으로 비교합니다.</div></div><button aria-label="기준 단어 듣기" class="compareSpeakBtn" id="compareBaseSpeak" type="button">🔊</button></div>
+<div class="compareBaseMeta" id="compareBaseMeta"></div>
+</section>
+<section class="compareSection"><div class="compareSectionTitle">등록된 유의어</div><div class="compareSectionSub">마스터 데이터에 등록된 유의어와 각 단어 자체의 뜻입니다.</div><div class="compareGrid" id="compareSynonymList"></div></section>
+<section class="compareSection"><div class="compareSectionTitle">뜻이 비슷한 학습 단어</div><div class="compareSectionSub">한글 뜻의 핵심 의미가 겹치는 앱 내 단어를 찾아 보여줍니다.</div><div class="compareGrid" id="compareSimilarList"></div><div class="compareNote">비슷한 뜻이라고 항상 같은 상황에 바꿔 쓸 수 있는 것은 아닙니다. 각 단어의 예문과 고유 뜻을 함께 비교하세요.</div></section>
+</div>
+</div>
+<div aria-hidden="true" class="voicePracticePage hidden" id="voicePracticePage">
+<div class="voicePracticeShell">
+<header class="voicePracticeHeader">
+<button aria-label="뒤로" class="voicePracticeBackBtn" id="voicePracticeBackBtn" type="button">←</button>
+<div>
+<h1>🎙️ 음성 녹음 학습</h1>
+<p>원하는 영어 문장을 자유롭게 녹음하고 정답 음성과 비교해 보세요.</p>
+</div>
+</header>
+<section class="voicePracticePromptCard">
+<div class="voicePracticeLabel">연습할 문장</div>
+<textarea class="voicePracticeInput" id="voicePracticeInput" placeholder="예: What I'm trying to say is that we need more time." rows="3"></textarea>
+<div class="voicePracticePromptActions">
+<button class="voicePracticeReferenceBtn" id="voicePracticeReferenceBtn" type="button">🔊 정답 듣기</button>
+<button class="voicePracticeClearBtn" id="voicePracticeClearBtn" type="button">초기화</button>
+</div>
+<div class="voicePracticeRecentTitle">최근 연습 문장</div>
+<div class="voicePracticeRecent" id="voicePracticeRecent"></div>
+</section>
+<section class="voicePracticeRecorderSection">
+<div id="voicePracticeRecorderMount"></div>
+<div aria-label="녹음 파일 기능" class="voicePracticeFileActions">
+<button class="voicePracticeFileAction" disabled="" id="voicePracticeMyPlayAction" type="button">▶ 내 녹음 듣기</button>
+<button class="voicePracticeFileAction voicePracticeMp3Action" disabled="" id="voicePracticeMp3Save" type="button">⬇ MP3 파일 저장</button>
+</div>
+<div class="voicePracticePrivacy" id="voicePracticePrivacy">녹음을 완료하면 내 녹음을 듣거나 MP3 파일로 저장할 수 있습니다.</div>
+</section>
+</div>
+</div>
+<div class="hidden" id="dayAppPage">
+<div class="app"><header class="dayHeader"><button aria-expanded="false" aria-label="메뉴 열기" class="courseMenuBtn" id="dayMenuBtn" type="button">☰</button><div class="dayHeaderTitle"><h1>Speaking Priority VOCA · Day 1</h1><div class="sub">회화 활용도 중심 30일 코스</div></div><div class="count"><span id="idx">1</span>/<span id="total">57</span></div></header><div class="progress"><div class="bar" id="bar"></div></div><div class="tabs fourTabs"><button class="tab active" data-v="learn">학습</button><button class="tab" data-v="quiz">퀴즈</button><button class="tab" data-v="forget">망각곡선</button><button class="tab" data-v="score">스코어</button></div><div class="toolbar" id="toolbar"><select aria-label="학습 순서" class="select" id="orderMode"><option value="book">📘 기본 순서</option><option selected="" value="quizWrongDesc">❌ 퀴즈 오답 많은 순</option><option value="quizWeak">🎯 틀린 단어만</option><option value="favorite">⭐ 모르는 단어</option><option value="wrongFav">🎯⭐ 틀린 단어 + 모르는 단어</option><option value="quizRateAsc">📉 퀴즈 정답률 낮은 순</option><option value="quizRateDesc">📈 퀴즈 정답률 높은 순</option><option value="random">🔀 랜덤</option><option value="practiceSentence">🗣 실전 문장 연습</option></select><select aria-label="자동 읽기" class="select" id="speechMode"><option value="off">🔇 자동 읽기 끄기</option><option value="word">🔤 단어 읽기 · 단어+뜻</option><option value="all">🎙 단어 + 예문 + 패러프레이즈</option><option selected="" value="full">🔊 전체 읽기</option></select></div><div class="modeNote" id="modeNote"></div>
+<section id="learn"><div class="autoPlayBadge" id="autoPlayBadge"></div><div class="card" id="card"><div class="hero" id="hero"><div class="heroTop"><span class="tag">DAY 1 · SPEAKING PRIORITY</span><button class="fav" id="fav">☆</button></div><div class="visualScene" id="visualScene">🎯</div><div class="heroCopy"><div class="memoryPhrase" id="memoryPhrase"></div><div class="memoryKo" id="memoryKo"></div></div><div class="flipHint">탭해서 카드 뒤집기</div></div><div class="body"><div class="row"><div><div class="word" id="word"></div><div class="pronunciation" id="pronunciation"></div></div><button class="speak" id="speakW">🔊</button></div><div class="meaning" id="meaning"></div><div class="metaLine"><div id="stars"></div><span class="streak" id="studyCountBadge">학습 0회</span><span class="streak" id="learnQuizCountBadge">퀴즈 오답 0회 / 시도 0회</span></div><div class="autoStatus" id="autoStatus">새 카드가 나오면 자동으로 읽어 줍니다.</div><div class="section"><div class="label">첫 번째 예문</div><div class="row"><div><div class="example" id="ex"></div><div class="trans" id="tr"></div></div><button class="speak" id="speakE">🔊</button></div></div><div class="section">
+<div class="label">🔄 패러프레이징 예문</div>
+<div class="synonymBadge" id="synonymBadge"></div>
+<div class="detailSpeakRow">
+<div class="detailSpeakCopy">
+<div class="question" id="q"></div>
+<div class="trans" id="paraTr"></div>
+</div>
+<button aria-label="패러프레이징 예문 듣기" class="inlineSpeak" id="speakQ" type="button">🔊</button>
+</div>
+<div class="paraNote">같은 의미를 다른 표현으로 말하는 연습입니다.</div>
+</div>
+<div class="section">
+<div class="patternLearning">
+<div class="patternTitle">🩷 문장에서 사용된 회화 패턴</div>
+<div class="detailSpeakRow">
+<div class="patternMain detailSpeakCopy" id="usedPattern"></div>
+<button aria-label="회화 패턴 듣기" class="inlineSpeak" id="speakPattern" type="button">🔊</button>
+</div>
+<div class="label" style="margin-top:13px">패턴 뜻</div>
+<div class="patternMeaning" id="usedPatternMeaning"></div>
+<div class="label" style="margin-top:13px">활용 예문</div>
+<div class="patternExamples" id="usedPatternExamples"></div>
+<button class="miniSpeak" id="speakPatternExamples" type="button">🔊 활용 예문 듣기</button>
+</div>
+</div>
+<div class="section moreWrap">
+<div class="label" style="font-size:15px">💡 회화에서 더 알아보기</div>
+<div class="morePanel" id="morePanel">
+<div class="moreBlock">
+<div class="detailSectionHead"><div class="label">💬 Collocation</div><button class="miniSpeak detailAllSpeak" id="speakAllCollocations" type="button">🔊 전체 듣기</button></div>
+<div class="detailList" id="collocationList"></div>
+</div>
+<div class="moreBlock">
+<div class="detailSectionHead"><div class="label">🔍 유의어 / 반의어</div><button class="miniSpeak detailAllSpeak" id="speakAllSynonyms" type="button">🔊 전체 듣기</button></div>
+<div class="detailList" id="synonymList"></div>
+</div>
+</div>
+</div><div class="small"><button id="prev">← 이전</button><button id="next">다음 →</button><button id="reset">↺ 초기화</button></div></div></div></section>
+<section class="hidden quiz" id="quiz">
+<div class="quizDayNav">
+<button class="quizWrongAllBtn" id="quizAllWrongBtn" title="다시 누르면 현재 학습 Day로 돌아갑니다." type="button">🔥 전체 Day 오답</button>
+<div class="quizDayRow">
+<button class="quizDayMove" id="quizPrevDay" type="button">◀ 이전</button>
+<div class="quizDayLabel" id="quizDayLabel"><b>DAY 1</b><span>30개 · 오답 0개</span></div>
+<button class="quizDayMove" id="quizNextDay" type="button">다음 ▶</button>
+</div>
+</div>
+<div aria-label="퀴즈 방식 선택" class="quizModeSwitch" role="tablist">
+<button aria-selected="true" class="quizModeBtn active" id="quizModeChoice" role="tab" type="button">단어 맞추기</button>
+<button aria-selected="false" class="quizModeBtn" id="quizModeLexical" role="tab" type="button">유의어·반의어</button>
+<button aria-selected="false" class="quizModeBtn" id="quizModeRecall" role="tab" type="button">단어 말하기</button>
+<button aria-selected="false" class="quizModeBtn" id="quizModeFavorite" role="tab" type="button">모르는 단어 선택</button>
+<button aria-selected="false" class="quizModeBtn hidden" id="quizModeSentence" role="tab" type="button">문장 말하기</button>
+</div>
+<div class="quizFilterBar">
+<span class="quizFilterLabel">퀴즈 대상</span>
+<select aria-label="퀴즈 대상 조건" class="quizFilterSelect" id="quizFilterMode">
+<option value="all">전체 단어</option>
+<option value="wrong">틀린 단어만</option>
+<option value="favorite">모르는 단어</option>
+<option value="wrongFav">틀린 단어 + 모르는 단어</option>
+</select>
+<span class="quizFilterCount" id="quizFilterCount">0개</span>
+</div>
+<div class="sentenceSourceBar" id="sentenceSourceBar">
+<span class="sentenceSourceLabel">문장 소스</span>
+<div aria-label="문장 말하기 학습 소스" class="sentenceSourceSwitch" role="group">
+<button class="sentenceSourceBtn active" id="sentenceSourceExample" type="button">학습 예문</button>
+<button class="sentenceSourceBtn" id="sentenceSourcePractice" type="button">실전 리딩</button>
+</div>
+</div>
+<div class="recallGuide hidden" id="recallGuide">문제를 보고 답을 소리 내어 말하세요. 말하지 못하면 바로 ‘오답’으로 기록하세요.</div>
+<div class="quizControls" style="flex-wrap:wrap"><select class="select" id="quizDirection" style="flex:1;min-width:160px"><option value="enKo">영어 → 한글</option><option value="koEn">한글 → 영어</option></select><button aria-label="퀴즈 단어 듣기" class="speak" id="speakQuiz">🔊</button></div><div class="metaLine" id="quizStatLine"><span class="missBadge" id="quizCorrectBadge">정답 0회</span><span class="missBadge" id="quizWrongBadge">오답 0회</span><span class="missBadge" id="quizStreakBadge">연속 정답 0회</span><span class="missBadge" id="quizAccuracyBadge">정답률 0%</span></div><div class="word" id="qw"></div><div class="quizMeta" id="quizMeta"></div><div id="opts"></div><div class="quizFeedback hidden" id="quizFeedback"></div><div class="quizQuestionNav quizQuestionNavThree"><button class="option quizNavNext" id="nextq" type="button">다음 →</button><button class="option quizNavPrev" id="prevq" type="button">← 이전</button><button class="option quizPlaybackToggle" id="quizPlayPause" type="button">자동 ON</button></div></section><section class="hidden score" id="score">
+<section class="studyTimeDashboard" id="studyTimeDashboard">
+<div class="studyTimeHead"><div><div class="studyTimeTitle">◷ 학습 시간</div><div class="studyTimeSub">실제 학습에 집중한 시간만 자동 기록합니다.</div></div><button class="studyTimeGuideBtn" id="studyTimeGuideBtn" type="button">기록 안내 ?</button></div>
+<div class="studyTimeSummary">
+<div class="studySummaryCard"><span>오늘 학습</span><b id="studyTodayValue">0분</b><small>오늘 기록</small></div>
+<div class="studySummaryCard"><span>이번 주</span><b id="studyWeekValue">0분</b><small>이번 주 누적</small></div>
+<div class="studySummaryCard"><span>연속 학습</span><b id="studyStreakValue">0일</b><small id="studyBestStreak">최고 0일</small></div>
+</div>
+<div class="studyChartCard">
+<div class="studyChartTop"><div><b>▥ 최근 학습 시간</b><span id="studyChartAverage">평균 0분</span></div><div class="studyRangeSwitch"><button class="active" id="studyRange7" type="button">7일</button><button id="studyRange30" type="button">30일</button></div></div>
+<div class="studyBarChart" id="studyBarChart"></div>
+</div>
+<div class="studyCategoryCard">
+<div class="studyCategoryTitle"><b>학습 종류별 시간</b><span>최근 <span id="studyCategoryRangeLabel">7일</span></span></div>
+<div class="studyCategoryBody">
+<div class="studyDonut" id="studyDonut"><div><span>총</span><b id="studyCategoryTotal">0분</b></div></div>
+<div class="studyCategoryLegend">
+<div><i class="catDot word"></i><span>단어 학습</span><b id="studyCatWord">0분 (0%)</b></div>
+<div><i class="catDot reading"></i><span>실전 리딩</span><b id="studyCatReading">0분 (0%)</b></div>
+<div><i class="catDot quiz"></i><span>퀴즈 &amp; 문장 말하기</span><b id="studyCatQuiz">0분 (0%)</b></div>
+</div>
+</div>
+</div>
+<div class="studyTimeNotice">ⓘ 화면이 보이고 최근 3분 안에 학습 조작이 있었을 때만 기록합니다. 홈·설정·스코어 화면에 머문 시간은 포함하지 않습니다.</div>
+</section>
+<div class="scoreHero">
+<div>
+<div class="scoreEyebrow">DAY MASTERY SCORE</div>
+<div class="scoreMain"><b id="dayScore">0</b><span>/100</span></div>
+<div class="scoreGrade gradeRed" id="dayScoreGrade">집중 필요</div>
+</div>
+<div class="scoreHeroText">
+<b>얼마나 확실히 알고 있나요?</b>
+<span>학습 횟수와 퀴즈 정답·오답 및 복습 간격을 합쳐 단어 숙련도를 계산합니다.</span>
+</div>
+</div>
+<div class="scoreBands">
+<div class="scoreBand master"><b id="bandMaster">0</b><span>Master<br/>90–100</span></div>
+<div class="scoreBand stable"><b id="bandStable">0</b><span>안정<br/>75–89</span></div>
+<div class="scoreBand learning"><b id="bandLearning">0</b><span>학습 중<br/>50–74</span></div>
+<div class="scoreBand weak"><b id="bandWeak">0</b><span>취약<br/>25–49</span></div>
+<div class="scoreBand focus"><b id="bandFocus">0</b><span>집중 필요<br/>0–24</span></div>
+</div>
+<div class="scoreMetrics">
+<div><b id="scoreQuizRate">0%</b><span>퀴즈 정답률</span></div>
+<div><b id="scoreLearnedCount">0</b><span>학습 단어</span></div>
+<div><b id="scoreReviewStage">0.0</b><span>평균 복습 단계</span></div>
+</div>
+<button class="focusStudyBtn" id="focusStudyBtn">🔥 50점 미만 집중 학습</button>
+<div class="scoreListHead">
+<b>단어별 스코어</b>
+<select class="select" id="scoreSort" style="width:auto">
+<option value="low">점수 낮은 순</option>
+<option value="high">점수 높은 순</option>
+<option value="wrong">오답 많은 순</option>
+<option value="studyAsc">학습 적은 순</option>
+<option value="alpha">알파벳순</option>
+</select>
+</div>
+<div id="scoreList"></div>
+</section>
+<section class="hidden forget" id="forget">
+<div class="forgetHero">
+<div>
+<div class="forgetTitle">🧠 망각곡선 복습</div>
+<div class="forgetSub">어려웠던 단어는 빨리, 익숙한 단어는 점점 긴 간격으로 다시 보여줍니다.</div>
+</div>
+<div class="forgetTodayBadge"><b id="forgetDueCount">0</b><span>오늘 복습</span></div>
+</div>
+<div class="curveSteps">
+<div class="curveStep"><b>퀴즈 오답</b><span>약 3시간 후</span></div>
+<div class="curveArrow">→</div>
+<div class="curveStep"><b>퀴즈 정답</b><span>1일 후</span></div>
+<div class="curveArrow">→</div>
+<div class="curveStep"><b>복습 성공</b><span>3일 후</span></div>
+<div class="curveArrow">→</div>
+<div class="curveStep"><b>계속 성공</b><span>7·14·30일</span></div>
+</div>
+<div class="forgetSummaryGrid">
+<div class="summaryCard"><b id="forgetNow">0</b><span>지금 복습</span></div>
+<div class="summaryCard"><b id="forgetTomorrow">0</b><span>24시간 내</span></div>
+<div class="summaryCard"><b id="forgetLater">0</b><span>그 이후</span></div>
+</div>
+<div class="forgetActions">
+<button class="forgetPrimary" id="forgetStartBtn" type="button">오늘 복습 시작</button>
+<select aria-label="복습 개수" class="select" id="forgetLimit">
+<option value="10">10개씩</option>
+<option value="20">20개씩</option>
+<option value="999">전체</option>
+</select>
+</div>
+<div class="statusLegend">
+<span class="legendItem unlearned">미학습</span>
+<span class="legendItem learning">학습 중</span>
+<span class="legendItem scheduled">복습 예정</span>
+<span class="legendItem now">복습 필요</span>
+</div>
+<div class="forgetListHead">
+<b>복습 예정 단어</b>
+<select class="select" id="forgetSort" style="width:auto">
+<option value="due">복습 시급순</option>
+<option value="weak">취약도순</option>
+<option value="time">복습 예정시간순</option>
+</select>
+</div>
+<div id="forgetList"></div>
+</section></div><div class="bottom learningControlBar hidden" id="bottom"><div class="learningControlInner"><button class="learningControlBtn" id="learnHomeControl" type="button">🏠<br/>홈</button><button class="learningControlBtn primary" id="learnPlayPause" type="button">⏸<br/>전체 정지</button><button class="learningControlBtn repeatCurrent" id="learnCurrentRepeat" type="button">🔁<br/>현재 단어</button></div></div>
+<div class="startOverlay hidden" id="reviewModeOverlay">
+<div class="startBox reviewModeBox">
+<h2>오늘 복습 방식</h2>
+<p>망각곡선이 고른 단어를 어떤 깊이로 복습할지 선택하세요.</p>
+<div class="reviewModeChoices">
+<button class="reviewModeBtn modeFast" data-mode="fast"><b>⚡ 빠른 복습 · 2~3분</b><span>단어 뜻만 빠르게 확인 · 1회전 · 재출제 없음</span></button>
+<button class="reviewModeBtn recommended modeStandard" data-mode="standard"><b>⭐ 표준 복습 · 5~8분</b><span>기억 꺼내기 → 모른 단어 재확인 → 4지선다 퀴즈</span></button>
+<button class="reviewModeBtn modeComplete" data-mode="complete"><b>🎤 완전 복습 · 10분+</b><span>3회 반복 Recall → 영↔한 양방향 퀴즈 → 회화 패턴 확인</span></button>
+</div>
+<button class="reviewCloseBtn" id="closeReviewMode">취소</button>
+</div>
+</div>
+<div class="startOverlay hidden" id="reviewSessionOverlay">
+<div class="reviewSessionBox">
+<div class="reviewSessionTop">
+<div>
+<div class="reviewStage" id="reviewStageLabel">RECALL</div>
+<div class="reviewSessionTitle" id="reviewSessionTitle">기억에서 꺼내기</div>
+</div>
+<div class="reviewSessionCount"><span id="reviewSessionIdx">1</span>/<span id="reviewSessionTotal">10</span></div>
+</div>
+<div class="reviewSessionProgress"><div id="reviewSessionBar"></div></div><div class="reviewFlowPreview" id="reviewFlowPreview"></div>
+<div id="recallPanel">
+<div class="recallWordRow"><div class="recallWord" id="recallWord"></div><button class="reviewSpeak" id="recallSpeak">🔊</button></div>
+<div class="recallMeaning hidden" id="recallMeaning"></div>
+<button class="showMeaningBtn" id="showRecallMeaning">뜻 보기</button>
+<div class="recallChoiceRow">
+<button class="recallKnow" id="recallKnow">기억남</button>
+<button class="recallMiss" id="recallMiss">모름</button>
+</div>
+<div class="reviewTip">뜻을 보기 전에 먼저 머릿속으로 의미를 떠올려 보세요.</div>
+</div>
+<div class="hidden" id="reviewQuizPanel">
+<div class="reviewQuizPrompt" id="reviewQuizPrompt"></div>
+<div id="reviewQuizOptions"></div>
+<div class="reviewQuizFeedback hidden" id="reviewQuizFeedback"></div>
+<button class="reviewNextBtn hidden" id="reviewQuizNext">다음</button>
+</div>
+<div class="hidden" id="productionPanel">
+<div class="productionWord" id="productionWord"></div>
+<div class="productionMeaning" id="productionMeaning"></div>
+<div class="productionQuestion" id="productionQuestion"></div>
+<div class="productionQuestionKo" id="productionQuestionKo"></div>
+<div class="patternLearning" style="margin-top:16px">
+<div class="patternTitle">🩷 문장에서 사용된 회화 패턴</div>
+<div class="patternMain" id="productionPattern"></div>
+<div class="patternMeaning" id="productionPatternMeaning"></div>
+<div class="patternExamples" id="productionPatternExamples"></div>
+</div>
+<div class="productionBtns">
+<button class="miniAction" id="productionHearQ">🔊 패러프레이즈 듣기</button>
+<button class="miniAction" id="productionPatternSpeak">🔊 패턴 예문 듣기</button>
+<button class="reviewNextBtn" id="productionNext">다음 단어</button>
+</div>
+</div>
+<div class="hidden" id="reviewDonePanel">
+<div class="reviewDoneIcon">🎉</div>
+<h2>오늘 복습 완료</h2>
+<div class="reviewDoneSummary" id="reviewDoneSummary"></div>
+<button class="reviewNextBtn" id="reviewDoneClose">망각곡선으로 돌아가기</button>
+</div>
+<button class="reviewSessionExit" id="reviewSessionExit">×</button>
+</div>
+</div>
+<div class="startOverlay hidden" id="startOverlay"><div class="startBox"><h2>Day 1 학습 시작</h2><p>시작을 누르면 새 단어가 표시될 때 단어와 예문을 자동으로 읽습니다. 브라우저의 음성 재생 권한을 활성화하기 위한 첫 단계입니다.</p><button id="startLearning">학습 시작</button></div></div><div class="startOverlay hidden" id="finishOverlay"><div class="startBox"><h2>학습 완료 🎉</h2><p id="finishSummary">현재 학습 모드를 모두 끝냈습니다.</p><button id="restartLearning">다시하기</button></div></div></div>
+<div aria-hidden="true" class="mvInfoOverlay hidden" id="mvInfoOverlay">
+<div class="mvInfoBackdrop" data-mv-info-close="1"></div>
+<section aria-labelledby="mvInfoTitle" aria-modal="true" class="mvInfoSheet" role="dialog">
+<header class="mvInfoHeader">
+<div>
+<h2 id="mvInfoTitle">MY VOCA</h2>
+<p id="mvInfoSub"></p>
+</div>
+<button aria-label="닫기" class="mvInfoClose" id="mvInfoClose" type="button">×</button>
+</header>
+<div class="mvInfoBody" id="mvInfoBody"></div>
+</section>
+</div>
