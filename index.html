@@ -1,10 +1,10 @@
-<!-- SAYWARD V5.4.40 BASELINE OPT-A: only embedded home images externalized to WebP; app logic unchanged. -->
+<!-- SAYWARD V5.4.63 · OPT-G BASELINE + USER DATA BACKUP/RESTORE -->
 <!doctype html><html lang="ko"><head>
-<!-- SAYWARD V5.4.40 · MY Lesson 20 not as ~ as it used to be -->
+<!-- SAYWARD V5.4.63 · OPT-G baseline + user data backup/restore -->
 
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.40</title>
+<meta http-equiv="Expires" content="0"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>SAYWARD v5.4.63</title>
 
 <meta name="theme-color" content="#2563eb">
 <meta name="mobile-web-app-capable" content="yes">
@@ -3274,6 +3274,7 @@ body.mvSwipeActive246{overscroll-behavior:none!important}
 
 <button class="drawerItem" data-drawer-action="score"><span class="drawerIcon">📊</span><span class="drawerItemText">학습 통계<small>스코어와 DAY별 기록</small></span></button>
 <button class="drawerItem" data-drawer-action="forget"><span class="drawerIcon">🧠</span><span class="drawerItemText">망각곡선<small>오늘의 복습 대상 확인</small></span></button>
+<button class="drawerItem" data-drawer-action="backupRestore"><span class="drawerIcon">💾</span><span class="drawerItemText">데이터 백업/복원<small>모르는 단어 · 학습 진행 · 통계 · 설정</small></span></button>
 <button class="drawerItem" data-drawer-action="config"><span class="drawerIcon">⚙️</span><span class="drawerItemText">Config<small>음성 · 반복 · 퀴즈 설정</small></span></button>
 <button class="drawerItem" data-drawer-action="usage"><span class="drawerIcon">📘</span><span class="drawerItemText">사용 방법<small>MY VOCA 학습 방법과 기능 안내</small></span></button>
 <button class="drawerItem" data-drawer-action="whatsnew"><span class="drawerIcon">🆕</span><span class="drawerItemText">업데이트 내역<small>이번 버전 변경 사항</small></span></button>
@@ -12588,7 +12589,7 @@ function mvSentenceEntryAudit182(){
 window.mvSentenceEntryAudit182=mvSentenceEntryAudit182;
 
 /* ===== V5.3.189 · STANDARD APP INFO / UPDATE HISTORY ===== */
-const MV_APP_VERSION='5.4.40';
+const MV_APP_VERSION='5.4.63';
 
 function mvCloseInfoOverlay(){
   const overlay=document.getElementById('mvInfoOverlay');
@@ -12617,6 +12618,14 @@ function mvOpenUpdateHistory(){
     `MY ENGLISH v${MV_APP_VERSION}`,
     `
       <div class="mvInfoVersionCard"><b>v${MV_APP_VERSION}</b><span>현재 설치 버전</span></div>
+      <section class="mvInfoSection">
+        <h3>v5.4.63</h3>
+        <ul>
+          <li>OPT-G 안정 기준을 유지한 채 사용자 데이터 JSON 백업/복원 기능을 추가했습니다.</li>
+          <li>모르는 단어, 즐겨찾기, 학습 진행, 통계, 설정 등 SAYWARD localStorage 데이터를 한 파일로 보관할 수 있습니다.</li>
+          <li>복원 실패 시 기존 데이터를 자동으로 되돌리는 롤백 보호를 추가했습니다.</li>
+        </ul>
+      </section>
       <section class="mvInfoSection">
         <h3>v5.4.40</h3>
         <ul><li>MY 수업 13에 Based on everything I've heard so far, ... Chunk를 추가했습니다.</li>
@@ -12894,6 +12903,7 @@ document.addEventListener('keydown',(e)=>{
     if(action==='score'){openDay(currentDay||1,'score');return}
     if(action==='forget'){openDay(currentDay||1,'forget');return}
     if(action==='export'){window.exportMyVocaLearningRecords?.();return}
+    if(action==='backupRestore'){window.mvOpenDataBackupRestore?.();return}
     if(action==='config'){openConfiguration();return}
     if(action==='usage'){openUsagePage();return}
     if(action==='whatsnew'){mvOpenUpdateHistory();return}
@@ -22186,7 +22196,7 @@ function bindHomeSwipe(){
 }
 
 function boot(){
-  try{document.title='SAYWARD v5.4.40'}catch(e){}
+  try{document.title='SAYWARD v5.4.63'}catch(e){}
   try{ensureMyClassHomeCards()}catch(e){console.warn('[SAYWARD] MY card auto-heal',e)}
   setHomeVisibleClass();bindLauncher();bindOverallProxy();buildDaySettings();placeTodayCard();bindHomeSwipe();
   placeTodayCard();
@@ -22207,7 +22217,7 @@ window.mvCleanAudit540=function(){
   const h=home(),bar=document.getElementById('sharedStudySelectBar');
   const cards=[...document.querySelectorAll('#homePage .myClassSection .myClassCard')].slice(0,4);
   return {
-    version:'v5.4.40',mode:currentMode(),defaultMainMode:resolveInitialMainMode(),hero:!!document.getElementById('cleanHeroMenuHit'),launcher:document.querySelectorAll('.cleanModeCard').length,
+    version:'v5.4.63',mode:currentMode(),defaultMainMode:resolveInitialMainMode(),hero:!!document.getElementById('cleanHeroMenuHit'),launcher:document.querySelectorAll('.cleanModeCard').length,
     sharedBar:!!bar,daySettings:!!document.getElementById('cleanDaySettings'),legacyModePanelVisible:!!document.getElementById('homeStudyModePanel')&&getComputedStyle(document.getElementById('homeStudyModePanel')).display!=='none',
     visibleSections:{day:getComputedStyle(document.querySelector('#homePage .daySection')||document.body).display,my:getComputedStyle(document.querySelector('#homePage .myClassSection')||document.body).display,sori:getComputedStyle(document.querySelector('#homePage .soriClassSection')||document.body).display,opic:getComputedStyle(document.querySelector('#homePage .opicClassSection')||document.body).display,friends:getComputedStyle(document.querySelector('#homePage .friendsClassSection')||document.body).display},
     myCards:cards.map(c=>({w:Math.round(c.getBoundingClientRect().width),h:Math.round(c.getBoundingClientRect().height)})),
@@ -22374,7 +22384,7 @@ window.mvCleanAudit540=function(){
      Do not append V13/V14 patch blocks. Edit that master block in place only. -->
 <style id="saywardHomeCleanMaster">
 /* ======================================================================
-   SAYWARD HOME CLEAN MASTER — v5.4.40
+   SAYWARD HOME CLEAN MASTER — v5.4.63
    One authoritative home-style block. Do NOT append version patches below.
    Future home UI edits must modify this block in place.
    ====================================================================== */
@@ -22393,7 +22403,7 @@ window.mvCleanAudit540=function(){
 #cleanHeroMenuHit,#cleanHeroSearchHit{position:absolute!important;top:0!important;height:100%!important;width:18%!important;border:0!important;background:transparent!important;padding:0!important;z-index:8!important;cursor:pointer!important;-webkit-tap-highlight-color:transparent!important}
 #cleanHeroMenuHit{left:-5px!important} #cleanHeroSearchHit{right:0!important}
 #homePage .homeHero::before{
-  content:"v5.4.40"!important;position:absolute!important;right:14.0%!important;top:8px!important;z-index:6!important;
+  content:"v5.4.63"!important;position:absolute!important;right:14.0%!important;top:8px!important;z-index:6!important;
   min-width:54px!important;padding:2px 8px 3px!important;box-sizing:border-box!important;text-align:center!important;
   border:1.5px solid rgba(255,255,255,.92)!important;border-radius:999px!important;background:rgba(77,62,202,.96)!important;
   color:#fff!important;font-size:9px!important;line-height:1.1!important;font-weight:950!important;letter-spacing:.1px!important;
@@ -22530,4 +22540,160 @@ window.mvCleanAudit540=function(){
   #homePage .homeHero::before{top:7px!important;right:13.8%!important;font-size:8.7px!important;min-width:52px!important}
 }
 </style>
+
+<script id="saywardUserBackupRestore5463">
+/* ===== SAYWARD v5.4.63 · USER DATA BACKUP / RESTORE ===== */
+(function(){
+'use strict';
+const SW_BACKUP_SCHEMA='SAYWARD_USER_BACKUP_V1';
+const SW_BACKUP_VERSION='5.4.63';
+const SW_BACKUP_EXACT_KEYS=new Set(['d1stats','d1k']);
+function swIsUserDataKey(key){
+  key=String(key||'');
+  return key.startsWith('mv_')||key.startsWith('myVoca')||key.startsWith('sayward_')||SW_BACKUP_EXACT_KEYS.has(key);
+}
+function swCollectUserStorage(){
+  const out={};
+  for(let i=0;i<localStorage.length;i++){
+    const key=localStorage.key(i);
+    if(key&&swIsUserDataKey(key))out[key]=localStorage.getItem(key);
+  }
+  return out;
+}
+function swBytesOfStorage(storage){
+  try{return new Blob([JSON.stringify(storage)]).size}catch(e){return JSON.stringify(storage||{}).length}
+}
+function swBackupSummary(storage){
+  const keys=Object.keys(storage||{});
+  return {
+    key_count:keys.length,
+    approx_bytes:swBytesOfStorage(storage),
+    has_stats:Object.prototype.hasOwnProperty.call(storage,'mv_unified_stats'),
+    has_favorites:Object.prototype.hasOwnProperty.call(storage,'mv_unified_favs')||Object.prototype.hasOwnProperty.call(storage,'mv_study_favorites_239'),
+    has_progress:Object.prototype.hasOwnProperty.call(storage,'mv_card_study_progress_v2')||Object.prototype.hasOwnProperty.call(storage,'mv_selected_auto_progress_v1'),
+    has_settings:Object.prototype.hasOwnProperty.call(storage,'myVocaConfigurationV1')
+  };
+}
+function swDateStamp(){
+  const d=new Date(),p=n=>String(n).padStart(2,'0');
+  return `${d.getFullYear()}${p(d.getMonth()+1)}${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}`;
+}
+function swDownloadJson(payload,filename){
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'});
+  const a=document.createElement('a');
+  const url=URL.createObjectURL(blob);
+  a.href=url;a.download=filename;a.style.display='none';document.body.appendChild(a);a.click();
+  setTimeout(()=>{try{URL.revokeObjectURL(url)}catch(e){};a.remove()},1200);
+}
+window.mvExportSaywardUserBackup=function(){
+  try{
+    if(typeof save==='function')save();
+    const storage=swCollectUserStorage();
+    const payload={
+      schema:SW_BACKUP_SCHEMA,
+      schema_version:1,
+      app_version:SW_BACKUP_VERSION,
+      exported_at:new Date().toISOString(),
+      summary:swBackupSummary(storage),
+      storage
+    };
+    swDownloadJson(payload,`SAYWARD_USER_BACKUP_${swDateStamp()}.json`);
+    const kb=(payload.summary.approx_bytes/1024).toFixed(1);
+    alert(`백업 파일을 만들었습니다.\n\n저장 항목: ${payload.summary.key_count}개\n크기: 약 ${kb} KB\n\n이 JSON 파일을 안전한 곳에 보관해 주세요.`);
+    return payload;
+  }catch(e){
+    console.error('[SAYWARD backup]',e);
+    alert('사용자 데이터 백업에 실패했습니다.');
+    return null;
+  }
+};
+function swValidateBackup(payload){
+  if(!payload||payload.schema!==SW_BACKUP_SCHEMA||payload.schema_version!==1)throw new Error('지원하지 않는 SAYWARD 백업 파일입니다.');
+  if(!payload.storage||typeof payload.storage!=='object'||Array.isArray(payload.storage))throw new Error('백업 데이터 형식이 올바르지 않습니다.');
+  const clean={};
+  for(const [key,val] of Object.entries(payload.storage)){
+    if(!swIsUserDataKey(key))continue;
+    if(typeof val!=='string'&&val!==null)throw new Error(`저장값 형식 오류: ${key}`);
+    if(val!==null)clean[key]=val;
+  }
+  if(!Object.keys(clean).length)throw new Error('복원할 SAYWARD 사용자 데이터가 없습니다.');
+  return clean;
+}
+function swApplyStorageExact(nextStorage){
+  const previous=swCollectUserStorage();
+  try{
+    const currentKeys=[];
+    for(let i=0;i<localStorage.length;i++){
+      const key=localStorage.key(i);if(key&&swIsUserDataKey(key))currentKeys.push(key);
+    }
+    currentKeys.forEach(key=>localStorage.removeItem(key));
+    for(const [key,val] of Object.entries(nextStorage))localStorage.setItem(key,val);
+    return {ok:true,previous};
+  }catch(e){
+    try{
+      const rollbackKeys=[];
+      for(let i=0;i<localStorage.length;i++){
+        const key=localStorage.key(i);if(key&&swIsUserDataKey(key))rollbackKeys.push(key);
+      }
+      rollbackKeys.forEach(key=>localStorage.removeItem(key));
+      for(const [key,val] of Object.entries(previous))localStorage.setItem(key,val);
+    }catch(rollbackError){console.error('[SAYWARD restore rollback]',rollbackError)}
+    throw e;
+  }
+}
+window.mvRestoreSaywardUserBackupFile=async function(file){
+  if(!file)return false;
+  try{
+    const text=await file.text();
+    const payload=JSON.parse(text);
+    const clean=swValidateBackup(payload);
+    const summary=payload.summary||swBackupSummary(clean);
+    const when=payload.exported_at?new Date(payload.exported_at).toLocaleString():'알 수 없음';
+    const ok=confirm(`SAYWARD 사용자 데이터를 복원할까요?\n\n백업 시각: ${when}\n저장 항목: ${Object.keys(clean).length}개\n\n현재 SAYWARD 사용자 데이터는 백업 파일 내용으로 교체됩니다.`);
+    if(!ok)return false;
+    swApplyStorageExact(clean);
+    alert('복원이 완료되었습니다.\n앱을 새로고침하여 복원된 데이터를 적용합니다.');
+    location.reload();
+    return true;
+  }catch(e){
+    console.error('[SAYWARD restore]',e);
+    alert(`복원에 실패했습니다.\n${e?.message||e}\n\n기존 데이터는 가능한 경우 자동으로 유지/복구했습니다.`);
+    return false;
+  }
+};
+window.mvChooseSaywardUserBackup=function(){
+  let input=document.getElementById('saywardUserBackupFileInput5463');
+  if(!input){
+    input=document.createElement('input');
+    input.id='saywardUserBackupFileInput5463';input.type='file';input.accept='.json,application/json';input.style.display='none';
+    input.addEventListener('change',async()=>{const f=input.files&&input.files[0];if(f)await window.mvRestoreSaywardUserBackupFile(f);input.value='';});
+    document.body.appendChild(input);
+  }
+  input.click();
+};
+window.mvOpenDataBackupRestore=function(){
+  const storage=swCollectUserStorage(),summary=swBackupSummary(storage),kb=(summary.approx_bytes/1024).toFixed(1);
+  if(typeof mvOpenInfoOverlay!=='function'){
+    if(confirm(`현재 SAYWARD 사용자 데이터 ${summary.key_count}개 (약 ${kb} KB)\n\n확인: 백업 파일 만들기\n취소: 종료`))window.mvExportSaywardUserBackup();
+    return;
+  }
+  mvOpenInfoOverlay('💾 데이터 백업/복원',`SAYWARD v${SW_BACKUP_VERSION}`,
+    `<div class="mvInfoVersionCard"><b>${summary.key_count}개</b><span>현재 사용자 데이터 · 약 ${kb} KB</span></div>
+     <section class="mvInfoSection"><h3>백업</h3><p>모르는 단어, 즐겨찾기, 학습 진행, 통계, 설정을 JSON 파일 한 개로 저장합니다.</p>
+       <button id="saywardBackupExportBtn5463" type="button" style="width:100%;padding:14px;border:0;border-radius:12px;background:#2563eb;color:#fff;font-weight:900;font-size:15px">⬇️ JSON 백업 파일 만들기</button></section>
+     <section class="mvInfoSection"><h3>복원</h3><p>이 기능으로 만든 JSON 백업 파일을 선택하면 현재 사용자 데이터를 해당 백업 시점으로 되돌립니다.</p>
+       <button id="saywardBackupRestoreBtn5463" type="button" style="width:100%;padding:14px;border:1px solid #cbd5e1;border-radius:12px;background:#fff;color:#0f172a;font-weight:900;font-size:15px">⬆️ JSON 백업 파일에서 복원</button></section>
+     <section class="mvInfoSection"><p style="margin:0;color:#64748b;font-size:12px;line-height:1.6">※ 앱 본체와 학습 콘텐츠 파일은 백업하지 않습니다. Chrome의 사이트 데이터 삭제 전에 이 백업 파일을 만들어 두는 것을 권장합니다.</p></section>`);
+  setTimeout(()=>{
+    const ex=document.getElementById('saywardBackupExportBtn5463');if(ex)ex.onclick=()=>window.mvExportSaywardUserBackup();
+    const re=document.getElementById('saywardBackupRestoreBtn5463');if(re)re.onclick=()=>window.mvChooseSaywardUserBackup();
+  },0);
+};
+window.mvSaywardBackupAudit5463=function(){
+  const storage=swCollectUserStorage();
+  return {version:'5.4.63',schema:SW_BACKUP_SCHEMA,summary:swBackupSummary(storage),menu:!!document.querySelector('[data-drawer-action="backupRestore"]')};
+};
+})();
+</script>
+
 </body></html>
